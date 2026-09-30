@@ -168,3 +168,29 @@ body.dark .map-source{
 body.dark .notice{
   color:#f0edda!important;
 }
+
+
+/* Mapas com mais presença + recorte municipal */
+.map-card{min-height:270px}
+.map-body svg{width:68%;height:205px}
+.rn-map-card .map-body svg{width:72%;height:215px}
+.rn-map-large{min-height:570px}
+.mun-focus-wrap{margin-top:12px;padding-top:12px;border-top:1px solid rgba(88,97,106,.18)}
+.mun-focus-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;margin-bottom:7px}
+.mun-focus-map{width:100%;height:210px;display:block;border:1px solid var(--rule);border-radius:12px;background:linear-gradient(180deg,#fff,#fafbfc);padding:8px}
+.mun-focus-shape{fill:var(--yellow);stroke:#17191c;stroke-width:2.2;vector-effect:non-scaling-stroke}
+body.dark .mun-focus-map{background:#15191d;border-color:#343c43}
+body.dark .mun-focus-label{color:#eef1f3!important}
+body.dark .mun-focus-shape{stroke:#f5f7f8}
+@media(max-width:900px){
+  .rn-map-large{min-height:500px}
+}
+@media(max-width:600px){
+  .map-body svg,.rn-map-card .map-body svg{height:230px}
+  .rn-map-large{min-height:410px}
+  .mun-focus-map{height:230px}
+}
+@media(max-width:380px){
+  .rn-map-large{min-height:370px}
+  .mun-focus-map{height:210px}
+}
