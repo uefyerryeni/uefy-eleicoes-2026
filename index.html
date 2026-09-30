@@ -11,8 +11,8 @@
 <header class="topbar">
   <div class="wrap topbar-inner">
     <div class="brand">
-      <img class="brandmark" src="assets/brand.svg" alt="Uefyerryeni">
-      <div class="brandtext"><strong>UEFY Eleições</strong><span>Observatório por Uefyerryeni</span></div>
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
+      <div class="brandtext"><strong>UEFY Eleições</strong><span>Apuração e publicação</span></div>
     </div>
     <nav class="nav">
       <a class="active" href="#apuracao">Apuração</a>
@@ -29,23 +29,22 @@
   <div class="wrap">
     <div class="eyebrow">Eleições 2026</div>
     <h1>Resultados oficiais prontos para compartilhar.</h1>
-    <p>Acompanhe os dados do TSE, gere uma imagem e prepare o texto para publicar no X.</p>
+    <p>Acompanhe os dados do TSE, gere a imagem em alta qualidade e prepare o texto para publicar no X.</p>
 
     <div class="toolbar card">
       <label class="field"><span>Cargo</span><select id="officeSelect">
         <option value="pres">Presidência</option>
-        <option value="gov">Governo do RN</option>
-        <option value="sen">Senado RN</option>
+        <option value="gov">Governador</option>
+        <option value="sen">Senado</option>
+        <option value="depf">Deputado federal</option>
+        <option value="depe">Deputado estadual</option>
       </select></label>
-      <label class="field"><span>Recorte</span><select id="scopeSelect">
-        <option value="br">Brasil</option>
-        <option value="rn">Rio Grande do Norte</option>
-      </select></label>
+      <label class="field"><span>Recorte</span><select id="scopeSelect"></select></label>
       <button class="mode" id="modeBtn">Modo: demonstração</button>
       <button class="go" id="refreshBtn">Atualizar dados</button>
     </div>
 
-    <div class="notice"><b>Mapas:</b> malhas geográficas reais. No modo demonstração, os números eleitorais são fictícios.</div>
+    <div class="notice"><b>Estrutura atual:</b> Presidência por Brasil, regiões e estados; Governador em todas as UFs; e, no RN, Senado, deputado federal e deputado estadual. Os mapas usam malhas geográficas reais.</div>
   </div>
 </section>
 
@@ -66,7 +65,7 @@
           </div>
         </article>
 
-        <article class="map-card">
+        <article class="map-card rn-map-card">
           <div class="map-title"><div><h3>Rio Grande do Norte</h3><p>167 municípios</p></div><span class="map-source">GeoJSON</span></div>
           <div class="map-body"><svg id="rnMap" viewBox="0 0 420 300" aria-label="Mapa do Rio Grande do Norte por municípios"></svg>
             <div class="metric"><span>Seções totalizadas</span><strong id="rnProgressText">0,0%</strong><div class="progress"><i id="rnProgressBar"></i></div></div>
@@ -76,16 +75,24 @@
 
       <div class="results">
         <article class="result-card selected" data-office="pres">
-          <div class="result-head"><div><h3>Presidência · Brasil</h3><small id="presSmall"></small></div><button class="pick active" data-pick="pres">Usar</button></div>
+          <div class="result-head"><div><h3>Presidência</h3><small id="presSmall"></small></div><button class="pick active" data-pick="pres">Usar</button></div>
           <div id="presRows"></div><div class="more" id="presMore"></div>
         </article>
         <article class="result-card" data-office="gov">
-          <div class="result-head"><div><h3>Governo do RN</h3><small id="govSmall"></small></div><button class="pick" data-pick="gov">Usar</button></div>
+          <div class="result-head"><div><h3>Governador</h3><small id="govSmall"></small></div><button class="pick" data-pick="gov">Usar</button></div>
           <div id="govRows"></div><div class="more" id="govMore"></div>
         </article>
         <article class="result-card" data-office="sen">
-          <div class="result-head"><div><h3>Senado RN</h3><small id="senSmall"></small></div><button class="pick" data-pick="sen">Usar</button></div>
+          <div class="result-head"><div><h3>Senado</h3><small id="senSmall"></small></div><button class="pick" data-pick="sen">Usar</button></div>
           <div id="senRows"></div><div class="more" id="senMore"></div>
+        </article>
+        <article class="result-card" data-office="depf">
+          <div class="result-head"><div><h3>Deputado federal</h3><small id="depfSmall"></small></div><button class="pick" data-pick="depf">Usar</button></div>
+          <div id="depfRows"></div><div class="more" id="depfMore"></div>
+        </article>
+        <article class="result-card" data-office="depe">
+          <div class="result-head"><div><h3>Deputado estadual</h3><small id="depeSmall"></small></div><button class="pick" data-pick="depe">Usar</button></div>
+          <div id="depeRows"></div><div class="more" id="depeMore"></div>
         </article>
       </div>
 
@@ -100,7 +107,7 @@
 
   <aside class="card publisher" id="publicacao">
     <h2>Publicação pronta</h2>
-    <p class="sub">Confira antes de publicar no X.</p>
+    <p class="sub">Confira a arte e o texto antes de publicar no X.</p>
     <div class="block-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
     <div class="canvas-box"><canvas id="shareCanvas" width="1080" height="1080"></canvas></div>
     <div class="block-title text-title"><span>Texto da publicação</span><span id="charCount">0/280</span></div>
@@ -114,7 +121,7 @@
   </aside>
 </section>
 
-<footer class="foot" id="sobre"><div class="wrap footline"><strong>UEFY Eleições · Observatório por Uefyerryeni</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
+<footer class="foot" id="sobre"><div class="wrap footline"><strong>UEFY Eleições</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
 </main>
 <button class="to-top" id="toTop">↑</button>
 <script src="app.js"></script>
