@@ -32,6 +32,13 @@ function renderList(filter){
   $('#munList').querySelectorAll('.rn-item').forEach(b=>b.onclick=()=>selectMunicipality(fc.features.find(f=>f.properties.nome===b.dataset.name)));
   markSelection();
 }
+function renderFocusMap(){
+  if(!selectedFeature)return;
+  const svg=$('#munFocusMap');
+  if(!svg)return;
+  const one={type:'FeatureCollection',features:[selectedFeature]},proj=projector(one,320,220,18);
+  svg.innerHTML='<path class="mun-focus-shape" d="'+geometryPath(selectedFeature.geometry,proj)+'"></path>';
+}
 function markSelection(){
   if(!selectedFeature)return;
   const name=selectedFeature.properties.nome;
@@ -39,7 +46,7 @@ function markSelection(){
   $('#munList').querySelectorAll('.rn-item').forEach(el=>el.classList.toggle('active',el.dataset.name===name));
 }
 function selectMunicipality(feature){
-  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();
+  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
   if(mode==='demo')applyDemo();else loadRemote();
 }
 function applyDemo(){
@@ -110,15 +117,31 @@ function drawFeature(ctx,feature,x,y,w,h){
 function drawRN(ctx,x,y,w,h){
   if(!fc)return;const proj=projector(fc,w,h,5);ctx.save();ctx.translate(x,y);fc.features.forEach(f=>{const active=f===selectedFeature,g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];ctx.fillStyle=active?'#17191c':'#f5c400';ctx.strokeStyle='#fff';ctx.lineWidth=1.1;polys.forEach(poly=>{ctx.beginPath();poly.forEach(ring=>ring.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()})});ctx.restore()}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
+  let size=startSize;
+  while(size>minSize){
+    ctx.font=weight+' '+size+'px Inter,Segoe UI,Arial';
+    if(ctx.measureText(text).width<=maxWidth)break;
+    size-=1;
+  }
+  ctx.fillStyle=color;ctx.font=weight+' '+size+'px Inter,Segoe UI,Arial';ctx.fillText(text,x,y);
+}
+function drawFocusedMunicipality(ctx,feature,x,y,w,h){
+  if(!feature)return;
+  const one={type:'FeatureCollection',features:[feature]},proj=projector(one,w,h,10),g=feature.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
+  ctx.save();ctx.translate(x,y);ctx.fillStyle='#f5c400';ctx.strokeStyle='#17191c';ctx.lineWidth=3;
+  polys.forEach(poly=>{ctx.beginPath();poly.forEach(ring=>ring.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()});ctx.restore();
+}
 function drawCanvas(){
   if(!selectedFeature)return;
   const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=selectedFeature.properties.nome;ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logo.complete)ctx.drawImage(logo,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'DEMONSTRAÇÃO':'DADOS DO TSE',790,105);
-  drawRN(ctx,725,145,270,225);
+  drawFocusedMunicipality(ctx,selectedFeature,650,115,350,265);
+  drawRN(ctx,790,300,205,135);
   ctx.fillStyle='#17191c';ctx.font='700 76px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,245);
-  ctx.font='700 42px Inter,Segoe UI,Arial';ctx.fillText(OFFICE[office].title,70,306);
-  ctx.fillStyle='#4d555d';ctx.font='600 30px Inter,Segoe UI,Arial';ctx.fillText(name+' · RN',70,347);
+  fitCanvasText(ctx,OFFICE[office].title,70,306,520,42,32,'700','#17191c');
+  fitCanvasText(ctx,name+' · RN',70,347,520,30,23,'600','#4d555d');
   ctx.fillStyle='#58616a';ctx.font='600 26px Inter,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,410);ctx.fillStyle='#17191c';ctx.font='800 62px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(current.progress),70,476);ctx.fillStyle='#e0e5e9';roundRect(ctx,280,430,330,20,10);ctx.fill();ctx.fillStyle='#f5c400';roundRect(ctx,280,430,330*Math.min(100,current.progress)/100,20,10);ctx.fill();
   let yy=575;current.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
   ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Dados fictícios para demonstração':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
