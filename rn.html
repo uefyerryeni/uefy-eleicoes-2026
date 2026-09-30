@@ -4,8 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f5c400">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>UEFY Eleições 2026 — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20260930-3">
+  <link rel="stylesheet" href="style.css?v=20260930-4">
+  <script>
+(function(){
+  fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
+    if(!x||!x.build)return;
+    const u=new URL(location.href);
+    if(u.searchParams.get('v')!==x.build){
+      u.searchParams.set('v',x.build);
+      location.replace(u.pathname+u.search+u.hash);
+    }
+  }).catch(()=>{});
+})();
+</script>
 </head>
 <body>
 <header class="topbar">
@@ -54,7 +69,12 @@
     </div>
 
     <aside class="card rn-side">
-      <div class="rn-selected"><small>Município selecionado</small><strong id="selectedMun">Natal</strong></div>
+      <div class="rn-selected"><small>Município selecionado</small><strong id="selectedMun">Natal</strong>
+        <div class="mun-focus-wrap">
+          <span class="mun-focus-label">Recorte do município</span>
+          <svg id="munFocusMap" class="mun-focus-map" viewBox="0 0 320 220" aria-label="Município selecionado ampliado"></svg>
+        </div>
+      </div>
 
       <div class="rn-toolbar">
         <select id="rnOffice">
@@ -95,6 +115,6 @@
 </main>
 <footer class="foot rn-foot"><div class="wrap footline"><strong>UEFY Eleições · Rio Grande do Norte</strong><span>Selecione um município, confira os dados e gere a publicação.</span></div></footer>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20260930-3"></script>
+<script src="rn.js?v=20260930-4"></script>
 </body>
 </html>
