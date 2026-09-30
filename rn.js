@@ -115,10 +115,12 @@ function drawCanvas(){
   const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=selectedFeature.properties.nome;ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logo.complete)ctx.drawImage(logo,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'DEMONSTRAÇÃO':'DADOS DO TSE',790,105);
-  drawRN(ctx,660,135,340,265);
-  ctx.fillStyle='#17191c';ctx.font='700 76px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,245);ctx.font='600 42px Inter,Segoe UI,Arial';ctx.fillText(OFFICE[office].title+' · '+name,70,310);
-  ctx.fillStyle='#58616a';ctx.font='600 27px Inter,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,390);ctx.fillStyle='#17191c';ctx.font='800 62px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(current.progress),70,458);ctx.fillStyle='#e0e5e9';roundRect(ctx,280,410,330,20,10);ctx.fill();ctx.fillStyle='#f5c400';roundRect(ctx,280,410,330*Math.min(100,current.progress)/100,20,10);ctx.fill();
-  let yy=555;current.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
+  drawRN(ctx,725,145,270,225);
+  ctx.fillStyle='#17191c';ctx.font='700 76px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,245);
+  ctx.font='700 42px Inter,Segoe UI,Arial';ctx.fillText(OFFICE[office].title,70,306);
+  ctx.fillStyle='#4d555d';ctx.font='600 30px Inter,Segoe UI,Arial';ctx.fillText(name+' · RN',70,347);
+  ctx.fillStyle='#58616a';ctx.font='600 26px Inter,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,410);ctx.fillStyle='#17191c';ctx.font='800 62px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(current.progress),70,476);ctx.fillStyle='#e0e5e9';roundRect(ctx,280,430,330,20,10);ctx.fill();ctx.fillStyle='#f5c400';roundRect(ctx,280,430,330*Math.min(100,current.progress)/100,20,10);ctx.fill();
+  let yy=575;current.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
   ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Dados fictícios para demonstração':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
 $('#munSearch').oninput=e=>renderList(e.target.value);
@@ -130,5 +132,17 @@ $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/28
 $('#rnCopyText').onclick=async()=>navigator.clipboard.writeText($('#rnPostText').value);
 $('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
 $('#rnOpenX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#rnPostText').value),'_blank','noopener,noreferrer');
-const theme=$('#themeToggle');if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light')};
+const theme=$('#themeToggle');
+if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
+function syncTheme(){
+  const dark=document.body.classList.contains('dark');
+  theme.textContent=dark?'☀':'◐';
+  theme.setAttribute('aria-pressed',String(dark));
+  theme.setAttribute('title',dark?'Usar tema claro':'Usar tema escuro');
+}
+syncTheme();
+theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 init().catch(e=>{$('#rnStatus').textContent='Erro ao carregar o mapa: '+e.message});
+
+const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn?.classList.toggle('show',scrollY>420),{passive:true});if(topBtn)topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
