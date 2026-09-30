@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5c400">
+  <title>UEFY Eleições 2026</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brandmark" src="assets/brand.svg" alt="Uefyerryeni">
+      <div class="brandtext"><strong>UEFY Eleições</strong><span>Observatório por Uefyerryeni</span></div>
+    </div>
+    <nav class="nav">
+      <a class="active" href="#apuracao">Apuração</a>
+      <a href="#publicacao">Publicação</a>
+      <a href="#sobre">Sobre</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+      <span class="live"><i></i><span id="liveLabel">Demonstração</span></span>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Eleições 2026</div>
+    <h1>Resultados oficiais prontos para compartilhar.</h1>
+    <p>Acompanhe os dados do TSE, gere uma imagem e prepare o texto para publicar no X.</p>
+
+    <div class="toolbar card">
+      <label class="field"><span>Cargo</span><select id="officeSelect">
+        <option value="pres">Presidência</option>
+        <option value="gov">Governo do RN</option>
+        <option value="sen">Senado RN</option>
+      </select></label>
+      <label class="field"><span>Recorte</span><select id="scopeSelect">
+        <option value="br">Brasil</option>
+        <option value="rn">Rio Grande do Norte</option>
+      </select></label>
+      <button class="mode" id="modeBtn">Modo: demonstração</button>
+      <button class="go" id="refreshBtn">Atualizar dados</button>
+    </div>
+
+    <div class="notice"><b>Mapas:</b> malhas geográficas reais. No modo demonstração, os números eleitorais são fictícios.</div>
+  </div>
+</section>
+
+<section class="wrap main-grid" id="apuracao">
+  <div>
+    <div class="section-head"><h2>Atualização atual</h2><span id="sourceHint">Dados de demonstração</span></div>
+    <section class="card status-card">
+      <div class="status-top">
+        <div><strong id="statusTitle">Demonstração pronta</strong><p id="statusText">Use os controles para simular o avanço da apuração.</p></div>
+        <div class="updated">Última atualização<strong id="updatedAt">—</strong></div>
+      </div>
+
+      <div class="map-row">
+        <article class="map-card">
+          <div class="map-title"><div><h3>Brasil</h3><p>Unidades da Federação</p></div><span class="map-source">GeoJSON</span></div>
+          <div class="map-body"><svg id="brMap" viewBox="0 0 420 300" aria-label="Mapa do Brasil por estados"></svg>
+            <div class="metric"><span>Seções totalizadas</span><strong id="brProgressText">0,0%</strong><div class="progress"><i id="brProgressBar"></i></div></div>
+          </div>
+        </article>
+
+        <article class="map-card">
+          <div class="map-title"><div><h3>Rio Grande do Norte</h3><p>167 municípios</p></div><span class="map-source">GeoJSON</span></div>
+          <div class="map-body"><svg id="rnMap" viewBox="0 0 420 300" aria-label="Mapa do Rio Grande do Norte por municípios"></svg>
+            <div class="metric"><span>Seções totalizadas</span><strong id="rnProgressText">0,0%</strong><div class="progress"><i id="rnProgressBar"></i></div></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="results">
+        <article class="result-card selected" data-office="pres">
+          <div class="result-head"><div><h3>Presidência · Brasil</h3><small id="presSmall"></small></div><button class="pick active" data-pick="pres">Usar</button></div>
+          <div id="presRows"></div><div class="more" id="presMore"></div>
+        </article>
+        <article class="result-card" data-office="gov">
+          <div class="result-head"><div><h3>Governo do RN</h3><small id="govSmall"></small></div><button class="pick" data-pick="gov">Usar</button></div>
+          <div id="govRows"></div><div class="more" id="govMore"></div>
+        </article>
+        <article class="result-card" data-office="sen">
+          <div class="result-head"><div><h3>Senado RN</h3><small id="senSmall"></small></div><button class="pick" data-pick="sen">Usar</button></div>
+          <div id="senRows"></div><div class="more" id="senMore"></div>
+        </article>
+      </div>
+
+      <div class="demo-controls" id="demoControls">
+        <button class="btn" id="demoBack">← Voltar</button>
+        <button class="btn primary" id="demoNext">Avançar apuração →</button>
+        <button class="btn" id="demoReset">Reiniciar</button>
+        <span id="demoStepLabel"></span>
+      </div>
+    </section>
+  </div>
+
+  <aside class="card publisher" id="publicacao">
+    <h2>Publicação pronta</h2>
+    <p class="sub">Confira antes de publicar no X.</p>
+    <div class="block-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+    <div class="canvas-box"><canvas id="shareCanvas" width="1080" height="1080"></canvas></div>
+    <div class="block-title text-title"><span>Texto da publicação</span><span id="charCount">0/280</span></div>
+    <textarea id="postText"></textarea>
+    <div class="actions">
+      <button class="btn" id="copyText">Copiar texto</button>
+      <button class="btn" id="copyImage">Copiar imagem</button>
+      <button class="btn" id="downloadImage">Baixar imagem</button>
+      <button class="btn primary" id="openX">Abrir no X</button>
+    </div>
+  </aside>
+</section>
+
+<footer class="foot" id="sobre"><div class="wrap footline"><strong>UEFY Eleições · Observatório por Uefyerryeni</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
+</main>
+<button class="to-top" id="toTop">↑</button>
+<script src="app.js"></script>
+</body>
+</html>
