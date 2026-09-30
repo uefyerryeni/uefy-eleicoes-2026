@@ -4,8 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f5c400">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>UEFY Eleições 2026</title>
-  <link rel="stylesheet" href="style.css?v=20260930-3">
+  <link rel="stylesheet" href="style.css?v=20260930-4">
+  <script>
+(function(){
+  fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
+    if(!x||!x.build)return;
+    const u=new URL(location.href);
+    if(u.searchParams.get('v')!==x.build){
+      u.searchParams.set('v',x.build);
+      location.replace(u.pathname+u.search+u.hash);
+    }
+  }).catch(()=>{});
+})();
+</script>
 </head>
 <body>
 <header class="topbar">
@@ -136,6 +151,6 @@
 <footer class="foot" id="sobre"><div class="wrap footline"><strong>UEFY Eleições</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
 </main>
 <button class="to-top" id="toTop">↑</button>
-<script src="app.js?v=20260930-3"></script>
+<script src="app.js?v=20260930-4"></script>
 </body>
 </html>
