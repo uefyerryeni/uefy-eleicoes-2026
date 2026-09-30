@@ -130,10 +130,12 @@ function drawCanvas(){
   const c=$('#shareCanvas'),ctx=c.getContext('2d'),d=state[selectedOffice],m=officeMeta[selectedOffice];ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logoImg.complete)ctx.drawImage(logoImg,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.fillStyle='#17191c';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'DEMONSTRAÇÃO':'DADOS OFICIAIS DO TSE',760,105);
-  const fc=featureCollectionForScope();if(fc&&fc.features?.length){const detailed=(selectedOffice!=='pres'&&selectedScope==='uf_rn');const x=detailed?610:665,y=detailed?150:165,w=detailed?370:330,h=detailed?285:265;drawGeoJSON(ctx,fc,x,y,w,h)}
-  ctx.fillStyle='#17191c';ctx.font='700 78px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,245);ctx.font='600 44px Inter,Segoe UI,Arial';ctx.fillText(m.title+' · '+scopeLabel(),70,310);
-  ctx.fillStyle='#58616a';ctx.font='600 27px Inter,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,390);ctx.fillStyle='#17191c';ctx.font='800 62px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(d.progress),70,458);ctx.fillStyle='#e0e5e9';roundRect(ctx,280,410,330,20,10);ctx.fill();ctx.fillStyle='#f5c400';roundRect(ctx,280,410,330*Math.min(100,d.progress)/100,20,10);ctx.fill();
-  let yy=555;d.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
+  const fc=featureCollectionForScope();if(fc&&fc.features?.length){const detailed=(selectedOffice!=='pres'&&selectedScope==='uf_rn');const x=detailed?690:735,y=detailed?150:160,w=detailed?315:250,h=detailed?245:225;drawGeoJSON(ctx,fc,x,y,w,h)}
+  ctx.fillStyle='#17191c';ctx.font='700 78px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,245);
+  ctx.font='700 43px Inter,Segoe UI,Arial';ctx.fillText(m.title,70,306);
+  ctx.fillStyle='#4d555d';ctx.font='600 31px Inter,Segoe UI,Arial';ctx.fillText(scopeLabel(),70,347);
+  ctx.fillStyle='#58616a';ctx.font='600 26px Inter,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,410);ctx.fillStyle='#17191c';ctx.font='800 62px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(d.progress),70,476);ctx.fillStyle='#e0e5e9';roundRect(ctx,280,430,330,20,10);ctx.fill();ctx.fillStyle='#f5c400';roundRect(ctx,280,430,330*Math.min(100,d.progress)/100,20,10);ctx.fill();
+  let yy=575;d.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
   ctx.strokeStyle='#d3d9de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Dados fictícios para demonstração':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
 function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+'/280';drawCanvas()}
@@ -142,6 +144,16 @@ $('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').on
 $('#modeBtn').onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%MODES.length];mode==='demo'?applyDemo():(renderAll(),loadRemote())};$('#refreshBtn').onclick=()=>mode==='demo'?applyDemo():loadRemote();
 $('#demoNext').onclick=()=>{demoStep=Math.min(DEMO_PROGRESS.length-1,demoStep+1);applyDemo()};$('#demoBack').onclick=()=>{demoStep=Math.max(0,demoStep-1);applyDemo()};$('#demoReset').onclick=()=>{demoStep=0;applyDemo()};
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';$('#copyText').onclick=async()=>{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Copiado!')};$('#copyImage').onclick=async()=>{try{const b=await new Promise(r=>$('#shareCanvas').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);flash($('#copyImage'),'Imagem copiada!')}catch{alert('Use “Baixar imagem” neste navegador.')}};$('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};$('#openX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#postText').value),'_blank','noopener,noreferrer');
-const theme=$('#themeToggle');if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light')};
+const theme=$('#themeToggle');
+if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
+function syncTheme(){
+  const dark=document.body.classList.contains('dark');
+  theme.textContent=dark?'☀':'◐';
+  theme.setAttribute('aria-pressed',String(dark));
+  theme.setAttribute('title',dark?'Usar tema claro':'Usar tema escuro');
+}
+syncTheme();
+theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
 populateScopeSelect();applyDemo();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
+document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
