@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5c400">
+  <title>UEFY Eleições 2026 — Rio Grande do Norte</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
+      <div class="brandtext"><strong>UEFY Eleições</strong><span>Rio Grande do Norte</span></div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Apuração</a>
+      <a class="active" href="rn.html">RN</a>
+      <a href="#publicacao">Publicação</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+      <span class="live"><i></i><span id="liveLabel">Demonstração</span></span>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap rn-shell">
+  <section class="rn-hero">
+    <div>
+      <span class="rn-badge">RN · 167 municípios</span>
+      <h1>Escolha um município no mapa.</h1>
+      <p>Esta página é dedicada ao Rio Grande do Norte. Clique em qualquer município para preparar a mesma visualização e a arte de compartilhamento daquele recorte.</p>
+    </div>
+    <div class="notice"><b>Fonte prevista dos resultados:</b> Tribunal Superior Eleitoral. O modo demonstração usa números fictícios; os municípios e a geometria do mapa são reais.</div>
+  </section>
+
+  <section class="rn-layout">
+    <div class="card rn-map-panel">
+      <div class="rn-map-head">
+        <div><h2>Mapa do Rio Grande do Norte</h2><p>Clique diretamente no município ou use a busca.</p></div>
+        <span class="map-source">GeoJSON</span>
+      </div>
+      <input class="rn-search" id="munSearch" type="search" placeholder="Buscar município">
+      <svg id="rnLargeMap" class="rn-map-large" viewBox="0 0 760 560" aria-label="Mapa dos municípios do Rio Grande do Norte"></svg>
+    </div>
+
+    <aside class="card rn-side">
+      <div class="rn-selected"><small>Município selecionado</small><strong id="selectedMun">Natal</strong></div>
+
+      <div class="rn-toolbar">
+        <select id="rnOffice">
+          <option value="gov">Governador</option>
+          <option value="sen">Senado</option>
+          <option value="depf">Deputado federal</option>
+          <option value="depe">Deputado estadual</option>
+        </select>
+        <select id="rnMode">
+          <option value="demo">Demonstração</option>
+          <option value="sim">Simulado TSE</option>
+          <option value="official">Oficial TSE</option>
+        </select>
+        <button class="btn primary" id="rnRefresh">Atualizar</button>
+      </div>
+
+      <div class="rn-list" id="munList" aria-label="Lista de municípios"></div>
+
+      <div class="rn-publisher" id="publicacao">
+        <div class="block-title"><span>Resultado do município</span><span id="rnProgress">0,0%</span></div>
+        <div class="rn-result-lines" id="rnResults"></div>
+        <div class="rn-note" id="rnStatus">Demonstração pronta.</div>
+
+        <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+        <div class="canvas-box"><canvas id="rnCanvas" width="1080" height="1080"></canvas></div>
+        <div class="block-title text-title"><span>Texto</span><span id="rnChars">0/280</span></div>
+        <textarea id="rnPostText"></textarea>
+        <div class="rn-actions">
+          <button class="btn" id="rnCopyText">Copiar texto</button>
+          <button class="btn" id="rnDownload">Baixar imagem</button>
+          <button class="btn primary" id="rnOpenX">Abrir no X</button>
+          <button class="btn" id="rnNextDemo">Avançar demonstração</button>
+        </div>
+      </div>
+    </aside>
+  </section>
+</main>
+<script src="rn.js"></script>
+</body>
+</html>
