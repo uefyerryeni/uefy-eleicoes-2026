@@ -123,6 +123,24 @@ function drawCanvas(){
   let yy=575;current.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
   ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Dados fictícios para demonstração':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
+async function shareRNImageAndText(){
+  const canvas=$('#rnCanvas'),text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
+  const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));
+  if(!blob)return;
+  const file=new File([blob],`uefy-eleicoes-rn-${norm(name)}.png`,{type:'image/png'});
+  try{
+    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({title:'UEFY Eleições · Rio Grande do Norte',text,files:[file]});
+      return;
+    }
+  }catch(err){
+    if(err?.name==='AbortError')return;
+  }
+  const a=document.createElement('a');
+  a.download=file.name;a.href=URL.createObjectURL(blob);a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
+}
 $('#munSearch').oninput=e=>renderList(e.target.value);
 $('#rnOffice').onchange=e=>{office=e.target.value;mode==='demo'?applyDemo():loadRemote()};
 $('#rnMode').onchange=e=>{mode=e.target.value;$('#liveLabel').textContent=mode==='demo'?'Demonstração':mode==='sim'?'Simulado TSE':'TSE';mode==='demo'?applyDemo():loadRemote()};
@@ -131,7 +149,7 @@ $('#rnNextDemo').onclick=()=>{demoStep=(demoStep+1)%PROGRESS.length;applyDemo()}
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/280';
 $('#rnCopyText').onclick=async()=>navigator.clipboard.writeText($('#rnPostText').value);
 $('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
-$('#rnOpenX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#rnPostText').value),'_blank','noopener,noreferrer');
+$('#rnOpenX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#rnPostText').value),'_blank','noopener,noreferrer');$('#rnShareBundle').onclick=shareRNImageAndText;
 const theme=$('#themeToggle');
 if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
 function syncTheme(){
