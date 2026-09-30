@@ -125,15 +125,24 @@ function populateScopeSelect(){const scopes=officeMeta[selectedOffice].scopes,se
 function selectOffice(k){selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;populateScopeSelect();$('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));$('[data-pick]').forEach(b=>b.classList.toggle('active',b.dataset.pick===k));updateScopeMap();regenerate()}
 function makePostText(){const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5),lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel(),fmtPct(d.progress)+' das seções totalizadas',''];d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));lines.push('','Fonte: TSE');return lines.join('\n')}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
+function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
+  let size=startSize;
+  while(size>minSize){
+    ctx.font=weight+' '+size+'px Inter,Segoe UI,Arial';
+    if(ctx.measureText(text).width<=maxWidth)break;
+    size-=1;
+  }
+  ctx.fillStyle=color;ctx.font=weight+' '+size+'px Inter,Segoe UI,Arial';ctx.fillText(text,x,y);
+}
 const logoImg=new Image();logoImg.crossOrigin='anonymous';logoImg.src=LOGO_URL;logoImg.onload=()=>drawCanvas();
 function drawCanvas(){
   const c=$('#shareCanvas'),ctx=c.getContext('2d'),d=state[selectedOffice],m=officeMeta[selectedOffice];ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logoImg.complete)ctx.drawImage(logoImg,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.fillStyle='#17191c';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'DEMONSTRAÇÃO':'DADOS OFICIAIS DO TSE',760,105);
-  const fc=featureCollectionForScope();if(fc&&fc.features?.length){const detailed=(selectedOffice!=='pres'&&selectedScope==='uf_rn');const x=detailed?690:735,y=detailed?150:160,w=detailed?315:250,h=detailed?245:225;drawGeoJSON(ctx,fc,x,y,w,h)}
+  const fc=featureCollectionForScope();if(fc&&fc.features?.length){const detailed=(selectedOffice!=='pres'&&selectedScope==='uf_rn');const x=detailed?590:625,y=detailed?118:122,w=detailed?430:390,h=detailed?330:305;drawGeoJSON(ctx,fc,x,y,w,h)}
   ctx.fillStyle='#17191c';ctx.font='700 78px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,245);
-  ctx.font='700 43px Inter,Segoe UI,Arial';ctx.fillText(m.title,70,306);
-  ctx.fillStyle='#4d555d';ctx.font='600 31px Inter,Segoe UI,Arial';ctx.fillText(scopeLabel(),70,347);
+  fitCanvasText(ctx,m.title,70,306,500,43,32,'700','#17191c');
+  fitCanvasText(ctx,scopeLabel(),70,347,500,31,24,'600','#4d555d');
   ctx.fillStyle='#58616a';ctx.font='600 26px Inter,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,410);ctx.fillStyle='#17191c';ctx.font='800 62px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(d.progress),70,476);ctx.fillStyle='#e0e5e9';roundRect(ctx,280,430,330,20,10);ctx.fill();ctx.fillStyle='#f5c400';roundRect(ctx,280,430,330*Math.min(100,d.progress)/100,20,10);ctx.fill();
   let yy=575;d.candidates.slice(0,4).forEach((cand,i)=>{ctx.fillStyle='#25292e';ctx.font='700 31px Inter,Segoe UI,Arial';ctx.fillText(cand.name.length>24?cand.name.slice(0,23)+'…':cand.name,70,yy);ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+26,675,23,12);ctx.fill();ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+26,675*Math.min(100,cand.pct)/100,23,12);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 35px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+8);ctx.textAlign='left';yy+=102});
   ctx.strokeStyle='#d3d9de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Dados fictícios para demonstração':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
