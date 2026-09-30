@@ -116,3 +116,55 @@ body.dark .rn-result-line .bar{background:#30383f}
   .hero h1{font-size:29px}
   .actions,.rn-actions{grid-template-columns:1fr}
 }
+
+
+/* Correções: menu móvel, contraste escuro e compartilhamento */
+.btn.full{grid-column:1/-1}
+.mobile-rn-link{display:none;align-items:center;justify-content:center;min-height:40px;padding:0 11px;border-radius:10px;background:var(--yellow);color:#17191c!important;text-decoration:none;font-size:12px!important;font-weight:800}
+@media(max-width:820px){
+  .mobile-menu{display:block!important}
+  .mobile-menu summary{display:grid!important;visibility:visible!important;opacity:1!important}
+  .mobile-rn-link{display:flex}
+  .nav{gap:7px}
+}
+@media(max-width:600px){
+  .mobile-menu-panel{right:-48px}
+  .mobile-rn-link{min-width:42px;padding-inline:9px}
+}
+body.dark{
+  --muted:#d5dbe0;
+}
+body.dark .brandtext span,
+body.dark .eyebrow,
+body.dark .hero>div>p,
+body.dark .section-head span,
+body.dark .status-top p,
+body.dark .updated,
+body.dark .map-card p,
+body.dark .metric span,
+body.dark .result-head small,
+body.dark .more,
+body.dark .sub,
+body.dark .block-title span:last-child,
+body.dark .demo-controls span,
+body.dark .rn-hero p,
+body.dark .rn-map-head p,
+body.dark .rn-selected small,
+body.dark .rn-note{
+  color:#e4e8eb!important;
+}
+body.dark .updated strong,
+body.dark .map-card h3,
+body.dark .result-head h3,
+body.dark .publisher h2,
+body.dark .rn-map-head h2,
+body.dark .rn-selected strong{
+  color:#f5f7f8!important;
+}
+body.dark .map-source{
+  color:#eef1f3!important;
+  border-color:#55606a!important;
+}
+body.dark .notice{
+  color:#f0edda!important;
+}
