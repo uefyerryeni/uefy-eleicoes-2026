@@ -1,6 +1,6 @@
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
-const MODES=['demo','sim','official'], MODE_LABELS={demo:'demonstração',sim:'simulado TSE',official:'oficial TSE'};
+const MODES=['demo','sim','official'], MODE_LABELS={demo:'candidaturas TSE',sim:'simulado TSE',official:'oficial TSE'};
 const REGION_STATES={
   reg_norte:['ac','ap','am','pa','ro','rr','to'],
   reg_nordeste:['al','ba','ce','ma','pb','pe','pi','rn','se'],
@@ -162,7 +162,7 @@ async function loadRemote(){
       const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store'});if(!r.ok)throw new Error(r.status);result=parseEA20(await r.json());
     }
     state[selectedOffice]=result;$('#statusTitle').textContent='Dados carregados';$('#statusText').textContent='Arquivo recebido do ambiente '+MODE_LABELS[mode]+'.';renderAll();
-  }catch(e){$('#statusTitle').textContent='Fonte indisponível';$('#statusText').textContent='Não foi possível carregar este recorte agora. O modo demonstração continua disponível.'}
+  }catch(e){$('#statusTitle').textContent='Fonte indisponível';$('#statusText').textContent='Não foi possível carregar este recorte agora. As candidaturas oficiais continuam disponíveis no modo Candidaturas TSE.'}
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
 function renderRows(k){
@@ -171,9 +171,23 @@ function renderRows(k){
   $('#'+k+'Small').textContent=mode==='demo'?(all.length+' candidatura(s) na base TSE'):fmtPct(state[k].progress)+' das seções totalizadas';
   $('#'+k+'More').textContent=mode==='demo'?'Lista completa para conferência':(all.length>4?'+ '+(all.length-4)+' candidato(s) no arquivo':'Ordem conforme a fonte de dados');
 }
-function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);const current=state[selectedOffice].progress,rn=Math.max(state.gov.progress,state.sen.progress,state.depf.progress,state.depe.progress);$('#scopeProgressText').textContent=fmtPct(current);$('#scopeProgressBar').style.width=Math.min(100,current)+'%';$('#rnProgressText').textContent=fmtPct(rn);$('#rnProgressBar').style.width=Math.min(100,rn)+'%';updateScopeMap();$('#updatedAt').textContent=state[selectedOffice].generatedAt||'—';$('#sourceHint').textContent=mode==='demo'?'Candidaturas TSE · teste sem votos':'Dados do '+MODE_LABELS[mode];$('#liveLabel').textContent=mode==='demo'?'Demonstração':mode==='sim'?'Simulado TSE':'TSE';$('#modeBtn').textContent='Modo: '+MODE_LABELS[mode];$('#demoControls').classList.toggle('show',mode==='demo');$('#demoStepLabel').textContent='Etapa '+(demoStep+1)+' de '+DEMO_PROGRESS.length;regenerate()}
+function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);const current=state[selectedOffice].progress,rn=Math.max(state.gov.progress,state.sen.progress,state.depf.progress,state.depe.progress);$('#scopeProgressText').textContent=fmtPct(current);$('#scopeProgressBar').style.width=Math.min(100,current)+'%';$('#rnProgressText').textContent=fmtPct(rn);$('#rnProgressBar').style.width=Math.min(100,rn)+'%';updateScopeMap();$('#updatedAt').textContent=state[selectedOffice].generatedAt||'—';$('#sourceHint').textContent=mode==='demo'?'Candidaturas TSE · teste sem votos':'Dados do '+MODE_LABELS[mode];$('#liveLabel').textContent=mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE';$('#modeBtn').textContent='Modo: '+MODE_LABELS[mode];$('#demoControls').classList.toggle('show',mode==='demo');$('#demoStepLabel').textContent='Etapa '+(demoStep+1)+' de '+DEMO_PROGRESS.length;regenerate()}
 function populateScopeSelect(){const scopes=officeMeta[selectedOffice].scopes,sel=$('#scopeSelect');sel.innerHTML=scopes.map(s=>'<option value="'+s.value+'">'+s.label+'</option>').join('');if(!scopes.some(s=>s.value===selectedScope))selectedScope=officeMeta[selectedOffice].defaultScope;sel.value=selectedScope}
-function selectOffice(k){selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;populateScopeSelect();if(mode==='demo')setTimeout(loadTestCandidates,0);$('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));$('[data-pick]').forEach(b=>b.classList.toggle('active',b.dataset.pick===k));updateScopeMap();regenerate()}
+function updateCardVisibility(){
+  const rnContext=selectedScope==='uf_rn'||['sen','depf','depe'].includes(selectedOffice);
+  $('.result-card').forEach(el=>{
+    const k=el.dataset.office;
+    el.hidden=!rnContext&&['sen','depf','depe'].includes(k);
+  });
+}
+function selectOffice(k){
+  selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;
+  populateScopeSelect();updateCardVisibility();
+  $('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));
+  $('[data-pick]').forEach(b=>b.classList.toggle('active',b.dataset.pick===k));
+  updateScopeMap();
+  if(mode==='demo')loadTestCandidates();else loadRemote();
+}
 function makePostText(){const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5),lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel(),fmtPct(d.progress)+' das seções totalizadas',''];d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));lines.push('','Fonte: TSE');return lines.join('\n')}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
@@ -235,7 +249,7 @@ async function shareImageAndText(){
   setTimeout(()=>URL.revokeObjectURL(a.href),2000);
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
 }
-$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();if(mode==='demo'){applyDemo();setTimeout(loadTestCandidates,0)}else regenerate()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
+$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();if(mode==='demo'){loadTestCandidates()}else{loadRemote()}};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
 $('#modeBtn').onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%MODES.length];mode==='demo'?loadTestCandidates():(renderAll(),loadRemote())};$('#refreshBtn').onclick=()=>mode==='demo'?loadTestCandidates():loadRemote();
 $('#demoNext')?.addEventListener('click',()=>{demoStep=Math.min(DEMO_PROGRESS.length-1,demoStep+1);loadTestCandidates()});$('#demoBack')?.addEventListener('click',()=>{demoStep=Math.max(0,demoStep-1);loadTestCandidates()});$('#demoReset')?.addEventListener('click',()=>{demoStep=0;loadTestCandidates()});
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';$('#copyText').onclick=async()=>{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Copiado!')};$('#copyImage').onclick=async()=>{try{const b=await new Promise(r=>$('#shareCanvas').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);flash($('#copyImage'),'Imagem copiada!')}catch{alert('Use “Baixar imagem” neste navegador.')}};$('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};$('#openX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#postText').value),'_blank','noopener,noreferrer');$('#shareBundle').onclick=shareImageAndText;
@@ -250,7 +264,7 @@ function syncTheme(){
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
-populateScopeSelect();applyDemo();setTimeout(loadTestCandidates,0);loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
+populateScopeSelect();updateCardVisibility();loadTestCandidates();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
 
 /* Favoritos e atualização operacional */
