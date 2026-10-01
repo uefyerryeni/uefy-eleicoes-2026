@@ -5,6 +5,7 @@ let fc=null,selectedFeature=null,office='gov',mode='demo',current={progress:0,ca
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
 
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function fmtPct(v){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%'}
 function nowStamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
 function coordsOfGeometry(g,out=[]){if(!g)return out;if(g.type==='Polygon')g.coordinates.forEach(r=>r.forEach(p=>out.push(p)));else if(g.type==='MultiPolygon')g.coordinates.forEach(poly=>poly.forEach(r=>r.forEach(p=>out.push(p))));return out}
@@ -62,7 +63,7 @@ async function loadRnCandidates(){
     renderCurrent();
   }catch(e){
     current={progress:0,candidates:[],generatedAt:nowStamp()};
-    $('#rnStatus').textContent='Não foi possível carregar as candidaturas do RN. Nenhum dado fictício será exibido.';
+    $('#rnStatus').textContent='Não foi possível carregar as candidaturas do RN. Nenhum dado alternativo será usado como substituição.';
     renderCurrent();
   }
 }
@@ -147,7 +148,10 @@ async function loadRemote(){
       $('#rnStatus').textContent='EA20 oficial · '+current.integrity.matched+'/'+current.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
     }
     renderCurrent();
-  }catch(e){$('#rnStatus').textContent='Não foi possível carregar este município agora: '+e.message}
+  }catch(e){
+    const notPublished=mode==='official'&&String(e?.message||e).includes('404');
+    $('#rnStatus').textContent=notPublished?'O arquivo oficial deste município ainda não foi publicado pelo TSE.':'Não foi possível carregar este município agora: '+e.message;
+  }
   finally{$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar'}
 }
 function renderCurrent(){
@@ -156,14 +160,14 @@ function renderCurrent(){
     if(title)title.textContent='Candidaturas a Governador do RN';
     $('#rnProgress').textContent=String(current.candidates?.length||0);
     $('#rnResults').innerHTML=(current.candidates||[]).map(c=>{
-      const meta=[c.number,c.party].filter(Boolean).join(' · ');
-      const status=c.status?'<span class="status-chip">'+c.status+'</span>':'';
-      return '<div class="rn-result-line registry"><span>'+c.name+(meta?'<small>'+meta+'</small>':'')+'</span>'+status+'</div>';
+      const meta=[c.number,c.party].filter(Boolean).map(esc).join(' · ');
+      const status=c.status?'<span class="status-chip">'+esc(c.status)+'</span>':'';
+      return '<div class="rn-result-line registry"><span>'+esc(c.name)+(meta?'<small>'+meta+'</small>':'')+'</span>'+status+'</div>';
     }).join('');
   }else{
     if(title)title.textContent='Resultado do município';
     $('#rnProgress').textContent=fmtPct(current.progress);
-    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+c.name+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
+    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
   }
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+'/280';drawCanvas();
 }
