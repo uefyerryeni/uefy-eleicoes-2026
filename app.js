@@ -210,7 +210,11 @@ async function loadRemote(){
       }
     }
     renderAll();
-  }catch(e){$('#statusTitle').textContent='Fonte indisponível';$('#statusText').textContent='Não foi possível carregar este recorte agora. As candidaturas oficiais continuam disponíveis no modo Candidaturas TSE.'}
+  }catch(e){
+    const notPublished=mode==='official'&&String(e?.message||e).includes('404');
+    $('#statusTitle').textContent=notPublished?'Resultado oficial ainda não disponível':'Fonte indisponível';
+    $('#statusText').textContent=notPublished?'O arquivo EA20 deste recorte ainda não foi publicado pelo TSE. A base oficial de candidaturas continua disponível.':'Não foi possível carregar este recorte agora. As candidaturas oficiais continuam disponíveis no modo Candidaturas TSE.';
+  }
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
 function renderRows(k){
