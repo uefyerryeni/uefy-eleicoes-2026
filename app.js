@@ -350,28 +350,44 @@ function drawCanvas(){
 }
 function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+'/280';drawCanvas()}
 function flash(btn,t){const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1200)}
-async function shareImageAndText(){
+async function shareImageAndText(openX=false,preopened=null){
   const canvas=$('#shareCanvas'),text=$('#postText').value;
   const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));
-  if(!blob)return;
+  if(!blob){if(preopened)preopened.close();return}
   const file=new File([blob],`uefy-eleicoes-2026-${selectedOffice}.png`,{type:'image/png'});
-  try{
-    if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
-      await navigator.share({title:'UEFY Eleições',text,files:[file]});
-      return;
-    }
-  }catch(err){
-    if(err?.name==='AbortError')return;
+  const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
+  if(!openX||!desktop){
+    try{
+      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
+        await navigator.share({title:'UEFY Eleições',text,files:[file]});
+        if(preopened)preopened.close();
+        return;
+      }
+    }catch(err){if(err?.name==='AbortError'){if(preopened)preopened.close();return}}
   }
-  const a=document.createElement('a');
-  a.download=file.name;a.href=URL.createObjectURL(blob);a.click();
-  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
-  window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
-}
-$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();if(mode==='demo'){loadTestCandidates()}else{loadRemote()}};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
+  if(openX){
+    let copied=false;
+    try{
+      if(navigator.clipboard&&window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+        copied=true;
+      }
+    }catch{}
+    const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
+    if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
+    if(copied)flash($('#openX'),'Imagem copiada · cole no X');
+    else{
+      const dl=document.createElement('a');dl.download=file.name;dl.href=URL.createObjectURL(blob);dl.click();setTimeout(()=>URL.revokeObjectURL(dl.href),2000);
+      flash($('#openX'),'Imagem baixada · anexe no X');
+    }
+    return;
+  }
+  const dl=document.createElement('a');dl.download=file.name;dl.href=URL.createObjectURL(blob);dl.click();setTimeout(()=>URL.revokeObjectURL(dl.href),2000);
+  try{await navigator.clipboard.writeText(text)}catch{}
+}$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();if(mode==='demo'){loadTestCandidates()}else{loadRemote()}};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
 $('#modeBtn').onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%MODES.length];mode==='demo'?loadTestCandidates():(renderAll(),loadRemote())};$('#refreshBtn').onclick=()=>mode==='demo'?loadTestCandidates():loadRemote();
 
-$('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';$('#copyText').onclick=async()=>{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Copiado!')};$('#copyImage').onclick=async()=>{try{const b=await new Promise(r=>$('#shareCanvas').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);flash($('#copyImage'),'Imagem copiada!')}catch{alert('Use “Baixar imagem” neste navegador.')}};$('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};$('#openX').onclick=shareImageAndText;$('#shareBundle').onclick=shareImageAndText;
+$('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';$('#copyText').onclick=async()=>{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Copiado!')};$('#copyImage').onclick=async()=>{try{const b=await new Promise(r=>$('#shareCanvas').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);flash($('#copyImage'),'Imagem copiada!')}catch{alert('Use “Baixar imagem” neste navegador.')}};$('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};$('#openX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareImageAndText(true,w)};$('#shareBundle').onclick=()=>shareImageAndText(false);
 const theme=$('#themeToggle');
 if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
 function syncTheme(){
