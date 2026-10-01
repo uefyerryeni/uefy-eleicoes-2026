@@ -1,0 +1,11 @@
+{
+  "status": "waiting",
+  "generated_at": "2026-10-01T16:35:00-03:00",
+  "source_generated_at": null,
+  "source_name": "TSE / Dados Abertos — Prestação de contas de candidatos 2026",
+  "source_url": "https://dadosabertos.tse.jus.br/pt_BR/dataset/prestacao-de-contas-eleitorais-2026",
+  "message": "A interface do Radar RN está pronta. O primeiro snapshot financeiro será criado pelo atualizador automático a partir do arquivo oficial do TSE.",
+  "records": 0,
+  "candidates": [],
+  "findings": []
+}

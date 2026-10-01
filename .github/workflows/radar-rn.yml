@@ -1,0 +1,40 @@
+name: Atualizar Radar RN
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */3 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: radar-rn-data
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Gerar snapshot oficial do Radar RN
+        run: python scripts/build_radar_rn.py
+
+      - name: Validar JSON gerado
+        run: python -m json.tool data/radar-rn.json > /dev/null
+
+      - name: Publicar somente se os dados mudaram
+        run: |
+          if git diff --quiet -- data/radar-rn.json; then
+            echo "Sem alterações no snapshot."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/radar-rn.json
+          git commit -m "dados: atualizar Radar RN"
+          git push
