@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20261001-19">
+  <link rel="stylesheet" href="style.css?v=20261001-22">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -59,6 +59,43 @@
       <p>Busque ou selecione um município para consultar o recorte de Governo do Estado e preparar a publicação.</p>
     </div>
     <div class="notice"><b>Fonte:</b> resultados do TSE. Use <b>Oficial TSE</b> para a apuração e <b>Simulado TSE</b> apenas para testar a ferramenta. Esta página consulta exclusivamente Governador do RN por município.</div>
+  </section>
+
+  <section class="card rn-total-map-section" id="mapa-totalizacao">
+    <div class="rn-total-map-head">
+      <div>
+        <span class="rn-badge">Totalização estadual</span>
+        <h2>Quem lidera em cada município</h2>
+        <p>Mapa de governador do RN por município. Cada município assume a cor da candidatura que estiver em 1º lugar naquele recorte.</p>
+      </div>
+      <div class="rn-map-audit" id="rnMapAudit">
+        <span>Municípios lidos</span>
+        <strong id="rnMapRead">0/167</strong>
+        <small id="rnMapBase">Aguardando TSE</small>
+      </div>
+    </div>
+    <div class="rn-total-map-grid">
+      <div class="rn-total-map-card">
+        <svg id="rnLeaderMap" class="rn-leader-map" viewBox="0 0 760 560" aria-label="Mapa de liderança por município para governador"></svg>
+        <div class="rn-map-legend" id="rnLeaderLegend"></div>
+      </div>
+      <aside class="rn-total-map-side">
+        <div class="rn-map-summary">
+          <span class="map-source">Governador</span>
+          <h3>Municípios liderados</h3>
+          <div id="rnLeaderSummary" class="rn-leader-summary"></div>
+        </div>
+        <div class="rn-natal-highlight" id="rnNatalHighlight">
+          <small>Natal</small>
+          <strong>Aguardando apuração oficial</strong>
+          <span>O destaque da capital aparecerá quando houver votos.</span>
+        </div>
+        <div class="rn-map-publish">
+          <button class="btn primary" id="rnMapPublish" type="button" disabled>Gerar publicação do mapa</button>
+          <small id="rnMapPublishNote">A publicação será liberada quando a base municipal estiver completa e conferida.</small>
+        </div>
+      </aside>
+    </div>
   </section>
 
   <section class="rn-layout">
@@ -114,6 +151,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">RN</a><a href="radar.html">Radar</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261001-19"></script>
+<script src="rn.js?v=20261001-22"></script>
 </body>
 </html>
