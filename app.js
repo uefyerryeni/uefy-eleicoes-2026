@@ -201,3 +201,15 @@ theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
 populateScopeSelect();applyDemo();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
+
+/* Favoritos e atualização operacional */
+const UEFY_FAV_KEY='uefy-eleicoes-favorites-v1';
+function getFavs(){try{return JSON.parse(localStorage.getItem(UEFY_FAV_KEY)||'[]')}catch{return[]}}
+function saveFavs(v){localStorage.setItem(UEFY_FAV_KEY,JSON.stringify(v));renderFavStrip();syncFavButton()}
+function currentFav(){return {type:'general',office:selectedOffice,scope:selectedScope,label:(OFFICES[selectedOffice]?.title||selectedOffice)+' · '+(SCOPES.find?.(x=>x.value===selectedScope)?.label||selectedScope||'Brasil')}}
+function favId(f){return [f.type,f.office,f.scope,f.municipality].filter(Boolean).join('|')}
+function syncFavButton(){const b=document.querySelector('#favoriteCurrent');if(!b)return;const on=getFavs().some(f=>favId(f)===favId(currentFav()));b.classList.toggle('on',on);b.textContent=on?'★ Favorito':'☆ Favoritar'}
+function renderFavStrip(){const box=document.querySelector('#liveStripItems');if(!box)return;const favs=getFavs();if(!favs.length){box.innerHTML='<span class="strip-empty">Marque um resultado com ★ para acompanhar aqui.</span>';return}box.innerHTML=favs.map(f=>'<button class="strip-chip" data-favid="'+favId(f)+'"><b>'+f.label+'</b><span>toque para abrir · <em>↻</em></span></button>').join('');box.querySelectorAll('.strip-chip').forEach((b,i)=>b.onclick=()=>{const f=favs[i];if(f.type==='rn'){location.href='rn.html?fav='+encodeURIComponent(f.municipality)+'&office='+f.office}else{selectOffice(f.office);selectedScope=f.scope;populateScopeSelect();document.querySelector('#scopeSelect').value=f.scope;mode==='demo'?applyDemo():loadRemote();scrollTo({top:document.querySelector('#apuracao').offsetTop-120,behavior:'smooth'})}})}
+document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
+document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{if(mode==='demo')applyDemo();else await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
+document.querySelector('#officeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));document.querySelector('#scopeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));renderFavStrip();syncFavButton();
