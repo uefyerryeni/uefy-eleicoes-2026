@@ -17,13 +17,7 @@ const officeMeta={
   depf:{title:'Deputado federal',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0006',election:'state'},
   depe:{title:'Deputado estadual',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0007',election:'state'}
 };
-const DEMO_BASE={
-  pres:[['CLARIANA BARAO',0],['EDMILSON COSTA',0],['ESCRITOR AUGUSTO CURY',0],['FLAVIO BOLSONARO',0],['HERTZ DIAS',0],['LEONARDO AVALANCHE',0],['LULA',0],['RENAN SANTOS',0],['RONALDO CAIADO',0],['RUI COSTA PIMENTA',0],['SAMARA',0],['VETERINÁRIO WILSON GRASSI',0],['ZEMA',0]],
-  gov:[['Candidato 11',52.1],['Candidato 12',38.4],['Candidato 13',6.2],['Candidato 14',3.3]],
-  sen:[['Candidato 21',44.6],['Candidato 22',34.3],['Candidato 23',15.3],['Candidato 24',5.8]],
-  depf:[['Candidato 31',29.3],['Candidato 32',24.8],['Candidato 33',18.0],['Candidato 34',12.3]],
-  depe:[['Candidato 41',20.7],['Candidato 42',18.9],['Candidato 43',13.8],['Candidato 44',11.0]]
-};
+const DEMO_BASE={pres:[],gov:[],sen:[],depf:[],depe:[]};
 const DEMO_PROGRESS=[0,6.4,22.7,51.3,82.6,100];
 let mode='demo',demoStep=0,selectedOffice='pres',selectedScope='br',maps={br:null,rn:null};
 let state={pres:{progress:0,candidates:[]},gov:{progress:0,candidates:[]},sen:{progress:0,candidates:[]},depf:{progress:0,candidates:[]},depe:{progress:0,candidates:[]}};
