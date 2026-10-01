@@ -99,7 +99,7 @@ async function municipalityCode(){
   }
   const all=municipalityConfigCache[key];
   const target=norm(selectedFeature.properties.nome);
-  const found=all.find(m=>(!m.uf||m.uf==='rn')&&norm(m.name)===target)||all.find(m=>norm(m.name)===target);
+  const found=all.find(m=>m.uf==='rn'&&norm(m.name)===target);
   if(!found)throw new Error('Município não encontrado na configuração do TSE');
   return found.code;
 }
