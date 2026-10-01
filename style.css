@@ -579,3 +579,50 @@ body.dark .share-note{color:#cfd5da}
   .rn-hero{display:grid!important;grid-template-columns:1fr!important}
   .rn-hero .notice{width:100%;margin-top:0}
 }
+
+
+/* Fechamento móvel definitivo — controles flutuantes e áreas seguras */
+@media(max-width:820px){
+  .topbar-inner{height:64px}
+  .live-strip{top:64px}
+  .float-refresh{
+    right:14px;
+    bottom:18px;
+    width:52px;
+    height:52px;
+    z-index:72;
+  }
+  .to-top{
+    right:14px;
+    bottom:78px;
+    width:46px;
+    height:46px;
+    z-index:71;
+  }
+}
+@media(max-width:600px){
+  body{padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+  .topbar-inner{height:60px}
+  .live-strip{top:60px}
+  .mobile-dock{
+    left:8px;
+    right:8px;
+    bottom:calc(7px + env(safe-area-inset-bottom));
+    z-index:65;
+  }
+  .float-refresh{
+    right:12px;
+    bottom:calc(78px + env(safe-area-inset-bottom));
+    width:54px;
+    height:54px;
+    z-index:72;
+  }
+  .to-top{
+    right:12px;
+    bottom:calc(140px + env(safe-area-inset-bottom));
+    width:46px;
+    height:46px;
+    z-index:71;
+  }
+  .actions,.rn-actions{grid-template-columns:1fr}
+}
