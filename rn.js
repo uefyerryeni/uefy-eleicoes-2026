@@ -258,6 +258,14 @@ function flashRN(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent
 async function rnCanvasBlob(){
   return await new Promise((resolve,reject)=>$('#rnCanvas').toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a imagem.')),'image/png'));
 }
+async function rnShareJpegBlob(){
+  const canvas=$('#rnCanvas'),flat=document.createElement('canvas');
+  flat.width=canvas.width;flat.height=canvas.height;
+  const ctx=flat.getContext('2d',{alpha:false});
+  ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,flat.width,flat.height);
+  ctx.drawImage(canvas,0,0);
+  return await new Promise((resolve,reject)=>flat.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível preparar a imagem para compartilhamento.')),'image/jpeg',0.96));
+}
 async function copyRnImage(){
   if(!window.isSecureContext||!navigator.clipboard||!window.ClipboardItem)throw new Error('Área de transferência de imagens indisponível.');
   const blob=await rnCanvasBlob();
@@ -272,8 +280,12 @@ async function shareRNImageAndText(openX=false,preopened=null){
   const text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
   let blob;
   try{blob=await rnCanvasBlob()}catch{if(preopened)preopened.close();flashRN(openX?$('#rnOpenX'):$('#rnShareBundle'),'Falha ao gerar imagem');return}
-  const file=new File([blob],`uefy-eleicoes-rn-${norm(name)}.png`,{type:'image/png'});
   const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
+  let shareBlob=blob;
+  if(!desktop){
+    try{shareBlob=await rnShareJpegBlob()}catch{}
+  }
+  const file=new File([shareBlob],`uefy-eleicoes-rn-${norm(name)}.${shareBlob.type==='image/jpeg'?'jpg':'png'}`,{type:shareBlob.type||'image/png'});
 
   if(openX&&desktop){
     let copied=false;
