@@ -76,7 +76,8 @@ function extractMunicipalities(data){
   const walk=(node,uf=null)=>{
     if(Array.isArray(node)){node.forEach(x=>walk(x,uf));return}
     if(!node||typeof node!=='object')return;
-    const localUf=String(node.sg||node.uf||node.cdabr||node.abr||uf||'').toLowerCase();
+    const stateCode=(Array.isArray(node.mu)&&/^[a-z]{2}$/i.test(String(node.cd||'')))?node.cd:'';
+    const localUf=String(node.sg||node.uf||node.cdabr||node.abr||stateCode||uf||'').toLowerCase();
     if(Array.isArray(node.mu)){
       node.mu.forEach(m=>{
         const code=String(m.cd||m.c||m.cdmun||m.mun||m.codigo||'').padStart(5,'0');
