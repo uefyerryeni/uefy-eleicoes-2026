@@ -101,9 +101,15 @@ function aggregateResults(parts){
   return {progress:ts?st/ts*100:0,candidates:arr,generatedAt:latest||nowStamp(),sectionsDone:st,sectionsTotal:ts};
 }
 function applyDemo(){
+  // O modo de teste usa exclusivamente candidaturas oficiais do TSE.
+  // Os controles alteram apenas o estágio visual; nunca recriam candidatos fictícios.
   const p=DEMO_PROGRESS[demoStep];
-  Object.keys(state).forEach(k=>{const base=DEMO_BASE[k]||[];const factor=demoStep===0?0:1;state[k]={progress:k==='pres'?0:Math.min(100,p+4),candidates:base.map((x,i)=>({name:x[0],pct:k==='pres'?0:x[1]*factor,seq:i+1,id:String(i+1)})),generatedAt:nowStamp()}});
-  renderAll();
+  if(candidateBase){
+    Object.keys(state).forEach(k=>{state[k].progress=0});
+    renderAll();
+  }else{
+    loadTestCandidates();
+  }
 }
 let candidateBase=null;
 async function loadTestCandidates(){
@@ -138,7 +144,12 @@ async function loadRemote(){
   }catch(e){$('#statusTitle').textContent='Fonte indisponível';$('#statusText').textContent='Não foi possível carregar este recorte agora. O modo demonstração continua disponível.'}
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
-function renderRows(k){const items=(state[k].candidates||[]).slice(0,4),box=$('#'+k+'Rows');box.innerHTML=items.length?items.map(c=>'<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>').join(''):'<div class="more">Aguardando dados.</div>';$('#'+k+'Small').textContent=fmtPct(state[k].progress)+' das seções totalizadas';$('#'+k+'More').textContent=state[k].candidates.length>4?'+ '+(state[k].candidates.length-4)+' candidato(s) no arquivo':'Ordem conforme a fonte de dados'}
+function renderRows(k){
+  const all=state[k].candidates||[], items=mode==='demo'?all:all.slice(0,4), box=$('#'+k+'Rows');
+  box.innerHTML=items.length?items.map(c=>'<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(mode==='demo'&&c.number?' <small>· '+esc(String(c.number))+' '+esc(c.party||'')+'</small>':'')+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>').join(''):'<div class="more">Aguardando dados.</div>';
+  $('#'+k+'Small').textContent=mode==='demo'?(all.length+' candidatura(s) na base TSE'):fmtPct(state[k].progress)+' das seções totalizadas';
+  $('#'+k+'More').textContent=mode==='demo'?'Lista completa para conferência':(all.length>4?'+ '+(all.length-4)+' candidato(s) no arquivo':'Ordem conforme a fonte de dados');
+}
 function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);const current=state[selectedOffice].progress,rn=Math.max(state.gov.progress,state.sen.progress,state.depf.progress,state.depe.progress);$('#scopeProgressText').textContent=fmtPct(current);$('#scopeProgressBar').style.width=Math.min(100,current)+'%';$('#rnProgressText').textContent=fmtPct(rn);$('#rnProgressBar').style.width=Math.min(100,rn)+'%';updateScopeMap();$('#updatedAt').textContent=state[selectedOffice].generatedAt||'—';$('#sourceHint').textContent=mode==='demo'?'Candidaturas TSE · teste sem votos':'Dados do '+MODE_LABELS[mode];$('#liveLabel').textContent=mode==='demo'?'Demonstração':mode==='sim'?'Simulado TSE':'TSE';$('#modeBtn').textContent='Modo: '+MODE_LABELS[mode];$('#demoControls').classList.toggle('show',mode==='demo');$('#demoStepLabel').textContent='Etapa '+(demoStep+1)+' de '+DEMO_PROGRESS.length;regenerate()}
 function populateScopeSelect(){const scopes=officeMeta[selectedOffice].scopes,sel=$('#scopeSelect');sel.innerHTML=scopes.map(s=>'<option value="'+s.value+'">'+s.label+'</option>').join('');if(!scopes.some(s=>s.value===selectedScope))selectedScope=officeMeta[selectedOffice].defaultScope;sel.value=selectedScope}
 function selectOffice(k){selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;populateScopeSelect();if(mode==='demo')setTimeout(loadTestCandidates,0);$('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));$('[data-pick]').forEach(b=>b.classList.toggle('active',b.dataset.pick===k));updateScopeMap();regenerate()}
@@ -204,8 +215,8 @@ async function shareImageAndText(){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
 }
 $('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();if(mode==='demo'){applyDemo();setTimeout(loadTestCandidates,0)}else regenerate()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
-$('#modeBtn').onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%MODES.length];mode==='demo'?applyDemo():(renderAll(),loadRemote())};$('#refreshBtn').onclick=()=>mode==='demo'?applyDemo():loadRemote();
-$('#demoNext').onclick=()=>{demoStep=Math.min(DEMO_PROGRESS.length-1,demoStep+1);applyDemo()};$('#demoBack').onclick=()=>{demoStep=Math.max(0,demoStep-1);applyDemo()};$('#demoReset').onclick=()=>{demoStep=0;applyDemo()};
+$('#modeBtn').onclick=()=>{mode=MODES[(MODES.indexOf(mode)+1)%MODES.length];mode==='demo'?loadTestCandidates():(renderAll(),loadRemote())};$('#refreshBtn').onclick=()=>mode==='demo'?loadTestCandidates():loadRemote();
+$('#demoNext').onclick=()=>{demoStep=Math.min(DEMO_PROGRESS.length-1,demoStep+1);loadTestCandidates()};$('#demoBack').onclick=()=>{demoStep=Math.max(0,demoStep-1);loadTestCandidates()};$('#demoReset').onclick=()=>{demoStep=0;loadTestCandidates()};
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';$('#copyText').onclick=async()=>{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Copiado!')};$('#copyImage').onclick=async()=>{try{const b=await new Promise(r=>$('#shareCanvas').toBlob(r,'image/png'));await navigator.clipboard.write([new ClipboardItem({'image/png':b})]);flash($('#copyImage'),'Imagem copiada!')}catch{alert('Use “Baixar imagem” neste navegador.')}};$('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};$('#openX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#postText').value),'_blank','noopener,noreferrer');$('#shareBundle').onclick=shareImageAndText;
 const theme=$('#themeToggle');
 if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
