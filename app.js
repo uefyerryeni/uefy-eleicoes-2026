@@ -105,16 +105,43 @@ function applyDemo(){
   Object.keys(state).forEach(k=>{const base=DEMO_BASE[k]||[];const factor=demoStep===0?0:1;state[k]={progress:k==='pres'?0:Math.min(100,p+4),candidates:base.map((x,i)=>({name:x[0],pct:k==='pres'?0:x[1]*factor,seq:i+1,id:String(i+1)})),generatedAt:nowStamp()}});
   renderAll();
 }
+let candidateBase=null;
 async function loadTestCandidates(){
-  const uf=selectedOffice==='pres'?(selectedScope==='br'?'br':scopeCode()):scopeCode();
-  if(!uf)return;
   try{
-    const r=await fetch(endpointFor(selectedOffice,uf,'official'),{cache:'no-store'});
-    if(!r.ok)return;
-    const x=parseEA20(await r.json());
-    state[selectedOffice]={...x,progress:0,candidates:x.candidates.map(c=>({...c,pct:0,votes:0}))};
+    if(!candidateBase){
+      const r=await fetch('data/candidatos-2026.json',{cache:'no-store'});
+      if(!r.ok)throw new Error('base '+r.status);
+      candidateBase=await r.json();
+    }
+    let rows=[];
+    if(selectedOffice==='pres') rows=candidateBase.pres||[];
+    else if(selectedScope==='uf_rn'){
+      const cargo=Number(officeMeta[selectedOffice].cargo);
+      rows=(candidateBase.rn||[]).filter(x=>x.cargo===cargo);
+    }
+    if(!rows.length){
+      state[selectedOffice]={progress:0,candidates:[],generatedAt:candidateBase.generated||nowStamp()};
+      renderAll(); return;
+    }
+    state[selectedOffice]={
+      progress:0,
+      generatedAt:candidateBase.generated||nowStamp(),
+      candidates:rows.map((x,i)=>({
+        id:String(x.seq||x.numero),
+        name:x.nome,
+        number:x.numero,
+        party:x.partido,
+        status:x.situacao,
+        pct:0,
+        votes:0,
+        seq:i+1
+      }))
+    };
     renderAll();
-  }catch(e){}
+  }catch(e){
+    state[selectedOffice]={progress:0,candidates:[],generatedAt:nowStamp()};
+    renderAll();
+  }
 }
 async function loadRemote(){
   $('#refreshBtn').textContent='Carregando…';$('#refreshBtn').disabled=true;
@@ -131,7 +158,7 @@ async function loadRemote(){
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
 function renderRows(k){const items=(state[k].candidates||[]).slice(0,4),box=$('#'+k+'Rows');box.innerHTML=items.length?items.map(c=>'<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>').join(''):'<div class="more">Aguardando dados.</div>';$('#'+k+'Small').textContent=fmtPct(state[k].progress)+' das seções totalizadas';$('#'+k+'More').textContent=state[k].candidates.length>4?'+ '+(state[k].candidates.length-4)+' candidato(s) no arquivo':'Ordem conforme a fonte de dados'}
-function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);const current=state[selectedOffice].progress,rn=Math.max(state.gov.progress,state.sen.progress,state.depf.progress,state.depe.progress);$('#scopeProgressText').textContent=fmtPct(current);$('#scopeProgressBar').style.width=Math.min(100,current)+'%';$('#rnProgressText').textContent=fmtPct(rn);$('#rnProgressBar').style.width=Math.min(100,rn)+'%';updateScopeMap();$('#updatedAt').textContent=state[selectedOffice].generatedAt||'—';$('#sourceHint').textContent=mode==='demo'?(selectedOffice==='pres'?'Candidaturas reais do TSE · sem votos':'Dados de demonstração'):'Dados do '+MODE_LABELS[mode];$('#liveLabel').textContent=mode==='demo'?'Demonstração':mode==='sim'?'Simulado TSE':'TSE';$('#modeBtn').textContent='Modo: '+MODE_LABELS[mode];$('#demoControls').classList.toggle('show',mode==='demo');$('#demoStepLabel').textContent='Etapa '+(demoStep+1)+' de '+DEMO_PROGRESS.length;regenerate()}
+function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);const current=state[selectedOffice].progress,rn=Math.max(state.gov.progress,state.sen.progress,state.depf.progress,state.depe.progress);$('#scopeProgressText').textContent=fmtPct(current);$('#scopeProgressBar').style.width=Math.min(100,current)+'%';$('#rnProgressText').textContent=fmtPct(rn);$('#rnProgressBar').style.width=Math.min(100,rn)+'%';updateScopeMap();$('#updatedAt').textContent=state[selectedOffice].generatedAt||'—';$('#sourceHint').textContent=mode==='demo'?'Candidaturas TSE · teste sem votos':'Dados do '+MODE_LABELS[mode];$('#liveLabel').textContent=mode==='demo'?'Demonstração':mode==='sim'?'Simulado TSE':'TSE';$('#modeBtn').textContent='Modo: '+MODE_LABELS[mode];$('#demoControls').classList.toggle('show',mode==='demo');$('#demoStepLabel').textContent='Etapa '+(demoStep+1)+' de '+DEMO_PROGRESS.length;regenerate()}
 function populateScopeSelect(){const scopes=officeMeta[selectedOffice].scopes,sel=$('#scopeSelect');sel.innerHTML=scopes.map(s=>'<option value="'+s.value+'">'+s.label+'</option>').join('');if(!scopes.some(s=>s.value===selectedScope))selectedScope=officeMeta[selectedOffice].defaultScope;sel.value=selectedScope}
 function selectOffice(k){selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;populateScopeSelect();if(mode==='demo')setTimeout(loadTestCandidates,0);$('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));$('[data-pick]').forEach(b=>b.classList.toggle('active',b.dataset.pick===k));updateScopeMap();regenerate()}
 function makePostText(){const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5),lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel(),fmtPct(d.progress)+' das seções totalizadas',''];d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));lines.push('','Fonte: TSE');return lines.join('\n')}
@@ -149,7 +176,7 @@ const logoImg=new Image();logoImg.crossOrigin='anonymous';logoImg.src=LOGO_URL;l
 function drawCanvas(){
   const c=$('#shareCanvas'),ctx=c.getContext('2d'),d=state[selectedOffice],m=officeMeta[selectedOffice];ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logoImg.complete)ctx.drawImage(logoImg,70,54,100,100);
-  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.fillStyle='#17191c';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?(selectedOffice==='pres'?'CANDIDATURAS TSE · SEM VOTOS':'DEMONSTRAÇÃO'):'DADOS OFICIAIS DO TSE',650,105);
+  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.fillStyle='#17191c';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'CANDIDATURAS TSE · SEM VOTOS':'DADOS OFICIAIS DO TSE',650,105);
   const fc=featureCollectionForScope();
   if(fc&&fc.features?.length){
     const detailed=(selectedOffice!=='pres'&&selectedScope==='uf_rn');
@@ -173,7 +200,7 @@ function drawCanvas(){
     ctx.fillStyle='#17191c';ctx.font='800 33px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+6);ctx.textAlign='left';
     yy+=82;
   });
-  ctx.strokeStyle='#d3d9de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?(selectedOffice==='pres'?'Candidaturas: TSE · votos ainda não disponíveis':'Dados fictícios para demonstração'):'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
+  ctx.strokeStyle='#d3d9de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Candidaturas: TSE · votos ainda não disponíveis':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
 function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+'/280';drawCanvas()}
 function flash(btn,t){const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1200)}
