@@ -69,7 +69,8 @@ function drawGeoJSON(ctx,fc,x,y,w,h){if(!fc)return;const proj=projector(fc,w,h,5
 function flattenCandidates(data){
   const out=[];(data.carg||[]).forEach(c=>(c.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(cand=>out.push({
     id:String(cand.n||cand.nsqcand||cand.nm||cand.nmu||''),
-    name:cand.nmu||cand.nm||('Candidato '+(cand.n||'')),
+    number:String(cand.n||''),
+    name:cand.nmu||cand.nm||(cand.n?'Número '+cand.n:'Nome não informado'),
     pct:Number(String(cand.pvap??0).replace(',','.'))||0,
     votes:Number(cand.vap||0),
     seq:Number(cand.seq||999999)
@@ -88,7 +89,7 @@ function endpointFor(office,uf,env=mode){
 }
 function aggregateResults(parts){
   const byId=new Map();let st=0,ts=0,latest='';
-  parts.forEach(p=>{st+=p.sectionsDone||0;ts+=p.sectionsTotal||0;latest=p.generatedAt||latest;p.candidates.forEach(c=>{const key=c.id||c.name;if(!byId.has(key))byId.set(key,{id:key,name:c.name,votes:0,seq:c.seq});const x=byId.get(key);x.votes+=c.votes||0;x.seq=Math.min(x.seq,c.seq)})});
+  parts.forEach(p=>{st+=p.sectionsDone||0;ts+=p.sectionsTotal||0;latest=p.generatedAt||latest;p.candidates.forEach(c=>{const key=c.id||c.name;if(!byId.has(key))byId.set(key,{id:key,number:c.number||key,name:c.name,votes:0,seq:c.seq});const x=byId.get(key);x.votes+=c.votes||0;x.seq=Math.min(x.seq,c.seq)})});
   const arr=[...byId.values()],total=arr.reduce((s,c)=>s+c.votes,0);arr.forEach(c=>c.pct=total?c.votes/total*100:0);arr.sort((a,b)=>b.votes-a.votes||a.seq-b.seq);
   return {progress:ts?st/ts*100:0,candidates:arr,generatedAt:latest||nowStamp(),sectionsDone:st,sectionsTotal:ts};
 }
@@ -157,6 +158,36 @@ async function loadTestCandidates(){
   }
   renderAll();
 }
+async function ensurePresidentBase(){
+  if(candidateBase&&Array.isArray(candidateBase.pres)&&candidateBase.pres.length)return candidateBase;
+  const r=await fetch('data/candidatos-2026.json',{cache:'no-store'});
+  if(!r.ok)throw new Error('base presidencial '+r.status);
+  candidateBase=await r.json();
+  return candidateBase;
+}
+async function registryForResult(office){
+  if(office==='pres')return (await ensurePresidentBase()).pres||[];
+  const uf=scopeCode()||'rn',data=await getUfCandidates(uf);
+  const cargo=Number(officeMeta[office].cargo);
+  return (data?.candidates||[]).filter(x=>x.cargo===cargo);
+}
+async function reconcileResult(result,office){
+  try{
+    const registry=await registryForResult(office);
+    const byNumber=new Map(registry.map(x=>[String(x.numero),x]));
+    let matched=0;
+    result.candidates=result.candidates.map(c=>{
+      const reg=byNumber.get(String(c.number||c.id||''));
+      if(!reg)return {...c,matched:false};
+      matched++;
+      return {...c,id:String(reg.seq||c.id),number:reg.numero,name:reg.nome,party:reg.partido,status:reg.situacao,matched:true};
+    });
+    result.integrity={matched,total:result.candidates.length,unmatched:result.candidates.length-matched};
+  }catch(e){
+    result.integrity={matched:0,total:result.candidates.length,unmatched:result.candidates.length,error:true};
+  }
+  return result;
+}
 async function loadRemote(){
   $('#refreshBtn').textContent='Carregando…';$('#refreshBtn').disabled=true;
   try{
@@ -167,7 +198,15 @@ async function loadRemote(){
       const uf=selectedOffice==='pres'?(selectedScope==='br'?'br':scopeCode()):scopeCode();
       const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store'});if(!r.ok)throw new Error(r.status);result=parseEA20(await r.json());
     }
-    state[selectedOffice]=result;$('#statusTitle').textContent='Dados carregados';$('#statusText').textContent='Arquivo recebido do ambiente '+MODE_LABELS[mode]+'.';renderAll();
+    result=await reconcileResult(result,selectedOffice);
+    state[selectedOffice]=result;
+    $('#statusTitle').textContent='Resultados carregados';
+    if(result.integrity?.unmatched){
+      $('#statusText').textContent='Atenção: '+result.integrity.unmatched+' registro(s) do resultado não corresponderam à base oficial de candidaturas.';
+    }else{
+      $('#statusText').textContent='EA20 '+MODE_LABELS[mode]+' · '+result.integrity.matched+'/'+result.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
+    }
+    renderAll();
   }catch(e){$('#statusTitle').textContent='Fonte indisponível';$('#statusText').textContent='Não foi possível carregar este recorte agora. As candidaturas oficiais continuam disponíveis no modo Candidaturas TSE.'}
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
