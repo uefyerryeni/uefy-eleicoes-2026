@@ -1,7 +1,6 @@
 const $=s=>document.querySelector(s);
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const OFFICE={gov:{title:'Governador',cargo:'0003'},sen:{title:'Senado',cargo:'0005'},depf:{title:'Deputado federal',cargo:'0006'},depe:{title:'Deputado estadual',cargo:'0007'}};
-const DEMO={gov:[['Candidato 11',52.1],['Candidato 12',38.4],['Candidato 13',6.2],['Candidato 14',3.3]],sen:[['Candidato 21',44.6],['Candidato 22',34.3],['Candidato 23',15.3],['Candidato 24',5.8]],depf:[['Candidato 31',29.3],['Candidato 32',24.8],['Candidato 33',18.0],['Candidato 34',12.3]],depe:[['Candidato 41',20.7],['Candidato 42',18.9],['Candidato 43',13.8],['Candidato 44',11.0]]};
 const PROGRESS=[0,8.5,27.4,53.8,81.2,100];
 let fc=null,selectedFeature=null,office='gov',mode='demo',demoStep=0,current={progress:0,candidates:[],generatedAt:null};
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
@@ -47,13 +46,28 @@ function markSelection(){
 }
 function selectMunicipality(feature){
   selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
-  if(mode==='demo')applyDemo();else loadRemote();
+  if(mode==='demo')loadRnCandidates();else loadRemote();
 }
-function applyDemo(){
-  const p=PROGRESS[demoStep],base=DEMO[office];
-  current={progress:p,candidates:base.map((x,i)=>({name:x[0],pct:demoStep===0?0:x[1],seq:i+1})),generatedAt:nowStamp()};
-  $('#rnStatus').textContent='Demonstração com dados fictícios.';renderCurrent();
+let rnCandidateBase=null;
+async function loadRnCandidates(){
+  try{
+    if(!rnCandidateBase){
+      const r=await fetch('data/candidatos-ufs-c.json',{cache:'no-store'});
+      if(!r.ok)throw new Error('Base RN '+r.status);
+      const data=await r.json();rnCandidateBase=data.rn;
+    }
+    const cargo=Number(OFFICE[office].cargo);
+    const rows=(rnCandidateBase?.candidates||[]).filter(x=>x.cargo===cargo);
+    current={progress:0,candidates:rows.map((x,i)=>({name:x.nome,number:x.numero,party:x.partido,status:x.situacao,pct:0,votes:0,seq:i+1})),generatedAt:rnCandidateBase?.generated||nowStamp()};
+    $('#rnStatus').textContent='Candidaturas do RN carregadas da base eleitoral · sem votos.';
+    renderCurrent();
+  }catch(e){
+    current={progress:0,candidates:[],generatedAt:nowStamp()};
+    $('#rnStatus').textContent='Não foi possível carregar as candidaturas do RN. Nenhum dado fictício será exibido.';
+    renderCurrent();
+  }
 }
+function applyDemo(){return loadRnCandidates();}
 function municipalConfigUrl(){
   if(mode==='sim')return 'https://resultados-sim.tse.jus.br/simulado/simulado2026/ele2026/21270/config/mun-e021270-cm.json';
   return 'https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json';
@@ -136,7 +150,7 @@ function drawCanvas(){
   if(!selectedFeature)return;
   const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=selectedFeature.properties.nome;ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logo.complete)ctx.drawImage(logo,70,54,100,100);
-  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'DEMONSTRAÇÃO':'DADOS DO TSE',790,105);
+  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'CANDIDATURAS TSE · SEM VOTOS':'DADOS DO TSE',690,105);
   drawFocusedMunicipality(ctx,selectedFeature,555,115,470,350);
   ctx.fillStyle='#17191c';ctx.font='700 76px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,235);
   fitCanvasText(ctx,OFFICE[office].title,70,300,440,44,32,'700','#17191c');
@@ -155,7 +169,7 @@ function drawCanvas(){
     ctx.fillStyle='#17191c';ctx.font='800 33px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+6);ctx.textAlign='left';
     yy+=82;
   });
-  ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Dados fictícios para demonstração':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
+  ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'Candidaturas: TSE · votos ainda não disponíveis':'Fonte: Tribunal Superior Eleitoral',70,1008);ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
 async function shareRNImageAndText(){
   const canvas=$('#rnCanvas'),text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
@@ -176,10 +190,10 @@ async function shareRNImageAndText(){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
 }
 $('#munSearch').oninput=e=>renderList(e.target.value);
-$('#rnOffice').onchange=e=>{office=e.target.value;mode==='demo'?applyDemo():loadRemote()};
-$('#rnMode').onchange=e=>{mode=e.target.value;$('#liveLabel').textContent=mode==='demo'?'Demonstração':mode==='sim'?'Simulado TSE':'TSE';mode==='demo'?applyDemo():loadRemote()};
-$('#rnRefresh').onclick=()=>mode==='demo'?applyDemo():loadRemote();
-$('#rnNextDemo').onclick=()=>{demoStep=(demoStep+1)%PROGRESS.length;applyDemo()};
+$('#rnOffice').onchange=e=>{office=e.target.value;mode==='demo'?loadRnCandidates():loadRemote()};
+$('#rnMode').onchange=e=>{mode=e.target.value;$('#liveLabel').textContent=mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE';mode==='demo'?loadRnCandidates():loadRemote()};
+$('#rnRefresh').onclick=()=>mode==='demo'?loadRnCandidates():loadRemote();
+$('#rnNextDemo').onclick=()=>{demoStep=(demoStep+1)%PROGRESS.length;loadRnCandidates()};
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/280';
 $('#rnCopyText').onclick=async()=>navigator.clipboard.writeText($('#rnPostText').value);
 $('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
@@ -208,6 +222,6 @@ function favId(f){return [f.type,f.office,f.scope,f.municipality].filter(Boolean
 function syncFavButton(){const b=document.querySelector('#favoriteCurrent');if(!b||!selectedFeature)return;const on=getFavs().some(f=>favId(f)===favId(currentFav()));b.classList.toggle('on',on);b.textContent=on?'★ Favorito':'☆ Favoritar'}
 function renderFavStrip(){const box=document.querySelector('#liveStripItems');if(!box)return;const favs=getFavs();if(!favs.length){box.innerHTML='<span class="strip-empty">Marque municípios para acompanhar aqui.</span>';return}box.innerHTML=favs.map(f=>'<button class="strip-chip"><b>'+f.label+'</b><span>toque para abrir · <em>↻</em></span></button>').join('');box.querySelectorAll('.strip-chip').forEach((b,i)=>b.onclick=()=>{const f=favs[i];if(f.type!=='rn'){location.href='index.html'}else{const ft=fc?.features.find(x=>norm(x.properties.nome)===norm(f.municipality));if(ft){office=f.office;document.querySelector('#rnOffice').value=office;selectMunicipality(ft);scrollTo({top:document.querySelector('.rn-side').offsetTop-115,behavior:'smooth'})}}})}
 document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{if(!selectedFeature)return;const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
-document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{if(mode==='demo')applyDemo();else await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
+document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{if(mode==='demo')await loadRnCandidates();else await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
 document.querySelector('#rnOffice')?.addEventListener('change',()=>setTimeout(syncFavButton));renderFavStrip();
 const _uefyInitFav=setInterval(()=>{if(fc&&selectedFeature){clearInterval(_uefyInitFav);const q=new URLSearchParams(location.search),m=q.get('fav'),o=q.get('office');if(o&&OFFICE[o]){office=o;document.querySelector('#rnOffice').value=o}if(m){const ft=fc.features.find(x=>norm(x.properties.nome)===norm(m));if(ft)selectMunicipality(ft)}syncFavButton();renderFavStrip()}},100);
