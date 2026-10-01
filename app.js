@@ -111,7 +111,18 @@ function applyDemo(){
     loadTestCandidates();
   }
 }
-let candidateBase=null;
+let candidateBase=null,ufCandidateCache={};
+const UF_SHARD={ac:'a',al:'a',am:'a',ap:'a',ba:'a',ce:'a',df:'a',es:'a',go:'a',ma:'b',mg:'b',ms:'b',mt:'b',pa:'b',pb:'b',pe:'b',pi:'b',pr:'b',rn:'c',ro:'c',rr:'c',rs:'c',sc:'c',se:'c',to:'c'};
+async function getUfCandidates(uf){
+  uf=String(uf||'').toLowerCase();
+  if(!UF_SHARD[uf])return null;
+  if(ufCandidateCache[uf])return ufCandidateCache[uf];
+  const r=await fetch('data/candidatos-ufs-'+UF_SHARD[uf]+'.json',{cache:'no-store'});
+  if(!r.ok)throw new Error('base UF '+r.status);
+  const shard=await r.json();
+  Object.assign(ufCandidateCache,shard);
+  return ufCandidateCache[uf]||null;
+}
 async function loadTestCandidates(){
   try{
     if(!candidateBase){
@@ -119,14 +130,30 @@ async function loadTestCandidates(){
       if(!r.ok)throw new Error('base '+r.status);
       candidateBase=await r.json();
     }
-    const stamp=candidateBase.generated||nowStamp();
-    const setRows=(office,rows)=>{state[office]={progress:0,generatedAt:stamp,candidates:rows.map((x,i)=>({id:String(x.seq||x.numero),name:x.nome,number:x.numero,party:x.partido,status:x.situacao,pct:0,votes:0,seq:i+1}))}};
-    setRows('pres',candidateBase.pres||[]);
+    const setRows=(office,rows,stamp)=>{state[office]={progress:0,generatedAt:stamp||nowStamp(),candidates:(rows||[]).map((x,i)=>({id:String(x.seq||x.numero),name:x.nome,number:x.numero,party:x.partido,status:x.situacao,pct:0,votes:0,seq:i+1}))}};
+    setRows('pres',candidateBase.pres||[],candidateBase.generatedBR||candidateBase.generated);
+    const rn=await getUfCandidates('rn');
     const cargoMap={gov:3,sen:5,depf:6,depe:7};
-    Object.entries(cargoMap).forEach(([office,cargo])=>setRows(office,(candidateBase.rn||[]).filter(x=>x.cargo===cargo)));
+    Object.entries(cargoMap).forEach(([office,cargo])=>setRows(office,(rn?.candidates||[]).filter(x=>x.cargo===cargo),rn?.generated));
+    if(selectedOffice!=='pres'){
+      const uf=scopeCode();
+      const ufData=await getUfCandidates(uf);
+      if(!ufData){
+        setRows(selectedOffice,[],nowStamp());
+        $('#statusTitle').textContent='Candidaturas indisponíveis';
+        $('#statusText').textContent='A base desta UF ainda não foi processada. Nenhum dado de outra UF será exibido.';
+      }else{
+        const cargo=Number(officeMeta[selectedOffice].cargo);
+        setRows(selectedOffice,ufData.candidates.filter(x=>x.cargo===cargo),ufData.generated);
+        $('#statusTitle').textContent='Candidaturas carregadas';
+        $('#statusText').textContent='Base TSE · '+scopeLabel()+' · sem votos';
+      }
+    }
     renderAll();
   }catch(e){
-    Object.keys(state).forEach(k=>state[k]={progress:0,candidates:[],generatedAt:nowStamp()});
+    state[selectedOffice]={progress:0,candidates:[],generatedAt:nowStamp()};
+    $('#statusTitle').textContent='Base indisponível';
+    $('#statusText').textContent='Não foi possível carregar candidaturas deste recorte. Nenhuma outra UF foi usada como substituição.';
     renderAll();
   }
 }
