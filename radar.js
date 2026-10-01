@@ -1,46 +1,72 @@
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const DATA_URL='data/radar-rn.json';
+const CANDIDATE_URL='data/candidatos-ufs-c.json';
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadual'};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
-let radar={status:'loading',findings:[],offices:{}}, selected=null;
+let radar={status:'loading',findings:[],offices:{}}, selected=null, candidateRegistry=[];
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
 function flash(btn,text){if(!btn)return;const old=btn.textContent;btn.textContent=text;setTimeout(()=>btn.textContent=old,1800)}
 function setStatus(msg,error=false){const el=$('#radarStatus');el.hidden=!msg;el.textContent=msg||'';el.classList.toggle('error',error)}
 function escapeHtml(s=''){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function activeOffice(){return $('#officeFilter')?.value||'sen'}
+const OFFICE_CARGO={sen:5,depf:6,depe:7};
+function registryForOffice(office=activeOffice()){return candidateRegistry.filter(x=>Number(x.cargo)===OFFICE_CARGO[office]).sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR'))}
+function selectedRegistryCandidate(){const v=$('#candidateFilter')?.value;if(!v||v==='all')return null;return registryForOffice().find(x=>String(x.seq||x.nome)===v)||null}
 async function loadRadar(){
   setStatus('Carregando a última leitura oficial do Radar RN…');
   try{
-    const r=await fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
-    radar=await r.json();
+    const [radarRes,candRes]=await Promise.all([
+      fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'}),
+      fetch(CANDIDATE_URL+'?ts='+Date.now(),{cache:'no-store'})
+    ]);
+    if(!radarRes.ok)throw new Error('Radar HTTP '+radarRes.status);
+    radar=await radarRes.json();
+    if(candRes.ok){
+      const base=await candRes.json();
+      candidateRegistry=Array.isArray(base?.rn?.candidates)?base.rn.candidates:[];
+    }else candidateRegistry=[];
     $('#sourceGenerated').textContent=radar.source_generated_at||radar.generated_at||'Aguardando resultados';
-    $('#sourceMeta').textContent=(radar.source_name||'Tribunal Superior Eleitoral')+(radar.progress!=null?' · '+pct(radar.progress)+' das seções totalizadas':'');
+    $('#sourceMeta').textContent=(radar.source_name||'Tribunal Superior Eleitoral')+(radar.status==='ok'&&radar.progress!=null?' · '+pct(radar.progress)+' das seções totalizadas':'');
     if(radar.source_url)$('#sourceLink').href=radar.source_url;
-    $('#radarLive').textContent=radar.status==='ok'?'TSE oficial':'Aguardando TSE';
-    if(radar.status!=='ok')setStatus(radar.message||'Os resultados oficiais ainda não estão disponíveis para o Radar RN.',false);else setStatus('');
+    $('#radarLive').textContent=radar.status==='ok'?'TSE oficial':'Aguardando apuração';
+    if(radar.status!=='ok')setStatus('Candidaturas carregadas. Os indicadores de votação serão ativados quando a apuração oficial estiver disponível.',false);else setStatus('');
     buildFilters();renderFindings();
-  }catch(e){setStatus('Não foi possível carregar a leitura do Radar RN agora. A apuração principal continua independente desta área.',true);radar={status:'error',findings:[],offices:{}};buildFilters();renderFindings()}
+  }catch(e){setStatus('Não foi possível carregar o Radar RN agora. Tente atualizar a página.',true);radar={status:'error',findings:[],offices:{}};candidateRegistry=[];buildFilters();renderFindings()}
 }
 function buildFilters(){
   const office=activeOffice(),c=$('#candidateFilter'),t=$('#typeFilter');
-  const scoped=(radar.findings||[]).filter(f=>f.office===office);
-  const names=[...new Set(scoped.map(f=>f.candidate).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
-  c.innerHTML='<option value="all">Todas</option>'+names.map(n=>'<option value="'+escapeHtml(n)+'">'+escapeHtml(n)+'</option>').join('');
-  const types=[...new Set(scoped.map(f=>f.type))];
-  t.innerHTML='<option value="all">Todos os achados</option>'+types.map(x=>'<option value="'+x+'">'+(TYPE_LABELS[x]||x)+'</option>').join('');
+  const currentCandidate=c.value,currentType=t.value;
+  const regs=registryForOffice(office);
+  c.innerHTML='<option value="all">Todas as candidaturas</option>'+regs.map(x=>{
+    const meta=[x.numero,x.partido].filter(Boolean).join(' · ');
+    return '<option value="'+escapeHtml(String(x.seq||x.nome))+'">'+escapeHtml(x.nome+(meta?' — '+meta:''))+'</option>';
+  }).join('');
+  if([...c.options].some(o=>o.value===currentCandidate))c.value=currentCandidate;
+  const types=Object.keys(TYPE_LABELS);
+  t.innerHTML='<option value="all">Todos os achados</option>'+types.map(x=>'<option value="'+x+'">'+TYPE_LABELS[x]+'</option>').join('');
+  if([...t.options].some(o=>o.value===currentType))t.value=currentType;
 }
 function filtered(){
-  const office=activeOffice(),c=$('#candidateFilter').value,t=$('#typeFilter').value;
-  return (radar.findings||[]).filter(f=>f.office===office&&(c==='all'||f.candidate===c)&&(t==='all'||f.type===t));
+  const office=activeOffice(),candidate=selectedRegistryCandidate(),t=$('#typeFilter').value;
+  return (radar.findings||[]).filter(f=>f.office===office&&(!candidate||f.candidate===candidate.nome)&&(t==='all'||f.type===t));
 }
 function renderFindings(){
   const items=filtered();
   $('#findingCount').textContent=items.length===1?'1 achado disponível':items.length+' achados disponíveis';
   const grid=$('#findingsGrid');
   if(!items.length){
-    const office=OFFICE_LABELS[activeOffice()];
-    grid.innerHTML='<div class="no-findings">Ainda não há achados oficiais para '+escapeHtml(office)+'. Assim que os resultados do TSE estiverem disponíveis, o Radar passa a calcular automaticamente a distribuição municipal dos votos.</div>';
+    const office=OFFICE_LABELS[activeOffice()],cand=selectedRegistryCandidate(),regs=registryForOffice();
+    if(radar.status!=='ok'){
+      if(cand){
+        const meta=[cand.numero,cand.partido].filter(Boolean).join(' · ');
+        grid.innerHTML='<div class="no-findings waiting-candidate"><span class="waiting-kicker">CANDIDATURA SELECIONADA</span><h3>'+escapeHtml(cand.nome)+'</h3><p class="waiting-meta">'+escapeHtml(meta)+'</p><p>A candidatura já pode ser selecionada no Radar. Os números abaixo só serão calculados quando houver votos oficiais disponíveis.</p><div class="waiting-metrics"><span>Presença municipal</span><span>Natal x interior</span><span>Concentração territorial</span><span>Primeiro lugar nos municípios</span></div></div>';
+      }else{
+        grid.innerHTML='<div class="no-findings waiting-candidate"><span class="waiting-kicker">RADAR PREPARADO</span><h3>'+escapeHtml(office)+'</h3><p>'+regs.length+' candidatura(s) estão disponíveis no filtro acima. Selecione uma para deixar o Radar preparado; os indicadores de votação serão preenchidos automaticamente quando a apuração oficial estiver disponível.</p><div class="waiting-metrics"><span>Presença municipal</span><span>Natal x interior</span><span>Concentração territorial</span><span>Primeiro lugar nos municípios</span></div></div>';
+      }
+    }else{
+      grid.innerHTML='<div class="no-findings">Não há achado para a combinação de filtros selecionada. Tente outra candidatura ou outro tipo de análise.</div>';
+    }
     return;
   }
   grid.innerHTML=items.map(f=>'<article class="finding-card '+(selected?.id===f.id?'selected':'')+'" data-id="'+escapeHtml(f.id)+'" tabindex="0"><div class="finding-meta"><span class="finding-chip">'+escapeHtml(TYPE_LABELS[f.type]||f.type)+'</span><span class="finding-chip">'+escapeHtml(OFFICE_LABELS[f.office]||f.office)+'</span></div><div class="finding-value">'+escapeHtml(f.display_value||'Dado')+'</div><h3>'+escapeHtml(f.headline)+'</h3><p>'+escapeHtml(f.summary||'')+'</p><button type="button">Conferir cálculo →</button></article>').join('');
