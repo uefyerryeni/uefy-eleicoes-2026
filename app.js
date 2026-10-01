@@ -17,9 +17,7 @@ const officeMeta={
   depf:{title:'Deputado federal',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0006',election:'state'},
   depe:{title:'Deputado estadual',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0007',election:'state'}
 };
-const DEMO_BASE={pres:[],gov:[],sen:[],depf:[],depe:[]};
-const DEMO_PROGRESS=[0,6.4,22.7,51.3,82.6,100];
-let mode='demo',demoStep=0,selectedOffice='pres',selectedScope='br',maps={br:null,rn:null};
+let mode='demo',selectedOffice='pres',selectedScope='br',maps={br:null,rn:null};
 let state={pres:{progress:0,candidates:[]},gov:{progress:0,candidates:[]},sen:{progress:0,candidates:[]},depf:{progress:0,candidates:[]},depe:{progress:0,candidates:[]}};
 
 function fmtPct(v){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%'}
@@ -94,17 +92,7 @@ function aggregateResults(parts){
   const arr=[...byId.values()],total=arr.reduce((s,c)=>s+c.votes,0);arr.forEach(c=>c.pct=total?c.votes/total*100:0);arr.sort((a,b)=>b.votes-a.votes||a.seq-b.seq);
   return {progress:ts?st/ts*100:0,candidates:arr,generatedAt:latest||nowStamp(),sectionsDone:st,sectionsTotal:ts};
 }
-function applyDemo(){
-  // O modo de teste usa exclusivamente candidaturas oficiais do TSE.
-  // Os controles alteram apenas o estágio visual; nunca recriam candidatos fictícios.
-  const p=DEMO_PROGRESS[demoStep];
-  if(candidateBase){
-    Object.keys(state).forEach(k=>{state[k].progress=0});
-    renderAll();
-  }else{
-    loadTestCandidates();
-  }
-}
+function applyDemo(){return loadTestCandidates();}
 let candidateBase=null,ufCandidateCache={};
 const UF_SHARD={ac:'a',al:'a',am:'a',ap:'a',ba:'a',ce:'a',df:'a',es:'a',go:'a',ma:'b',mg:'b',ms:'b',mt:'b',pa:'b',pb:'b',pe:'b',pi:'b',pr:'b',rj:'d',rn:'c',ro:'c',rr:'c',rs:'c',sc:'c',se:'c',sp:'d',to:'c'};
 async function getUfCandidates(uf){
@@ -118,38 +106,56 @@ async function getUfCandidates(uf){
   return ufCandidateCache[uf]||null;
 }
 async function loadTestCandidates(){
+  const setRows=(office,rows,stamp)=>{state[office]={progress:0,generatedAt:stamp||nowStamp(),candidates:(rows||[]).map((x,i)=>({
+    id:String(x.seq||x.numero||i),name:x.nome,number:x.numero,party:x.partido,status:x.situacao,pct:0,votes:0,seq:i+1
+  }))}};
   try{
     if(!candidateBase){
       const r=await fetch('data/candidatos-2026.json',{cache:'no-store'});
-      if(!r.ok)throw new Error('base '+r.status);
+      if(!r.ok)throw new Error('base presidencial '+r.status);
       candidateBase=await r.json();
     }
-    const setRows=(office,rows,stamp)=>{state[office]={progress:0,generatedAt:stamp||nowStamp(),candidates:(rows||[]).map((x,i)=>({id:String(x.seq||x.numero),name:x.nome,number:x.numero,party:x.partido,status:x.situacao,pct:0,votes:0,seq:i+1}))}};
-    setRows('pres',candidateBase.pres||[],candidateBase.generatedBR||candidateBase.generated);
+    if(!Array.isArray(candidateBase.pres)||!candidateBase.pres.length)throw new Error('base presidencial vazia');
+    setRows('pres',candidateBase.pres,candidateBase.generatedBR||candidateBase.generated);
+  }catch(e){
+    setRows('pres',[],nowStamp());
+    if(selectedOffice==='pres'){
+      $('#statusTitle').textContent='Base presidencial indisponível';
+      $('#statusText').textContent='A base oficial de candidaturas à Presidência não pôde ser carregada.';
+      renderAll();return;
+    }
+  }
+
+  try{
     const rn=await getUfCandidates('rn');
     const cargoMap={gov:3,sen:5,depf:6,depe:7};
     Object.entries(cargoMap).forEach(([office,cargo])=>setRows(office,(rn?.candidates||[]).filter(x=>x.cargo===cargo),rn?.generated));
-    if(selectedOffice!=='pres'){
+  }catch(e){
+    ['gov','sen','depf','depe'].forEach(k=>{if(!state[k].candidates?.length)setRows(k,[],nowStamp())});
+  }
+
+  if(selectedOffice!=='pres'){
+    try{
       const uf=scopeCode();
       const ufData=await getUfCandidates(uf);
-      if(!ufData){
-        setRows(selectedOffice,[],nowStamp());
-        $('#statusTitle').textContent='Candidaturas indisponíveis';
-        $('#statusText').textContent='A base desta UF ainda não foi processada. Nenhum dado de outra UF será exibido.';
-      }else{
-        const cargo=Number(officeMeta[selectedOffice].cargo);
-        setRows(selectedOffice,ufData.candidates.filter(x=>x.cargo===cargo),ufData.generated);
-        $('#statusTitle').textContent='Candidaturas carregadas';
-        $('#statusText').textContent='Base TSE · '+scopeLabel()+' · sem votos';
-      }
+      if(!ufData)throw new Error('UF sem base');
+      const cargo=Number(officeMeta[selectedOffice].cargo);
+      const rows=(ufData.candidates||[]).filter(x=>x.cargo===cargo);
+      if(!rows.length)throw new Error('cargo sem candidaturas');
+      setRows(selectedOffice,rows,ufData.generated);
+      $('#statusTitle').textContent='Candidaturas oficiais carregadas';
+      $('#statusText').textContent=rows.length+' candidatura(s) · '+scopeLabel()+' · base TSE · sem votos';
+    }catch(e){
+      setRows(selectedOffice,[],nowStamp());
+      $('#statusTitle').textContent='Candidaturas indisponíveis';
+      $('#statusText').textContent='Não foi possível carregar este cargo e recorte. Nenhuma outra UF foi usada como substituição.';
     }
-    renderAll();
-  }catch(e){
-    state[selectedOffice]={progress:0,candidates:[],generatedAt:nowStamp()};
-    $('#statusTitle').textContent='Base indisponível';
-    $('#statusText').textContent='Não foi possível carregar candidaturas deste recorte. Nenhuma outra UF foi usada como substituição.';
-    renderAll();
+  }else{
+    const n=state.pres.candidates.length;
+    $('#statusTitle').textContent='Candidaturas oficiais carregadas';
+    $('#statusText').textContent=n+' candidatura(s) à Presidência · base TSE · sem votos';
   }
+  renderAll();
 }
 async function loadRemote(){
   $('#refreshBtn').textContent='Carregando…';$('#refreshBtn').disabled=true;
@@ -166,19 +172,39 @@ async function loadRemote(){
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
 function renderRows(k){
-  const all=state[k].candidates||[], items=mode==='demo'?all:all.slice(0,4), box=$('#'+k+'Rows');
-  box.innerHTML=items.length?items.map(c=>'<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(mode==='demo'&&c.number?' <small>· '+esc(String(c.number))+' '+esc(c.party||'')+'</small>':'')+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>').join(''):'<div class="more">Aguardando dados.</div>';
-  $('#'+k+'Small').textContent=mode==='demo'?(all.length+' candidatura(s) na base TSE'):fmtPct(state[k].progress)+' das seções totalizadas';
-  $('#'+k+'More').textContent=mode==='demo'?'Lista completa para conferência':(all.length>4?'+ '+(all.length-4)+' candidato(s) no arquivo':'Ordem conforme a fonte de dados');
+  const box=$('#'+k+'Rows'),small=$('#'+k+'Small'),more=$('#'+k+'More');
+  if(!box)return;
+  const all=state[k]?.candidates||[];
+  const limit=mode==='demo'?(k==='depf'||k==='depe'?16:20):8;
+  const items=all.slice(0,limit);
+  box.innerHTML=items.length?items.map(c=>{
+    const meta=[c.number,c.party,c.status].filter(Boolean).map(esc).join(' · ');
+    return '<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(meta?' <small>'+meta+'</small>':'')+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct||0)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>';
+  }).join(''):'<div class="empty-state">Nenhum dado disponível para este recorte.</div>';
+  if(small)small.textContent=mode==='demo'?(all.length+' candidatura(s) na base oficial'):fmtPct(state[k]?.progress)+' das seções totalizadas';
+  if(more)more.textContent=all.length>items.length?'Mostrando '+items.length+' de '+all.length:(mode==='demo'?'Ordem por número de candidatura':'Ordem por votação');
 }
-function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);const current=state[selectedOffice].progress,rn=Math.max(state.gov.progress,state.sen.progress,state.depf.progress,state.depe.progress);$('#scopeProgressText').textContent=fmtPct(current);$('#scopeProgressBar').style.width=Math.min(100,current)+'%';$('#rnProgressText').textContent=fmtPct(rn);$('#rnProgressBar').style.width=Math.min(100,rn)+'%';updateScopeMap();$('#updatedAt').textContent=state[selectedOffice].generatedAt||'—';$('#sourceHint').textContent=mode==='demo'?'Candidaturas TSE · teste sem votos':'Dados do '+MODE_LABELS[mode];$('#liveLabel').textContent=mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE';$('#modeBtn').textContent='Modo: '+MODE_LABELS[mode];$('#demoControls').classList.toggle('show',mode==='demo');$('#demoStepLabel').textContent='Etapa '+(demoStep+1)+' de '+DEMO_PROGRESS.length;regenerate()}
+function renderAll(){
+  ['pres','gov','sen','depf','depe'].forEach(renderRows);
+  const current=Number(state[selectedOffice]?.progress||0);
+  const setText=(id,value)=>{const el=$(id);if(el)el.textContent=value};
+  const setWidth=(id,value)=>{const el=$(id);if(el)el.style.width=value};
+  setText('#scopeProgressText',fmtPct(current));setWidth('#scopeProgressBar',Math.min(100,current)+'%');
+  setText('#rnProgressText',fmtPct(current));setWidth('#rnProgressBar',Math.min(100,current)+'%');
+  updateScopeMap();
+  setText('#updatedAt',state[selectedOffice]?.generatedAt||'—');
+  setText('#sourceHint',mode==='demo'?'Candidaturas oficiais TSE · sem votos':'Resultados · '+MODE_LABELS[mode]);
+  setText('#liveLabel',mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE');
+  setText('#modeBtn','Modo: '+MODE_LABELS[mode]);
+  updateCardVisibility();
+  regenerate();
+}
 function populateScopeSelect(){const scopes=officeMeta[selectedOffice].scopes,sel=$('#scopeSelect');sel.innerHTML=scopes.map(s=>'<option value="'+s.value+'">'+s.label+'</option>').join('');if(!scopes.some(s=>s.value===selectedScope))selectedScope=officeMeta[selectedOffice].defaultScope;sel.value=selectedScope}
 function updateCardVisibility(){
-  const rnContext=selectedScope==='uf_rn'||['sen','depf','depe'].includes(selectedOffice);
-  $$('.result-card').forEach(el=>{
-    const k=el.dataset.office;
-    el.hidden=!rnContext&&['sen','depf','depe'].includes(k);
-  });
+  $('.result-card').forEach(el=>{el.hidden=el.dataset.office!==selectedOffice});
+  const rnCard=$('.rn-map-card');
+  if(rnCard)rnCard.hidden=true;
+  const row=$('.map-row');if(row)row.classList.add('single');
 }
 function selectOffice(k){
   selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;
