@@ -1,205 +1,219 @@
 #!/usr/bin/env python3
-import csv, io, json, math, os, re, sys, unicodedata, urllib.request, zipfile
+import json, sys, urllib.request
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
-ZIP_URL = 'https://cdn.tse.jus.br/estatistica/sead/odsele/prestacao_contas/prestacao_de_contas_eleitorais_candidatos_2026.zip'
-SOURCE_PAGE = 'https://dadosabertos.tse.jus.br/pt_BR/dataset/prestacao-de-contas-eleitorais-2026'
-OUT = Path(__file__).resolve().parents[1] / 'data' / 'radar-rn.json'
-TZ = timezone(timedelta(hours=-3))
+BASE='https://resultados.tse.jus.br/oficial/ele2026'
+ELECTION='6259'
+EL='006259'
+CONFIG_URL='https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json'
+SOURCE_PAGE='https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados'
+OUT=Path(__file__).resolve().parents[1]/'data'/'radar-rn.json'
+TZ=timezone(timedelta(hours=-3))
+OFFICES={
+    'sen': {'cargo':'0005','label':'Senador'},
+    'depf': {'cargo':'0006','label':'Deputado federal'},
+    'depe': {'cargo':'0007','label':'Deputado estadual'},
+}
 
-def norm(s):
-    s = '' if s is None else str(s)
-    s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
-    return re.sub(r'\s+', ' ', s).strip().upper()
+def fetch_json(url, timeout=25):
+    req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 UEFY-Radar-RN/2.0'})
+    with urllib.request.urlopen(req,timeout=timeout) as r:
+        return json.loads(r.read().decode('utf-8-sig'))
 
-NULLISH = {'', '#NULO', 'NULO', 'NULL', 'NONE', 'NAO INFORMADO', 'NAO IDENTIFICADO', 'SEM-ID', 'SEM ID'}
+def parse_number(v):
+    try:return int(str(v or '0').replace('.','').replace(',','.').split('.')[0])
+    except:return 0
 
-def meaningful_supplier(value):
-    n = norm(value)
-    return bool(n) and n not in NULLISH and not n.startswith('#NULO')
+def parse_pct(v):
+    try:return float(str(v or '0').replace(',','.'))
+    except:return 0.0
 
-def dec(v):
-    if v is None: return 0.0
-    s = str(v).strip().replace('R$', '').replace(' ', '')
-    if not s: return 0.0
-    if ',' in s:
-        s = s.replace('.', '').replace(',', '.')
-    try: return float(s)
-    except: return 0.0
+def walk_municipalities(node, uf=None, out=None):
+    if out is None: out=[]
+    if isinstance(node,list):
+        for x in node: walk_municipalities(x,uf,out)
+        return out
+    if not isinstance(node,dict): return out
+    local=str(node.get('sg') or node.get('uf') or node.get('cdabr') or node.get('abr') or uf or '').lower()
+    if isinstance(node.get('mu'),list):
+        maybe_state=str(node.get('cd') or '')
+        if len(maybe_state)==2 and maybe_state.isalpha(): local=maybe_state.lower()
+        for m in node['mu']:
+            if not isinstance(m,dict): continue
+            code=str(m.get('cd') or m.get('c') or m.get('cdmun') or m.get('mun') or m.get('codigo') or '').zfill(5)
+            name=str(m.get('nm') or m.get('nmu') or m.get('nome') or m.get('ds') or m.get('descricao') or '').strip()
+            if code and name: out.append({'uf':local,'code':code,'name':name})
+    for k,v in node.items():
+        if k!='mu': walk_municipalities(v,local,out)
+    return out
 
-def brl(v):
-    s = f'{float(v):,.2f}'.replace(',', 'X').replace('.', ',').replace('X', '.')
-    return 'R$ ' + s
+def flatten_candidates(data):
+    out=[]
+    for cargo in data.get('carg',[]) or []:
+        for agr in cargo.get('agr',[]) or []:
+            for par in agr.get('par',[]) or []:
+                for cand in par.get('cand',[]) or []:
+                    number=str(cand.get('n') or cand.get('nsqcand') or '')
+                    name=str(cand.get('nmu') or cand.get('nm') or ('Número '+number if number else 'Nome não informado'))
+                    votes=parse_number(cand.get('vap'))
+                    out.append({'id':number or name,'number':number,'name':name,'votes':votes,'seq':parse_number(cand.get('seq') or 999999)})
+    return out
+
+def progress_of(data):
+    s=data.get('s') or {}
+    if s.get('pst') is not None:return parse_pct(s.get('pst'))
+    ts=parse_number(s.get('ts')); st=parse_number(s.get('st'))
+    return st/ts*100 if ts else 0.0
+
+def stamp_of(data):
+    return ' · '.join([x for x in [str(data.get('dg') or '').strip(),str(data.get('hg') or '').strip()] if x])
+
+def state_url(office):
+    return f"{BASE}/{ELECTION}/dados/rn/rn-c{OFFICES[office]['cargo']}-e{EL}-u.json"
+
+def municipality_url(code,office):
+    return f"{BASE}/{ELECTION}/dados/rn/rn{code}-c{OFFICES[office]['cargo']}-e{EL}-u.json"
 
 def pct(v):
-    return f'{float(v):.1f}'.replace('.', ',') + '%'
+    return f'{float(v):.1f}'.replace('.',',')+'%'
 
-def compact(v):
-    v=float(v or 0)
-    if v>=1_000_000: return ('R$ '+f'{v/1_000_000:.2f}'.replace('.', ',')+' mi').replace(',00','')
-    if v>=1_000: return ('R$ '+f'{v/1_000:.1f}'.replace('.', ',')+' mil').replace(',0','')
-    return brl(v)
+def integer(v):
+    return f'{int(v):,}'.replace(',','.')
 
-def get(row, *names):
-    for n in names:
-        if n in row and row[n] not in (None, ''): return row[n]
-    return ''
+def finding(fid,typ,office,candidate,headline,summary,display,calculation,post_text,breakdown,card_note=None):
+    return {
+        'id':fid,'type':typ,'office':office,'candidate':candidate,'headline':headline,
+        'summary':summary,'display_value':display,'calculation':calculation,'post_text':post_text,
+        'breakdown':breakdown,'explanation':summary,'card_note':card_note or summary
+    }
 
-def detect_kind(name):
-    n=norm(name)
-    if 'RECEITAS_CANDIDATOS' in n or ('RECEITA' in n and 'CANDIDAT' in n): return 'receipts'
-    if 'DESPESAS_CONTRATADAS_CANDIDATOS' in n or ('DESPESA' in n and 'CONTRAT' in n and 'CANDIDAT' in n): return 'expenses'
-    return None
-
-def iter_csv(zf, member):
-    raw=zf.read(member)
-    text=None
-    for enc in ('utf-8-sig','latin-1'):
-        try:
-            text=raw.decode(enc);break
-        except UnicodeDecodeError: pass
-    if text is None: text=raw.decode('latin-1','replace')
-    sample=text[:8192]
-    delim=';' if sample.count(';')>=sample.count(',') else ','
-    rdr=csv.DictReader(io.StringIO(text), delimiter=delim)
-    for row in rdr:
-        yield {str(k).strip().lstrip('\ufeff'): v for k,v in row.items() if k is not None}
-
-def is_rn_governor(row):
-    return norm(get(row,'SG_UF'))=='RN' and 'GOVERNADOR' in norm(get(row,'DS_CARGO','NM_CARGO'))
-
-def cand_key(row):
-    return get(row,'SQ_CANDIDATO','NR_CANDIDATO','NM_CANDIDATO')
-
-def cand_name(row):
-    return get(row,'NM_URNA_CANDIDATO','NM_CANDIDATO') or 'Candidatura não identificada'
-
-def cand_meta(row):
-    return {'name':cand_name(row),'number':get(row,'NR_CANDIDATO'),'party':get(row,'SG_PARTIDO')}
-
-def parse_source_stamp(row):
-    d=get(row,'DT_GERACAO'); h=get(row,'HH_GERACAO')
-    if not d:return None
-    for fmt in ('%d/%m/%Y %H:%M:%S','%d/%m/%Y %H:%M','%d/%m/%Y'):
-        try:
-            val=(d+' '+h).strip() if '%H' in fmt else d
-            dt=datetime.strptime(val,fmt).replace(tzinfo=TZ)
-            return dt
-        except: pass
-    return None
-
-def load_previous():
-    try:
-        return json.loads(OUT.read_text(encoding='utf-8'))
-    except: return {}
-
-def finding(fid, typ, headline, summary, display, calculation, post_text, candidate=None, candidates=None, breakdown=None, card_note=None):
-    return {'id':fid,'type':typ,'headline':headline,'summary':summary,'display_value':display,'calculation':calculation,'post_text':post_text,'candidate':candidate,'candidates':candidates or [],'breakdown':breakdown or [],'explanation':summary,'card_note':card_note or summary}
+def waiting(message):
+    now=datetime.now(TZ).isoformat(timespec='seconds')
+    data={'status':'waiting','generated_at':now,'source_generated_at':None,'source_name':'Tribunal Superior Eleitoral · resultados oficiais','source_url':SOURCE_PAGE,'progress':0,'scope':'Rio Grande do Norte','offices':{},'findings':[],'message':message,'methodology_version':'2.0'}
+    OUT.parent.mkdir(parents=True,exist_ok=True)
+    OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+    print(message)
 
 def main():
-    prev=load_previous(); prev_by={c.get('key'):c for c in prev.get('candidates',[]) if c.get('key')}
-    req=urllib.request.Request(ZIP_URL, headers={'User-Agent':'Mozilla/5.0 UEFY-Radar-RN/1.0'})
-    with urllib.request.urlopen(req, timeout=120) as r: payload=r.read()
-    zf=zipfile.ZipFile(io.BytesIO(payload))
-    members=[n for n in zf.namelist() if n.lower().endswith(('.csv','.txt'))]
-    chosen={'receipts':[],'expenses':[]}
-    for n in members:
-        k=detect_kind(n)
-        if k: chosen[k].append(n)
-    if not chosen['receipts'] or not chosen['expenses']:
-        raise RuntimeError('Não foi possível localizar receitas e despesas contratadas no ZIP oficial.')
+    try:
+        cfg=fetch_json(CONFIG_URL)
+        municipalities=[m for m in walk_municipalities(cfg) if m['uf']=='rn']
+    except Exception as e:
+        waiting('A configuração oficial de municípios do TSE ainda não pôde ser carregada.')
+        return
+    if not municipalities:
+        waiting('O TSE ainda não disponibilizou a lista de municípios necessária ao Radar RN.')
+        return
 
-    candidates={}
-    rec_count=0; source_dt=None
-    receipts=defaultdict(float); own=defaultdict(float)
-    expenses=defaultdict(float); exp_by_cat=defaultdict(lambda:defaultdict(float)); exp_by_supplier=defaultdict(lambda:defaultdict(float)); exp_by_supplier_state=defaultdict(lambda:defaultdict(float)); supplier_names={}
+    statewide={}
+    for office in OFFICES:
+        try:
+            data=fetch_json(state_url(office))
+            statewide[office]={'progress':progress_of(data),'stamp':stamp_of(data),'candidates':flatten_candidates(data)}
+        except Exception:
+            statewide[office]=None
 
-    for member in chosen['receipts']:
-        for row in iter_csv(zf,member):
-            if not is_rn_governor(row): continue
-            k=cand_key(row); candidates.setdefault(k,cand_meta(row)); rec_count+=1
-            v=dec(get(row,'VR_RECEITA','VR_RECEITA_ESTIMAVEL'))
-            receipts[k]+=v
-            origin=norm(get(row,'DS_ORIGEM_RECEITA','DS_FONTE_RECEITA'))
-            if 'RECURSOS PROPRIOS' in origin or 'RECURSO PROPRIO' in origin: own[k]+=v
-            dt=parse_source_stamp(row); source_dt=max(source_dt,dt) if source_dt and dt else (dt or source_dt)
+    if not any(statewide.values()):
+        waiting('Os resultados oficiais do RN ainda não estão disponíveis. O Radar será preenchido automaticamente quando o TSE publicar a apuração.')
+        return
 
-    for member in chosen['expenses']:
-        for row in iter_csv(zf,member):
-            if not is_rn_governor(row): continue
-            k=cand_key(row); candidates.setdefault(k,cand_meta(row)); rec_count+=1
-            v=dec(get(row,'VR_DESPESA_CONTRATADA','VR_DESPESA','VR_PAGTO_DESPESA'))
-            if v<=0: continue
-            expenses[k]+=v
-            cat=get(row,'DS_ORIGEM_DESPESA','DS_TIPO_DESPESA','DS_DESPESA') or 'Não informado'
-            exp_by_cat[k][cat]+=v
-            sid_raw=get(row,'NR_CPF_CNPJ_FORNECEDOR','NR_CNPJ_CPF_FORNECEDOR')
-            sname=(get(row,'NM_FORNECEDOR_RFB','NM_FORNECEDOR') or '').strip()
-            # Registros sem fornecedor identificável continuam nos totais e nas categorias,
-            # mas não entram em concentração nem em cruzamentos de fornecedor em comum.
-            if meaningful_supplier(sname):
-                sid=sid_raw.strip() if meaningful_supplier(sid_raw) else 'NAME:'+norm(sname)
-                supplier_names[sid]=sname
-                exp_by_supplier[k][sid]+=v
-            st=norm(get(row,'SG_UF_FORNECEDOR')) or 'NI'
-            exp_by_supplier_state[k][st]+=v
-            dt=parse_source_stamp(row); source_dt=max(source_dt,dt) if source_dt and dt else (dt or source_dt)
+    per_office={o:defaultdict(lambda:{'name':'','total':0,'municipal':{},'natal':0}) for o in OFFICES}
+    errors=0
 
-    findings=[]
-    cand_list=[]
-    for k,meta in sorted(candidates.items(), key=lambda kv: kv[1]['name']):
-        total_e=expenses[k]; total_r=receipts[k]
-        sups=sorted(exp_by_supplier[k].items(),key=lambda x:x[1],reverse=True)
-        cats=sorted(exp_by_cat[k].items(),key=lambda x:x[1],reverse=True)
-        top_sup=[{'name':supplier_names.get(s,'Fornecedor'),'value':round(v,2)} for s,v in sups[:5]]
-        top_cat=[{'name':n,'value':round(v,2)} for n,v in cats[:5]]
-        rec={'key':k,**meta,'receipts':round(total_r,2),'expenses':round(total_e,2),'own_resources':round(own[k],2),'top_suppliers':top_sup,'top_categories':top_cat}
-        if total_r>0: rec['own_share']=round(own[k]/total_r*100,2)
-        if total_e>0: rec['rn_supplier_share']=round(exp_by_supplier_state[k].get('RN',0)/total_e*100,2)
-        cand_list.append(rec)
-        name=meta['name']
-        if total_e>0 and sups:
-            top3=sum(v for _,v in sups[:3]); share=top3/total_e*100
-            findings.append(finding(f'conc-{k}','supplier_concentration',f'Três fornecedores respondem por {pct(share)} das despesas contratadas de {name}.',f'O cálculo considera as despesas contratadas registradas na base processada e soma os três fornecedores com maior valor dentro desta candidatura.',pct(share),f'{brl(top3)} ÷ {brl(total_e)} = {pct(share)}',f'Três fornecedores respondem por {pct(share)} das despesas contratadas registradas de {name}.',candidate=name,breakdown=[{'label':'Três fornecedores','value':brl(top3)},{'label':'Despesas contratadas','value':brl(total_e)}],card_note='Proporção calculada sobre as despesas contratadas registradas na base oficial.'))
-        if total_e>0 and cats:
-            cat,val=cats[0]; share=val/total_e*100
-            findings.append(finding(f'cat-{k}','expense_category',f'{cat} representa {pct(share)} das despesas contratadas de {name}.','O Radar agrupa as despesas pela classificação informada ao TSE e calcula a participação da categoria no total contratado.',pct(share),f'{brl(val)} ÷ {brl(total_e)} = {pct(share)}',f'{cat} representa {pct(share)} das despesas contratadas registradas de {name}.',candidate=name,breakdown=[{'label':cat,'value':brl(val)},{'label':'Despesas contratadas','value':brl(total_e)}]))
-        if total_e>0:
-            rnval=exp_by_supplier_state[k].get('RN',0); share=rnval/total_e*100
-            findings.append(finding(f'rn-{k}','local_suppliers',f'Fornecedores identificados no RN concentram {pct(share)} das despesas contratadas de {name}.','O cálculo usa o campo de UF do fornecedor. Registros sem UF informada permanecem no denominador e não são tratados como fornecedores potiguares.',pct(share),f'{brl(rnval)} ÷ {brl(total_e)} = {pct(share)}',f'Fornecedores identificados no RN concentram {pct(share)} das despesas contratadas registradas de {name}.',candidate=name,breakdown=[{'label':'Fornecedores com UF = RN','value':brl(rnval)},{'label':'Despesas contratadas','value':brl(total_e)}]))
-        if total_r>0 and own[k]>0:
-            share=own[k]/total_r*100
-            findings.append(finding(f'own-{k}','own_resources',f'Recursos próprios representam {pct(share)} das receitas registradas de {name}.','O Radar soma receitas cuja origem é identificada como recursos próprios e divide pelo total de receitas registradas para a candidatura.',pct(share),f'{brl(own[k])} ÷ {brl(total_r)} = {pct(share)}',f'Recursos próprios representam {pct(share)} das receitas registradas de {name}.',candidate=name,breakdown=[{'label':'Recursos próprios','value':brl(own[k])},{'label':'Receitas registradas','value':brl(total_r)}]))
-        old=prev_by.get(k) or {}
-        old_e=float(old.get('expenses') or 0); old_r=float(old.get('receipts') or 0)
-        if old_e>0 and total_e-old_e>0.009:
-            delta=total_e-old_e
-            findings.append(finding(f'de-{k}','expense_change',f'{compact(delta)} em novas despesas contratadas apareceram para {name} desde o snapshot anterior.','A variação compara o total de despesas contratadas do snapshot atual com o último snapshot válido armazenado pela Central.',compact(delta),f'{brl(total_e)} − {brl(old_e)} = {brl(delta)}',f'Desde o snapshot anterior, a base passou a registrar {brl(delta)} a mais em despesas contratadas de {name}.',candidate=name,breakdown=[{'label':'Snapshot atual','value':brl(total_e)},{'label':'Snapshot anterior','value':brl(old_e)}]))
-        if old_r>0 and total_r-old_r>0.009:
-            delta=total_r-old_r
-            findings.append(finding(f'dr-{k}','receipt_change',f'{compact(delta)} em novas receitas apareceram para {name} desde o snapshot anterior.','A variação compara o total de receitas registradas do snapshot atual com o último snapshot válido armazenado pela Central.',compact(delta),f'{brl(total_r)} − {brl(old_r)} = {brl(delta)}',f'Desde o snapshot anterior, a base passou a registrar {brl(delta)} a mais em receitas de {name}.',candidate=name,breakdown=[{'label':'Snapshot atual','value':brl(total_r)},{'label':'Snapshot anterior','value':brl(old_r)}]))
+    def task(m,office):
+        data=fetch_json(municipality_url(m['code'],office))
+        return m,office,flatten_candidates(data)
 
-    common=defaultdict(list)
-    for k in candidates:
-        for sid,val in exp_by_supplier[k].items():
-            if val>0: common[sid].append((k,val))
-    for sid,items in common.items():
-        if len(items)<2: continue
-        names=[candidates[k]['name'] for k,_ in items]
-        total=sum(v for _,v in items); sname=supplier_names.get(sid,'Fornecedor')
-        findings.append(finding('common-'+re.sub(r'\W+','',sid)[-18:],'common_supplier',f'{sname} aparece como fornecedor em {len(items)} candidaturas ao Governo do RN.','O Radar encontrou o mesmo identificador de fornecedor em despesas contratadas de mais de uma candidatura. Isso descreve uma coincidência cadastral e não implica irregularidade.',f'{len(items)} campanhas',f'{len(items)} candidaturas possuem despesas contratadas associadas ao mesmo fornecedor.',f'{sname} aparece como fornecedor em despesas contratadas de {len(items)} candidaturas ao Governo do RN.',candidates=names,breakdown=[{'label':candidates[k]['name'],'value':brl(v)} for k,v in sorted(items,key=lambda x:x[1],reverse=True)[:6]],card_note='Fornecedor em comum na base de despesas contratadas. O dado, por si só, não indica irregularidade.'))
+    futures=[]
+    with ThreadPoolExecutor(max_workers=12) as ex:
+        for m in municipalities:
+            for office in OFFICES:
+                if statewide.get(office):
+                    futures.append(ex.submit(task,m,office))
+        for fut in as_completed(futures):
+            try:
+                m,office,rows=fut.result()
+                for c in rows:
+                    if c['votes']<=0: continue
+                    rec=per_office[office][c['id']]
+                    rec['name']=c['name']; rec['number']=c['number']; rec['municipal'][m['name']]=c['votes']
+                    if m['name'].strip().upper()=='NATAL': rec['natal']=c['votes']
+            except Exception:
+                errors+=1
 
-    # Ordenação técnica: mudanças primeiro, depois relações entre campanhas, depois indicadores individuais.
-    priority={'expense_change':0,'receipt_change':0,'common_supplier':1,'supplier_concentration':2,'expense_category':3,'local_suppliers':4,'own_resources':5}
-    findings.sort(key=lambda f:(priority.get(f['type'],9),f.get('candidate') or '',f['id']))
+    findings=[]; offices_meta={}; progress_values=[]; stamps=[]
+    for office,meta in OFFICES.items():
+        state=statewide.get(office)
+        if not state: continue
+        progress_values.append(state['progress'])
+        if state['stamp']: stamps.append(state['stamp'])
+        state_by={c['id']:c for c in state['candidates']}
+        profiles=per_office[office]
+        for cid,c in state_by.items():
+            if c['votes']<=0: continue
+            rec=profiles[cid]
+            rec['name']=rec['name'] or c['name']; rec['number']=rec.get('number') or c['number']; rec['total']=c['votes']
+            name=rec['name']; total=rec['total']; municipal=rec['municipal']
+            if total<=0: continue
+            covered=sum(1 for v in municipal.values() if v>0)
+            natal=rec['natal']; natal_share=natal/total*100 if total else 0
+            interior=max(0,total-natal); interior_share=interior/total*100 if total else 0
+            ordered=sorted(municipal.items(),key=lambda x:x[1],reverse=True)
+            top3=ordered[:3]; top3_votes=sum(v for _,v in top3); top3_share=top3_votes/total*100 if total else 0
+            top_name,top_votes=(ordered[0] if ordered else ('—',0)); top_share=top_votes/total*100 if total else 0
+
+            findings.append(finding(
+                f'coverage-{office}-{cid}','territorial_coverage',office,name,
+                f'{name} recebeu votos em {covered} dos 167 municípios do RN.',
+                'O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.',
+                f'{covered}/167',
+                f'{covered} municípios com voto nominal registrado ÷ 167 municípios do RN.',
+                f'{name} recebeu votos em {covered} dos 167 municípios do Rio Grande do Norte.',
+                [{'label':'Municípios com votos','value':str(covered)},{'label':'Municípios do RN','value':'167'},{'label':'Votos no estado','value':integer(total)}]
+            ))
+            findings.append(finding(
+                f'capital-{office}-{cid}','capital_share',office,name,
+                f'Natal responde por {pct(natal_share)} dos votos de {name} contabilizados no RN.',
+                'A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.',
+                pct(natal_share),
+                f'{integer(natal)} votos em Natal ÷ {integer(total)} votos no RN = {pct(natal_share)}.',
+                f'Natal concentra {pct(natal_share)} dos votos de {name} contabilizados no RN; o restante do estado responde por {pct(interior_share)}.',
+                [{'label':'Natal','value':integer(natal)},{'label':'Demais municípios','value':integer(interior)},{'label':'Total no RN','value':integer(total)}]
+            ))
+            if top3:
+                detail='; '.join([f'{n}: {integer(v)}' for n,v in top3])
+                findings.append(finding(
+                    f'top3-{office}-{cid}','top_municipalities',office,name,
+                    f'Os três municípios com mais votos para {name} somam {pct(top3_share)} da votação estadual da candidatura.',
+                    f'O município com maior número de votos nominais para esta candidatura é {top_name}, com {integer(top_votes)} votos ({pct(top_share)} do total estadual).',
+                    pct(top3_share),
+                    f'{integer(top3_votes)} votos nos três municípios com maior votação ÷ {integer(total)} votos no RN = {pct(top3_share)}.',
+                    f'Os três municípios com mais votos para {name} somam {pct(top3_share)} da votação estadual registrada da candidatura.',
+                    [{'label':'Três municípios','value':integer(top3_votes)},{'label':'Total no RN','value':integer(total)},{'label':'Maior votação municipal','value':top_name}],
+                    card_note=detail
+                ))
+        offices_meta[office]={'label':meta['label'],'progress':state['progress'],'candidates_with_votes':sum(1 for c in state['candidates'] if c['votes']>0)}
+
+    findings.sort(key=lambda f:(f['office'],f['candidate'],f['type']))
     now=datetime.now(TZ)
-    data={'status':'ok','generated_at':now.isoformat(timespec='seconds'),'source_generated_at':source_dt.isoformat(timespec='seconds') if source_dt else None,'source_name':'TSE / Dados Abertos — Prestação de contas de candidatos 2026','source_url':SOURCE_PAGE,'source_download_url':ZIP_URL,'records':rec_count,'scope':'Rio Grande do Norte','office':'Governador','methodology_version':'1.0','candidates':cand_list,'findings':findings}
-    OUT.parent.mkdir(parents=True,exist_ok=True);OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(f'Radar RN: {len(cand_list)} candidaturas, {len(findings)} achados, {rec_count} registros RN processados.')
+    progress=min(progress_values) if progress_values else 0
+    data={
+        'status':'ok','generated_at':now.isoformat(timespec='seconds'),
+        'source_generated_at':max(stamps) if stamps else None,
+        'source_name':'Tribunal Superior Eleitoral · resultados oficiais',
+        'source_url':SOURCE_PAGE,'progress':round(progress,2),'scope':'Rio Grande do Norte',
+        'offices':offices_meta,'municipalities':len(municipalities),'request_errors':errors,
+        'findings':findings,'methodology_version':'2.0'
+    }
+    OUT.parent.mkdir(parents=True,exist_ok=True)
+    OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+    print(f"Radar RN legislativo: {len(findings)} achados; {len(municipalities)} municípios; {errors} requisições sem resposta.")
 
 if __name__=='__main__':
     try: main()
     except Exception as e:
-        print('ERRO:',e,file=sys.stderr);sys.exit(1)
+        print('ERRO:',e,file=sys.stderr)
+        waiting('O Radar RN não conseguiu concluir a leitura oficial nesta atualização. A próxima execução tentará novamente.')
