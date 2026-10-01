@@ -204,7 +204,7 @@ async function loadRemote(){
     state[selectedOffice]=result;
     if(mode==='sim'){
       $('#statusTitle').textContent='Simulado TSE carregado';
-      $('#statusText').textContent='Dados de teste do ambiente de simulação do TSE. Não representam as candidaturas reais da eleição.';
+      $('#statusText').textContent='Dados do Simulado TSE. Não representam a apuração oficial.';
     }else{
       $('#statusTitle').textContent='Resultados oficiais carregados';
       if(result.integrity?.unmatched){
@@ -217,7 +217,7 @@ async function loadRemote(){
   }catch(e){
     const notPublished=mode==='official'&&String(e?.message||e).includes('404');
     $('#statusTitle').textContent=notPublished?'Resultado oficial ainda não disponível':'Fonte indisponível';
-    $('#statusText').textContent=notPublished?'O arquivo EA20 deste recorte ainda não foi publicado pelo TSE. A base oficial de candidaturas continua disponível.':'Não foi possível carregar este recorte agora. As candidaturas oficiais continuam disponíveis no modo Candidaturas TSE.';
+    $('#statusText').textContent=notPublished?'O resultado oficial deste recorte ainda não está disponível no TSE. Use o Simulado TSE apenas para testar a ferramenta.':'Não foi possível carregar este recorte agora. Tente atualizar; para testar a ferramenta, selecione Simulado TSE.';
   }
   finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
@@ -291,7 +291,7 @@ function makePostText(){
   }else{
     lines.push(fmtPct(d.progress)+' das seções totalizadas','');
     d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
-    lines.push('','Fonte: TSE');
+    lines.push('',mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE');
   }
   return lines.join('\n');
 }
@@ -313,7 +313,7 @@ function drawCanvas(){
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logoImg.complete)ctx.drawImage(logoImg,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);
-  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'CANDIDATURAS TSE · SEM VOTOS':'DADOS DO TSE',650,105);
+  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='sim'?'SIMULADO TSE':'RESULTADOS TSE',650,105);
 
   const fc=featureCollectionForScope();
   if(fc&&fc.features?.length){
