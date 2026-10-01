@@ -105,6 +105,17 @@ function applyDemo(){
   Object.keys(state).forEach(k=>{const base=DEMO_BASE[k]||[];const factor=demoStep===0?0:1;state[k]={progress:k==='pres'?0:Math.min(100,p+4),candidates:base.map((x,i)=>({name:x[0],pct:k==='pres'?0:x[1]*factor,seq:i+1,id:String(i+1)})),generatedAt:nowStamp()}});
   renderAll();
 }
+async function loadTestCandidates(){
+  const uf=selectedOffice==='pres'?(selectedScope==='br'?'br':scopeCode()):scopeCode();
+  if(!uf)return;
+  try{
+    const r=await fetch(endpointFor(selectedOffice,uf,'official'),{cache:'no-store'});
+    if(!r.ok)return;
+    const x=parseEA20(await r.json());
+    state[selectedOffice]={...x,progress:0,candidates:x.candidates.map(c=>({...c,pct:0,votes:0}))};
+    renderAll();
+  }catch(e){}
+}
 async function loadRemote(){
   $('#refreshBtn').textContent='Carregando…';$('#refreshBtn').disabled=true;
   try{
