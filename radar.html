@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5c400">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Central das Eleições UEFY — Radar RN</title>
+  <link rel="stylesheet" href="style.css?v=20261001-19">
+  <link rel="stylesheet" href="radar.css?v=20261001-19">
+  <script>
+  (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
+  </script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
+      <div class="brandtext"><strong>Central das Eleições UEFY</strong><span>Radar RN · jornalismo de dados</span></div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Apuração</a>
+      <a href="rn.html">RN</a>
+      <a class="active" href="radar.html">Radar RN</a>
+      <a href="#publicacao">Publicação</a>
+      <details class="mobile-menu">
+        <summary aria-label="Abrir menu">Menu</summary>
+        <div class="mobile-menu-panel">
+          <a href="index.html">Apuração geral</a>
+          <a href="rn.html">Rio Grande do Norte</a>
+          <a href="radar.html">Radar RN</a>
+          <a href="#publicacao">Publicação</a>
+          <a href="#metodologia">Metodologia</a>
+        </div>
+      </details>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+      <span class="live"><i></i><span id="radarLive">Base oficial</span></span>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap radar-shell">
+  <section class="radar-hero">
+    <div>
+      <div class="radar-kicker">Central das Eleições UEFY · Rio Grande do Norte</div>
+      <h1>O que os dados eleitorais do RN estão mostrando?</h1>
+      <p>O Radar cruza registros oficiais do TSE para encontrar padrões, concentrações e mudanças que podem virar pauta. Nada é publicado automaticamente.</p>
+    </div>
+    <div class="radar-source-card">
+      <span>Base processada</span>
+      <strong id="sourceGenerated">Carregando…</strong>
+      <small id="sourceMeta">TSE · DivulgaCandContas / Dados Abertos</small>
+      <a id="sourceLink" href="https://dadosabertos.tse.jus.br/pt_BR/dataset/prestacao-de-contas-eleitorais-2026" target="_blank" rel="noopener">Abrir fonte oficial</a>
+    </div>
+  </section>
+
+  <section class="radar-controls card" aria-label="Filtros do Radar RN">
+    <label><span>Cargo</span><strong>Governador do Rio Grande do Norte</strong></label>
+    <label><span>Candidatura</span><select id="candidateFilter"><option value="all">Todas</option></select></label>
+    <label><span>Tipo de achado</span><select id="typeFilter"><option value="all">Todos os achados</option></select></label>
+    <button class="btn primary" id="refreshRadar" type="button">Atualizar tela</button>
+  </section>
+
+  <section class="radar-status card" id="radarStatus" hidden></section>
+
+  <section class="radar-grid-section">
+    <div class="section-head radar-section-head">
+      <div><h2>Achados nos dados</h2><p id="findingCount">—</p></div>
+      <span class="review-legend"><i></i> Gere a publicação somente depois de conferir o cálculo.</span>
+    </div>
+    <div class="findings-grid" id="findingsGrid"></div>
+  </section>
+
+  <section class="radar-workbench" id="publicacao">
+    <div class="card radar-detail">
+      <div class="detail-empty" id="detailEmpty">
+        <span>RADAR RN</span>
+        <h2>Selecione um achado.</h2>
+        <p>Você verá o cálculo, a origem dos dados e os componentes usados para chegar ao número antes de gerar uma arte.</p>
+      </div>
+      <div id="detailContent" hidden>
+        <div class="detail-topline"><span id="detailType">—</span><span id="detailCandidate">—</span></div>
+        <h2 id="detailHeadline">—</h2>
+        <p class="detail-explain" id="detailExplain">—</p>
+        <div class="calc-box">
+          <small>Como o Radar chegou a este número</small>
+          <strong id="detailCalc">—</strong>
+        </div>
+        <div class="detail-breakdown" id="detailBreakdown"></div>
+        <div class="detail-source">
+          <div><span>Fonte</span><strong>TSE / DivulgaCandContas</strong></div>
+          <div><span>Base</span><strong id="detailBase">—</strong></div>
+        </div>
+        <label class="review-check"><input type="checkbox" id="reviewCheck"> <span>Conferi o cálculo e quero liberar a geração da publicação.</span></label>
+      </div>
+    </div>
+
+    <aside class="card radar-publisher">
+      <div class="publisher-head"><div><span>Achados UEFY</span><h2>Publicação</h2></div><span class="publisher-size">1080 × 1080</span></div>
+      <div class="canvas-box radar-canvas-box"><canvas id="radarCanvas" width="1080" height="1080"></canvas></div>
+      <div class="block-title text-title"><span>Texto para o X</span><span id="radarChars">0/280</span></div>
+      <textarea id="radarPostText" readonly></textarea>
+      <div class="radar-actions">
+        <button class="btn" id="copyRadarText" disabled>Copiar texto</button>
+        <button class="btn" id="copyRadarImage" disabled>Copiar imagem</button>
+        <button class="btn primary" id="openRadarX" disabled>Publicar no X</button>
+        <button class="btn" id="downloadRadar" disabled>Baixar imagem</button>
+      </div>
+      <p class="share-note">No computador, “Publicar no X” copia a imagem e abre o X com o texto preenchido. Cole a imagem com Ctrl+V. A Central não publica automaticamente.</p>
+    </aside>
+  </section>
+
+  <section class="card methodology" id="metodologia">
+    <div><span class="radar-kicker">Transparência</span><h2>Como o Radar funciona</h2></div>
+    <div class="method-grid">
+      <article><b>1</b><strong>Dados oficiais</strong><p>O atualizador usa arquivos do Portal de Dados Abertos do TSE e mantém o horário da base processada.</p></article>
+      <article><b>2</b><strong>Cálculo reproduzível</strong><p>Cada achado guarda numerador, denominador e componentes. Se o cálculo não puder ser reproduzido, ele não vira card.</p></article>
+      <article><b>3</b><strong>Sem adjetivação automática</strong><p>O sistema descreve valores, proporções, fornecedores e mudanças. Não classifica um dado como suspeito, bom ou ruim.</p></article>
+      <article><b>4</b><strong>Revisão humana</strong><p>Copiar e publicar só são liberados depois da confirmação de revisão do achado selecionado.</p></article>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Radar RN</strong><span>Dados oficiais do TSE transformados em achados verificáveis.</span></div></footer>
+<nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">RN</a><a href="radar.html" class="active">Radar</a><a href="#publicacao">Publicar</a></nav>
+<button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
+<script src="radar.js?v=20261001-19"></script>
+</body>
+</html>
