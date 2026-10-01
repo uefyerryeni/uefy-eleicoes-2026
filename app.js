@@ -196,13 +196,18 @@ async function loadRemote(){
       const uf=selectedOffice==='pres'?(selectedScope==='br'?'br':scopeCode()):scopeCode();
       const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store'});if(!r.ok)throw new Error(r.status);result=parseEA20(await r.json());
     }
-    result=await reconcileResult(result,selectedOffice);
+    if(mode==='official')result=await reconcileResult(result,selectedOffice);
     state[selectedOffice]=result;
-    $('#statusTitle').textContent='Resultados carregados';
-    if(result.integrity?.unmatched){
-      $('#statusText').textContent='Atenção: '+result.integrity.unmatched+' registro(s) do resultado não corresponderam à base oficial de candidaturas.';
+    if(mode==='sim'){
+      $('#statusTitle').textContent='Simulado TSE carregado';
+      $('#statusText').textContent='Dados de teste do ambiente de simulação do TSE. Não representam as candidaturas reais da eleição.';
     }else{
-      $('#statusText').textContent='EA20 '+MODE_LABELS[mode]+' · '+result.integrity.matched+'/'+result.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
+      $('#statusTitle').textContent='Resultados oficiais carregados';
+      if(result.integrity?.unmatched){
+        $('#statusText').textContent='Atenção: '+result.integrity.unmatched+' registro(s) do resultado oficial não corresponderam à base de candidaturas.';
+      }else{
+        $('#statusText').textContent='EA20 oficial · '+result.integrity.matched+'/'+result.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
+      }
     }
     renderAll();
   }catch(e){$('#statusTitle').textContent='Fonte indisponível';$('#statusText').textContent='Não foi possível carregar este recorte agora. As candidaturas oficiais continuam disponíveis no modo Candidaturas TSE.'}
