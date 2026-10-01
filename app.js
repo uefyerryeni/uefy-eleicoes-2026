@@ -80,7 +80,7 @@ function flattenCandidates(data){
 }
 function parseEA20(data){
   const progress=data.s&&data.s.pst!=null?Number(String(data.s.pst).replace(',','.')):(data.s&&data.s.ts?Number(data.s.st||0)/Number(data.s.ts)*100:0);
-  return {progress:isFinite(progress)?progress:0,candidates:flattenCandidates(data),generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp(),sectionsTotal:Number(data.s?.ts||0),sectionsDone:Number(data.s?.st||0)};
+  const candidates=flattenCandidates(data).sort((a,b)=>b.votes-a.votes||a.seq-b.seq);return {progress:isFinite(progress)?progress:0,candidates,generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp(),sectionsTotal:Number(data.s?.ts||0),sectionsDone:Number(data.s?.st||0)};
 }
 function endpointFor(office,uf,env=mode){
   const meta=officeMeta[office],base=env==='sim'?'https://resultados-sim.tse.jus.br/simulado/simulado2026/ele2026':'https://resultados.tse.jus.br/oficial/ele2026';
