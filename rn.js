@@ -136,11 +136,14 @@ async function loadRemote(){
   $('#rnRefresh').disabled=true;$('#rnRefresh').textContent='Carregando…';$('#rnStatus').textContent='Localizando o município na configuração do TSE…';
   try{
     const code=await municipalityCode(),r=await fetch(resultUrl(code),{cache:'no-store'});if(!r.ok)throw new Error('Resultado '+r.status);
-    current=await reconcileRnResult(parseEA20(await r.json()));
-    if(current.integrity?.unmatched){
-      $('#rnStatus').textContent='Atenção: '+current.integrity.unmatched+' registro(s) do resultado não corresponderam à base oficial de candidaturas.';
+    current=parseEA20(await r.json());
+    if(mode==='official')current=await reconcileRnResult(current);
+    if(mode==='sim'){
+      $('#rnStatus').textContent='Dados de teste do Simulado TSE para este município. Não representam as candidaturas reais.';
+    }else if(current.integrity?.unmatched){
+      $('#rnStatus').textContent='Atenção: '+current.integrity.unmatched+' registro(s) do resultado oficial não corresponderam à base de candidaturas.';
     }else{
-      $('#rnStatus').textContent='EA20 '+(mode==='sim'?'simulado':'oficial')+' · '+current.integrity.matched+'/'+current.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
+      $('#rnStatus').textContent='EA20 oficial · '+current.integrity.matched+'/'+current.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
     }
     renderCurrent();
   }catch(e){$('#rnStatus').textContent='Não foi possível carregar este município agora: '+e.message}
