@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>UEFY Eleições 2026 — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20260930-5">
+  <link rel="stylesheet" href="style.css?v=20261001-1">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -47,6 +47,7 @@
     </nav>
   </div>
 </header>
+<div class="live-strip" aria-label="Acompanhamento rápido"><div class="wrap live-strip-inner"><strong>Favoritos</strong><div class="live-strip-items" id="liveStripItems"><span class="strip-empty">Marque municípios para acompanhar aqui.</span></div></div></div>
 
 <main class="wrap rn-shell">
   <section class="rn-hero">
@@ -69,7 +70,7 @@
     </div>
 
     <aside class="card rn-side">
-      <div class="rn-selected"><small>Município selecionado</small><strong id="selectedMun">Natal</strong>
+      <div class="rn-selected"><div class="selected-line"><div><small>Município selecionado</small><strong id="selectedMun">Natal</strong></div><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button></div>
         <div class="mun-focus-wrap">
           <span class="mun-focus-label">Recorte do município</span>
           <svg id="munFocusMap" class="mun-focus-map" viewBox="0 0 320 220" aria-label="Município selecionado ampliado"></svg>
@@ -114,7 +115,9 @@
   </section>
 </main>
 <footer class="foot rn-foot"><div class="wrap footline"><strong>UEFY Eleições · Rio Grande do Norte</strong><span>Selecione um município, confira os dados e gere a publicação.</span></div></footer>
+<nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">RN</a><a href="#publicacao">Publicar</a></nav>
+<button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20260930-5"></script>
+<script src="rn.js?v=20261001-1"></script>
 </body>
 </html>
