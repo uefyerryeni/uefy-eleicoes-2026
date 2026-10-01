@@ -8,8 +8,8 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Radar RN</title>
-  <link rel="stylesheet" href="style.css?v=20261001-19">
-  <link rel="stylesheet" href="radar.css?v=20261001-19">
+  <link rel="stylesheet" href="style.css?v=20261001-20">
+  <link rel="stylesheet" href="radar.css?v=20261001-20">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -37,7 +37,7 @@
         </div>
       </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
-      <span class="live"><i></i><span id="radarLive">Base oficial</span></span>
+      <span class="live"><i></i><span id="radarLive">TSE oficial</span></span>
     </nav>
   </div>
 </header>
@@ -46,19 +46,23 @@
   <section class="radar-hero">
     <div>
       <div class="radar-kicker">Central das Eleições UEFY · Rio Grande do Norte</div>
-      <h1>O que os dados eleitorais do RN estão mostrando?</h1>
-      <p>O Radar cruza registros oficiais do TSE para encontrar padrões, concentrações e mudanças que podem virar pauta. Nada é publicado automaticamente.</p>
+      <h1>O voto legislativo visto por dentro.</h1>
+      <p>O Radar RN lê os resultados oficiais do TSE para mostrar como a votação de Senado, Câmara dos Deputados e Assembleia Legislativa se distribui pelos municípios potiguares. A proposta é revelar padrões territoriais que o placar geral não mostra.</p>
     </div>
     <div class="radar-source-card">
-      <span>Base processada</span>
+      <span>Última leitura</span>
       <strong id="sourceGenerated">Carregando…</strong>
-      <small id="sourceMeta">TSE · DivulgaCandContas / Dados Abertos</small>
-      <a id="sourceLink" href="https://dadosabertos.tse.jus.br/pt_BR/dataset/prestacao-de-contas-eleitorais-2026" target="_blank" rel="noopener">Abrir fonte oficial</a>
+      <small id="sourceMeta">Tribunal Superior Eleitoral · resultados oficiais</small>
+      <a id="sourceLink" href="https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados" target="_blank" rel="noopener">Abrir resultados do TSE</a>
     </div>
   </section>
 
   <section class="radar-controls card" aria-label="Filtros do Radar RN">
-    <label><span>Cargo</span><strong>Governador do Rio Grande do Norte</strong></label>
+    <label><span>Cargo</span><select id="officeFilter">
+      <option value="sen">Senador</option>
+      <option value="depf">Deputado federal</option>
+      <option value="depe">Deputado estadual</option>
+    </select></label>
     <label><span>Candidatura</span><select id="candidateFilter"><option value="all">Todas</option></select></label>
     <label><span>Tipo de achado</span><select id="typeFilter"><option value="all">Todos os achados</option></select></label>
     <button class="btn primary" id="refreshRadar" type="button">Atualizar tela</button>
@@ -68,8 +72,8 @@
 
   <section class="radar-grid-section">
     <div class="section-head radar-section-head">
-      <div><h2>Achados nos dados</h2><p id="findingCount">—</p></div>
-      <span class="review-legend"><i></i> Gere a publicação somente depois de conferir o cálculo.</span>
+      <div><h2>O que o mapa do voto mostra</h2><p id="findingCount">—</p></div>
+      <span class="review-legend"><i></i> Os números acompanham a totalização oficial e podem mudar durante a apuração.</span>
     </div>
     <div class="findings-grid" id="findingsGrid"></div>
   </section>
@@ -79,7 +83,7 @@
       <div class="detail-empty" id="detailEmpty">
         <span>RADAR RN</span>
         <h2>Selecione um achado.</h2>
-        <p>Você verá o cálculo, a origem dos dados e os componentes usados para chegar ao número antes de gerar uma arte.</p>
+        <p>Você verá os componentes do cálculo antes de gerar uma publicação.</p>
       </div>
       <div id="detailContent" hidden>
         <div class="detail-topline"><span id="detailType">—</span><span id="detailCandidate">—</span></div>
@@ -91,7 +95,7 @@
         </div>
         <div class="detail-breakdown" id="detailBreakdown"></div>
         <div class="detail-source">
-          <div><span>Fonte</span><strong>TSE / DivulgaCandContas</strong></div>
+          <div><span>Fonte</span><strong>Tribunal Superior Eleitoral</strong></div>
           <div><span>Base</span><strong id="detailBase">—</strong></div>
         </div>
         <label class="review-check"><input type="checkbox" id="reviewCheck"> <span>Conferi o cálculo e quero liberar a geração da publicação.</span></label>
@@ -116,17 +120,17 @@
   <section class="card methodology" id="metodologia">
     <div><span class="radar-kicker">Transparência</span><h2>Como o Radar funciona</h2></div>
     <div class="method-grid">
-      <article><b>1</b><strong>Dados oficiais</strong><p>O atualizador usa arquivos do Portal de Dados Abertos do TSE e mantém o horário da base processada.</p></article>
-      <article><b>2</b><strong>Cálculo reproduzível</strong><p>Cada achado guarda numerador, denominador e componentes. Se o cálculo não puder ser reproduzido, ele não vira card.</p></article>
-      <article><b>3</b><strong>Sem adjetivação automática</strong><p>O sistema descreve valores, proporções, fornecedores e mudanças. Não classifica um dado como suspeito, bom ou ruim.</p></article>
-      <article><b>4</b><strong>Revisão humana</strong><p>Copiar e publicar só são liberados depois da confirmação de revisão do achado selecionado.</p></article>
+      <article><b>1</b><strong>Resultados oficiais</strong><p>O Radar usa apenas arquivos de resultados do TSE para o Rio Grande do Norte e seus 167 municípios.</p></article>
+      <article><b>2</b><strong>Leitura territorial</strong><p>A votação é reorganizada por candidatura e município para calcular presença territorial, peso da capital e concentração da votação.</p></article>
+      <article><b>3</b><strong>Sem julgamento político</strong><p>Os cards descrevem números e distribuições. Não classificam candidaturas como melhores, piores, fortes ou fracas.</p></article>
+      <article><b>4</b><strong>Apuração em movimento</strong><p>Enquanto a totalização não chega a 100%, os achados são parciais e podem mudar a cada atualização do TSE.</p></article>
     </div>
   </section>
 </main>
 
-<footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Radar RN</strong><span>Dados oficiais do TSE transformados em achados verificáveis.</span></div></footer>
+<footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Radar RN</strong><span>Resultados oficiais do TSE transformados em leituras territoriais verificáveis.</span></div></footer>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">RN</a><a href="radar.html" class="active">Radar</a><a href="#publicacao">Publicar</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="radar.js?v=20261001-19"></script>
+<script src="radar.js?v=20261001-20"></script>
 </body>
 </html>
