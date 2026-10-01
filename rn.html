@@ -78,14 +78,9 @@
       </div>
 
       <div class="rn-toolbar">
-        <select id="rnOffice">
-          <option value="gov">Governador</option>
-          <option value="sen">Senado</option>
-          <option value="depf">Deputado federal</option>
-          <option value="depe">Deputado estadual</option>
-        </select>
+        <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Resultado por município</span></div>
         <select id="rnMode">
-          <option value="demo">Demonstração</option>
+          <option value="demo">Candidaturas TSE · sem votos</option>
           <option value="sim">Simulado TSE</option>
           <option value="official">Oficial TSE</option>
         </select>
@@ -97,7 +92,7 @@
       <div class="rn-publisher" id="publicacao">
         <div class="block-title"><span>Resultado do município</span><span id="rnProgress">0,0%</span></div>
         <div class="rn-result-lines" id="rnResults"></div>
-        <div class="rn-note" id="rnStatus">Demonstração pronta.</div>
+        <div class="rn-note" id="rnStatus">Candidaturas do RN · aguardando consulta.</div>
 
         <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
         <div class="canvas-box"><canvas id="rnCanvas" width="1080" height="1080"></canvas></div>
@@ -118,6 +113,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">RN</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261001-6"></script>
+<script src="rn.js?v=20261001-7"></script>
 </body>
 </html>
