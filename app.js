@@ -112,7 +112,7 @@ function applyDemo(){
   }
 }
 let candidateBase=null,ufCandidateCache={};
-const UF_SHARD={ac:'a',al:'a',am:'a',ap:'a',ba:'a',ce:'a',df:'a',es:'a',go:'a',ma:'b',mg:'b',ms:'b',mt:'b',pa:'b',pb:'b',pe:'b',pi:'b',pr:'b',rn:'c',ro:'c',rr:'c',rs:'c',sc:'c',se:'c',to:'c'};
+const UF_SHARD={ac:'a',al:'a',am:'a',ap:'a',ba:'a',ce:'a',df:'a',es:'a',go:'a',ma:'b',mg:'b',ms:'b',mt:'b',pa:'b',pb:'b',pe:'b',pi:'b',pr:'b',rj:'d',rn:'c',ro:'c',rr:'c',rs:'c',sc:'c',se:'c',sp:'d',to:'c'};
 async function getUfCandidates(uf){
   uf=String(uf||'').toLowerCase();
   if(!UF_SHARD[uf])return null;
