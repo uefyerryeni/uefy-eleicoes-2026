@@ -143,7 +143,7 @@ async function loadRemote(){
     current=parseEA20(await r.json());
     if(mode==='official')current=await reconcileRnResult(current);
     if(mode==='sim'){
-      $('#rnStatus').textContent='Dados de teste do Simulado TSE para este município. Não representam as candidaturas reais.';
+      $('#rnStatus').textContent='Dados do Simulado TSE para este município. Não representam a apuração oficial.';
     }else if(current.integrity?.unmatched){
       $('#rnStatus').textContent='Atenção: '+current.integrity.unmatched+' registro(s) do resultado oficial não corresponderam à base de candidaturas.';
     }else{
@@ -183,7 +183,7 @@ function makeText(){
   }else{
     lines.push(fmtPct(current.progress)+' das seções totalizadas','');
     current.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
-    lines.push('','Fonte: TSE');
+    lines.push('',mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE');
   }
   return lines.join('\n');
 }
@@ -216,7 +216,7 @@ function drawCanvas(){
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logo.complete)ctx.drawImage(logo,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);
-  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='demo'?'CANDIDATURAS TSE · SEM VOTOS':'DADOS DO TSE',690,105);
+  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='sim'?'SIMULADO TSE':'RESULTADOS TSE',690,105);
   drawFocusedMunicipality(ctx,selectedFeature,555,115,470,350);
   ctx.fillStyle='#17191c';ctx.font='700 76px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,235);
   fitCanvasText(ctx,OFFICE[office].title,70,300,440,44,32,'700','#17191c');
