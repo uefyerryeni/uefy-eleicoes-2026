@@ -175,7 +175,7 @@ function renderAll(){['pres','gov','sen','depf','depe'].forEach(renderRows);cons
 function populateScopeSelect(){const scopes=officeMeta[selectedOffice].scopes,sel=$('#scopeSelect');sel.innerHTML=scopes.map(s=>'<option value="'+s.value+'">'+s.label+'</option>').join('');if(!scopes.some(s=>s.value===selectedScope))selectedScope=officeMeta[selectedOffice].defaultScope;sel.value=selectedScope}
 function updateCardVisibility(){
   const rnContext=selectedScope==='uf_rn'||['sen','depf','depe'].includes(selectedOffice);
-  $('.result-card').forEach(el=>{
+  $$('.result-card').forEach(el=>{
     const k=el.dataset.office;
     el.hidden=!rnContext&&['sen','depf','depe'].includes(k);
   });
@@ -183,7 +183,7 @@ function updateCardVisibility(){
 function selectOffice(k){
   selectedOffice=k;$('#officeSelect').value=k;selectedScope=officeMeta[k].defaultScope;
   populateScopeSelect();updateCardVisibility();
-  $('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));
+  $$('.result-card').forEach(el=>el.classList.toggle('selected',el.dataset.office===k));
   $('[data-pick]').forEach(b=>b.classList.toggle('active',b.dataset.pick===k));
   updateScopeMap();
   if(mode==='demo')loadTestCandidates();else loadRemote();
