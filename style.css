@@ -517,3 +517,44 @@ body.dark .rn-fixed-office{background:#171c20;border-color:#343c43}
   .rn-result-line{grid-template-columns:minmax(0,1fr) 52px}
   .rn-result-line .bar{display:none}
 }
+
+.candidate-row.registry{
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:center;
+}
+.candidate-row.registry .name small,
+.rn-result-line.registry small{
+  display:block;
+  margin-top:3px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:600;
+}
+.status-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:28px;
+  max-width:220px;
+  padding:5px 8px;
+  border:1px solid var(--rule);
+  border-radius:999px;
+  background:var(--soft);
+  color:#626a71;
+  font-size:9px;
+  font-weight:750;
+  text-align:center;
+  line-height:1.15;
+}
+.rn-result-line.registry{
+  grid-template-columns:minmax(0,1fr) auto;
+  padding:6px 0;
+  border-bottom:1px solid #eef1f3;
+}
+.rn-result-line.registry:last-child{border-bottom:0}
+body.dark .status-chip{background:#171c20;color:#e5e9ec;border-color:#3d454c}
+body.dark .rn-result-line.registry{border-color:#30383f}
+@media(max-width:600px){
+  .candidate-row.registry,.rn-result-line.registry{grid-template-columns:1fr}
+  .status-chip{width:max-content;max-width:100%;margin-top:4px}
+}
