@@ -89,9 +89,14 @@ function extractMunicipalities(data){
   };
   walk(data,null);return out;
 }
+let municipalityConfigCache={};
 async function municipalityCode(){
-  const cfg=await fetch(municipalConfigUrl(),{cache:'no-store'});if(!cfg.ok)throw new Error('Config '+cfg.status);
-  const all=extractMunicipalities(await cfg.json());
+  const key=mode==='sim'?'sim':'official';
+  if(!municipalityConfigCache[key]){
+    const cfg=await fetch(municipalConfigUrl(),{cache:'no-store'});if(!cfg.ok)throw new Error('Config '+cfg.status);
+    municipalityConfigCache[key]=extractMunicipalities(await cfg.json());
+  }
+  const all=municipalityConfigCache[key];
   const target=norm(selectedFeature.properties.nome);
   const found=all.find(m=>(!m.uf||m.uf==='rn')&&norm(m.name)===target)||all.find(m=>norm(m.name)===target);
   if(!found)throw new Error('Município não encontrado na configuração do TSE');
@@ -102,21 +107,49 @@ function resultUrl(code){
   return base+'/'+election+'/dados/rn/rn'+code+'-c'+OFFICE[office].cargo+'-e'+el+'-u.json';
 }
 function parseEA20(data){
-  const out=[];(data.carg||[]).forEach(c=>(c.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(cand=>out.push({name:cand.nmu||cand.nm||('Candidato '+(cand.n||'')),pct:Number(String(cand.pvap??0).replace(',','.'))||0,seq:Number(cand.seq||999999)})))));
+  const out=[];(data.carg||[]).forEach(c=>(c.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(cand=>out.push({id:String(cand.n||cand.nsqcand||''),number:String(cand.n||''),name:cand.nmu||cand.nm||(cand.n?'Número '+cand.n:'Nome não informado'),pct:Number(String(cand.pvap??0).replace(',','.'))||0,votes:Number(cand.vap||0),seq:Number(cand.seq||999999)})))));
   const progress=data.s&&data.s.pst!=null?Number(String(data.s.pst).replace(',','.')):(data.s&&data.s.ts?Number(data.s.st||0)/Number(data.s.ts)*100:0);
   return {progress:isFinite(progress)?progress:0,candidates:out.sort((a,b)=>b.pct-a.pct||a.seq-b.seq),generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp()};
+}
+async function reconcileRnResult(result){
+  try{
+    if(!rnCandidateBase){
+      const r=await fetch('data/candidatos-ufs-c.json',{cache:'no-store'});
+      if(!r.ok)throw new Error('Base RN '+r.status);
+      const data=await r.json();rnCandidateBase=data.rn;
+    }
+    const registry=(rnCandidateBase?.candidates||[]).filter(x=>x.cargo===3);
+    const byNumber=new Map(registry.map(x=>[String(x.numero),x]));
+    let matched=0;
+    result.candidates=result.candidates.map(c=>{
+      const reg=byNumber.get(String(c.number||c.id||''));
+      if(!reg)return {...c,matched:false};
+      matched++;
+      return {...c,id:String(reg.seq||c.id),number:reg.numero,name:reg.nome,party:reg.partido,status:reg.situacao,matched:true};
+    });
+    result.integrity={matched,total:result.candidates.length,unmatched:result.candidates.length-matched};
+  }catch(e){
+    result.integrity={matched:0,total:result.candidates.length,unmatched:result.candidates.length,error:true};
+  }
+  return result;
 }
 async function loadRemote(){
   $('#rnRefresh').disabled=true;$('#rnRefresh').textContent='Carregando…';$('#rnStatus').textContent='Localizando o município na configuração do TSE…';
   try{
     const code=await municipalityCode(),r=await fetch(resultUrl(code),{cache:'no-store'});if(!r.ok)throw new Error('Resultado '+r.status);
-    current=parseEA20(await r.json());$('#rnStatus').textContent='Dados carregados do '+(mode==='sim'?'simulado':'ambiente oficial')+' do TSE.';renderCurrent();
+    current=await reconcileRnResult(parseEA20(await r.json()));
+    if(current.integrity?.unmatched){
+      $('#rnStatus').textContent='Atenção: '+current.integrity.unmatched+' registro(s) do resultado não corresponderam à base oficial de candidaturas.';
+    }else{
+      $('#rnStatus').textContent='EA20 '+(mode==='sim'?'simulado':'oficial')+' · '+current.integrity.matched+'/'+current.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
+    }
+    renderCurrent();
   }catch(e){$('#rnStatus').textContent='Não foi possível carregar este município agora: '+e.message}
   finally{$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar'}
 }
 function renderCurrent(){
   $('#rnProgress').textContent=fmtPct(current.progress);
-  $('#rnResults').innerHTML=(current.candidates||[]).slice(0,4).map(c=>'<div class="rn-result-line"><span>'+c.name+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
+  $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+c.name+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+'/280';drawCanvas();
 }
 function makeText(){
