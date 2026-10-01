@@ -55,8 +55,8 @@
 <section class="hero">
   <div class="wrap">
     <div class="eyebrow">Eleições 2026</div>
-    <h1>Eleições 2026 prontas para acompanhar e compartilhar.</h1>
-    <p>Acompanhe os dados do TSE, gere a imagem em alta qualidade e prepare o texto para publicar no X.</p>
+    <h1>Acompanhe a eleição sem perder o contexto.</h1>
+    <p>Escolha o cargo e a abrangência, confira a fonte e gere a publicação em um único painel.</p>
 
     <div class="toolbar card">
       <label class="field"><span>Cargo</span><select id="officeSelect">
@@ -77,10 +77,10 @@
 
 <section class="wrap main-grid" id="apuracao">
   <div>
-    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Candidaturas TSE · sem votos</span></div>
+    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Candidaturas oficiais TSE · sem votos</span></div>
     <section class="card status-card">
       <div class="status-top">
-        <div><strong id="statusTitle">Candidaturas TSE pronta</strong><p id="statusText">Selecione o cargo e o recorte para conferir a base disponível.</p></div>
+        <div><strong id="statusTitle">Carregando base oficial</strong><p id="statusText">Aguarde a conferência das candidaturas.</p></div>
         <div class="updated">Última atualização<strong id="updatedAt">—</strong></div>
       </div>
 
@@ -92,7 +92,7 @@
           </div>
         </article>
 
-        <article class="map-card rn-map-card">
+        <article class="map-card rn-map-card" hidden>
           <div class="map-title"><div><h3>Rio Grande do Norte</h3><p>167 municípios</p></div><span class="map-source">GeoJSON</span></div>
           <div class="map-body"><svg id="rnMap" viewBox="0 0 420 300" aria-label="Mapa do Rio Grande do Norte por municípios"></svg>
             <div class="metric"><span>Seções totalizadas</span><strong id="rnProgressText">0,0%</strong><div class="progress"><i id="rnProgressBar"></i></div></div>
@@ -105,19 +105,19 @@
           <div class="result-head"><div><h3>Presidência</h3><small id="presSmall"></small></div><button class="pick active" data-pick="pres">Usar</button></div>
           <div id="presRows"></div><div class="more" id="presMore"></div>
         </article>
-        <article class="result-card" data-office="gov">
+        <article class="result-card" data-office="gov" hidden>
           <div class="result-head"><div><h3>Governador</h3><small id="govSmall"></small></div><button class="pick" data-pick="gov">Usar</button></div>
           <div id="govRows"></div><div class="more" id="govMore"></div>
         </article>
-        <article class="result-card" data-office="sen">
+        <article class="result-card" data-office="sen" hidden>
           <div class="result-head"><div><h3>Senado</h3><small id="senSmall"></small></div><button class="pick" data-pick="sen">Usar</button></div>
           <div id="senRows"></div><div class="more" id="senMore"></div>
         </article>
-        <article class="result-card" data-office="depf">
+        <article class="result-card" data-office="depf" hidden>
           <div class="result-head"><div><h3>Deputado federal</h3><small id="depfSmall"></small></div><button class="pick" data-pick="depf">Usar</button></div>
           <div id="depfRows"></div><div class="more" id="depfMore"></div>
         </article>
-        <article class="result-card" data-office="depe">
+        <article class="result-card" data-office="depe" hidden>
           <div class="result-head"><div><h3>Deputado estadual</h3><small id="depeSmall"></small></div><button class="pick" data-pick="depe">Usar</button></div>
           <div id="depeRows"></div><div class="more" id="depeMore"></div>
         </article>
@@ -128,8 +128,8 @@
   </div>
 
   <aside class="card publisher" id="publicacao">
-    <h2>Publicação pronta</h2>
-    <p class="sub">Confira a arte e o texto antes de publicar no X.</p>
+    <h2>Publicação</h2>
+    <p class="sub">Prévia da arte e do texto gerados para o recorte selecionado.</p>
     <div class="block-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
     <div class="canvas-box"><canvas id="shareCanvas" width="1080" height="1080"></canvas></div>
     <div class="block-title text-title"><span>Texto da publicação</span><span id="charCount">0/280</span></div>
