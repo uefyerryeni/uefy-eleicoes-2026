@@ -1,7 +1,8 @@
 const $=s=>document.querySelector(s);
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const OFFICE={gov:{title:'Governador',cargo:'0003'}};
-let fc=null,selectedFeature=null,office='gov',mode='demo',current={progress:0,candidates:[],generatedAt:null};
+const RESULTS_RELEASE_AT=Date.parse('2026-10-04T17:00:00-03:00');
+let fc=null,selectedFeature=null,office='gov',mode=Date.now()>=RESULTS_RELEASE_AT?'official':'demo',current={progress:0,candidates:[],generatedAt:null};
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
 
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
@@ -254,13 +255,41 @@ function drawCanvas(){
   ctx.fillText(mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':'Fonte: Tribunal Superior Eleitoral',70,1008);
   ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
+function flashRN(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
+async function rnCanvasBlob(){
+  return await new Promise((resolve,reject)=>$('#rnCanvas').toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a imagem.')),'image/png'));
+}
+async function copyRnImage(){
+  if(!window.isSecureContext||!navigator.clipboard||!window.ClipboardItem)throw new Error('Área de transferência de imagens indisponível.');
+  const blob=await rnCanvasBlob();
+  await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+  return blob;
+}
+function openRnXIntent(text,preopened=null){
+  const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
+  if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
+}
 async function shareRNImageAndText(openX=false,preopened=null){
-  const canvas=$('#rnCanvas'),text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
-  const blob=await new Promise(r=>canvas.toBlob(r,'image/png'));
-  if(!blob){if(preopened)preopened.close();return}
+  const text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
+  let blob;
+  try{blob=await rnCanvasBlob()}catch{if(preopened)preopened.close();flashRN(openX?$('#rnOpenX'):$('#rnShareBundle'),'Falha ao gerar imagem');return}
   const file=new File([blob],`uefy-eleicoes-rn-${norm(name)}.png`,{type:'image/png'});
   const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
-  if(!openX||!desktop){
+
+  if(openX&&desktop){
+    let copied=false;
+    try{
+      if(window.isSecureContext&&navigator.clipboard&&window.ClipboardItem){
+        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+        copied=true;
+      }
+    }catch{}
+    openRnXIntent(text,preopened);
+    flashRN($('#rnOpenX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”');
+    return;
+  }
+
+  if(!openX){
     try{
       if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
         await navigator.share({title:'UEFY Eleições · Rio Grande do Norte',text,files:[file]});
@@ -268,34 +297,31 @@ async function shareRNImageAndText(openX=false,preopened=null){
         return;
       }
     }catch(err){if(err?.name==='AbortError'){if(preopened)preopened.close();return}}
-  }
-  if(openX){
-    let copied=false;
     try{
-      if(navigator.clipboard&&window.ClipboardItem){
-        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
-        copied=true;
-      }
-    }catch{}
-    const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
-    if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
-    const b=$('#rnOpenX'),old=b.textContent;
-    b.textContent=copied?'Imagem copiada · cole no X':'Imagem baixada · anexe no X';
-    if(!copied){const dl=document.createElement('a');dl.download=file.name;dl.href=URL.createObjectURL(blob);dl.click();setTimeout(()=>URL.revokeObjectURL(dl.href),2000)}
-    setTimeout(()=>b.textContent=old,2200);
+      await copyRnImage();
+      flashRN($('#rnShareBundle'),'Imagem copiada · texto acima');
+    }catch{
+      flashRN($('#rnShareBundle'),'Use Copiar texto / Copiar imagem');
+    }
+    if(preopened)preopened.close();
     return;
   }
-  const dl=document.createElement('a');dl.download=file.name;dl.href=URL.createObjectURL(blob);dl.click();setTimeout(()=>URL.revokeObjectURL(dl.href),2000);
-  try{await navigator.clipboard.writeText(text)}catch{}
+
+  openRnXIntent(text,preopened);
+  flashRN($('#rnOpenX'),'X aberto com o texto');
 }
 $('#munSearch').oninput=e=>renderList(e.target.value);
 
+$('#rnMode').value=mode;
+$('#liveLabel').textContent=mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE';
 $('#rnMode').onchange=e=>{mode=e.target.value;$('#liveLabel').textContent=mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE';mode==='demo'?loadRnCandidates():loadRemote()};
 $('#rnRefresh').onclick=()=>mode==='demo'?loadRnCandidates():loadRemote();
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/280';
-$('#rnCopyText').onclick=async()=>navigator.clipboard.writeText($('#rnPostText').value);
+$('#rnCopyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
+$('#rnCopyImage').onclick=async()=>{try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
 $('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
-$('#rnOpenX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareRNImageAndText(true,w)};$('#rnShareBundle').onclick=()=>shareRNImageAndText(false);
+$('#rnOpenX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareRNImageAndText(true,w)};
+$('#rnShareBundle').onclick=()=>shareRNImageAndText(false);
 const theme=$('#themeToggle');
 if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
 function syncTheme(){
