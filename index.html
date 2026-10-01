@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>UEFY Eleições 2026</title>
-  <link rel="stylesheet" href="style.css?v=20260930-5">
+  <link rel="stylesheet" href="style.css?v=20261001-1">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -49,6 +49,7 @@
     </nav>
   </div>
 </header>
+<div class="live-strip" aria-label="Acompanhamento rápido"><div class="wrap live-strip-inner"><strong>Favoritos</strong><div class="live-strip-items" id="liveStripItems"><span class="strip-empty">Marque um resultado com ★ para acompanhar aqui.</span></div></div></div>
 
 <main>
 <section class="hero">
@@ -76,7 +77,7 @@
 
 <section class="wrap main-grid" id="apuracao">
   <div>
-    <div class="section-head"><h2>Atualização atual</h2><span id="sourceHint">Dados de demonstração</span></div>
+    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Dados de demonstração</span></div>
     <section class="card status-card">
       <div class="status-top">
         <div><strong id="statusTitle">Demonstração pronta</strong><p id="statusText">Use os controles para simular o avanço da apuração.</p></div>
@@ -150,7 +151,9 @@
 
 <footer class="foot" id="sobre"><div class="wrap footline"><strong>UEFY Eleições</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
 </main>
+<nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao" class="active">Geral</a><a href="rn.html">RN</a><a href="#publicacao">Publicar</a></nav>
+<button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop">↑</button>
-<script src="app.js?v=20260930-5"></script>
+<script src="app.js?v=20261001-1"></script>
 </body>
 </html>
