@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>UEFY Eleições 2026</title>
-  <link rel="stylesheet" href="style.css?v=20261001-14">
+  <link rel="stylesheet" href="style.css?v=20261001-15">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -45,7 +45,7 @@
         </div>
       </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
-      <span class="live"><i></i><span id="liveLabel">Candidaturas TSE</span></span>
+      <span class="live"><i></i><span id="liveLabel">TSE oficial</span></span>
     </nav>
   </div>
 </header>
@@ -67,20 +67,23 @@
         <option value="depe">Deputado estadual</option>
       </select></label>
       <label class="field"><span>Recorte</span><select id="scopeSelect"></select></label>
-      <button class="mode" id="modeBtn">Modo: candidaturas TSE</button>
+      <label class="field"><span>Fonte</span><select id="modeSelect">
+        <option value="official">Oficial TSE</option>
+        <option value="sim">Simulado TSE</option>
+      </select></label>
       <button class="go" id="refreshBtn">Atualizar dados</button>
     </div>
 
-    <div class="notice"><b>Abrangência:</b> Presidência por Brasil, regiões e UFs; Governador por UF; e, no RN, também Senado, deputado federal e deputado estadual. A consulta municipal é exclusiva para Governador do RN. No modo pré-apuração, são exibidas candidaturas oficiais sem votos.</div>
+    <div class="notice"><b>Abrangência:</b> Presidência por Brasil, regiões e UFs; Governador por UF; e, no RN, também Senado, deputado federal e deputado estadual. A consulta municipal é exclusiva para Governador do RN. Use <b>Oficial TSE</b> para a apuração e <b>Simulado TSE</b> apenas para testes da ferramenta.</div>
   </div>
 </section>
 
 <section class="wrap main-grid" id="apuracao">
   <div>
-    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Candidaturas oficiais TSE · sem votos</span></div>
+    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Resultados · oficial TSE</span></div>
     <section class="card status-card">
       <div class="status-top">
-        <div><strong id="statusTitle">Carregando base oficial</strong><p id="statusText">Aguarde a conferência das candidaturas.</p></div>
+        <div><strong id="statusTitle">Consultando o TSE</strong><p id="statusText">Aguarde o carregamento do resultado selecionado.</p></div>
         <div class="updated">Última atualização<strong id="updatedAt">—</strong></div>
       </div>
 
@@ -88,7 +91,7 @@
         <article class="map-card">
           <div class="map-title"><div><h3 id="scopeMapTitle">Brasil</h3><p id="scopeMapSubtitle">Unidades da Federação</p></div><span class="map-source">GeoJSON</span></div>
           <div class="map-body"><svg id="scopeMap" viewBox="0 0 420 300" aria-label="Mapa do recorte selecionado"></svg>
-            <div class="metric"><span id="scopeMetricLabel">Candidaturas na base</span><strong id="scopeProgressText">—</strong><div class="progress"><i id="scopeProgressBar"></i></div></div>
+            <div class="metric"><span id="scopeMetricLabel">Seções totalizadas</span><strong id="scopeProgressText">—</strong><div class="progress"><i id="scopeProgressBar"></i></div></div>
           </div>
         </article>
 
@@ -149,6 +152,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao" class="active">Geral</a><a href="rn.html">RN</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop">↑</button>
-<script src="app.js?v=20261001-14"></script>
+<script src="app.js?v=20261001-15"></script>
 </body>
 </html>
