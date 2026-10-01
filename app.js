@@ -27,7 +27,6 @@ function scopeLabel(v=selectedScope){return (officeMeta[selectedOffice].scopes.f
 function scopeCode(v=selectedScope){return v.startsWith('uf_')?v.slice(3):null}
 function featureCollectionForScope(){
   if(!maps.br)return null;
-  if(selectedOffice!=='pres' && selectedScope==='uf_rn' && maps.rn)return maps.rn;
   if(selectedScope==='br')return maps.br;
   if(selectedScope.startsWith('reg_')){
     const wanted=new Set((REGION_STATES[selectedScope]||[]).map(x=>x.toUpperCase()));
@@ -42,7 +41,6 @@ function featureCollectionForScope(){
 function scopeMapSubtitle(){
   if(selectedScope==='br')return 'Unidades da Federação';
   if(selectedScope.startsWith('reg_'))return 'Estados da região';
-  if(selectedOffice!=='pres' && selectedScope==='uf_rn')return 'Municípios do RN';
   return 'Recorte estadual';
 }
 function updateScopeMap(){
@@ -306,8 +304,7 @@ function drawCanvas(){
 
   const fc=featureCollectionForScope();
   if(fc&&fc.features?.length){
-    const detailed=(selectedOffice!=='pres'&&selectedScope==='uf_rn');
-    drawGeoJSON(ctx,fc,detailed?555:575,detailed?120:125,detailed?475:445,detailed?350:330);
+    drawGeoJSON(ctx,fc,575,125,445,330);
   }
 
   ctx.fillStyle='#17191c';ctx.font='700 78px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,235);
