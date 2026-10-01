@@ -45,7 +45,7 @@
         </div>
       </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
-      <span class="live"><i></i><span id="liveLabel">Demonstração</span></span>
+      <span class="live"><i></i><span id="liveLabel">Candidaturas TSE</span></span>
     </nav>
   </div>
 </header>
@@ -67,20 +67,20 @@
         <option value="depe">Deputado estadual</option>
       </select></label>
       <label class="field"><span>Recorte</span><select id="scopeSelect"></select></label>
-      <button class="mode" id="modeBtn">Modo: demonstração</button>
+      <button class="mode" id="modeBtn">Modo: candidaturas TSE</button>
       <button class="go" id="refreshBtn">Atualizar dados</button>
     </div>
 
-    <div class="notice"><b>Estrutura atual:</b> Presidência por Brasil, regiões e estados; Governador em todas as UFs; e, no RN, Senado, deputado federal e deputado estadual. Os mapas usam malhas geográficas reais. Na Presidência, o modo de teste já usa as candidaturas publicadas pelo TSE, sem atribuir votos fictícios. Na Presidência, o modo de teste já usa as candidaturas publicadas pelo TSE, sem atribuir votos fictícios.</div>
+    <div class="notice"><b>Abrangência:</b> Presidência por Brasil, regiões e UFs; Governador por UF; e, no RN, também Senado, deputado federal e deputado estadual. A consulta municipal é exclusiva para Governador do RN. No modo pré-apuração, são exibidas candidaturas oficiais sem votos.</div>
   </div>
 </section>
 
 <section class="wrap main-grid" id="apuracao">
   <div>
-    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Dados de demonstração</span></div>
+    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Candidaturas TSE · sem votos</span></div>
     <section class="card status-card">
       <div class="status-top">
-        <div><strong id="statusTitle">Demonstração pronta</strong><p id="statusText">Use os controles para simular o avanço da apuração.</p></div>
+        <div><strong id="statusTitle">Candidaturas TSE pronta</strong><p id="statusText">Use os controles para simular o avanço da apuração.</p></div>
         <div class="updated">Última atualização<strong id="updatedAt">—</strong></div>
       </div>
 
@@ -123,12 +123,7 @@
         </article>
       </div>
 
-      <div class="demo-controls" id="demoControls">
-        <button class="btn" id="demoBack">← Voltar</button>
-        <button class="btn primary" id="demoNext">Avançar apuração →</button>
-        <button class="btn" id="demoReset">Reiniciar</button>
-        <span id="demoStepLabel"></span>
-      </div>
+      <div class="demo-controls" id="demoControls"></div>
     </section>
   </div>
 
