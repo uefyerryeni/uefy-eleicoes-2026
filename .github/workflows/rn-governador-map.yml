@@ -1,0 +1,40 @@
+name: Atualizar mapa do RN - Governador
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+  push:
+    paths:
+      - 'scripts/build_rn_governador_map.py'
+      - '.github/workflows/rn-governador-map.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rn-governador-map
+  cancel-in-progress: true
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gerar mapa oficial por município
+        run: python scripts/build_rn_governador_map.py
+      - name: Validar JSON
+        run: python -m json.tool data/rn-governador-mapa.json > /dev/null
+      - name: Publicar se mudou
+        run: |
+          if git diff --quiet -- data/rn-governador-mapa.json; then
+            echo "Sem alterações."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/rn-governador-mapa.json
+          git commit -m "dados: atualizar mapa de governador do RN"
+          git push
