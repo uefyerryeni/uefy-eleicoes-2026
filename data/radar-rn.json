@@ -17,27 +17,27 @@
       "party": "UNIÃO",
       "receipts": 9307176.4,
       "expenses": 13346153.74,
-      "own_resources": 96000.0,
+      "own_resources": 96000,
       "top_suppliers": [
         {
           "name": "2HC CRIATIVIDADE E PRODUCOES LTDA",
-          "value": 3000000.0
+          "value": 3000000
         },
         {
           "name": "P H S SUASSUNA BARRETO PRODUCOES",
-          "value": 2100000.0
+          "value": 2100000
         },
         {
           "name": "SANTANA   ASSOCIADOS MARKETING E PROPAGANDA LTDA",
-          "value": 1200000.0
+          "value": 1200000
         },
         {
           "name": "ACM FUSION - COMUNICACAO VISUAL E GRAFICA RAPIDA LTDA",
-          "value": 978060.0
+          "value": 978060
         },
         {
           "name": "RIBEIRO BARBOSA ADVOGADOS",
-          "value": 640000.0
+          "value": 640000
         }
       ],
       "top_categories": [
@@ -51,11 +51,11 @@
         },
         {
           "name": "Serviços advocatícios",
-          "value": 1340000.0
+          "value": 1340000
         },
         {
           "name": "Publicidade por materiais impressos",
-          "value": 1316440.0
+          "value": 1316440
         },
         {
           "name": "Cessão ou locação de veículos",
@@ -63,50 +63,50 @@
         }
       ],
       "own_share": 1.03,
-      "rn_supplier_share": 0.0
+      "rn_supplier_share": 0
     },
     {
       "key": "200002534442",
       "name": "ALVARO COSTA DIAS",
       "number": "22",
       "party": "PL",
-      "receipts": 10096920.0,
+      "receipts": 10096920,
       "expenses": 11540079.74,
-      "own_resources": 30000.0,
+      "own_resources": 30000,
       "top_suppliers": [
         {
           "name": "EBA - COMUNICACAO E MARKETING POLITICO LTDA",
-          "value": 3600000.0
+          "value": 3600000
         },
         {
           "name": "DUETO PRODUCOES LTDA",
-          "value": 2000000.0
+          "value": 2000000
         },
         {
           "name": "ERICK PEREIRA ADVOGADOS",
-          "value": 1000000.0
+          "value": 1000000
         },
         {
           "name": "ENRIQUE ROBLEDO",
-          "value": 720000.0
+          "value": 720000
         },
         {
           "name": "R4 - INDUSTRIA E COMERCIO LTDA",
-          "value": 556000.0
+          "value": 556000
         }
       ],
       "top_categories": [
         {
           "name": "Serviços prestados por terceiros",
-          "value": 7399240.0
+          "value": 7399240
         },
         {
           "name": "Publicidade por materiais impressos",
-          "value": 1040080.0
+          "value": 1040080
         },
         {
           "name": "Serviços advocatícios",
-          "value": 1000000.0
+          "value": 1000000
         },
         {
           "name": "Publicidade por adesivos",
@@ -114,11 +114,11 @@
         },
         {
           "name": "Produção de programas de rádio, televisão ou vídeo",
-          "value": 302000.0
+          "value": 302000
         }
       ],
       "own_share": 0.3,
-      "rn_supplier_share": 0.0
+      "rn_supplier_share": 0
     },
     {
       "key": "200002547826",
@@ -126,11 +126,11 @@
       "number": "80",
       "party": "UP",
       "receipts": 80476.98,
-      "expenses": 0.0,
-      "own_resources": 0.0,
+      "expenses": 0,
+      "own_resources": 0,
       "top_suppliers": [],
       "top_categories": [],
-      "own_share": 0.0
+      "own_share": 0
     },
     {
       "key": "200002534001",
@@ -139,19 +139,19 @@
       "party": "PT",
       "receipts": 2994297.5,
       "expenses": 6094527.86,
-      "own_resources": 0.0,
+      "own_resources": 0,
       "top_suppliers": [
         {
           "name": "CENTER FILMES AUDIOVISUAL LTDA",
-          "value": 1000000.0
+          "value": 1000000
         },
         {
           "name": "ANDRE CASTRO SOCIEDADE INDIVIDUAL DE ADVOCACIA",
-          "value": 600000.0
+          "value": 600000
         },
         {
           "name": "AKA CLUB MIDIA LTDA",
-          "value": 500000.0
+          "value": 500000
         },
         {
           "name": "STAGE084 ESTRUTURAS, SERVICOS E LOCACOES LTDA",
@@ -159,7 +159,7 @@
         },
         {
           "name": "LIDERA CONSULTORIA ELEITORAL E PARTIDARIA LTDA",
-          "value": 300000.0
+          "value": 300000
         }
       ],
       "top_categories": [
@@ -169,7 +169,7 @@
         },
         {
           "name": "Produção de programas de rádio, televisão ou vídeo",
-          "value": 1000000.0
+          "value": 1000000
         },
         {
           "name": "Cessão ou locação de veículos",
@@ -177,14 +177,14 @@
         },
         {
           "name": "Serviços advocatícios",
-          "value": 600000.0
+          "value": 600000
         },
         {
           "name": "Publicidade por materiais impressos",
           "value": 541884.2
         }
       ],
-      "own_share": 0.0,
+      "own_share": 0,
       "rn_supplier_share": 1.97
     },
     {
@@ -192,52 +192,52 @@
       "name": "DARIO BARBOSA DE MELO",
       "number": "16",
       "party": "PSTU",
-      "receipts": 56004.0,
-      "expenses": 47000.0,
-      "own_resources": 0.0,
+      "receipts": 56004,
+      "expenses": 47000,
+      "own_resources": 0,
       "top_suppliers": [
         {
           "name": "WILSON DA SILVA BARBOSA 06154989490",
-          "value": 20000.0
+          "value": 20000
         },
         {
           "name": "ADONYARA DE JESUS TEIXEIRA AZEVEDO DIAS",
-          "value": 14000.0
+          "value": 14000
         },
         {
           "name": "ROSINEIDE PEREIRA DA SILVA",
-          "value": 7000.0
+          "value": 7000
         },
         {
           "name": "DW CONTABILIDADE E ASSESSORIA LTDA",
-          "value": 6000.0
+          "value": 6000
         }
       ],
       "top_categories": [
         {
           "name": "Serviços prestados por terceiros",
-          "value": 27000.0
+          "value": 27000
         },
         {
           "name": "Serviços advocatícios",
-          "value": 14000.0
+          "value": 14000
         },
         {
           "name": "Serviços contábeis",
-          "value": 6000.0
+          "value": 6000
         }
       ],
-      "own_share": 0.0,
-      "rn_supplier_share": 0.0
+      "own_share": 0,
+      "rn_supplier_share": 0
     },
     {
       "key": "200002553301",
       "name": "HENRIQUE OTHON COSTA DE LYRA",
       "number": "29",
       "party": "PCO",
-      "receipts": 0.0,
-      "expenses": 0.0,
-      "own_resources": 0.0,
+      "receipts": 0,
+      "expenses": 0,
+      "own_resources": 0,
       "top_suppliers": [],
       "top_categories": []
     },
@@ -248,100 +248,96 @@
       "party": "AGIR",
       "receipts": 444.8,
       "expenses": 52444.8,
-      "own_resources": 0.0,
+      "own_resources": 0,
       "top_suppliers": [
         {
           "name": "DEUSDEDITE BRITO   ABRAAO BRITO ADVOGADOS",
-          "value": 40000.0
+          "value": 40000
         },
         {
           "name": "MERITUS ASSESSORIA CONTABIL LTDA",
-          "value": 12000.0
+          "value": 12000
         },
         {
           "name": "FACEBOOK SERVICOS ONLINE DO BRASIL LTDA.",
-          "value": 400.0
-        },
-        {
-          "name": "#NULO",
-          "value": 44.8
+          "value": 400
         }
       ],
       "top_categories": [
         {
           "name": "Serviços advocatícios",
-          "value": 40000.0
+          "value": 40000
         },
         {
           "name": "Serviços contábeis",
-          "value": 12000.0
+          "value": 12000
         },
         {
           "name": "Despesa com Impulsionamento de Conteúdos",
-          "value": 400.0
+          "value": 400
         },
         {
           "name": "Encargos financeiros, taxas bancárias e/ou op. cartão de crédito",
           "value": 44.8
         }
       ],
-      "own_share": 0.0,
-      "rn_supplier_share": 0.0
+      "own_share": 0,
+      "rn_supplier_share": 0
     },
     {
       "key": "200002546757",
       "name": "ROBERIO PAULINO RODRIGUES",
       "number": "50",
       "party": "PSOL",
-      "receipts": 202400.0,
-      "expenses": 89853.0,
-      "own_resources": 22000.0,
+      "receipts": 202400,
+      "expenses": 89853,
+      "own_resources": 22000,
       "top_suppliers": [
         {
           "name": "A DE O VIANA EDITORA E COMUNICACAO LTDA",
-          "value": 15000.0
+          "value": 15000
         },
         {
           "name": "56.438.775 TARCISIO CASSIO DE LIMA GALVAO",
-          "value": 12000.0
+          "value": 12000
         },
         {
           "name": "L S COMERCIO E SERVICOS LTDA",
-          "value": 11220.0
+          "value": 11220
         },
         {
           "name": "DLOCAL BRASIL INSTITUICAO DE PAGAMENTO S.A.",
-          "value": 10400.0
+          "value": 10400
         },
         {
           "name": "VILA DO ARTESAO LTDA",
-          "value": 10000.0
+          "value": 10000
         }
       ],
       "top_categories": [
         {
           "name": "Serviços prestados por terceiros",
-          "value": 32000.0
+          "value": 32000
         },
         {
           "name": "Atividades de militância e mobilização de rua",
-          "value": 21230.0
+          "value": 21230
         },
         {
           "name": "Publicidade por jornais e revistas",
-          "value": 15000.0
+          "value": 15000
         },
         {
           "name": "Publicidade por materiais impressos",
-          "value": 11220.0
+          "value": 11220
         },
         {
           "name": "Despesa com Impulsionamento de Conteúdos",
-          "value": 10400.0
+          "value": 10400
         }
       ],
       "own_share": 10.87,
-      "rn_supplier_share": 0.0
+      "rn_supplier_share": 0
     }
   ],
   "findings": [
@@ -392,47 +388,6 @@
         {
           "label": "ALVARO COSTA DIAS",
           "value": "R$ 20.000,00"
-        }
-      ],
-      "explanation": "O Radar encontrou o mesmo identificador de fornecedor em despesas contratadas de mais de uma candidatura. Isso descreve uma coincidência cadastral e não implica irregularidade.",
-      "card_note": "Fornecedor em comum na base de despesas contratadas. O dado, por si só, não indica irregularidade."
-    },
-    {
-      "id": "common-1",
-      "type": "common_supplier",
-      "headline": "#NULO aparece como fornecedor em 5 candidaturas ao Governo do RN.",
-      "summary": "O Radar encontrou o mesmo identificador de fornecedor em despesas contratadas de mais de uma candidatura. Isso descreve uma coincidência cadastral e não implica irregularidade.",
-      "display_value": "5 campanhas",
-      "calculation": "5 candidaturas possuem despesas contratadas associadas ao mesmo fornecedor.",
-      "post_text": "#NULO aparece como fornecedor em despesas contratadas de 5 candidaturas ao Governo do RN.",
-      "candidate": null,
-      "candidates": [
-        "CARLOS EDUARDO XAVIER",
-        "ROBERIO PAULINO RODRIGUES",
-        "ALVARO COSTA DIAS",
-        "ALLYSON LEANDRO BEZERRA SILVA",
-        "KARLO RODRIGO LUCIO VIEIRA"
-      ],
-      "breakdown": [
-        {
-          "label": "CARLOS EDUARDO XAVIER",
-          "value": "R$ 640,80"
-        },
-        {
-          "label": "ALLYSON LEANDRO BEZERRA SILVA",
-          "value": "R$ 99,00"
-        },
-        {
-          "label": "KARLO RODRIGO LUCIO VIEIRA",
-          "value": "R$ 44,80"
-        },
-        {
-          "label": "ALVARO COSTA DIAS",
-          "value": "R$ 18,80"
-        },
-        {
-          "label": "ROBERIO PAULINO RODRIGUES",
-          "value": "R$ 3,00"
         }
       ],
       "explanation": "O Radar encontrou o mesmo identificador de fornecedor em despesas contratadas de mais de uma candidatura. Isso descreve uma coincidência cadastral e não implica irregularidade.",
@@ -1035,5 +990,8 @@
       "explanation": "O Radar soma receitas cuja origem é identificada como recursos próprios e divide pelo total de receitas registradas para a candidatura.",
       "card_note": "O Radar soma receitas cuja origem é identificada como recursos próprios e divide pelo total de receitas registradas para a candidatura."
     }
+  ],
+  "data_quality_notes": [
+    "Registros sem fornecedor identificável permanecem nos totais financeiros e nas categorias de despesa, mas são excluídos de concentração e de cruzamentos entre fornecedores."
   ]
 }
