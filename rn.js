@@ -135,6 +135,8 @@ async function reconcileRnResult(result){
   return result;
 }
 async function loadRemote(){
+  current={progress:0,candidates:[],generatedAt:null};
+  renderCurrent();
   $('#rnRefresh').disabled=true;$('#rnRefresh').textContent='Carregando…';$('#rnStatus').textContent='Localizando o município na configuração do TSE…';
   try{
     const code=await municipalityCode(),r=await fetch(resultUrl(code),{cache:'no-store'});if(!r.ok)throw new Error('Resultado '+r.status);
