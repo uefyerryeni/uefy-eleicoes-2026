@@ -566,3 +566,16 @@ body.dark .rn-result-line.registry{border-color:#30383f}
   line-height:1.45;
 }
 body.dark .share-note{color:#cfd5da}
+
+/* Fechamento responsivo da auditoria */
+.rn-layout{align-items:start}
+@media(min-width:1081px){
+  .rn-map-panel{position:sticky;top:92px;align-self:start}
+}
+@media(max-width:900px){
+  .rn-hero{grid-template-columns:1fr;gap:12px;align-items:start}
+}
+@media(max-width:600px){
+  .rn-hero{display:grid!important;grid-template-columns:1fr!important}
+  .rn-hero .notice{width:100%;margin-top:0}
+}
