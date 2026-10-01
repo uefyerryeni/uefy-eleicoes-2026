@@ -1,0 +1,13 @@
+{
+  "status": "waiting",
+  "generated_at": "2026-10-01T17:27:00-03:00",
+  "source_generated_at": null,
+  "municipalities_expected": 167,
+  "municipalities_read": 0,
+  "publication_ready": false,
+  "message": "O mapa será preenchido automaticamente quando o TSE publicar os resultados oficiais.",
+  "leaders": {},
+  "summary": [],
+  "natal": null,
+  "errors": []
+}
