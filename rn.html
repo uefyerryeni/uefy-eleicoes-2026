@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>UEFY Eleições 2026 — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20261001-14">
+  <link rel="stylesheet" href="style.css?v=20261001-15">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -43,7 +43,7 @@
         </div>
       </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
-      <span class="live"><i></i><span id="liveLabel">Candidaturas TSE</span></span>
+      <span class="live"><i></i><span id="liveLabel">TSE oficial</span></span>
     </nav>
   </div>
 </header>
@@ -56,7 +56,7 @@
       <h1>Governador do RN por município.</h1>
       <p>Busque ou selecione um município para consultar o recorte de Governo do Estado e preparar a publicação.</p>
     </div>
-    <div class="notice"><b>Fonte:</b> candidaturas oficiais da Justiça Eleitoral no modo pré-apuração; resultados do TSE nos modos de simulado e oficial. Esta página consulta exclusivamente Governador do RN por município.</div>
+    <div class="notice"><b>Fonte:</b> resultados do TSE. Use <b>Oficial TSE</b> para a apuração e <b>Simulado TSE</b> apenas para testar a ferramenta. Esta página consulta exclusivamente Governador do RN por município.</div>
   </section>
 
   <section class="rn-layout">
@@ -80,9 +80,8 @@
       <div class="rn-toolbar">
         <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Resultado por município</span></div>
         <select id="rnMode">
-          <option value="demo">Candidaturas TSE · sem votos</option>
-          <option value="sim">Simulado TSE</option>
           <option value="official">Oficial TSE</option>
+          <option value="sim">Simulado TSE</option>
         </select>
         <button class="btn primary" id="rnRefresh">Atualizar</button>
       </div>
@@ -90,9 +89,9 @@
       <div class="rn-list" id="munList" aria-label="Lista de municípios"></div>
 
       <div class="rn-publisher" id="publicacao">
-        <div class="block-title"><span id="rnResultTitle">Candidaturas do RN</span><span id="rnProgress">—</span></div>
+        <div class="block-title"><span id="rnResultTitle">Resultado do município</span><span id="rnProgress">—</span></div>
         <div class="rn-result-lines" id="rnResults"></div>
-        <div class="rn-note" id="rnStatus">Candidaturas do RN · aguardando consulta.</div>
+        <div class="rn-note" id="rnStatus">Aguardando consulta ao TSE.</div>
 
         <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
         <div class="canvas-box"><canvas id="rnCanvas" width="1080" height="1080"></canvas></div>
@@ -113,6 +112,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">RN</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261001-14"></script>
+<script src="rn.js?v=20261001-15"></script>
 </body>
 </html>
