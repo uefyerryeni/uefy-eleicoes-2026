@@ -362,6 +362,14 @@ async function canvasPngBlob(canvas){
   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a imagem.')),'image/png'));
   return blob;
 }
+async function canvasShareJpegBlob(canvas){
+  const flat=document.createElement('canvas');
+  flat.width=canvas.width;flat.height=canvas.height;
+  const ctx=flat.getContext('2d',{alpha:false});
+  ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,flat.width,flat.height);
+  ctx.drawImage(canvas,0,0);
+  return await new Promise((resolve,reject)=>flat.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível preparar a imagem para compartilhamento.')),'image/jpeg',0.96));
+}
 async function copyCanvasImage(canvas){
   if(!window.isSecureContext||!navigator.clipboard||!window.ClipboardItem)throw new Error('Área de transferência de imagens indisponível.');
   const blob=await canvasPngBlob(canvas);
@@ -376,8 +384,12 @@ async function shareImageAndText(openX=false,preopened=null){
   const canvas=$('#shareCanvas'),text=$('#postText').value;
   let blob;
   try{blob=await canvasPngBlob(canvas)}catch{if(preopened)preopened.close();flash(openX?$('#openX'):$('#shareBundle'),'Falha ao gerar imagem');return}
-  const file=new File([blob],`uefy-eleicoes-2026-${selectedOffice}.png`,{type:'image/png'});
   const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
+  let shareBlob=blob;
+  if(!desktop){
+    try{shareBlob=await canvasShareJpegBlob(canvas)}catch{}
+  }
+  const file=new File([shareBlob],`uefy-eleicoes-2026-${selectedOffice}.${shareBlob.type==='image/jpeg'?'jpg':'png'}`,{type:shareBlob.type||'image/png'});
 
   if(openX&&desktop){
     let copied=false;
