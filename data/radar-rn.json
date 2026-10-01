@@ -1,13 +1,30 @@
 {
-  "status": "waiting",
-  "generated_at": "2026-10-01T17:27:00-03:00",
-  "source_generated_at": null,
+  "status": "ok",
+  "generated_at": "2026-10-01T18:33:00-03:00",
+  "source_generated_at": "29/09/2026 · 19:31:03",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
-  "progress": 0,
+  "progress": 0.0,
   "scope": "Rio Grande do Norte",
-  "offices": {},
+  "offices": {
+    "sen": {
+      "label": "Senador",
+      "progress": 0.0,
+      "candidates_with_votes": 0
+    },
+    "depf": {
+      "label": "Deputado federal",
+      "progress": 0.0,
+      "candidates_with_votes": 0
+    },
+    "depe": {
+      "label": "Deputado estadual",
+      "progress": 0.0,
+      "candidates_with_votes": 0
+    }
+  },
+  "municipalities": 167,
+  "request_errors": 0,
   "findings": [],
-  "message": "Os resultados oficiais do RN ainda não estão disponíveis. O Radar será preenchido automaticamente quando o TSE publicar a apuração.",
   "methodology_version": "2.0"
 }
