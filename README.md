@@ -1,22 +1,19 @@
 # UEFY Eleições 2026
 
-Ferramenta da Uefyerryeni para acompanhar a apuração e preparar publicações para o X.
+Ferramenta da Uefyerryeni para acompanhar dados eleitorais oficiais e preparar publicações.
 
-## Escopo atual
-- Presidência: Brasil, regiões e UFs.
+## Abrangência
+- Presidência: Brasil, cinco regiões e todas as UFs.
 - Governador: todas as UFs.
-- Rio Grande do Norte: Governador, Senado, Deputado Federal e Deputado Estadual.
-- Próxima expansão prevista: Governador por município no Rio Grande do Norte.
+- Rio Grande do Norte: Presidente, Governador, Senado, Deputado Federal e Deputado Estadual.
+- Municípios do RN: exclusivamente Governador.
 
-## Mapas
-Os arquivos em `assets/maps/` usam malhas territoriais derivadas de dados públicos do IBGE:
-- `br-estados.geojson`: Unidades da Federação.
-- `rn-municipios.geojson`: municípios do Rio Grande do Norte.
+## Fontes
+- Candidaturas: arquivos oficiais de Candidatos 2026 e Informações Complementares do Portal de Dados Abertos do TSE.
+- Resultados: arquivos EA20 da Divulgação de Resultados do TSE.
+- Mapas: malhas territoriais derivadas de dados públicos do IBGE.
 
-Os mesmos GeoJSON são usados no painel e na arte 1080×1080.
+As bases de candidaturas são regeneradas automaticamente quatro vezes ao dia a partir dos ZIPs oficiais do TSE.
 
-## Marca
-A interface e a arte usam a marca oficial da Uefyerryeni já publicada no hub.
-
-## Dados eleitorais
-A aplicação está preparada para os arquivos de divulgação do TSE (EA20), com modo de demonstração local e ambientes de simulado/oficial.
+## Compartilhamento
+A arte é gerada em PNG 1080×1080. O site tenta compartilhar texto e arquivo juntos pela Web Share API quando o navegador/sistema oferece suporte. Em navegadores desktop sem compartilhamento de arquivos, o fallback baixa o PNG e abre o compositor do X com o texto.
