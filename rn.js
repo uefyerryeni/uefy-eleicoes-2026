@@ -1,6 +1,6 @@
 const $=s=>document.querySelector(s);
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
-const OFFICE={gov:{title:'Governador',cargo:'0003'},sen:{title:'Senado',cargo:'0005'},depf:{title:'Deputado federal',cargo:'0006'},depe:{title:'Deputado estadual',cargo:'0007'}};
+const OFFICE={gov:{title:'Governador',cargo:'0003'}};
 const PROGRESS=[0,8.5,27.4,53.8,81.2,100];
 let fc=null,selectedFeature=null,office='gov',mode='demo',demoStep=0,current={progress:0,candidates:[],generatedAt:null};
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
@@ -190,7 +190,7 @@ async function shareRNImageAndText(){
   window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank','noopener,noreferrer');
 }
 $('#munSearch').oninput=e=>renderList(e.target.value);
-$('#rnOffice').onchange=e=>{office=e.target.value;mode==='demo'?loadRnCandidates():loadRemote()};
+
 $('#rnMode').onchange=e=>{mode=e.target.value;$('#liveLabel').textContent=mode==='demo'?'Candidaturas TSE':mode==='sim'?'Simulado TSE':'TSE';mode==='demo'?loadRnCandidates():loadRemote()};
 $('#rnRefresh').onclick=()=>mode==='demo'?loadRnCandidates():loadRemote();
 $('#rnNextDemo').onclick=()=>{demoStep=(demoStep+1)%PROGRESS.length;loadRnCandidates()};
@@ -220,8 +220,8 @@ function saveFavs(v){localStorage.setItem(UEFY_FAV_KEY,JSON.stringify(v));render
 function currentFav(){return {type:'rn',office,municipality:selectedFeature?.properties?.nome||'Natal',label:(selectedFeature?.properties?.nome||'Natal')+' · '+OFFICE[office].title}}
 function favId(f){return [f.type,f.office,f.scope,f.municipality].filter(Boolean).join('|')}
 function syncFavButton(){const b=document.querySelector('#favoriteCurrent');if(!b||!selectedFeature)return;const on=getFavs().some(f=>favId(f)===favId(currentFav()));b.classList.toggle('on',on);b.textContent=on?'★ Favorito':'☆ Favoritar'}
-function renderFavStrip(){const box=document.querySelector('#liveStripItems');if(!box)return;const favs=getFavs();if(!favs.length){box.innerHTML='<span class="strip-empty">Marque municípios para acompanhar aqui.</span>';return}box.innerHTML=favs.map(f=>'<button class="strip-chip"><b>'+f.label+'</b><span>toque para abrir · <em>↻</em></span></button>').join('');box.querySelectorAll('.strip-chip').forEach((b,i)=>b.onclick=()=>{const f=favs[i];if(f.type!=='rn'){location.href='index.html'}else{const ft=fc?.features.find(x=>norm(x.properties.nome)===norm(f.municipality));if(ft){office=f.office;document.querySelector('#rnOffice').value=office;selectMunicipality(ft);scrollTo({top:document.querySelector('.rn-side').offsetTop-115,behavior:'smooth'})}}})}
+function renderFavStrip(){const box=document.querySelector('#liveStripItems');if(!box)return;const favs=getFavs();if(!favs.length){box.innerHTML='<span class="strip-empty">Marque municípios para acompanhar aqui.</span>';return}box.innerHTML=favs.map(f=>'<button class="strip-chip"><b>'+f.label+'</b><span>toque para abrir · <em>↻</em></span></button>').join('');box.querySelectorAll('.strip-chip').forEach((b,i)=>b.onclick=()=>{const f=favs[i];if(f.type!=='rn'){location.href='index.html'}else{const ft=fc?.features.find(x=>norm(x.properties.nome)===norm(f.municipality));if(ft){office=f.office;selectMunicipality(ft);scrollTo({top:document.querySelector('.rn-side').offsetTop-115,behavior:'smooth'})}}})}
 document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{if(!selectedFeature)return;const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{if(mode==='demo')await loadRnCandidates();else await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
-document.querySelector('#rnOffice')?.addEventListener('change',()=>setTimeout(syncFavButton));renderFavStrip();
-const _uefyInitFav=setInterval(()=>{if(fc&&selectedFeature){clearInterval(_uefyInitFav);const q=new URLSearchParams(location.search),m=q.get('fav'),o=q.get('office');if(o&&OFFICE[o]){office=o;document.querySelector('#rnOffice').value=o}if(m){const ft=fc.features.find(x=>norm(x.properties.nome)===norm(m));if(ft)selectMunicipality(ft)}syncFavButton();renderFavStrip()}},100);
+renderFavStrip();
+const _uefyInitFav=setInterval(()=>{if(fc&&selectedFeature){clearInterval(_uefyInitFav);const q=new URLSearchParams(location.search),m=q.get('fav');if(m){const ft=fc.features.find(x=>norm(x.properties.nome)===norm(m));if(ft)selectMunicipality(ft)}syncFavButton();renderFavStrip()}},100);
