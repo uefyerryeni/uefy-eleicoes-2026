@@ -14,6 +14,12 @@ def norm(s):
     s = unicodedata.normalize('NFKD', s).encode('ascii', 'ignore').decode('ascii')
     return re.sub(r'\s+', ' ', s).strip().upper()
 
+NULLISH = {'', '#NULO', 'NULO', 'NULL', 'NONE', 'NAO INFORMADO', 'NAO IDENTIFICADO', 'SEM-ID', 'SEM ID'}
+
+def meaningful_supplier(value):
+    n = norm(value)
+    return bool(n) and n not in NULLISH and not n.startswith('#NULO')
+
 def dec(v):
     if v is None: return 0.0
     s = str(v).strip().replace('R$', '').replace(' ', '')
@@ -129,10 +135,14 @@ def main():
             expenses[k]+=v
             cat=get(row,'DS_ORIGEM_DESPESA','DS_TIPO_DESPESA','DS_DESPESA') or 'Não informado'
             exp_by_cat[k][cat]+=v
-            sid=(get(row,'NR_CPF_CNPJ_FORNECEDOR','NR_CNPJ_CPF_FORNECEDOR') or get(row,'NM_FORNECEDOR','NM_FORNECEDOR_RFB') or 'sem-id').strip()
-            sname=(get(row,'NM_FORNECEDOR_RFB','NM_FORNECEDOR') or 'Fornecedor não identificado').strip()
-            supplier_names[sid]=sname
-            exp_by_supplier[k][sid]+=v
+            sid_raw=get(row,'NR_CPF_CNPJ_FORNECEDOR','NR_CNPJ_CPF_FORNECEDOR')
+            sname=(get(row,'NM_FORNECEDOR_RFB','NM_FORNECEDOR') or '').strip()
+            # Registros sem fornecedor identificável continuam nos totais e nas categorias,
+            # mas não entram em concentração nem em cruzamentos de fornecedor em comum.
+            if meaningful_supplier(sname):
+                sid=sid_raw.strip() if meaningful_supplier(sid_raw) else 'NAME:'+norm(sname)
+                supplier_names[sid]=sname
+                exp_by_supplier[k][sid]+=v
             st=norm(get(row,'SG_UF_FORNECEDOR')) or 'NI'
             exp_by_supplier_state[k][st]+=v
             dt=parse_source_stamp(row); source_dt=max(source_dt,dt) if source_dt and dt else (dt or source_dt)
