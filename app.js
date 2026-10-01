@@ -113,33 +113,14 @@ async function loadTestCandidates(){
       if(!r.ok)throw new Error('base '+r.status);
       candidateBase=await r.json();
     }
-    let rows=[];
-    if(selectedOffice==='pres') rows=candidateBase.pres||[];
-    else if(selectedScope==='uf_rn'){
-      const cargo=Number(officeMeta[selectedOffice].cargo);
-      rows=(candidateBase.rn||[]).filter(x=>x.cargo===cargo);
-    }
-    if(!rows.length){
-      state[selectedOffice]={progress:0,candidates:[],generatedAt:candidateBase.generated||nowStamp()};
-      renderAll(); return;
-    }
-    state[selectedOffice]={
-      progress:0,
-      generatedAt:candidateBase.generated||nowStamp(),
-      candidates:rows.map((x,i)=>({
-        id:String(x.seq||x.numero),
-        name:x.nome,
-        number:x.numero,
-        party:x.partido,
-        status:x.situacao,
-        pct:0,
-        votes:0,
-        seq:i+1
-      }))
-    };
+    const stamp=candidateBase.generated||nowStamp();
+    const setRows=(office,rows)=>{state[office]={progress:0,generatedAt:stamp,candidates:rows.map((x,i)=>({id:String(x.seq||x.numero),name:x.nome,number:x.numero,party:x.partido,status:x.situacao,pct:0,votes:0,seq:i+1}))}};
+    setRows('pres',candidateBase.pres||[]);
+    const cargoMap={gov:3,sen:5,depf:6,depe:7};
+    Object.entries(cargoMap).forEach(([office,cargo])=>setRows(office,(candidateBase.rn||[]).filter(x=>x.cargo===cargo)));
     renderAll();
   }catch(e){
-    state[selectedOffice]={progress:0,candidates:[],generatedAt:nowStamp()};
+    Object.keys(state).forEach(k=>state[k]={progress:0,candidates:[],generatedAt:nowStamp()});
     renderAll();
   }
 }
