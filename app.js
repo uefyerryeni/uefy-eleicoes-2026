@@ -216,19 +216,36 @@ function renderRows(k){
   const all=state[k]?.candidates||[];
   const limit=mode==='demo'?(k==='depf'||k==='depe'?16:20):8;
   const items=all.slice(0,limit);
-  box.innerHTML=items.length?items.map(c=>{
-    const meta=[c.number,c.party,c.status].filter(Boolean).map(esc).join(' · ');
-    return '<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(meta?' <small>'+meta+'</small>':'')+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct||0)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>';
-  }).join(''):'<div class="empty-state">Nenhum dado disponível para este recorte.</div>';
+  if(mode==='demo'){
+    box.innerHTML=items.length?items.map(c=>{
+      const meta=[c.number,c.party].filter(Boolean).map(esc).join(' · ');
+      const status=c.status?'<span class="status-chip">'+esc(c.status)+'</span>':'';
+      return '<div class="candidate-row registry"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(meta?' <small>'+meta+'</small>':'')+'</span>'+status+'</div>';
+    }).join(''):'<div class="empty-state">Nenhuma candidatura disponível para este recorte.</div>';
+  }else{
+    box.innerHTML=items.length?items.map(c=>{
+      const meta=[c.number,c.party].filter(Boolean).map(esc).join(' · ');
+      return '<div class="candidate-row"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(meta?' <small>'+meta+'</small>':'')+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct||0)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>';
+    }).join(''):'<div class="empty-state">Nenhum resultado disponível para este recorte.</div>';
+  }
   if(small)small.textContent=mode==='demo'?(all.length+' candidatura(s) na base oficial'):fmtPct(state[k]?.progress)+' das seções totalizadas';
   if(more)more.textContent=all.length>items.length?'Mostrando '+items.length+' de '+all.length:(mode==='demo'?'Ordem por número de candidatura':'Ordem por votação');
 }
 function renderAll(){
   ['pres','gov','sen','depf','depe'].forEach(renderRows);
   const current=Number(state[selectedOffice]?.progress||0);
+  const count=state[selectedOffice]?.candidates?.length||0;
   const setText=(id,value)=>{const el=$(id);if(el)el.textContent=value};
   const setWidth=(id,value)=>{const el=$(id);if(el)el.style.width=value};
-  setText('#scopeProgressText',fmtPct(current));setWidth('#scopeProgressBar',Math.min(100,current)+'%');
+  if(mode==='demo'){
+    setText('#scopeMetricLabel','Candidaturas na base');
+    setText('#scopeProgressText',String(count));
+    setWidth('#scopeProgressBar',count?'100%':'0%');
+  }else{
+    setText('#scopeMetricLabel','Seções totalizadas');
+    setText('#scopeProgressText',fmtPct(current));
+    setWidth('#scopeProgressBar',Math.min(100,current)+'%');
+  }
   setText('#rnProgressText',fmtPct(current));setWidth('#rnProgressBar',Math.min(100,current)+'%');
   updateScopeMap();
   setText('#updatedAt',state[selectedOffice]?.generatedAt||'—');
@@ -253,7 +270,20 @@ function selectOffice(k){
   updateScopeMap();
   if(mode==='demo')loadTestCandidates();else loadRemote();
 }
-function makePostText(){const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5),lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel(),fmtPct(d.progress)+' das seções totalizadas',''];d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));lines.push('','Fonte: TSE');return lines.join('\n')}
+function makePostText(){
+  const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5);
+  const lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel()];
+  if(mode==='demo'){
+    lines.push(d.candidates.length+' candidatura(s) na base oficial','');
+    d.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
+    lines.push('','Base oficial TSE · sem votos');
+  }else{
+    lines.push(fmtPct(d.progress)+' das seções totalizadas','');
+    d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
+    lines.push('','Fonte: TSE');
+  }
+  return lines.join('\n');
+}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
   let size=startSize;
