@@ -104,7 +104,7 @@ function resultUrl(code){
 function parseEA20(data){
   const out=[];(data.carg||[]).forEach(c=>(c.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(cand=>out.push({name:cand.nmu||cand.nm||('Candidato '+(cand.n||'')),pct:Number(String(cand.pvap??0).replace(',','.'))||0,seq:Number(cand.seq||999999)})))));
   const progress=data.s&&data.s.pst!=null?Number(String(data.s.pst).replace(',','.')):(data.s&&data.s.ts?Number(data.s.st||0)/Number(data.s.ts)*100:0);
-  return {progress:isFinite(progress)?progress:0,candidates:out.sort((a,b)=>a.seq-b.seq),generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp()};
+  return {progress:isFinite(progress)?progress:0,candidates:out.sort((a,b)=>b.pct-a.pct||a.seq-b.seq),generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp()};
 }
 async function loadRemote(){
   $('#rnRefresh').disabled=true;$('#rnRefresh').textContent='Carregando…';$('#rnStatus').textContent='Localizando o município na configuração do TSE…';
@@ -197,7 +197,7 @@ $('#rnNextDemo').onclick=()=>{demoStep=(demoStep+1)%PROGRESS.length;loadRnCandid
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/280';
 $('#rnCopyText').onclick=async()=>navigator.clipboard.writeText($('#rnPostText').value);
 $('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
-$('#rnOpenX').onclick=()=>window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent($('#rnPostText').value),'_blank','noopener,noreferrer');$('#rnShareBundle').onclick=shareRNImageAndText;
+$('#rnOpenX').onclick=shareRNImageAndText;$('#rnShareBundle').onclick=shareRNImageAndText;
 const theme=$('#themeToggle');
 if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');
 function syncTheme(){
