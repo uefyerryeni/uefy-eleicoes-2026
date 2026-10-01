@@ -112,6 +112,7 @@ def main():
 
     read=sum(1 for x in leaders.values() if x.get('status') in ('ok','no_votes'))
     complete=read==len(mun) and len(errors)==0
+    final_result=complete and all(float(x.get('progress') or 0)>=100 for x in leaders.values() if x.get('status') in ('ok','no_votes'))
     summary=sorted(counts.values(),key=lambda x:(-x['municipalities'],x['name']))
     natal=leaders.get('Natal') or leaders.get('NATAL')
     data={
@@ -119,7 +120,7 @@ def main():
         'generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
         'source_generated_at':latest or None,
         'municipalities_expected':len(mun),'municipalities_read':read,
-        'publication_ready':complete,
+        'publication_ready':complete,'final_result':final_result,
         'errors':errors,'leaders':leaders,'summary':summary,'natal':natal,
         'message':('Mapa completo e conferido.' if complete else f'Mapa parcial: {read}/{len(mun)} municípios lidos. Publicação bloqueada até completar a base.')
     }
