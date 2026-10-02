@@ -232,9 +232,9 @@ async function openX(text,w=null){
   return useIntent;
 }
 function syncRadarTextModeButtons(){
-  $('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
+  $$('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
 }
-$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
+$$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
   publicationTextMode=b.dataset.textMode;
   syncRadarTextModeButtons();
   updatePublisher($('#reviewCheck')?.checked||false);
