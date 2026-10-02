@@ -239,7 +239,7 @@ function mapPublicationText(){
     const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title];
     summary.slice(0,3).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'));
     lines.push('',activeOffice()==='sen'?'Mapa municipal; a eleição ao Senado é definida pela votação estadual.':'Mapa de votação nominal municipal; não representa, por si só, candidaturas eleitas.');
-    lines.push('Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
+    lines.push(publicationSource());return lines.join('\n');
   }
   const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title,''];
   summary.slice(0,8).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'));
@@ -249,14 +249,14 @@ function mapPublicationText(){
   else lines.push('Leitura: para deputados, a maior votação nominal em um município não equivale a eleição. As vagas são distribuídas pelo sistema proporcional entre partidos e federações.');
   if(prog<100)lines.push('Apuração parcial: as posições municipais podem mudar com novas seções.');
   if(radar.source_generated_at||radar.generated_at)lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
-  lines.push('Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
+  lines.push(publicationSource());return lines.join('\n');
 }
 function municipalPublicationText(){
   const rows=municipalityResult(),prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0;
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase(),selectedMunicipality+' (RN)',prog>=100?'RESULTADO FINAL':'PARCIAL · '+pct(prog)];
     rows.slice(0,2).forEach(x=>lines.push(candidateLabel(x)+' — '+pct(x.pct)));
-    lines.push('','Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
+    lines.push('',publicationSource());return lines.join('\n');
   }
   const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase(),selectedMunicipality+' (RN)',prog>=100?'RESULTADO FINAL':'APURAÇÃO PARCIAL · '+pct(prog)+' das seções',''];
   rows.slice(0,5).forEach(x=>lines.push(candidateLabel(x)+' — '+pct(x.pct)+' · '+int(x.votes)+' votos'));
@@ -265,7 +265,7 @@ function municipalPublicationText(){
   else lines.push('Para deputados, a posição neste município não determina eleição; as vagas são distribuídas pelo sistema proporcional.');
   if(prog<100)lines.push('O resultado pode mudar até o encerramento da totalização.');
   if(radar.source_generated_at||radar.generated_at)lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
-  lines.push('Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
+  lines.push(publicationSource());return lines.join('\n');
 }
 function currentPublicationText(){return publicationView==='municipality'?municipalPublicationText():mapPublicationText()}
 
