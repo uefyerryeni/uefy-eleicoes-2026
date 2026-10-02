@@ -758,3 +758,22 @@ body.dark .candidate-row.outcome-row{background:rgba(245,196,0,.07)}
 body.dark .candidate-row .status-chip.outcome{background:rgba(245,196,0,.13);border-color:rgba(245,196,0,.38);color:#f3df76}
 body.dark .rn-election-outcome{background:rgba(245,196,0,.08);border-color:rgba(245,196,0,.34)}
 body.dark .rn-election-outcome>span{color:#f3df76}
+
+
+/* Prévia editorial ampliada · 2026-10-02 */
+.publisher textarea,
+#postText,#rnPostText,#radarPostText{
+  min-height:280px;
+  max-height:520px;
+  font-size:14px;
+  line-height:1.55;
+  padding:14px;
+}
+@media(max-width:820px){
+  .publisher textarea,
+  #postText,#rnPostText,#radarPostText{min-height:240px;max-height:460px}
+}
+@media(max-width:560px){
+  .publisher textarea,
+  #postText,#rnPostText,#radarPostText{min-height:220px;font-size:13px}
+}
