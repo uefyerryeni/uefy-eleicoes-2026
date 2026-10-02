@@ -52,6 +52,20 @@ if radar.get("status")=="ok":
         if integ and integ.get("missing_candidate_ids"):
             fail(f"Integridade do Radar falhou em {office}: {integ['missing_candidate_ids']}")
 
+# 3b) Radar Legislativo: estrutura dos mapas municipais por cargo.
+radar_maps=radar.get("municipal_maps") or {}
+for office in ("sen","depf","depe"):
+    if office not in radar_maps:
+        fail(f"Radar Legislativo sem mapa municipal do cargo {office}.")
+        continue
+    mm=radar_maps.get(office) or {}
+    for key in ("leaders","results","summary","municipalities_read"):
+        if key not in mm:
+            fail(f"Radar Legislativo {office} sem campo {key}.")
+    office_progress=float((radar.get("offices") or {}).get(office,{}).get("progress") or 0)
+    if office_progress>0 and int(mm.get("municipalities_read") or 0)==0:
+        fail(f"Radar Legislativo {office} tem apuração, mas nenhum município lido no mapa.")
+
 # 4) Mapa de governador: se liberado para publicação, deve estar completo.
 m=load("data/rn-governador-mapa.json")
 if m.get("publication_ready"):
