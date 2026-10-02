@@ -413,9 +413,16 @@ function makeText(){
   }else{
     const final=mode==='lab'?current.progress>=100:!!current.finalTotalization;
     lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(current.progress)+' das seções totalizadas','');
-    current.candidates.slice(0,4).forEach(c=>lines.push(labeledCandidate(c.name,c.party)+' — '+fmtPct(c.pct)));
-    if(publicationTextMode==='full'&&!final&&mode!=='lab'){
-      lines.push('','Os percentuais refletem o resultado deste município no momento da atualização e podem mudar até a conclusão da totalização.');
+    const visible=publicationTextMode==='full'?current.candidates.slice(0,5):current.candidates.slice(0,3);
+    visible.forEach(c=>lines.push(labeledCandidate(c.name,c.party)+' — '+fmtPct(c.pct)+(publicationTextMode==='full'&&c.votes?' · '+Number(c.votes).toLocaleString('pt-BR')+' votos':'')));
+    if(publicationTextMode==='full'){
+      const leader=current.candidates[0],runner=current.candidates[1];
+      if(leader&&runner){
+        const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
+        lines.push('','Em '+name+', '+labeledCandidate(leader.name,leader.party)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+labeledCandidate(runner.name,runner.party)+'.');
+      }
+      if(!final&&mode!=='lab')lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
+      if(mode==='lab')lines.push('','Cenário fictício criado exclusivamente para testar a Central; não representa resultado eleitoral.');
     }
   }
   if(publicationTextMode==='full'&&current.generatedAt)lines.push('','Atualização: '+current.generatedAt);
