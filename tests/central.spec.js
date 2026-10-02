@@ -402,7 +402,7 @@ test('Mapas de deputados deixam claro que votação municipal não define eleiç
 });
 
 for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
-  test(\`Simulação operacional de domingo em \${viewport.width}px\`, async ({page})=>{
+  test(`Simulação operacional de domingo em ${viewport.width}px`, async ({page})=>{
     await page.setViewportSize(viewport);
 
     await page.goto('/index.html?v='+BUILD);
