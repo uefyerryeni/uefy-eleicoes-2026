@@ -140,6 +140,7 @@ function renderAll(){
   $('#radarMunicipalOffice').textContent=officeLabel();
   const senate=activeOffice()==='sen';
   $('#senateRankSwitch').hidden=!senate;
+  $('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
   $('#radarMapTitle').textContent=senate
     ?((senateMapRank===1?'Quem teve a maior':'Quem teve a 2ª maior')+' votação nominal para Senador em cada município')
     :'Quem teve a maior votação nominal para '+officeLabel()+' em cada município';
@@ -259,6 +260,8 @@ function municipalPublicationText(){
   const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase(),selectedMunicipality+' (RN)',prog>=100?'RESULTADO FINAL':'APURAÇÃO PARCIAL · '+pct(prog)+' das seções',''];
   rows.slice(0,5).forEach(x=>lines.push(candidateLabel(x)+' — '+pct(x.pct)+' · '+int(x.votes)+' votos'));
   if(rows[0]&&rows[1])lines.push('','No município, '+candidateLabel(rows[0])+' aparece em 1º, com diferença de '+pct(rows[0].pct-rows[1].pct)+' para '+candidateLabel(rows[1])+'.');
+  if(activeOffice()==='sen')lines.push('No Senado, este recorte municipal não define os eleitos: as duas vagas são preenchidas pelos dois candidatos mais votados no estado.');
+  else lines.push('Para deputados, a posição neste município não determina eleição; as vagas são distribuídas pelo sistema proporcional.');
   if(prog<100)lines.push('O resultado pode mudar até o encerramento da totalização.');
   if(radar.source_generated_at||radar.generated_at)lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
   lines.push('Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
