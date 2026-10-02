@@ -1,6 +1,8 @@
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
-const MODE_LABELS={sim:'simulado TSE',official:'oficial TSE'};
+const MODE_LABELS={sim:'simulado TSE',official:'oficial TSE',lab:'Laboratório UEFY'};
+const LAB_STEPS=[0,8,22,41,63,81,95,100];
+let labStep=0;
 const REGION_STATES={
   reg_norte:['ac','ap','am','pa','ro','rr','to'],
   reg_nordeste:['al','ba','ce','ma','pb','pe','pi','rn','se'],
@@ -186,7 +188,24 @@ async function reconcileResult(result,office){
   }
   return result;
 }
+async function loadLab(){
+  const registry=await registryForResult(selectedOffice);
+  const progress=LAB_STEPS[labStep%LAB_STEPS.length];
+  const seed=(selectedOffice.charCodeAt(0)+(scopeLabel().length*7)+labStep*13);
+  const rows=(registry||[]).slice(0,Math.max(4,registry.length)).map((x,i)=>{
+    const base=Math.max(4,42-i*8);
+    const swing=((seed+i*17)%13)-6;
+    return {id:String(x.seq||x.numero||i),number:String(x.numero||''),name:x.nome||('Candidato '+(i+1)),party:x.partido||'',status:x.situacao||'',votes:progress?Math.max(0,Math.round((base+swing)*progress*137)):0,seq:i+1};
+  });
+  if(progress>=41&&rows.length>1){rows[0].votes=Math.round(rows[0].votes*.92);rows[1].votes=Math.round(rows[1].votes*1.13)}
+  const total=rows.reduce((s,x)=>s+x.votes,0);rows.forEach(x=>x.pct=total?x.votes/total*100:0);rows.sort((x,y)=>y.votes-x.votes||x.seq-y.seq);
+  state[selectedOffice]={progress,candidates:rows,generatedAt:nowStamp(),lab:true};
+  $('#statusTitle').textContent='Laboratório UEFY · dados fictícios';
+  $('#statusText').textContent='Cenário '+(labStep+1)+'/'+LAB_STEPS.length+' · '+fmtPct(progress)+' das seções simuladas. Atualize para avançar a apuração.';
+  renderAll();
+}
 async function loadRemote(){
+  if(mode==='lab'){try{await loadLab()}catch(e){$('#statusTitle').textContent='Laboratório indisponível';$('#statusText').textContent='Não foi possível montar o cenário fictício: '+e.message}return}
   state[selectedOffice]={progress:0,candidates:[],generatedAt:null};
   renderAll();
   $('#statusTitle').textContent='Consultando o TSE…';
@@ -261,7 +280,7 @@ function renderAll(){
   updateScopeMap();
   setText('#updatedAt',state[selectedOffice]?.generatedAt||'—');
   setText('#sourceHint','Resultados · '+MODE_LABELS[mode]);
-  setText('#liveLabel',mode==='sim'?'Simulado TSE':'TSE oficial');
+  setText('#liveLabel',mode==='lab'?'LAB fictício':mode==='sim'?'Simulado TSE':'TSE oficial');
   const modeSelect=$('#modeSelect');if(modeSelect)modeSelect.value=mode;
   updateCardVisibility();
   regenerate();
@@ -291,7 +310,7 @@ function makePostText(){
   }else{
     lines.push(fmtPct(d.progress)+' das seções totalizadas','');
     d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
-    lines.push('',mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE');
+    lines.push('',mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE');
   }
   return lines.join('\n');
 }
@@ -313,7 +332,7 @@ function drawCanvas(){
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logoImg.complete)ctx.drawImage(logoImg,70,54,100,100);
   ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);
-  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='sim'?'SIMULADO TSE':'RESULTADOS TSE',650,105);
+  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':'RESULTADOS TSE',650,105);
 
   const fc=featureCollectionForScope();
   if(fc&&fc.features?.length){
@@ -353,7 +372,7 @@ function drawCanvas(){
 
   ctx.strokeStyle='#d3d9de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();
   ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';
-  ctx.fillText(mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':'Fonte: Tribunal Superior Eleitoral',70,1008);
+  ctx.fillText(mode==='lab'?'LABORATÓRIO UEFY · NÃO É RESULTADO ELEITORAL':mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':'Fonte: Tribunal Superior Eleitoral',70,1008);
   ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
 function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+'/280';drawCanvas()}
@@ -425,7 +444,7 @@ async function shareImageAndText(openX=false,preopened=null){
   openXIntent(text,preopened);
   flash($('#openX'),'X aberto com o texto');
 }$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();loadRemote()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
-$('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;loadRemote()};$('#refreshBtn').onclick=()=>loadRemote();
+$('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;if(mode==='lab')labStep=0;loadRemote()};$('#refreshBtn').onclick=()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRemote()};
 
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';
 $('#copyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Texto copiado!')}catch{flash($('#copyText'),'Cópia bloqueada')}};
@@ -456,5 +475,5 @@ function favId(f){return [f.type,f.office,f.scope,f.municipality].filter(Boolean
 function syncFavButton(){const b=document.querySelector('#favoriteCurrent');if(!b)return;const on=getFavs().some(f=>favId(f)===favId(currentFav()));b.classList.toggle('on',on);b.textContent=on?'★ Favorito':'☆ Favoritar'}
 function renderFavStrip(){const box=document.querySelector('#liveStripItems');if(!box)return;const favs=getFavs();if(!favs.length){box.innerHTML='<span class="strip-empty">Marque um resultado com ★ para acompanhar aqui.</span>';return}box.innerHTML=favs.map(f=>'<button class="strip-chip" data-favid="'+favId(f)+'"><b>'+f.label+'</b><span>toque para abrir · <em>↻</em></span></button>').join('');box.querySelectorAll('.strip-chip').forEach((b,i)=>b.onclick=()=>{const f=favs[i];if(f.type==='rn'){location.href='rn.html?fav='+encodeURIComponent(f.municipality)+'&office='+f.office}else{selectOffice(f.office);selectedScope=f.scope;populateScopeSelect();document.querySelector('#scopeSelect').value=f.scope;loadRemote();scrollTo({top:document.querySelector('#apuracao').offsetTop-120,behavior:'smooth'})}})}
 document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
-document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
+document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
 document.querySelector('#officeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));document.querySelector('#scopeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));renderFavStrip();syncFavButton();
