@@ -11,7 +11,7 @@ const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b'
 
 let radar={status:'loading',findings:[],offices:{},municipal_maps:{}};
 let candidateRegistry=[],rnMap=null,radarMode='official',labStep=0,publicationTextMode='full';
-let selectedMunicipality='Natal',publicationView='map';
+let selectedMunicipality='Natal',publicationView='map',senateMapRank=1;
 
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%';
 const int=v=>Number(v||0).toLocaleString('pt-BR');
@@ -45,8 +45,24 @@ function municipalityNames(){
 function municipalityResult(name=selectedMunicipality){
   return officeMapData().results?.[name]||[];
 }
+function municipalityRankedCandidate(name=selectedMunicipality,rank=1){
+  const rows=officeMapData().results?.[name]||[];
+  return rows[Math.max(0,Number(rank||1)-1)]||null;
+}
 function municipalityLeader(name=selectedMunicipality){
-  return officeMapData().leaders?.[name]||null;
+  return municipalityRankedCandidate(name,1);
+}
+function effectiveMapRank(){return activeOffice()==='sen'?senateMapRank:1}
+function mapCandidate(name){return municipalityRankedCandidate(name,effectiveMapRank())}
+function mapSummary(){
+  const counts=new Map();
+  for(const name of municipalityNames()){
+    const row=mapCandidate(name);if(!row)continue;
+    const key=String(row.number||row.name);
+    if(!counts.has(key))counts.set(key,{number:row.number,name:row.name,party:row.party||candidateMeta(row.number,row.name).party,municipalities:0});
+    counts.get(key).municipalities++;
+  }
+  return [...counts.values()].sort((a,b)=>b.municipalities-a.municipalities||String(a.name).localeCompare(String(b.name),'pt-BR'));
 }
 function candidateFindingParty(name){
   const row=registryForOffice().find(x=>x.nome===name);return row?.partido||'';
@@ -122,7 +138,17 @@ function renderAll(){
   $('#radarOfficeTitle').textContent=officeLabel();
   $('#radarSummaryOffice').textContent=officeLabel();
   $('#radarMunicipalOffice').textContent=officeLabel();
-  $('#radarMapTitle').textContent='Quem lidera para '+officeLabel()+' em cada município';
+  const senate=activeOffice()==='sen';
+  $('#senateRankSwitch').hidden=!senate;
+  $('#radarMapTitle').textContent=senate
+    ?((senateMapRank===1?'Quem teve a maior':'Quem teve a 2ª maior')+' votação nominal para Senador em cada município')
+    :'Quem teve a maior votação nominal para '+officeLabel()+' em cada município';
+  $('#radarMapExplanation').textContent=senate
+    ?'Em 2026, duas vagas ao Senado estão em disputa no estado. Este mapa mostra a posição da votação nominal dentro de cada município; a eleição é definida pela votação estadual.'
+    :'O mapa mostra quem teve a maior votação nominal neste cargo em cada município. Para deputados, isso não indica candidatura eleita, pois a distribuição das vagas segue o sistema proporcional.';
+  $('#radarElectoralNote').textContent=senate
+    ?'Senado: o mapa municipal é descritivo. Os dois candidatos mais votados no estado são eleitos; liderar um município, isoladamente, não define o resultado estadual.'
+    :'Deputados: o mapa municipal mostra votação nominal local. A eleição depende do sistema proporcional e da distribuição de vagas entre partidos e federações.';
   $('#radarSourceBadge').textContent=radarMode==='lab'?'LAB · DADOS FICTÍCIOS':'OFICIAL TSE';
   $('#radarSourceBadge').dataset.mode=radarMode;
   $('#sourceGenerated').textContent=radar.source_generated_at||radar.generated_at||'Aguardando resultados';
@@ -149,23 +175,22 @@ function populateMunicipalities(){
 
 function renderMap(){
   const svg=$('#radarLegMap');if(!svg||!rnMap)return;
-  const proj=projector(rnMap,650,520,8),m=officeMapData();
+  const proj=projector(rnMap,650,520,8),m=officeMapData(),rank=effectiveMapRank(),summary=mapSummary();
   svg.innerHTML=rnMap.features.map(f=>{
-    const name=f.properties?.nome||'',lead=m.leaders?.[name],fill=lead?candidateColor(lead.number,lead.name):'#d9dee2',active=name===selectedMunicipality;
-    return '<path class="radar-map-feature'+(active?' selected':'')+'" data-mun="'+esc(name)+'" d="'+geometryPath(f.geometry,proj)+'" fill="'+fill+'"><title>'+esc(name+(lead?' · '+lead.name+' · '+pct(lead.pct):' · aguardando votos'))+'</title></path>';
+    const name=f.properties?.nome||'',lead=mapCandidate(name),fill=lead?candidateColor(lead.number,lead.name):'#d9dee2',active=name===selectedMunicipality;
+    const rankLabel=rank===1?'1º':'2º';
+    return '<path class="radar-map-feature'+(active?' selected':'')+'" data-mun="'+esc(name)+'" d="'+geometryPath(f.geometry,proj)+'" fill="'+fill+'"><title>'+esc(name+(lead?' · '+rankLabel+': '+lead.name+' · '+pct(lead.pct):' · aguardando votos'))+'</title></path>';
   }).join('');
   $$('.radar-map-feature').forEach(el=>el.addEventListener('click',()=>selectMunicipality(el.dataset.mun,true)));
 
-  const summary=m.summary||[];
-  $('#radarLeaderSummary').innerHTML=summary.length?summary.slice(0,10).map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.number,x.name)+'"></i><span><strong>'+esc(candidateLabel(x))+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">Aguardando votos oficiais.</div>';
-  const leader=municipalityLeader();
-  $('#radarSelectedHighlight').innerHTML='<small>Município selecionado</small><strong>'+esc(selectedMunicipality)+'</strong><span>'+(leader?esc(candidateLabel(leader))+' lidera com '+pct(leader.pct):'Aguardando votos para este cargo.')+'</span>';
+  $('#radarLeaderSummary').innerHTML=summary.length?summary.slice(0,10).map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.number,x.name)+'"></i><span><strong>'+esc(candidateLabel(x))+'</strong><small>'+x.municipalities+' município(s) em '+rank+'º</small></span></div>').join(''):'<div class="rn-map-empty">Aguardando votos oficiais.</div>';
+  const lead=mapCandidate();
+  $('#radarSelectedHighlight').innerHTML='<small>Município selecionado</small><strong>'+esc(selectedMunicipality)+'</strong><span>'+(lead?esc(candidateLabel(lead))+' aparece em '+rank+'º com '+pct(lead.pct):'Aguardando votos para este cargo.')+'</span>';
   $('#radarMapCoverage').textContent=Number(m.municipalities_read||0)+'/167 municípios lidos';
   const prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0;
   $('#radarMapProgress').textContent=prog?pct(prog)+' das seções totalizadas':'Aguardando apuração oficial';
   $('#radarMapPublish').disabled=!summary.length;
 }
-
 function selectMunicipality(name,scroll=false){
   selectedMunicipality=name;const sel=$('#radarMunicipality');if(sel)sel.value=name;
   renderMap();renderMunicipality();
@@ -204,17 +229,23 @@ function renderFindings(){
 }
 
 function mapPublicationText(){
-  const m=officeMapData(),summary=m.summary||[],prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0;
+  const m=officeMapData(),summary=mapSummary(),prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0,rank=effectiveMapRank();
+  const title=activeOffice()==='sen'
+    ?'MAPA MUNICIPAL · '+rank+'º COLOCADO'
+    :'MAPA DE MAIOR VOTAÇÃO NOMINAL POR MUNICÍPIO';
   if(publicationTextMode==='compact'){
-    const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN','MAPA DE LIDERANÇA MUNICIPAL'];
+    const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title];
     summary.slice(0,3).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'));
-    lines.push('','Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
+    lines.push('',activeOffice()==='sen'?'Mapa municipal; a eleição ao Senado é definida pela votação estadual.':'Mapa de votação nominal municipal; não representa, por si só, candidaturas eleitas.');
+    lines.push('Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
   }
-  const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN','MAPA DE LIDERANÇA MUNICIPAL',''];
+  const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title,''];
   summary.slice(0,8).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'));
-  const natal=m.leaders?.Natal||m.leaders?.NATAL;if(natal)lines.push('','Natal: '+candidateLabel(natal)+' lidera com '+pct(natal.pct)+'.');
+  const natal=mapCandidate('Natal')||mapCandidate('NATAL');if(natal)lines.push('','Natal: '+candidateLabel(natal)+' aparece em '+rank+'º com '+pct(natal.pct)+'.');
   lines.push('','Base municipal: '+Number(m.municipalities_read||0)+'/167 municípios lidos.');
-  if(prog<100)lines.push('Apuração parcial: as lideranças podem mudar com novas seções.');
+  if(activeOffice()==='sen')lines.push('Leitura: em 2026, duas vagas ao Senado estão em disputa no RN; os dois candidatos mais votados no estado são eleitos. Este mapa mostra apenas a posição dentro de cada município.');
+  else lines.push('Leitura: para deputados, a maior votação nominal em um município não equivale a eleição. As vagas são distribuídas pelo sistema proporcional entre partidos e federações.');
+  if(prog<100)lines.push('Apuração parcial: as posições municipais podem mudar com novas seções.');
   if(radar.source_generated_at||radar.generated_at)lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
   lines.push('Fonte: Tribunal Superior Eleitoral');return lines.join('\n');
 }
@@ -249,9 +280,11 @@ function drawCanvas(){
   ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: Tribunal Superior Eleitoral',70,1005);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1035);ctx.textAlign='left';
 }
 function drawMapCanvas(ctx){
-  const m=officeMapData();ctx.fillStyle='#59626b';ctx.font='600 24px Inter,Segoe UI,Arial';ctx.fillText('Quem lidera em cada município',70,300);
-  if(rnMap){const proj=projector(rnMap,630,500,8);ctx.save();ctx.translate(40,345);rnMap.features.forEach(f=>{const name=f.properties?.nome||'',lead=m.leaders?.[name],fill=lead?candidateColor(lead.number,lead.name):'#d9dee2',g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];ctx.fillStyle=fill;ctx.strokeStyle='#fff';ctx.lineWidth=1.1;polys.forEach(poly=>{ctx.beginPath();poly.forEach(r=>r.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()})});ctx.restore()}
-  let y=385;(m.summary||[]).slice(0,7).forEach(x=>{ctx.fillStyle=candidateColor(x.number,x.name);ctx.beginPath();ctx.arc(760,y-7,9,0,Math.PI*2);ctx.fill();fitText(ctx,candidateLabel(x),785,y,220,20,14,'700');ctx.fillStyle='#59626b';ctx.font='600 16px Inter,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',785,y+24);y+=66});
+  const m=officeMapData(),rank=effectiveMapRank(),summary=mapSummary();
+  ctx.fillStyle='#59626b';ctx.font='600 24px Inter,Segoe UI,Arial';
+  ctx.fillText(activeOffice()==='sen'?('Mapa municipal · '+rank+'º colocado'):'Maior votação nominal por município',70,300);
+  if(rnMap){const proj=projector(rnMap,630,500,8);ctx.save();ctx.translate(40,345);rnMap.features.forEach(f=>{const name=f.properties?.nome||'',lead=mapCandidate(name),fill=lead?candidateColor(lead.number,lead.name):'#d9dee2',g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];ctx.fillStyle=fill;ctx.strokeStyle='#fff';ctx.lineWidth=1.1;polys.forEach(poly=>{ctx.beginPath();poly.forEach(r=>r.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()})});ctx.restore()}
+  let y=385;summary.slice(0,7).forEach(x=>{ctx.fillStyle=candidateColor(x.number,x.name);ctx.beginPath();ctx.arc(760,y-7,9,0,Math.PI*2);ctx.fill();fitText(ctx,candidateLabel(x),785,y,220,20,14,'700');ctx.fillStyle='#59626b';ctx.font='600 16px Inter,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',785,y+24);y+=66});
 }
 function drawMunicipalityCanvas(ctx){
   ctx.fillStyle='#59626b';ctx.font='600 24px Inter,Segoe UI,Arial';ctx.fillText(selectedMunicipality+' · resultado municipal',70,300);
@@ -275,7 +308,12 @@ async function shareRadar(){
 }
 async function openX(text,w=null){const encoded=encodeURIComponent(text),useIntent=encoded.length<=6000,u=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';if(!useIntent)try{await navigator.clipboard.writeText(text)}catch{}if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer');return useIntent}
 
-$('#officeFilter').onchange=()=>{publicationView='map';renderAll()};
+$('#officeFilter').onchange=()=>{publicationView='map';senateMapRank=1;renderAll()};
+$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
+  senateMapRank=Number(b.dataset.senateRank)||1;
+  $('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
+  publicationView='map';renderMap();updatePublication();renderAll();
+});
 $('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;publicationView='map';loadRadar()};
 $('#refreshRadar').onclick=()=>{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRadar()};
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{
