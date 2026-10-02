@@ -187,3 +187,86 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   expect(fullRadar).toContain('Como foi calculado:');
   expect(fullRadar).not.toContain('/280');
 });
+
+
+test('EA20 só declara vencedor com estado oficial do TSE', async ({page})=>{
+  await page.goto('/index.html?v='+BUILD);
+  const result=await page.evaluate(()=>{
+    const fixture=(root,cands)=>({
+      dg:'04/10/2026',hg:'20:00:00',tf:root.tf,and:root.and||'p',md:root.md||'n',
+      s:{ts:100,st:100,pst:'100,00'},
+      carg:[{agr:[{par:[{sg:'TESTE',cand:cands}]}]}]
+    });
+    mode='official';selectedOffice='gov';selectedScope='uf_rn';
+    const partial=parseEA20(fixture({tf:'n',md:'n'},[
+      {n:10,nmu:'CANDIDATO A',vap:600,pvap:'60,00',seq:1,e:'n',st:''},
+      {n:20,nmu:'CANDIDATO B',vap:400,pvap:'40,00',seq:2,e:'n',st:''}
+    ]));
+    state.gov=partial;
+    const partialOutcome=officialOutcome(partial,'gov','uf_rn');
+    const partialText=makePostText();
+
+    const elected=parseEA20(fixture({tf:'n',md:'e'},[
+      {n:10,nmu:'CANDIDATO A',vap:600,pvap:'60,00',seq:1,e:'s',st:''},
+      {n:20,nmu:'CANDIDATO B',vap:400,pvap:'40,00',seq:2,e:'n',st:''}
+    ]));
+    const electedOutcome=officialOutcome(elected,'gov','uf_rn');
+
+    const runoff=parseEA20(fixture({tf:'n',md:'s'},[
+      {n:10,nmu:'CANDIDATO A',vap:480,pvap:'48,00',seq:1,e:'s',st:''},
+      {n:20,nmu:'CANDIDATO B',vap:420,pvap:'42,00',seq:2,e:'s',st:''},
+      {n:30,nmu:'CANDIDATO C',vap:100,pvap:'10,00',seq:3,e:'n',st:''}
+    ]));
+    const runoffOutcome=officialOutcome(runoff,'gov','uf_rn');
+
+    selectedOffice='depf';selectedScope='uf_rn';
+    const proportional=parseEA20(fixture({tf:'s',md:''},[
+      {n:1010,nmu:'DEPUTADO A',vap:10000,pvap:'10,00',seq:1,e:'s',st:'Eleito por QP'},
+      {n:2020,nmu:'DEPUTADO B',vap:9000,pvap:'9,00',seq:2,e:'s',st:'Eleito por média'},
+      {n:3030,nmu:'DEPUTADO C',vap:8000,pvap:'8,00',seq:3,e:'n',st:'Suplente'}
+    ]));
+    const proportionalOutcome=officialOutcome(proportional,'depf','uf_rn');
+    return {
+      partialKind:partialOutcome.kind,
+      partialText,
+      electedKind:electedOutcome.kind,
+      electedName:electedOutcome.candidates[0]?.name,
+      runoffKind:runoffOutcome.kind,
+      runoffCount:runoffOutcome.candidates.length,
+      proportionalKind:proportionalOutcome.kind,
+      proportionalCount:proportionalOutcome.candidates.length
+    };
+  });
+  expect(result.partialKind).toBe('none');
+  expect(result.partialText).toContain('APURAÇÃO PARCIAL');
+  expect(result.partialText).not.toContain('RESULTADO FINAL');
+  expect(result.electedKind).toBe('elected');
+  expect(result.electedName).toBe('CANDIDATO A');
+  expect(result.runoffKind).toBe('second_round');
+  expect(result.runoffCount).toBe(2);
+  expect(result.proportionalKind).toBe('elected_multiple');
+  expect(result.proportionalCount).toBe(2);
+});
+
+test('RN mostra destaque estadual de eleito e segundo turno', async ({page})=>{
+  await page.goto('/rn.html?v='+BUILD);
+  await page.evaluate(()=>{
+    mode='official';
+    leaderMapData.outcome={kind:'elected',candidates:[{name:'CANDIDATO TESTE',party:'ABC',pct:55.4}]};
+    renderElectionOutcome();
+  });
+  await expect(page.locator('#rnElectionOutcome')).toBeVisible();
+  await expect(page.locator('#rnElectionOutcome')).toContainText('ELEITO');
+  await expect(page.locator('#rnElectionOutcome')).toContainText('CANDIDATO TESTE (ABC)');
+
+  await page.evaluate(()=>{
+    leaderMapData.outcome={kind:'second_round',candidates:[
+      {name:'CANDIDATO A',party:'AAA',pct:45},
+      {name:'CANDIDATO B',party:'BBB',pct:40}
+    ]};
+    renderElectionOutcome();
+  });
+  await expect(page.locator('#rnElectionOutcome')).toContainText('2º TURNO CONFIRMADO');
+  await expect(page.locator('#rnElectionOutcome')).toContainText('CANDIDATO A (AAA)');
+  await expect(page.locator('#rnElectionOutcome')).toContainText('CANDIDATO B (BBB)');
+});
