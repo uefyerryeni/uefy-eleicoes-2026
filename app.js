@@ -463,9 +463,9 @@ async function shareImageAndText(openX=false,preopened=null){
 $('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;if(mode==='lab')labStep=0;loadRemote()};$('#refreshBtn').onclick=()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRemote()};
 
 function syncTextModeButtons(){
-  $('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
+  $$('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
 }
-$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
+$$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
   publicationTextMode=b.dataset.textMode;
   syncTextModeButtons();
   regenerate();
