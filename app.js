@@ -379,9 +379,16 @@ function makePostText(){
       if(publicationTextMode!=='full'&&outcome.candidates.length>list.length)lines.push('e mais '+(outcome.candidates.length-list.length)+' candidatura(s).');
     }else{
       lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(d.progress)+' das seções totalizadas','');
-      d.candidates.slice(0,4).forEach(c=>lines.push(candidateLabel(c)+' — '+fmtPct(c.pct)));
-      if(publicationTextMode==='full'&&!final&&mode!=='lab'){
-        lines.push('','Os percentuais refletem o recorte selecionado neste momento e podem mudar até a conclusão da totalização.');
+      const visible=publicationTextMode==='full'?d.candidates.slice(0,5):d.candidates.slice(0,3);
+      visible.forEach(c=>lines.push(candidateLabel(c)+' — '+fmtPct(c.pct)+(publicationTextMode==='full'&&c.votes?' · '+Number(c.votes).toLocaleString('pt-BR')+' votos':'')));
+      if(publicationTextMode==='full'){
+        const leader=d.candidates[0],runner=d.candidates[1];
+        if(leader&&runner){
+          const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
+          lines.push('','Neste recorte, '+candidateLabel(leader)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+candidateLabel(runner)+'.');
+        }
+        if(!final&&mode!=='lab')lines.push('','A apuração ainda está em andamento e a ordem pode mudar conforme novas seções forem totalizadas.');
+        if(mode==='lab')lines.push('','Cenário fictício criado exclusivamente para testar a Central; não representa resultado eleitoral.');
       }
     }
   }
