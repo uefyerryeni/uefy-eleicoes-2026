@@ -8,8 +8,8 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Radar RN</title>
-  <link rel="stylesheet" href="style.css?v=20261002-17">
-  <link rel="stylesheet" href="radar.css?v=20261002-05">
+  <link rel="stylesheet" href="style.css?v=20261002-19">
+  <link rel="stylesheet" href="radar.css?v=20261002-19">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -42,12 +42,12 @@
   </div>
 </header>
 
-<main class="wrap radar-shell">
+<main class="wrap radar-shell radar-legislative">
   <section class="radar-hero">
     <div>
       <div class="radar-kicker">Central das Eleições UEFY · Rio Grande do Norte</div>
-      <h1>O voto legislativo visto por dentro.</h1>
-      <p>O Radar RN lê os resultados oficiais do TSE para mostrar como a votação de Senado, Câmara dos Deputados e Assembleia Legislativa se distribui pelos municípios potiguares. A proposta é revelar padrões territoriais que o placar geral não mostra.</p>
+      <h1>O Legislativo no mapa do RN.</h1>
+      <p>Senado, Câmara dos Deputados e Assembleia Legislativa com a mesma lógica visual da página do RN: liderança por município, resultado local e publicação pronta para compartilhar.</p>
     </div>
     <div class="radar-source-card">
       <span>Última leitura</span>
@@ -57,79 +57,120 @@
     </div>
   </section>
 
-  <section class="radar-controls card" aria-label="Filtros do Radar RN">
-    <label><span>Cargo</span><select id="officeFilter">
+  <section class="card rn-source-control radar-main-controls" aria-label="Controles do Radar Legislativo">
+    <div class="rn-source-copy">
+      <span>Radar Legislativo</span>
+      <strong id="radarOfficeTitle">Senador</strong>
+      <small>O cargo selecionado controla mapa, município e publicação.</small>
+    </div>
+    <label class="rn-source-select"><span>Cargo</span><select id="officeFilter">
       <option value="sen">Senador</option>
       <option value="depf">Deputado federal</option>
       <option value="depe">Deputado estadual</option>
     </select></label>
-    <label><span>Fonte</span><select id="radarMode"><option value="official">Oficial TSE</option><option value="lab">Laboratório UEFY · dados fictícios</option></select></label>
-    <label><span>Candidatura</span><select id="candidateFilter"><option value="all">Todas</option></select></label>
-    <label><span>Tipo de achado</span><select id="typeFilter"><option value="all">Todos os achados</option></select></label>
-    <button class="btn primary" id="refreshRadar" type="button">Atualizar tela</button>
+    <label class="rn-source-select"><span>Fonte</span><select id="radarMode">
+      <option value="official">Oficial TSE</option>
+      <option value="lab">Laboratório UEFY · dados fictícios</option>
+    </select></label>
+    <button class="btn primary rn-source-refresh" id="refreshRadar" type="button">Atualizar tudo</button>
   </section>
 
   <section class="radar-status card" id="radarStatus" hidden></section>
 
-  <section class="radar-grid-section">
-    <div class="section-head radar-section-head">
-      <div><h2>O que o mapa do voto mostra</h2><p id="findingCount">—</p></div>
-      <span class="review-legend"><i></i> Os números acompanham a totalização oficial e podem mudar durante a apuração.</span>
+  <section class="card rn-total-map-section radar-map-section" id="mapa-legislativo">
+    <div class="rn-map-head">
+      <div>
+        <div class="rn-map-titleline"><span class="rn-badge">Mapa legislativo</span><span class="rn-source-chip" id="radarSourceBadge">OFICIAL TSE</span></div>
+        <h2 id="radarMapTitle">Quem lidera para Senador em cada município</h2>
+        <p>As cores mostram a candidatura com mais votos nominais no município para o cargo selecionado.</p>
+      </div>
+      <button class="btn primary" id="radarMapPublish" type="button" disabled>Gerar publicação do mapa</button>
     </div>
-    <div class="findings-grid" id="findingsGrid"></div>
+    <div class="rn-total-map-grid radar-map-grid">
+      <div class="rn-map-large radar-map-large">
+        <svg id="radarLegMap" viewBox="0 0 650 520" role="img" aria-label="Mapa do Rio Grande do Norte por liderança legislativa"></svg>
+      </div>
+      <aside class="rn-map-summary">
+        <span class="map-source" id="radarSummaryOffice">Senador</span>
+        <h3>Municípios liderados</h3>
+        <div id="radarLeaderSummary" class="rn-leader-summary"></div>
+        <div class="rn-natal-highlight" id="radarSelectedHighlight">
+          <small>Município selecionado</small>
+          <strong>Natal</strong>
+          <span>Clique no mapa ou escolha um município abaixo.</span>
+        </div>
+      </aside>
+    </div>
+    <div class="rn-map-foot">
+      <span id="radarMapCoverage">0/167 municípios lidos</span>
+      <span id="radarMapProgress">Aguardando apuração oficial</span>
+    </div>
   </section>
 
-  <section class="radar-workbench" id="publicacao">
-    <div class="card radar-detail">
-      <div class="detail-empty" id="detailEmpty">
-        <span>RADAR RN</span>
-        <h2>Selecione um achado.</h2>
-        <p>Você verá os componentes do cálculo antes de gerar uma publicação.</p>
+  <section class="card radar-municipality-section" id="municipio">
+    <div class="section-head radar-section-head">
+      <div><h2>Resultado por município</h2><p>Veja a votação legislativa local do cargo selecionado.</p></div>
+      <button class="btn" id="radarMunicipalPublish" type="button" disabled>Gerar publicação deste município</button>
+    </div>
+    <div class="radar-municipality-grid">
+      <label class="radar-mun-picker"><span>Município</span><select id="radarMunicipality"></select></label>
+      <div class="radar-municipal-card">
+        <div class="selected-line"><div><small id="radarMunicipalOffice">Senador</small><h3 id="radarMunicipalTitle">Natal</h3></div><strong id="radarMunicipalProgress">—</strong></div>
+        <div id="radarMunicipalResults" class="radar-municipal-results"></div>
       </div>
-      <div id="detailContent" hidden>
-        <div class="detail-topline"><span id="detailType">—</span><span id="detailCandidate">—</span></div>
-        <h2 id="detailHeadline">—</h2>
-        <p class="detail-explain" id="detailExplain">—</p>
-        <div class="calc-box">
-          <small>Como o Radar chegou a este número</small>
-          <strong id="detailCalc">—</strong>
-        </div>
-        <div class="detail-breakdown" id="detailBreakdown"></div>
-        <div class="detail-source">
-          <div><span>Fonte</span><strong>Tribunal Superior Eleitoral</strong></div>
-          <div><span>Base</span><strong id="detailBase">—</strong></div>
-        </div>
-        <label class="review-check"><input type="checkbox" id="reviewCheck"> <span>Conferi o cálculo e quero liberar a geração da publicação.</span></label>
+    </div>
+  </section>
+
+  <details class="card radar-analysis-drawer" id="analises">
+    <summary><div><span class="radar-kicker">Análises adicionais</span><strong>Explorar padrões territoriais</strong></div><span>Abrir</span></summary>
+    <div class="radar-analysis-body">
+      <div class="radar-analysis-controls">
+        <label><span>Candidatura</span><select id="candidateFilter"><option value="all">Todas as candidaturas</option></select></label>
+        <label><span>Tipo de análise</span><select id="typeFilter"><option value="all">Todas</option></select></label>
       </div>
+      <div class="section-head radar-section-head"><div><h2>Leituras do Radar</h2><p id="findingCount">—</p></div></div>
+      <div class="findings-grid" id="findingsGrid"></div>
+    </div>
+  </details>
+
+  <section class="radar-workbench radar-workbench-simple" id="publicacao">
+    <div class="card radar-detail radar-publication-context">
+      <span class="radar-kicker">Publicação selecionada</span>
+      <h2 id="publicationContextTitle">Mapa legislativo do RN</h2>
+      <p id="publicationContextText">Gere a publicação do mapa estadual ou de um município para preparar o card e o texto.</p>
+      <div id="detailContent" hidden></div>
+      <div id="detailEmpty"></div>
+      <input type="checkbox" id="reviewCheck" checked hidden>
+      <span id="detailType" hidden></span><span id="detailCandidate" hidden></span><span id="detailHeadline" hidden></span><span id="detailExplain" hidden></span><span id="detailCalc" hidden></span><span id="detailBase" hidden></span><div id="detailBreakdown" hidden></div>
     </div>
 
     <aside class="card radar-publisher">
-      <div class="publisher-head"><div><span>Achados UEFY</span><h2>Publicação</h2></div><span class="publisher-size">1080 × 1080</span></div>
+      <div class="publisher-head"><div><span>Central das Eleições UEFY</span><h2>Publicação</h2></div><span class="publisher-size">1080 × 1080</span></div>
       <div class="canvas-box radar-canvas-box"><canvas id="radarCanvas" width="1080" height="1080"></canvas></div>
-      <div class="block-title text-title"><span>Texto para o X</span><span id="radarChars">0 caracteres</span></div>
+      <div class="block-title text-title"><span>Texto da publicação</span><span id="radarChars">0 caracteres</span></div>
       <div class="text-mode-switch" role="group" aria-label="Tamanho do texto">
         <button type="button" class="active" data-text-mode="full">Completo</button>
         <button type="button" data-text-mode="compact">Enxuto</button>
       </div>
-      <textarea id="radarPostText" readonly></textarea>
+      <textarea id="radarPostText"></textarea>
       <div class="radar-actions">
-        <button class="btn" id="copyRadarText" disabled>Copiar texto</button>
-        <button class="btn" id="copyRadarImage" disabled>Copiar imagem</button>
-        <button class="btn primary" id="openRadarX" disabled>Publicar no X</button>
-        <button class="btn" id="downloadRadar" disabled>Baixar imagem</button>
-        <button class="btn primary full" id="shareRadarBundle" disabled>Compartilhar imagem + texto</button>
+        <button class="btn" id="copyRadarText">Copiar texto</button>
+        <button class="btn" id="copyRadarImage">Copiar imagem</button>
+        <button class="btn primary" id="openRadarX">Publicar no X</button>
+        <button class="btn" id="downloadRadar">Baixar imagem</button>
+        <button class="btn primary full" id="shareRadarBundle">Compartilhar imagem + texto</button>
       </div>
-      <p class="share-note">O modo <b>Completo</b> inclui contexto e cálculo; o <b>Enxuto</b> mantém só o essencial. No computador, “Publicar no X” prepara o texto e copia a imagem. Textos excepcionalmente grandes são copiados integralmente, sem truncamento.</p>
+      <p class="share-note">O modo Completo traz contexto territorial; o Enxuto mantém apenas o essencial. O card acompanha o mapa estadual ou o município selecionado.</p>
     </aside>
   </section>
 
   <section class="card methodology" id="metodologia">
     <div><span class="radar-kicker">Transparência</span><h2>Como o Radar funciona</h2></div>
     <div class="method-grid">
-      <article><b>1</b><strong>Resultados oficiais</strong><p>O Radar usa apenas arquivos de resultados do TSE para o Rio Grande do Norte e seus 167 municípios.</p></article>
-      <article><b>2</b><strong>Leitura territorial</strong><p>A votação é reorganizada por candidatura e município para calcular presença territorial, peso da capital e concentração da votação.</p></article>
-      <article><b>3</b><strong>Sem julgamento político</strong><p>Os cards descrevem números e distribuições. Não classificam candidaturas como melhores, piores, fortes ou fracas.</p></article>
-      <article><b>4</b><strong>Apuração em movimento</strong><p>Enquanto a totalização não chega a 100%, os achados são parciais e podem mudar a cada atualização do TSE.</p></article>
+      <article><b>1</b><strong>Resultados oficiais</strong><p>O Radar usa os arquivos do TSE para Senado, Câmara e Assembleia no RN e seus 167 municípios.</p></article>
+      <article><b>2</b><strong>Mapa municipal</strong><p>Cada município recebe a cor da candidatura com maior votação nominal para o cargo selecionado.</p></article>
+      <article><b>3</b><strong>Resultado local</strong><p>Ao selecionar um município, a ferramenta mostra a votação nominal daquele recorte.</p></article>
+      <article><b>4</b><strong>Análises adicionais</strong><p>Presença municipal, Natal x interior e concentração continuam disponíveis numa área secundária.</p></article>
     </div>
   </section>
 </main>
@@ -137,6 +178,6 @@
 <footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Radar RN</strong><span>Resultados oficiais do TSE transformados em leituras territoriais verificáveis.</span></div></footer>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">RN</a><a href="radar.html" class="active">Radar</a><a href="#publicacao">Publicar</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="radar.js?v=20261002-18"></script>
+<script src="radar.js?v=20261002-19"></script>
 </body>
 </html>
