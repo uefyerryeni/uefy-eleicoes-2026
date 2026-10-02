@@ -127,7 +127,7 @@ function makePost(f){
   let text='ELEIÇÕES 2026 | RADAR RN\\n\\n'+(f.post_text||f.headline)+'\\n\\n'+(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: TSE'+progress);
   if(text.length>280)text=text.slice(0,277)+'…';return text;
 }
-function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+'/280';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar','#shareRadarBundle'].forEach(s=>{const el=$(s);if(el)el.disabled=!selected||!reviewed})}
+function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+' caracteres';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar','#shareRadarBundle'].forEach(s=>{const el=$(s);if(el)el.disabled=!selected||!reviewed})}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function fitLine(ctx,text,maxWidth,minChars=4){
   let value=String(text||'');
