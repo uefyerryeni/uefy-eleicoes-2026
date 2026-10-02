@@ -202,17 +202,35 @@ function partyByNumber(number){
 }
 function labeledCandidate(name,party=''){return name+(party?' ('+party+')':'')}
 function mapPostText(){
-  const final=leaderMapData.final_result;
-  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',final?'RESULTADO FINAL':'MAPA PARCIAL — liderança por município',''];
-  (leaderMapData.summary||[]).slice(0,6).forEach(x=>lines.push(labeledCandidate(x.name,partyByNumber(x.number))+' — '+x.municipalities+' município(s)'));
-  if(leaderMapData.natal?.status==='ok'){
-    lines.push('','Natal: '+labeledCandidate(leaderMapData.natal.candidate,partyByNumber(leaderMapData.natal.candidate_number))+' aparece em 1º neste snapshot.');
+  const final=leaderMapData.final_result,outcome=leaderMapData?.outcome||{};
+  const status=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':final?'RESULTADO FINAL':'MAPA PARCIAL';
+
+  if(publicationTextMode==='compact'){
+    const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status];
+    if(outcome.kind==='elected'&&outcome.candidates?.length){
+      const w=outcome.candidates[0];lines.push('',labeledCandidate(w.name,w.party)+' — '+fmtPct(w.pct));
+    }else if(outcome.kind==='second_round'&&outcome.candidates?.length){
+      outcome.candidates.slice(0,2).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+' — '+fmtPct(x.pct)));
+    }else{
+      (leaderMapData.summary||[]).slice(0,3).forEach(x=>lines.push(labeledCandidate(x.name,partyByNumber(x.number))+' — '+x.municipalities+' município(s)'));
+    }
+    lines.push('','Fonte: Tribunal Superior Eleitoral');
+    return lines.join('\n');
   }
-  if(publicationTextMode==='full'&&!final){
+
+  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status+(status==='MAPA PARCIAL'||status==='RESULTADO FINAL'?' — liderança por município':'') ,''];
+  if(outcome.kind==='elected'&&outcome.candidates?.length){
+    const w=outcome.candidates[0];lines.push(labeledCandidate(w.name,w.party)+' — '+fmtPct(w.pct),'');
+  }else if(outcome.kind==='second_round'&&outcome.candidates?.length){
+    outcome.candidates.forEach(x=>lines.push(labeledCandidate(x.name,x.party)+' — '+fmtPct(x.pct)));lines.push('');
+  }
+  (leaderMapData.summary||[]).slice(0,6).forEach(x=>lines.push(labeledCandidate(x.name,partyByNumber(x.number))+' — '+x.municipalities+' município(s)'));
+  if(leaderMapData.natal?.status==='ok')lines.push('','Natal: '+labeledCandidate(leaderMapData.natal.candidate,partyByNumber(leaderMapData.natal.candidate_number))+' aparece em 1º neste snapshot.');
+  if(!final){
     lines.push('','O mapa representa o snapshot atual da apuração. As lideranças municipais podem mudar conforme novas seções forem totalizadas.');
     lines.push('Base municipal: '+Number(leaderMapData.municipalities_read||0)+'/'+Number(leaderMapData.municipalities_expected||167)+' municípios lidos.');
   }
-  if(publicationTextMode==='full'&&leaderMapData.source_generated_at)lines.push('','Atualização: '+leaderMapData.source_generated_at);
+  if(leaderMapData.source_generated_at)lines.push('','Atualização: '+leaderMapData.source_generated_at);
   lines.push('','Fonte: Tribunal Superior Eleitoral');
   return lines.join('\n');
 }
@@ -406,26 +424,37 @@ function makeText(){
   if(mapPublicationMode)return mapPostText();
   const name=selectedFeature?.properties?.nome||'Município';
   const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
+  const final=mode==='lab'?current.progress>=100:!!current.finalTotalization;
+
+  if(publicationTextMode==='compact'){
+    const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
+    if(mode==='demo'){
+      lines.push('',current.candidates.length+' candidatura(s) registradas.');
+    }else{
+      lines.push('',(final?'RESULTADO FINAL':'PARCIAL')+' · '+fmtPct(current.progress));
+      current.candidates.slice(0,2).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+' — '+fmtPct(x.pct)));
+    }
+    lines.push('',source);
+    return lines.join('\n');
+  }
+
   const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
   if(mode==='demo'){
     lines.push('',current.candidates.length+' candidatura(s) registradas na base eleitoral.');
-    current.candidates.slice(0,4).forEach(c=>lines.push(labeledCandidate(c.name,c.party)+(c.number?' · nº '+c.number:'')));
+    current.candidates.slice(0,6).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+(x.number?' · nº '+x.number:'')));
+    lines.push('','Cadastro eleitoral disponível para o município selecionado.');
   }else{
-    const final=mode==='lab'?current.progress>=100:!!current.finalTotalization;
     lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(current.progress)+' das seções totalizadas','');
-    const visible=publicationTextMode==='full'?current.candidates.slice(0,5):current.candidates.slice(0,3);
-    visible.forEach(c=>lines.push(labeledCandidate(c.name,c.party)+' — '+fmtPct(c.pct)+(publicationTextMode==='full'&&c.votes?' · '+Number(c.votes).toLocaleString('pt-BR')+' votos':'')));
-    if(publicationTextMode==='full'){
-      const leader=current.candidates[0],runner=current.candidates[1];
-      if(leader&&runner){
-        const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
-        lines.push('','Em '+name+', '+labeledCandidate(leader.name,leader.party)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+labeledCandidate(runner.name,runner.party)+'.');
-      }
-      if(!final&&mode!=='lab')lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
-      if(mode==='lab')lines.push('','Cenário fictício criado exclusivamente para testar a Central; não representa resultado eleitoral.');
+    current.candidates.slice(0,5).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
+    const leader=current.candidates[0],runner=current.candidates[1];
+    if(leader&&runner){
+      const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
+      lines.push('','Em '+name+', '+labeledCandidate(leader.name,leader.party)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+labeledCandidate(runner.name,runner.party)+'.');
     }
+    if(!final&&mode!=='lab')lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
+    if(mode==='lab')lines.push('','Cenário fictício criado exclusivamente para testar a Central; não representa resultado eleitoral.');
   }
-  if(publicationTextMode==='full'&&current.generatedAt)lines.push('','Atualização: '+current.generatedAt);
+  if(current.generatedAt)lines.push('','Atualização: '+current.generatedAt);
   lines.push('',source);
   return lines.join('\n');
 }
