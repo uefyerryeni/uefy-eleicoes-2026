@@ -53,17 +53,38 @@ function selectMunicipality(feature){
   loadRemote();
 }
 
-const FIXED_CANDIDATE_COLORS={
-  'cadu de lula':'#d62828',
-  'alvaro dias':'#2e7d32',
-  'allyson':'#1976d2'
+const GOVERNOR_COLORS_BY_NUMBER={
+  '13':'#d62828', // Cadu de Lula · vermelho
+  '16':'#7b2cbf', // Dário Barbosa · roxo
+  '22':'#2e7d32', // Álvaro Dias · verde
+  '27':'#ef6c00', // Godeiro Linharess · laranja
+  '29':'#00897b', // Henrique Lyra · verde-água
+  '36':'#c2185b', // Rodrigo de Bolsonaro · magenta
+  '44':'#1976d2', // Allyson · azul
+  '50':'#6d4c41', // Professor Roberio Paulino · marrom
+  '80':'#455a64'  // Arinalda do MLB · grafite
 };
-const EXTRA_CANDIDATE_COLORS=['#7b2cbf','#e76f51','#f4a261','#00897b','#8d6e63','#6d4c41','#ad1457','#455a64','#5e35b1','#ef6c00'];
+const GOVERNOR_COLORS_BY_NAME={
+  'cadu de lula':'#d62828',
+  'dario barbosa':'#7b2cbf',
+  'alvaro dias':'#2e7d32',
+  'godeiro linharess':'#ef6c00',
+  'henrique lyra':'#00897b',
+  'rodrigo de bolsonaro':'#c2185b',
+  'allyson':'#1976d2',
+  'professor roberio paulino':'#6d4c41',
+  'arinalda do mlb':'#455a64'
+};
 function candidateColor(name,number=''){
+  const byNumber=GOVERNOR_COLORS_BY_NUMBER[String(number||'').replace(/\D/g,'')];
+  if(byNumber)return byNumber;
   const n=norm(name);
-  for(const [key,color] of Object.entries(FIXED_CANDIDATE_COLORS))if(n.includes(norm(key)))return color;
-  const seed=String(number||name||'x').split('').reduce((a,ch)=>a+ch.charCodeAt(0),0);
-  return EXTRA_CANDIDATE_COLORS[seed%EXTRA_CANDIDATE_COLORS.length];
+  if(GOVERNOR_COLORS_BY_NAME[n])return GOVERNOR_COLORS_BY_NAME[n];
+  // Fallback determinístico para eventual nova candidatura:
+  // o mesmo número/nome sempre recebe exatamente a mesma cor.
+  const seed=String(number||name||'0').split('').reduce((a,ch)=>a+ch.charCodeAt(0),0);
+  const hue=(seed*137.508)%360;
+  return 'hsl('+hue.toFixed(1)+' 58% 42%)';
 }
 function leaderForFeature(feature){
   const name=norm(feature?.properties?.nome);
@@ -297,7 +318,7 @@ function renderCurrent(){
   }else{
     if(title)title.textContent='Resultado do município';
     $('#rnProgress').textContent=fmtPct(current.progress);
-    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
+    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%;background:'+candidateColor(c.name,c.number)+'"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
   }
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+'/280';drawCanvas();
 }
@@ -378,7 +399,7 @@ function drawCanvas(){
       ctx.fillStyle='#25292e';ctx.font='700 29px Inter,Segoe UI,Arial';
       ctx.fillText(cand.name.length>27?cand.name.slice(0,26)+'…':cand.name,70,yy);
       ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+23,700,21,11);ctx.fill();
-      ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+23,700*Math.min(100,cand.pct)/100,21,11);ctx.fill();
+      ctx.fillStyle=candidateColor(cand.name,cand.number);roundRect(ctx,70,yy+23,700*Math.min(100,cand.pct)/100,21,11);ctx.fill();
       ctx.fillStyle='#17191c';ctx.font='800 33px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+6);ctx.textAlign='left';
       yy+=82;
     });
