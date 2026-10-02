@@ -112,7 +112,7 @@ function makePost(f){
   let text='ELEIÇÕES 2026 | RADAR RN\\n\\n'+(f.post_text||f.headline)+'\\n\\n'+(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: TSE'+progress);
   if(text.length>280)text=text.slice(0,277)+'…';return text;
 }
-function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+'/280';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar'].forEach(s=>$(s).disabled=!selected||!reviewed)}
+function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+'/280';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar','#shareRadarBundle'].forEach(s=>{const el=$(s);if(el)el.disabled=!selected||!reviewed})}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function wrap(ctx,text,x,y,maxWidth,lineHeight,maxLines){const words=String(text).split(/\\s+/);let line='',lines=[];for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=w}else line=test}if(line)lines.push(line);if(lines.length>maxLines){lines=lines.slice(0,maxLines);let last=lines[maxLines-1];while(ctx.measureText(last+'…').width>maxWidth&&last.includes(' '))last=last.slice(0,last.lastIndexOf(' '));lines[maxLines-1]=last+'…'}lines.forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));return y+lines.length*lineHeight}
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=drawCanvas;
@@ -124,16 +124,36 @@ function drawCanvas(){
   ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText('RADAR RN · MAPA DO VOTO',70,185);
   ctx.fillStyle='#626a72';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText((selected?OFFICE_LABELS[selected.office]:OFFICE_LABELS[activeOffice()])+' · Eleições 2026',70,218);
   if(!selected){ctx.fillStyle='#17191c';ctx.font='800 70px Inter,Segoe UI,Arial';ctx.fillText('Radar RN',70,410);ctx.fillStyle='#59626b';ctx.font='600 28px Inter,Segoe UI,Arial';wrap(ctx,'Selecione um achado e confira o cálculo antes de gerar a publicação.',70,470,850,42,3)}
-  else{ctx.fillStyle='#17191c';ctx.font='850 90px Inter,Segoe UI,Arial';ctx.fillText(selected.display_value||'Dado',70,405);ctx.font='800 47px Inter,Segoe UI,Arial';const end=wrap(ctx,selected.headline,70,475,920,58,4);ctx.fillStyle='#5b646d';ctx.font='600 24px Inter,Segoe UI,Arial';wrap(ctx,selected.card_note||selected.summary||'',70,end+30,890,36,4);ctx.fillStyle='#fff';roundRect(ctx,70,790,940,105,16);ctx.fill();ctx.strokeStyle='#d7dce0';ctx.stroke();ctx.fillStyle='#6b737b';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText('COMO FOI CALCULADO',95,827);ctx.fillStyle='#17191c';ctx.font='700 22px Inter,Segoe UI,Arial';wrap(ctx,selected.calculation||'Cálculo reproduzível a partir dos resultados municipais.',95,861,870,29,2)}
+  else{
+    ctx.fillStyle='#17191c';let valueSize=90;while(valueSize>54){ctx.font='850 '+valueSize+'px Inter,Segoe UI,Arial';if(ctx.measureText(selected.display_value||'Dado').width<=920)break;valueSize-=2}ctx.fillText(selected.display_value||'Dado',70,390);
+    ctx.font='800 45px Inter,Segoe UI,Arial';const end=wrap(ctx,selected.headline,70,458,920,54,3);
+    ctx.fillStyle='#5b646d';ctx.font='600 23px Inter,Segoe UI,Arial';wrap(ctx,selected.card_note||selected.summary||'',70,end+20,890,33,2);
+    ctx.fillStyle='#fff';roundRect(ctx,70,760,940,170,16);ctx.fill();ctx.strokeStyle='#d7dce0';ctx.stroke();
+    ctx.fillStyle='#6b737b';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText('COMO FOI CALCULADO',95,798);
+    ctx.fillStyle='#17191c';ctx.font='700 21px Inter,Segoe UI,Arial';wrap(ctx,selected.calculation||'Cálculo reproduzível a partir dos resultados municipais.',95,836,870,27,3);
+  }
   ctx.strokeStyle='#d0d6db';ctx.beginPath();ctx.moveTo(70,956);ctx.lineTo(1010,956);ctx.stroke();ctx.fillStyle='#59626b';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS · NÃO É RESULTADO ELEITORAL':'Fonte: Tribunal Superior Eleitoral · resultados oficiais',70,998);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1030);ctx.textAlign='left';
 }
 async function canvasBlob(){return await new Promise((res,rej)=>$('#radarCanvas').toBlob(b=>b?res(b):rej(new Error('blob')),'image/png'))}
+async function radarShareJpegBlob(){
+  const canvas=$('#radarCanvas'),flat=document.createElement('canvas');flat.width=canvas.width;flat.height=canvas.height;
+  const ctx=flat.getContext('2d',{alpha:false});ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,flat.width,flat.height);ctx.drawImage(canvas,0,0);
+  return await new Promise((res,rej)=>flat.toBlob(b=>b?res(b):rej(new Error('blob')),'image/jpeg',0.96));
+}
 async function copyImage(){if(!window.isSecureContext||!navigator.clipboard||!window.ClipboardItem)throw new Error('clipboard');const b=await canvasBlob();await navigator.clipboard.write([new ClipboardItem({'image/png':b})])}
+async function shareRadar(){
+  const png=await canvasBlob();const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820;
+  let blob=png;if(!desktop)try{blob=await radarShareJpegBlob()}catch{}
+  const file=new File([blob],`uefy-radar-rn-${selected?.id||'achado'}.${blob.type==='image/jpeg'?'jpg':'png'}`,{type:blob.type||'image/png'});
+  if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Central das Eleições UEFY · Radar RN',text:$('#radarPostText').value,files:[file]});return true}
+  await copyImage();return false;
+}
 function openX(text,w=null){const u='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer')}
 $('#copyRadarText').onclick=async()=>{try{await navigator.clipboard.writeText($('#radarPostText').value);flash($('#copyRadarText'),'Texto copiado!')}catch{flash($('#copyRadarText'),'Cópia bloqueada')}};
 $('#copyRadarImage').onclick=async()=>{try{await copyImage();flash($('#copyRadarImage'),'Imagem copiada!')}catch{flash($('#copyRadarImage'),'Cópia bloqueada')}};
 $('#downloadRadar').onclick=()=>{const a=document.createElement('a');a.download='uefy-radar-rn-'+(selected?.id||'achado')+'.png';a.href=$('#radarCanvas').toDataURL('image/png');a.click()};
 $('#openRadarX').onclick=async()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}openX($('#radarPostText').value,w);flash($('#openRadarX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto')};
+$('#shareRadarBundle')?.addEventListener('click',async()=>{try{const native=await shareRadar();if(!native)flash($('#shareRadarBundle'),'Imagem copiada · texto acima')}catch(e){if(e?.name!=='AbortError')flash($('#shareRadarBundle'),'Use Copiar texto / Copiar imagem')}});
 $('#officeFilter').onchange=()=>{selected=null;buildFilters();renderFindings();renderDetail();drawCanvas();updatePublisher(false)};
 $('#candidateFilter').onchange=renderFindings;$('#typeFilter').onchange=renderFindings;
 $('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;selected=null;loadRadar()};
