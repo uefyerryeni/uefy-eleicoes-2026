@@ -106,7 +106,7 @@ test('Cores de governador são fixas e exclusivas', async ({page})=>{
 for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
   test(`Controles flutuantes não se sobrepõem em ${viewport.width}px`, async ({page})=>{
     await page.setViewportSize(viewport);
-    for(const path of ['/index.html','/rn.html']){
+    for(const path of ['/index.html','/rn.html','/radar.html']){
       await page.goto(path+'?v='+BUILD);
       await page.evaluate(()=>scrollTo(0,1000));
       await page.waitForTimeout(150);
@@ -343,4 +343,23 @@ test('Resultado eleito mantém versões editorialmente diferentes', async ({page
   expect(sizes.compact).toContain('ELEITO');
   expect(sizes.compact).not.toContain('matematicamente definida');
   expect(sizes.compact.length).toBeLessThan(sizes.full.length*0.7);
+});
+
+
+test('Todas as páginas têm atualizar e voltar ao topo', async ({page})=>{
+  for(const path of ['/index.html','/rn.html','/radar.html']){
+    await page.goto(path+'?v='+BUILD);
+    await expect(page.locator('#refreshAll')).toBeAttached();
+    await expect(page.locator('#toTop')).toBeAttached();
+  }
+});
+
+test('Navegação usa nomes coerentes com as áreas', async ({page})=>{
+  await page.goto('/index.html?v='+BUILD);
+  await expect(page.locator('.nav')).toContainText('Apuração geral');
+  await expect(page.locator('.nav')).toContainText('Governador RN');
+  await expect(page.locator('.nav')).toContainText('Legislativo RN');
+
+  await page.goto('/radar.html?v='+BUILD);
+  await expect(page.locator('.nav a.active')).toHaveText('Legislativo RN');
 });
