@@ -44,6 +44,16 @@ jobs:
       - name: Testar Geral, RN, Radar, cards e responsividade
         run: npx playwright test
 
+      - name: Salvar relatório dos testes
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          if-no-files-found: ignore
+
   deploy:
     needs: qa
     environment:
