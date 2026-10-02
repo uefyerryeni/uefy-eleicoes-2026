@@ -163,8 +163,9 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   const fullGeneral=await page.locator('#postText').inputValue();
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactGeneral=await page.locator('#postText').inputValue();
-  expect(fullGeneral.length).toBeGreaterThan(compactGeneral.length);
+  expect(fullGeneral.length-compactGeneral.length).toBeGreaterThan(80);
   expect(fullGeneral).toContain('Atualização:');
+  expect(fullGeneral).toContain('1º lugar');
 
   await page.goto('/rn.html?v='+BUILD);
   await page.selectOption('#rnMode','lab');
@@ -172,8 +173,9 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   const fullRn=await page.locator('#rnPostText').inputValue();
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactRn=await page.locator('#rnPostText').inputValue();
-  expect(fullRn.length).toBeGreaterThan(compactRn.length);
+  expect(fullRn.length-compactRn.length).toBeGreaterThan(80);
   expect(fullRn).toContain('Atualização:');
+  expect(fullRn).toContain('1º lugar');
 
   await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
@@ -183,8 +185,9 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   const fullRadar=await page.locator('#radarPostText').inputValue();
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactRadar=await page.locator('#radarPostText').inputValue();
-  expect(fullRadar.length).toBeGreaterThan(compactRadar.length);
+  expect(fullRadar.length-compactRadar.length).toBeGreaterThan(80);
   expect(fullRadar).toContain('Como foi calculado:');
+  expect(fullRadar).toContain('Dados do recorte:');
   expect(fullRadar).not.toContain('/280');
 });
 
@@ -269,4 +272,15 @@ test('RN mostra destaque estadual de eleito e segundo turno', async ({page})=>{
   await expect(page.locator('#rnElectionOutcome')).toContainText('2º TURNO CONFIRMADO');
   await expect(page.locator('#rnElectionOutcome')).toContainText('CANDIDATO A (AAA)');
   await expect(page.locator('#rnElectionOutcome')).toContainText('CANDIDATO B (BBB)');
+});
+
+
+test('Quadro de revisão do texto é ampliado', async ({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  for(const [path,selector] of [['/index.html','#postText'],['/rn.html','#rnPostText'],['/radar.html','#radarPostText']]){
+    await page.goto(path+'?v='+BUILD);
+    const box=await page.locator(selector).boundingBox();
+    expect(box).not.toBeNull();
+    expect(box.height).toBeGreaterThanOrEqual(275);
+  }
 });
