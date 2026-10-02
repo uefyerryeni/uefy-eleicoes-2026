@@ -15,7 +15,37 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  qa:
+    name: Homologação automatizada
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: QA estático e integridade dos dados
+        run: python scripts/qa_static.py
+
+      - name: Instalar testes de navegador
+        run: npm install
+
+      - name: Instalar Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Testar Geral, RN, Radar, cards e responsividade
+        run: npx playwright test
+
   deploy:
+    needs: qa
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
