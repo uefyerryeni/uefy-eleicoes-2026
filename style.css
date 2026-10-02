@@ -668,3 +668,6 @@ body.dark .rn-leader-mun:hover{stroke:#fff}
  .rn-leader-map{min-height:360px}
  .rn-total-map-side{grid-template-columns:1fr}
 }
+
+/* Laboratório UEFY · dados fictícios */
+body:has(#modeSelect option:checked[value="lab"]) #sourceHint,body:has(#rnMode option:checked[value="lab"]) .live{outline:2px solid #f5c400;outline-offset:2px}
