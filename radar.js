@@ -54,7 +54,7 @@ async function loadRadar(){
     if(radar.source_url)$('#sourceLink').href=radar.source_url;
     $('#radarLive').textContent=radarMode==='lab'?'LAB fictício':(radar.status==='ok'?'TSE oficial':'Aguardando apuração');
     if(radarMode==='lab')setStatus('LABORATÓRIO UEFY · DADOS FICTÍCIOS · cenário '+(labStep+1)+'/'+LAB_STEPS.length+'. Clique em Atualizar tela para avançar a apuração simulada.',false);else if(radar.status!=='ok')setStatus('Candidaturas carregadas. Os indicadores de votação serão ativados quando a apuração oficial estiver disponível.',false);else setStatus('');
-    buildFilters();renderFindings();
+    buildFilters();syncSelectionFromFilters();
   }catch(e){setStatus('Não foi possível carregar o Radar RN agora. Tente atualizar a página.',true);radar={status:'error',findings:[],offices:{}};candidateRegistry=[];buildFilters();renderFindings()}
 }
 function buildFilters(){
@@ -95,7 +95,22 @@ function renderFindings(){
   grid.innerHTML=items.map(f=>'<article class="finding-card '+(selected?.id===f.id?'selected':'')+'" data-id="'+escapeHtml(f.id)+'" tabindex="0"><div class="finding-meta"><span class="finding-chip">'+escapeHtml(TYPE_LABELS[f.type]||f.type)+'</span><span class="finding-chip">'+escapeHtml(OFFICE_LABELS[f.office]||f.office)+'</span></div><div class="finding-value">'+escapeHtml(f.display_value||'Dado')+'</div><h3>'+escapeHtml(f.headline)+'</h3><p>'+escapeHtml(f.summary||'')+'</p><button type="button">Conferir cálculo →</button></article>').join('');
   $$('.finding-card').forEach(el=>{el.onclick=()=>selectFinding(el.dataset.id);el.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectFinding(el.dataset.id)}}});
 }
-function selectFinding(id){selected=(radar.findings||[]).find(f=>f.id===id)||null;renderFindings();renderDetail();drawCanvas();updatePublisher(false);$('#detailContent')?.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function selectFinding(id,scroll=true){
+  selected=(radar.findings||[]).find(f=>f.id===id)||null;
+  renderFindings();renderDetail();drawCanvas();updatePublisher(false);
+  if(scroll)$('#detailContent')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function syncSelectionFromFilters(){
+  selected=null;
+  const items=filtered();
+  const specificCandidate=$('#candidateFilter')?.value&&$('#candidateFilter').value!=='all';
+  const specificType=$('#typeFilter')?.value&&$('#typeFilter').value!=='all';
+  if(items.length===1&&(specificCandidate||specificType)){
+    selectFinding(items[0].id,false);
+    return;
+  }
+  renderFindings();renderDetail();drawCanvas();updatePublisher(false);
+}
 function renderDetail(){
   $('#detailEmpty').hidden=!!selected;$('#detailContent').hidden=!selected;if(!selected)return;
   $('#detailType').textContent=TYPE_LABELS[selected.type]||selected.type;
@@ -154,9 +169,10 @@ $('#copyRadarImage').onclick=async()=>{try{await copyImage();flash($('#copyRadar
 $('#downloadRadar').onclick=()=>{const a=document.createElement('a');a.download='uefy-radar-rn-'+(selected?.id||'achado')+'.png';a.href=$('#radarCanvas').toDataURL('image/png');a.click()};
 $('#openRadarX').onclick=async()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}openX($('#radarPostText').value,w);flash($('#openRadarX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto')};
 $('#shareRadarBundle')?.addEventListener('click',async()=>{try{const native=await shareRadar();if(!native)flash($('#shareRadarBundle'),'Imagem copiada · texto acima')}catch(e){if(e?.name!=='AbortError')flash($('#shareRadarBundle'),'Use Copiar texto / Copiar imagem')}});
-$('#officeFilter').onchange=()=>{selected=null;buildFilters();renderFindings();renderDetail();drawCanvas();updatePublisher(false)};
-$('#candidateFilter').onchange=renderFindings;$('#typeFilter').onchange=renderFindings;
-$('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;selected=null;loadRadar()};
-$('#refreshRadar').onclick=()=>{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;selected=null;loadRadar()};
+$('#officeFilter').onchange=()=>{selected=null;buildFilters();syncSelectionFromFilters()};
+$('#candidateFilter').onchange=()=>syncSelectionFromFilters();
+$('#typeFilter').onchange=()=>syncSelectionFromFilters();
+$('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=radarMode==='lab'?1:0;selected=null;loadRadar()};
+$('#refreshRadar').onclick=()=>{if(radarMode==='lab'){labStep=(labStep+1)%LAB_STEPS.length;if(labStep===0)labStep=1}selected=null;loadRadar()};
 const theme=$('#themeToggle');if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');function syncTheme(){const d=document.body.classList.contains('dark');theme.textContent=d?'☀':'◐';theme.title=d?'Usar tema claro':'Usar tema escuro'}syncTheme();theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme();drawCanvas()};
 const topBtn=$('#toTop');addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));drawCanvas();updatePublisher(false);loadRadar();
