@@ -21,6 +21,7 @@ function flash(btn,text){if(!btn)return;const old=btn.textContent;btn.textConten
 function setStatus(msg,error=false){const el=$('#radarStatus');if(!el)return;el.hidden=!msg;el.textContent=msg||'';el.classList.toggle('error',error)}
 function activeOffice(){return $('#officeFilter')?.value||'sen'}
 function officeLabel(){return OFFICE_LABELS[activeOffice()]||'Legislativo'}
+function publicationSource(){return radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: Tribunal Superior Eleitoral'}
 function registryForOffice(office=activeOffice()){return candidateRegistry.filter(x=>Number(x.cargo)===OFFICE_CARGO[office]).sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR'))}
 function candidateMeta(number,name=''){
   const row=registryForOffice().find(x=>String(x.numero)===String(number))||candidateRegistry.find(x=>String(x.nome)===String(name));
