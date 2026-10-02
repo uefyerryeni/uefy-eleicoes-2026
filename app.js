@@ -21,6 +21,7 @@ const officeMeta={
 };
 let mode='official',selectedOffice='pres',selectedScope='br',maps={br:null,rn:null};
 let state={pres:{progress:0,candidates:[]},gov:{progress:0,candidates:[]},sen:{progress:0,candidates:[]},depf:{progress:0,candidates:[]},depe:{progress:0,candidates:[]}};
+let publicationTextMode='full';
 
 function fmtPct(v){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%'}
 function nowStamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
@@ -300,18 +301,27 @@ function selectOffice(k){
   updateScopeMap();
   loadRemote();
 }
+function candidateLabel(c){
+  return c.name+(c.party?' ('+c.party+')':'');
+}
 function makePostText(){
   const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5);
-  const footer=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE';
-  const lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel()];
+  const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
+  const lines=['ELEIÇÕES 2026 | '+m.title.toUpperCase(),scopeLabel()];
   if(mode==='demo'){
-    lines.push(d.candidates.length+' candidatura(s) na base oficial','');
-    d.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
+    lines.push('',d.candidates.length+' candidatura(s) registradas na base eleitoral.');
+    d.candidates.slice(0,4).forEach(c=>lines.push(candidateLabel(c)+(c.number?' · nº '+c.number:'')));
   }else{
-    lines.push((d.progress>=100?'RESULTADO FINAL · ':'PARCIAL · ')+fmtPct(d.progress)+' das seções totalizadas','');
-    d.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.party?' ('+c.party+')':'')+' — '+fmtPct(c.pct)));
+    const final=d.progress>=100;
+    lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(d.progress)+' das seções totalizadas','');
+    d.candidates.slice(0,4).forEach(c=>lines.push(candidateLabel(c)+' — '+fmtPct(c.pct)));
+    if(publicationTextMode==='full'&&!final&&mode!=='lab'){
+      lines.push('','Os percentuais refletem o recorte selecionado neste momento e podem mudar até a conclusão da totalização.');
+    }
   }
-  return lines.join('\n')+'\n\n'+footer;
+  if(publicationTextMode==='full'&&d.generatedAt)lines.push('','Atualização: '+d.generatedAt);
+  lines.push('',source);
+  return lines.join('\n');
 }
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
@@ -395,9 +405,15 @@ async function copyCanvasImage(canvas){
   await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
   return blob;
 }
-function openXIntent(text,preopened=null){
-  const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
+async function openXIntent(text,preopened=null){
+  const encoded=encodeURIComponent(text);
+  const useIntent=encoded.length<=6000;
+  const url=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';
+  if(!useIntent){
+    try{await navigator.clipboard.writeText(text)}catch{}
+  }
   if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
+  return useIntent;
 }
 async function shareImageAndText(openX=false,preopened=null){
   const canvas=$('#shareCanvas'),text=$('#postText').value;
@@ -418,8 +434,8 @@ async function shareImageAndText(openX=false,preopened=null){
         copied=true;
       }
     }catch{}
-    openXIntent(text,preopened);
-    flash($('#openX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”');
+    const prefilled=await openXIntent(text,preopened);
+    flash($('#openX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”'):'Texto copiado · cole no X');
     return;
   }
 
@@ -441,10 +457,20 @@ async function shareImageAndText(openX=false,preopened=null){
     return;
   }
 
-  openXIntent(text,preopened);
-  flash($('#openX'),'X aberto com o texto');
+  const prefilled=await openXIntent(text,preopened);
+  flash($('#openX'),prefilled?'X aberto com o texto':'Texto copiado · cole no X');
 }$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();loadRemote()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
 $('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;if(mode==='lab')labStep=0;loadRemote()};$('#refreshBtn').onclick=()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRemote()};
+
+function syncTextModeButtons(){
+  $('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
+}
+$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
+  publicationTextMode=b.dataset.textMode;
+  syncTextModeButtons();
+  regenerate();
+});
+syncTextModeButtons();
 
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+' caracteres';
 $('#copyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Texto copiado!')}catch{flash($('#copyText'),'Cópia bloqueada')}};
