@@ -27,6 +27,9 @@ jobs:
         run: python scripts/build_rn_governador_map.py
       - name: Validar JSON
         run: python -m json.tool data/rn-governador-mapa.json > /dev/null
+      - name: Auditoria de integridade antes de publicar
+        run: python scripts/qa_static.py
+
       - name: Publicar se mudou
         run: |
           if git diff --quiet -- data/rn-governador-mapa.json; then
