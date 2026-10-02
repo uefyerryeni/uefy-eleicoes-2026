@@ -30,8 +30,11 @@ for pattern in (r"registryForOffice\([^\)]*\)\.slice\(", r"regs\.slice\(0\s*,\s*
 # 2b) Proteção contra seletor único usado com forEach em controles múltiplos.
 for js_name in ("app.js","radar.js"):
     js=(ROOT/js_name).read_text(encoding="utf-8")
-    if re.search(r"(?<!\\$)\\$\\('\.text-mode-switch \\[data-text-mode\\]'\\)\\.forEach", js):
-        fail(f"{js_name} usa seletor único $() com forEach nos modos de texto.")
+    for line in js.splitlines():
+        stripped=line.lstrip()
+        if stripped.startswith("$(") and ".text-mode-switch [data-text-mode]" in stripped and ".forEach" in stripped:
+            fail(f"{js_name} usa seletor único $() com forEach nos modos de texto.")
+            break
 
 # 3) Snapshot do Radar: quando oficial estiver ativo, toda candidatura com achados
 # deve possuir os quatro tipos e a integridade não pode acusar ausências.
