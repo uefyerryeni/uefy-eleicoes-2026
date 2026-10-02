@@ -164,7 +164,7 @@ def main():
 
     read=sum(1 for x in leaders.values() if x.get('status') in ('ok','no_votes'))
     complete=read==len(mun) and len(errors)==0
-    final_result=complete and all(float(x.get('progress') or 0)>=100 for x in leaders.values() if x.get('status') in ('ok','no_votes'))
+    final_result=bool(statewide_outcome.get('final_totalization'))
     summary=sorted(counts.values(),key=lambda x:(-x['municipalities'],x['name']))
     natal=leaders.get('Natal') or leaders.get('NATAL')
     data={
