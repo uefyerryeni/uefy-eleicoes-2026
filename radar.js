@@ -132,23 +132,33 @@ function makePost(f){
   const party=candidateParty(f.candidate);
   const candidateLabel=f.candidate+(party?' ('+party+')':'');
   const headline=(f.post_text||f.headline||'').replace(f.candidate,candidateLabel);
-  const lines=['ELEIÇÕES 2026 | RADAR RN','',headline];
-  if(publicationTextMode==='full'){
-    const explanation=String(f.explanation||f.summary||'').trim();
-    const calculation=String(f.calculation||'').trim();
-    if(explanation&&explanation!==f.headline)lines.push('',explanation.replace(f.candidate,candidateLabel));
-    if(Array.isArray(f.breakdown)&&f.breakdown.length){
-      lines.push('','Dados do recorte:');
-      f.breakdown.slice(0,4).forEach(x=>lines.push('• '+x.label+': '+x.value));
+
+  if(publicationTextMode==='compact'){
+    const lines=['ELEIÇÕES 2026 | RADAR RN','',headline];
+    if(radarMode==='lab')lines.push('','LABORATÓRIO UEFY · DADOS FICTÍCIOS');
+    else{
+      if(radar.progress!=null)lines.push('','Apuração: '+pct(radar.progress)+'.');
+      lines.push('Fonte: Tribunal Superior Eleitoral');
     }
-    if(calculation)lines.push('','Como foi calculado: '+calculation);
-    if(radarMode!=='lab')lines.push('','O Radar descreve o retrato disponível no momento da atualização; os números podem mudar enquanto a apuração estiver em andamento.');
+    return lines.join('\n');
   }
+
+  const lines=['ELEIÇÕES 2026 | RADAR RN','',headline];
+  const explanation=String(f.explanation||f.summary||'').trim();
+  const calculation=String(f.calculation||'').trim();
+  if(explanation&&explanation!==f.headline)lines.push('',explanation.replace(f.candidate,candidateLabel));
+  if(Array.isArray(f.breakdown)&&f.breakdown.length){
+    lines.push('','Dados do recorte:');
+    f.breakdown.slice(0,4).forEach(x=>lines.push('• '+x.label+': '+x.value));
+  }
+  if(calculation)lines.push('','Como foi calculado: '+calculation);
   if(radarMode==='lab'){
-    lines.push('','LABORATÓRIO UEFY · DADOS FICTÍCIOS');
+    lines.push('','Cenário fictício produzido exclusivamente para teste da ferramenta.');
+    lines.push('LABORATÓRIO UEFY · DADOS FICTÍCIOS');
   }else{
     if(radar.progress!=null)lines.push('','Apuração: '+pct(radar.progress)+' das seções.');
-    if(publicationTextMode==='full'&&(radar.source_generated_at||radar.generated_at))lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
+    lines.push('O Radar descreve o retrato disponível no momento da atualização; os números podem mudar enquanto a apuração estiver em andamento.');
+    if(radar.source_generated_at||radar.generated_at)lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
     lines.push('Fonte: Tribunal Superior Eleitoral');
   }
   return lines.join('\n');
