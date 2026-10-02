@@ -4,7 +4,8 @@ const CANDIDATE_URL='data/candidatos-ufs-c.json';
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadual'};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
-let radar={status:'loading',findings:[],offices:{}}, selected=null, candidateRegistry=[];
+let radar={status:'loading',findings:[],offices:{}}, selected=null, candidateRegistry=[], radarMode='official', labStep=0;
+const LAB_STEPS=[0,8,22,41,63,81,95,100];
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
 function flash(btn,text){if(!btn)return;const old=btn.textContent;btn.textContent=text;setTimeout(()=>btn.textContent=old,1800)}
 function setStatus(msg,error=false){const el=$('#radarStatus');el.hidden=!msg;el.textContent=msg||'';el.classList.toggle('error',error)}
@@ -13,8 +14,29 @@ function activeOffice(){return $('#officeFilter')?.value||'sen'}
 const OFFICE_CARGO={sen:5,depf:6,depe:7};
 function registryForOffice(office=activeOffice()){return candidateRegistry.filter(x=>Number(x.cargo)===OFFICE_CARGO[office]).sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR'))}
 function selectedRegistryCandidate(){const v=$('#candidateFilter')?.value;if(!v||v==='all')return null;return registryForOffice().find(x=>String(x.seq||x.nome)===v)||null}
+function labFinding(id,office,type,candidate,value,headline,summary,calculation,breakdown=[]){
+  return {id,office,type,candidate,display_value:value,headline,summary,explanation:summary,calculation,breakdown,post_text:headline,card_note:'Cenário fictício criado exclusivamente para testar o Radar RN.'};
+}
+function buildLabRadar(){
+  const progress=LAB_STEPS[labStep%LAB_STEPS.length],findings=[],offices={};
+  Object.keys(OFFICE_LABELS).forEach((office,oi)=>{
+    const regs=registryForOffice(office).slice(0,Math.min(10,registryForOffice(office).length));
+    offices[office]={label:OFFICE_LABELS[office],progress,candidates_with_votes:progress?regs.length:0};
+    if(!progress)return;
+    regs.slice(0,6).forEach((c,i)=>{
+      const coverage=Math.min(167,Math.round((progress/100)*167*(.72+((i+oi)%4)*.07)));
+      const natal=12+((i*9+labStep*4+oi*5)%47),top3=28+((i*7+labStep*3)%39),leads=Math.min(167,Math.round(coverage*(.08+((i+labStep)%5)*.08)));
+      const base=(c.nome||'Candidatura')+' · '+(c.numero||'');
+      findings.push(labFinding('lab-'+office+'-'+i+'-cov',office,'territorial_coverage',c.nome,String(coverage)+'/167',c.nome+' registra votos em '+coverage+' municípios no cenário de teste.','Indicador fictício de presença municipal para validar filtros, cards e publicação do Radar.','Municípios com votos fictícios ÷ 167 municípios do RN',[{label:'Municípios com votos',value:String(coverage)},{label:'Total do RN',value:'167'}]));
+      findings.push(labFinding('lab-'+office+'-'+i+'-nat',office,'capital_share',c.nome,pct(natal),pct(natal)+' da votação fictícia de '+c.nome+' está em Natal.','Comparação fictícia entre capital e interior para testar o comportamento do Radar.','Votos fictícios em Natal ÷ votos fictícios totais da candidatura',[{label:'Natal',value:pct(natal)},{label:'Interior',value:pct(100-natal)}]));
+      findings.push(labFinding('lab-'+office+'-'+i+'-top',office,'top_municipalities',c.nome,pct(top3),'Os três maiores municípios concentram '+pct(top3)+' da votação fictícia de '+c.nome+'.','Concentração territorial artificial para teste do cálculo e da arte.','Soma dos votos fictícios nos 3 maiores municípios ÷ total fictício',[{label:'Top 3',value:pct(top3)},{label:'Demais municípios',value:pct(100-top3)}]));
+      findings.push(labFinding('lab-'+office+'-'+i+'-lead',office,'municipal_leads',c.nome,String(leads),c.nome+' aparece em primeiro em '+leads+' municípios no cenário fictício.','Contagem simulada de lideranças municipais para testar o Radar.','Quantidade de municípios em que a candidatura ocupa ficticiamente o 1º lugar',[{label:'Municípios liderados',value:String(leads)},{label:'Base com votos',value:String(coverage)}]));
+    });
+  });
+  radar={status:'ok',generated_at:new Date().toLocaleString('pt-BR'),source_generated_at:'LAB · cenário '+(labStep+1)+'/'+LAB_STEPS.length,source_name:'Laboratório UEFY · dados fictícios',progress,scope:'Rio Grande do Norte',offices,municipalities:167,request_errors:0,findings,lab:true};
+}
 async function loadRadar(){
-  setStatus('Carregando a última leitura oficial do Radar RN…');
+  setStatus(radarMode==='lab'?'Montando cenário fictício do Radar RN…':'Carregando a última leitura oficial do Radar RN…');
   try{
     const [radarRes,candRes]=await Promise.all([
       fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'}),
@@ -26,11 +48,12 @@ async function loadRadar(){
       const base=await candRes.json();
       candidateRegistry=Array.isArray(base?.rn?.candidates)?base.rn.candidates:[];
     }else candidateRegistry=[];
+    if(radarMode==='lab')buildLabRadar();
     $('#sourceGenerated').textContent=radar.source_generated_at||radar.generated_at||'Aguardando resultados';
-    $('#sourceMeta').textContent=(radar.source_name||'Tribunal Superior Eleitoral')+(radar.status==='ok'&&radar.progress!=null?' · '+pct(radar.progress)+' das seções totalizadas':'');
+    $('#sourceMeta').textContent=(radar.source_name||'Tribunal Superior Eleitoral')+(radar.status==='ok'&&radar.progress!=null?' · '+pct(radar.progress)+(radarMode==='lab'?' da simulação':' das seções totalizadas'):'');
     if(radar.source_url)$('#sourceLink').href=radar.source_url;
-    $('#radarLive').textContent=radar.status==='ok'?'TSE oficial':'Aguardando apuração';
-    if(radar.status!=='ok')setStatus('Candidaturas carregadas. Os indicadores de votação serão ativados quando a apuração oficial estiver disponível.',false);else setStatus('');
+    $('#radarLive').textContent=radarMode==='lab'?'LAB fictício':(radar.status==='ok'?'TSE oficial':'Aguardando apuração');
+    if(radarMode==='lab')setStatus('LABORATÓRIO UEFY · DADOS FICTÍCIOS · cenário '+(labStep+1)+'/'+LAB_STEPS.length+'. Clique em Atualizar tela para avançar a apuração simulada.',false);else if(radar.status!=='ok')setStatus('Candidaturas carregadas. Os indicadores de votação serão ativados quando a apuração oficial estiver disponível.',false);else setStatus('');
     buildFilters();renderFindings();
   }catch(e){setStatus('Não foi possível carregar o Radar RN agora. Tente atualizar a página.',true);radar={status:'error',findings:[],offices:{}};candidateRegistry=[];buildFilters();renderFindings()}
 }
@@ -86,7 +109,7 @@ function renderDetail(){
 function makePost(f){
   if(!f)return'';
   const progress=radar.progress!=null?' · '+pct(radar.progress)+' das seções':'';
-  let text='ELEIÇÕES 2026 | RADAR RN\\n\\n'+(f.post_text||f.headline)+'\\n\\nFonte: TSE'+progress;
+  let text='ELEIÇÕES 2026 | RADAR RN\\n\\n'+(f.post_text||f.headline)+'\\n\\n'+(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: TSE'+progress);
   if(text.length>280)text=text.slice(0,277)+'…';return text;
 }
 function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+'/280';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar'].forEach(s=>$(s).disabled=!selected||!reviewed)}
@@ -102,7 +125,7 @@ function drawCanvas(){
   ctx.fillStyle='#626a72';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText((selected?OFFICE_LABELS[selected.office]:OFFICE_LABELS[activeOffice()])+' · Eleições 2026',70,218);
   if(!selected){ctx.fillStyle='#17191c';ctx.font='800 70px Inter,Segoe UI,Arial';ctx.fillText('Radar RN',70,410);ctx.fillStyle='#59626b';ctx.font='600 28px Inter,Segoe UI,Arial';wrap(ctx,'Selecione um achado e confira o cálculo antes de gerar a publicação.',70,470,850,42,3)}
   else{ctx.fillStyle='#17191c';ctx.font='850 90px Inter,Segoe UI,Arial';ctx.fillText(selected.display_value||'Dado',70,405);ctx.font='800 47px Inter,Segoe UI,Arial';const end=wrap(ctx,selected.headline,70,475,920,58,4);ctx.fillStyle='#5b646d';ctx.font='600 24px Inter,Segoe UI,Arial';wrap(ctx,selected.card_note||selected.summary||'',70,end+30,890,36,4);ctx.fillStyle='#fff';roundRect(ctx,70,790,940,105,16);ctx.fill();ctx.strokeStyle='#d7dce0';ctx.stroke();ctx.fillStyle='#6b737b';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText('COMO FOI CALCULADO',95,827);ctx.fillStyle='#17191c';ctx.font='700 22px Inter,Segoe UI,Arial';wrap(ctx,selected.calculation||'Cálculo reproduzível a partir dos resultados municipais.',95,861,870,29,2)}
-  ctx.strokeStyle='#d0d6db';ctx.beginPath();ctx.moveTo(70,956);ctx.lineTo(1010,956);ctx.stroke();ctx.fillStyle='#59626b';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral · resultados oficiais',70,998);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1030);ctx.textAlign='left';
+  ctx.strokeStyle='#d0d6db';ctx.beginPath();ctx.moveTo(70,956);ctx.lineTo(1010,956);ctx.stroke();ctx.fillStyle='#59626b';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS · NÃO É RESULTADO ELEITORAL':'Fonte: Tribunal Superior Eleitoral · resultados oficiais',70,998);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1030);ctx.textAlign='left';
 }
 async function canvasBlob(){return await new Promise((res,rej)=>$('#radarCanvas').toBlob(b=>b?res(b):rej(new Error('blob')),'image/png'))}
 async function copyImage(){if(!window.isSecureContext||!navigator.clipboard||!window.ClipboardItem)throw new Error('clipboard');const b=await canvasBlob();await navigator.clipboard.write([new ClipboardItem({'image/png':b})])}
@@ -112,6 +135,8 @@ $('#copyRadarImage').onclick=async()=>{try{await copyImage();flash($('#copyRadar
 $('#downloadRadar').onclick=()=>{const a=document.createElement('a');a.download='uefy-radar-rn-'+(selected?.id||'achado')+'.png';a.href=$('#radarCanvas').toDataURL('image/png');a.click()};
 $('#openRadarX').onclick=async()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}openX($('#radarPostText').value,w);flash($('#openRadarX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto')};
 $('#officeFilter').onchange=()=>{selected=null;buildFilters();renderFindings();renderDetail();drawCanvas();updatePublisher(false)};
-$('#candidateFilter').onchange=renderFindings;$('#typeFilter').onchange=renderFindings;$('#refreshRadar').onclick=()=>loadRadar();
+$('#candidateFilter').onchange=renderFindings;$('#typeFilter').onchange=renderFindings;
+$('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;selected=null;loadRadar()};
+$('#refreshRadar').onclick=()=>{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;selected=null;loadRadar()};
 const theme=$('#themeToggle');if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');function syncTheme(){const d=document.body.classList.contains('dark');theme.textContent=d?'☀':'◐';theme.title=d?'Usar tema claro':'Usar tema escuro'}syncTheme();theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme();drawCanvas()};
 const topBtn=$('#toTop');addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));drawCanvas();updatePublisher(false);loadRadar();
