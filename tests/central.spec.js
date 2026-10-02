@@ -112,3 +112,22 @@ for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
     }
   });
 }
+
+
+test('Fonte global do RN sincroniza mapa e consulta municipal', async ({page})=>{
+  await page.goto('/rn.html?v='+BUILD);
+  await expect(page.locator('#rnSourceTitle')).toHaveText('Oficial TSE');
+  await expect(page.locator('#rnSourceBadge')).toHaveText('OFICIAL TSE');
+  await expect(page.locator('#rnMunicipalSource')).toHaveText('Oficial TSE');
+
+  await page.selectOption('#rnMode','sim');
+  await expect(page.locator('#rnSourceTitle')).toHaveText('Simulado TSE');
+  await expect(page.locator('#rnSourceBadge')).toHaveText('SIMULADO TSE');
+  await expect(page.locator('#rnMunicipalSource')).toHaveText('Simulado TSE');
+  await expect(page.locator('#rnLeaderSummary')).toContainText('Mapa estadual indisponível no Simulado TSE');
+
+  await page.selectOption('#rnMode','lab');
+  await expect(page.locator('#rnSourceTitle')).toHaveText('Laboratório UEFY');
+  await expect(page.locator('#rnSourceBadge')).toContainText('LAB');
+  await expect(page.locator('#rnMunicipalSource')).toHaveText('Laboratório UEFY');
+});
