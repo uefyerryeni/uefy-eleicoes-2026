@@ -59,7 +59,7 @@ def flatten_candidates(data):
                     number=str(cand.get('n') or cand.get('nsqcand') or '')
                     name=str(cand.get('nmu') or cand.get('nm') or ('Número '+number if number else 'Nome não informado'))
                     votes=parse_number(cand.get('vap'))
-                    out.append({'id':number or name,'number':number,'name':name,'votes':votes,'seq':parse_number(cand.get('seq') or 999999)})
+                    out.append({'id':number or name,'number':number,'name':name,'party':str(par.get('sg') or ''),'votes':votes,'pct':parse_pct(cand.get('pvap')),'seq':parse_number(cand.get('seq') or 999999)})
     return out
 
 def progress_of(data):
@@ -92,7 +92,7 @@ def finding(fid,typ,office,candidate,headline,summary,display,calculation,post_t
 
 def waiting(message):
     now=datetime.now(TZ).isoformat(timespec='seconds')
-    data={'status':'waiting','generated_at':now,'source_generated_at':None,'source_name':'Tribunal Superior Eleitoral · resultados oficiais','source_url':SOURCE_PAGE,'progress':0,'scope':'Rio Grande do Norte','offices':{},'findings':[],'message':message,'methodology_version':'2.0'}
+    data={'status':'waiting','generated_at':now,'source_generated_at':None,'source_name':'Tribunal Superior Eleitoral · resultados oficiais','source_url':SOURCE_PAGE,'progress':0,'scope':'Rio Grande do Norte','offices':{},'municipal_maps':{},'findings':[],'message':message,'methodology_version':'3.0'}
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
     print(message)
@@ -145,6 +145,7 @@ def main():
                 errors+=1
 
     findings=[]; offices_meta={}; progress_values=[]; stamps=[]
+    municipal_maps={o:{'leaders':{},'results':{},'summary':[],'municipalities_read':0} for o in OFFICES}
     municipal_leads={o:defaultdict(int) for o in OFFICES}
     municipal_lead_ties={o:defaultdict(int) for o in OFFICES}
     for office in OFFICES:
@@ -162,6 +163,39 @@ def main():
             for cid in winners:
                 municipal_leads[office][cid]+=1
                 if len(winners)>1:municipal_lead_ties[office][cid]+=1
+
+    # Estrutura territorial principal do Radar: liderança e resultado por município.
+    for office in OFFICES:
+        names=set()
+        for rec in per_office[office].values():
+            names.update(rec['municipal'].keys())
+        counts=defaultdict(lambda:{'number':'','name':'','party':'','municipalities':0})
+        for mun_name in sorted(names):
+            ranked=[]
+            for cid,rec in per_office[office].items():
+                votes=int(rec['municipal'].get(mun_name,0) or 0)
+                if votes<=0:continue
+                ranked.append({
+                    'id':cid,'number':rec.get('number') or cid,'name':rec.get('name') or cid,
+                    'votes':votes
+                })
+            ranked.sort(key=lambda x:(-x['votes'],x['name']))
+            if not ranked:continue
+            total=sum(x['votes'] for x in ranked)
+            for x in ranked:x['pct']=round((x['votes']/total*100) if total else 0,2)
+            top=ranked[0]
+            party=''
+            st=statewide.get(office)
+            if st:
+                match=next((z for z in st['candidates'] if z['id']==top['id']),None)
+                if match:party=match.get('party') or ''
+            top['party']=party
+            municipal_maps[office]['leaders'][mun_name]=top
+            municipal_maps[office]['results'][mun_name]=ranked[:8]
+            rec=counts[top['id']]
+            rec['number']=top['number'];rec['name']=top['name'];rec['party']=party;rec['municipalities']+=1
+        municipal_maps[office]['summary']=sorted(counts.values(),key=lambda x:(-x['municipalities'],x['name']))
+        municipal_maps[office]['municipalities_read']=len(municipal_maps[office]['results'])
 
     state_candidate_ids_with_votes={o:set() for o in OFFICES}
     finding_candidate_ids={o:set() for o in OFFICES}
@@ -248,7 +282,8 @@ def main():
         'source_name':'Tribunal Superior Eleitoral · resultados oficiais',
         'source_url':SOURCE_PAGE,'progress':round(progress,2),'scope':'Rio Grande do Norte',
         'offices':offices_meta,'municipalities':len(municipalities),'request_errors':errors,
-        'findings':findings,'methodology_version':'2.0'
+        'municipal_maps':municipal_maps,
+        'findings':findings,'methodology_version':'3.0'
     }
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
