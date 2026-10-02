@@ -5,6 +5,7 @@ const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadual'};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
 let radar={status:'loading',findings:[],offices:{}}, selected=null, candidateRegistry=[], radarMode='official', labStep=0;
+let publicationTextMode='full';
 const LAB_STEPS=[0,8,22,41,63,81,95,100];
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})+'%';
 function flash(btn,text){if(!btn)return;const old=btn.textContent;btn.textContent=text;setTimeout(()=>btn.textContent=old,1800)}
@@ -121,11 +122,31 @@ function renderDetail(){
   const items=selected.breakdown||[];$('#detailBreakdown').innerHTML=items.map(x=>'<div class="break-item"><span>'+escapeHtml(x.label)+'</span><strong>'+escapeHtml(x.value)+'</strong></div>').join('');
   $('#reviewCheck').checked=false;$('#reviewCheck').onchange=e=>updatePublisher(e.target.checked);
 }
+function candidateParty(name){
+  const target=String(name||'').toLocaleLowerCase('pt-BR');
+  const item=candidateRegistry.find(x=>String(x.nome||'').toLocaleLowerCase('pt-BR')===target);
+  return item?.partido||'';
+}
 function makePost(f){
   if(!f)return'';
-  const progress=radar.progress!=null?' · '+pct(radar.progress)+' das seções':'';
-  let text='ELEIÇÕES 2026 | RADAR RN\\n\\n'+(f.post_text||f.headline)+'\\n\\n'+(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: TSE'+progress);
-  if(text.length>280)text=text.slice(0,277)+'…';return text;
+  const party=candidateParty(f.candidate);
+  const candidateLabel=f.candidate+(party?' ('+party+')':'');
+  const headline=(f.post_text||f.headline||'').replace(f.candidate,candidateLabel);
+  const lines=['ELEIÇÕES 2026 | RADAR RN','',headline];
+  if(publicationTextMode==='full'){
+    const explanation=String(f.explanation||f.summary||'').trim();
+    const calculation=String(f.calculation||'').trim();
+    if(explanation&&explanation!==f.headline)lines.push('',explanation.replace(f.candidate,candidateLabel));
+    if(calculation)lines.push('','Como foi calculado: '+calculation);
+  }
+  if(radarMode==='lab'){
+    lines.push('','LABORATÓRIO UEFY · DADOS FICTÍCIOS');
+  }else{
+    if(radar.progress!=null)lines.push('','Apuração: '+pct(radar.progress)+' das seções.');
+    if(publicationTextMode==='full'&&(radar.source_generated_at||radar.generated_at))lines.push('Atualização: '+(radar.source_generated_at||radar.generated_at));
+    lines.push('Fonte: Tribunal Superior Eleitoral');
+  }
+  return lines.join('\n');
 }
 function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+' caracteres';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar','#shareRadarBundle'].forEach(s=>{const el=$(s);if(el)el.disabled=!selected||!reviewed})}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
@@ -203,11 +224,27 @@ async function shareRadar(){
   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Central das Eleições UEFY · Radar RN',text:$('#radarPostText').value,files:[file]});return true}
   await copyImage();return false;
 }
-function openX(text,w=null){const u='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer')}
+async function openX(text,w=null){
+  const encoded=encodeURIComponent(text),useIntent=encoded.length<=6000;
+  const u=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';
+  if(!useIntent)try{await navigator.clipboard.writeText(text)}catch{}
+  if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer');
+  return useIntent;
+}
+function syncRadarTextModeButtons(){
+  $('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
+}
+$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
+  publicationTextMode=b.dataset.textMode;
+  syncRadarTextModeButtons();
+  updatePublisher($('#reviewCheck')?.checked||false);
+});
+syncRadarTextModeButtons();
+
 $('#copyRadarText').onclick=async()=>{try{await navigator.clipboard.writeText($('#radarPostText').value);flash($('#copyRadarText'),'Texto copiado!')}catch{flash($('#copyRadarText'),'Cópia bloqueada')}};
 $('#copyRadarImage').onclick=async()=>{try{await copyImage();flash($('#copyRadarImage'),'Imagem copiada!')}catch{flash($('#copyRadarImage'),'Cópia bloqueada')}};
 $('#downloadRadar').onclick=()=>{const a=document.createElement('a');a.download='uefy-radar-rn-'+(selected?.id||'achado')+'.png';a.href=$('#radarCanvas').toDataURL('image/png');a.click()};
-$('#openRadarX').onclick=async()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}openX($('#radarPostText').value,w);flash($('#openRadarX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto')};
+$('#openRadarX').onclick=async()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}const prefilled=await openX($('#radarPostText').value,w);flash($('#openRadarX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto'):'Texto copiado · cole no X')};
 $('#shareRadarBundle')?.addEventListener('click',async()=>{try{const native=await shareRadar();if(!native)flash($('#shareRadarBundle'),'Imagem copiada · texto acima')}catch(e){if(e?.name!=='AbortError')flash($('#shareRadarBundle'),'Use Copiar texto / Copiar imagem')}});
 $('#officeFilter').onchange=()=>{selected=null;buildFilters();syncSelectionFromFilters()};
 $('#candidateFilter').onchange=()=>syncSelectionFromFilters();
