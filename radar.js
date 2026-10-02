@@ -129,7 +129,46 @@ function makePost(f){
 }
 function updatePublisher(reviewed){const text=selected?makePost(selected):'';$('#radarPostText').value=text;$('#radarChars').textContent=text.length+'/280';['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar','#shareRadarBundle'].forEach(s=>{const el=$(s);if(el)el.disabled=!selected||!reviewed})}
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
-function wrap(ctx,text,x,y,maxWidth,lineHeight,maxLines){const words=String(text).split(/\\s+/);let line='',lines=[];for(const w of words){const test=line?line+' '+w:w;if(ctx.measureText(test).width>maxWidth&&line){lines.push(line);line=w}else line=test}if(line)lines.push(line);if(lines.length>maxLines){lines=lines.slice(0,maxLines);let last=lines[maxLines-1];while(ctx.measureText(last+'…').width>maxWidth&&last.includes(' '))last=last.slice(0,last.lastIndexOf(' '));lines[maxLines-1]=last+'…'}lines.forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));return y+lines.length*lineHeight}
+function fitLine(ctx,text,maxWidth,minChars=4){
+  let value=String(text||'');
+  if(ctx.measureText(value).width<=maxWidth)return value;
+  while(value.length>minChars&&ctx.measureText(value+'…').width>maxWidth)value=value.slice(0,-1);
+  return value.trimEnd()+'…';
+}
+function wrap(ctx,text,x,y,maxWidth,lineHeight,maxLines){
+  const words=String(text||'').split(/\\s+/).filter(Boolean);let line='',lines=[];
+  for(const raw of words){
+    const w=ctx.measureText(raw).width>maxWidth?fitLine(ctx,raw,maxWidth):raw;
+    const test=line?line+' '+w:w;
+    if(ctx.measureText(test).width>maxWidth&&line){lines.push(fitLine(ctx,line,maxWidth));line=w}
+    else line=test;
+  }
+  if(line)lines.push(fitLine(ctx,line,maxWidth));
+  if(lines.length>maxLines){
+    lines=lines.slice(0,maxLines);
+    let last=lines[maxLines-1];
+    if(!last.endsWith('…'))last=fitLine(ctx,last+'…',maxWidth);
+    lines[maxLines-1]=last;
+  }
+  lines.forEach((l,i)=>ctx.fillText(l,x,y+i*lineHeight));return y+lines.length*lineHeight;
+}
+function drawAdaptiveHeadline(ctx,text,x,y,maxWidth){
+  let size=45;
+  while(size>=31){
+    ctx.font='800 '+size+'px Inter,Segoe UI,Arial';
+    const words=String(text||'').split(/\\s+/),tmp=[];let line='',ok=true;
+    for(const w of words){
+      if(ctx.measureText(w).width>maxWidth){ok=false;break}
+      const t=line?line+' '+w:w;
+      if(ctx.measureText(t).width>maxWidth&&line){tmp.push(line);line=w}else line=t;
+    }
+    if(line)tmp.push(line);
+    if(ok&&tmp.length<=3)break;
+    size-=2;
+  }
+  ctx.font='800 '+size+'px Inter,Segoe UI,Arial';
+  return wrap(ctx,text,x,y,maxWidth,Math.round(size*1.2),3);
+}
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=drawCanvas;
 function drawCanvas(){
   const c=$('#radarCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);
@@ -141,11 +180,12 @@ function drawCanvas(){
   if(!selected){ctx.fillStyle='#17191c';ctx.font='800 70px Inter,Segoe UI,Arial';ctx.fillText('Radar RN',70,410);ctx.fillStyle='#59626b';ctx.font='600 28px Inter,Segoe UI,Arial';wrap(ctx,'Selecione um achado e confira o cálculo antes de gerar a publicação.',70,470,850,42,3)}
   else{
     ctx.fillStyle='#17191c';let valueSize=90;while(valueSize>54){ctx.font='850 '+valueSize+'px Inter,Segoe UI,Arial';if(ctx.measureText(selected.display_value||'Dado').width<=920)break;valueSize-=2}ctx.fillText(selected.display_value||'Dado',70,390);
-    ctx.font='800 45px Inter,Segoe UI,Arial';const end=wrap(ctx,selected.headline,70,458,920,54,3);
-    ctx.fillStyle='#5b646d';ctx.font='600 23px Inter,Segoe UI,Arial';wrap(ctx,selected.card_note||selected.summary||'',70,end+20,890,33,2);
-    ctx.fillStyle='#fff';roundRect(ctx,70,760,940,170,16);ctx.fill();ctx.strokeStyle='#d7dce0';ctx.stroke();
-    ctx.fillStyle='#6b737b';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText('COMO FOI CALCULADO',95,798);
-    ctx.fillStyle='#17191c';ctx.font='700 21px Inter,Segoe UI,Arial';wrap(ctx,selected.calculation||'Cálculo reproduzível a partir dos resultados municipais.',95,836,870,27,3);
+    const end=drawAdaptiveHeadline(ctx,selected.headline,70,458,920);
+    ctx.fillStyle='#5b646d';ctx.font='600 23px Inter,Segoe UI,Arial';const noteEnd=wrap(ctx,selected.card_note||selected.summary||'',70,end+18,890,33,2);
+    const calcY=Math.max(690,Math.min(750,noteEnd+55));
+    ctx.fillStyle='#fff';roundRect(ctx,70,calcY,940,170,16);ctx.fill();ctx.strokeStyle='#d7dce0';ctx.stroke();
+    ctx.fillStyle='#6b737b';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText('COMO FOI CALCULADO',95,calcY+38);
+    ctx.fillStyle='#17191c';ctx.font='700 21px Inter,Segoe UI,Arial';wrap(ctx,selected.calculation||'Cálculo reproduzível a partir dos resultados municipais.',95,calcY+76,870,27,3);
   }
   ctx.strokeStyle='#d0d6db';ctx.beginPath();ctx.moveTo(70,956);ctx.lineTo(1010,956);ctx.stroke();ctx.fillStyle='#59626b';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS · NÃO É RESULTADO ELEITORAL':'Fonte: Tribunal Superior Eleitoral · resultados oficiais',70,998);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1030);ctx.textAlign='left';
 }
