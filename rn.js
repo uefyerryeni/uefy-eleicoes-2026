@@ -108,6 +108,15 @@ async function buildLabLeaderMap(){
 }
 async function loadLeaderMap(){
   if(mode==='lab'){await buildLabLeaderMap();renderLeaderMap();return}
+  if(mode==='sim'){
+    leaderMapData={
+      status:'sim_unavailable',leaders:{},summary:[],publication_ready:false,final_result:false,
+      municipalities_expected:167,municipalities_read:0,
+      source_generated_at:'Simulado TSE',
+      message:'O mapa estadual de lideranças não está disponível no Simulado TSE. A consulta municipal abaixo usa normalmente os dados do simulado.'
+    };
+    renderLeaderMap();return;
+  }
   try{
     const r=await fetch('data/rn-governador-mapa.json?ts='+Date.now(),{cache:'no-store'});
     if(!r.ok)throw new Error('Mapa '+r.status);
@@ -132,7 +141,8 @@ function renderLeaderMap(){
     document.querySelector('.rn-side')?.scrollIntoView({behavior:'smooth',block:'start'});
   }));
   const summary=(leaderMapData.summary||[]);
-  $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">Aguardando a apuração oficial.</div>';
+  const emptyMapMessage=mode==='sim'?'Mapa estadual indisponível no Simulado TSE. Use a consulta municipal abaixo.':mode==='lab'?'Atualize o Laboratório para gerar o cenário fictício.':'Aguardando a apuração oficial.';
+  $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">'+emptyMapMessage+'</div>';
   $('#rnLeaderLegend').innerHTML=summary.length?summary.map(x=>'<span><i style="background:'+candidateColor(x.name,x.number)+'"></i>'+esc(x.name)+'</span>').join(''):'<span><i style="background:#d9dee2"></i>Aguardando resultado</span>';
   const read=Number(leaderMapData.municipalities_read||0),expected=Number(leaderMapData.municipalities_expected||167);
   $('#rnMapRead').textContent=read+'/'+expected;
@@ -141,11 +151,36 @@ function renderLeaderMap(){
   if(natal?.status==='ok'){
     $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+esc(natal.candidate)+'</strong><span>'+Number(natal.votes||0).toLocaleString('pt-BR')+' votos · '+fmtPct(natal.pct)+' · '+fmtPct(natal.progress)+' das seções</span>';
   }else{
-    $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>Aguardando apuração oficial</strong><span>O destaque da capital aparecerá quando houver votos.</span>';
+    const natalTitle=mode==='sim'?'Mapa estadual indisponível no Simulado':mode==='lab'?'Aguardando cenário do Laboratório':'Aguardando apuração oficial';
+    const natalText=mode==='sim'?'Consulte Natal na área municipal abaixo.':mode==='lab'?'Atualize para avançar o cenário fictício.':'O destaque da capital aparecerá quando houver votos.';
+    $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+natalTitle+'</strong><span>'+natalText+'</span>';
   }
   const btn=$('#rnMapPublish'),note=$('#rnMapPublishNote');
   if(btn)btn.disabled=!leaderMapData.publication_ready;
   if(note)note.textContent=leaderMapData.publication_ready?(leaderMapData.final_result?'Base completa e totalização final.':'Base municipal completa. O card será identificado como resultado parcial.'):(leaderMapData.message||'A publicação será liberada quando a base municipal estiver completa e conferida.');
+}
+function sourceMeta(){
+  if(mode==='lab')return {title:'Laboratório UEFY',badge:'LAB · DADOS FICTÍCIOS',municipal:'Laboratório UEFY',help:'Mapa, município e publicação usam dados fictícios claramente identificados como teste.'};
+  if(mode==='sim')return {title:'Simulado TSE',badge:'SIMULADO TSE',municipal:'Simulado TSE',help:'A consulta municipal usa o ambiente de teste do TSE. O mapa estadual fica desativado para não misturar fontes.'};
+  return {title:'Oficial TSE',badge:'OFICIAL TSE',municipal:'Oficial TSE',help:'Mapa, município e publicação usam os resultados oficiais do TSE.'};
+}
+function updateSourceUI(){
+  const s=sourceMeta();
+  const title=$('#rnSourceTitle'),help=$('#rnSourceHelp'),badge=$('#rnSourceBadge'),mun=$('#rnMunicipalSource');
+  if(title)title.textContent=s.title;
+  if(help)help.textContent=s.help;
+  if(badge){badge.textContent=s.badge;badge.dataset.mode=mode}
+  if(mun)mun.textContent=s.municipal;
+  $('#liveLabel').textContent=mode==='lab'?'LAB fictício':mode==='sim'?'Simulado TSE':'TSE oficial';
+  document.body.dataset.rnSource=mode;
+}
+async function changeSource(next){
+  mode=next;
+  mapPublicationMode=false;
+  if(mode==='lab')labStep=0;
+  updateSourceUI();
+  await loadLeaderMap();
+  await loadRemote();
 }
 function mapPostText(){
   const status=leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
@@ -491,9 +526,9 @@ $('#rnMapPublish')?.addEventListener('click',()=>{
 $('#munSearch').oninput=e=>renderList(e.target.value);
 
 $('#rnMode').value=mode;
-$('#liveLabel').textContent=mode==='sim'?'Simulado TSE':'TSE oficial';
-$('#rnMode').onchange=e=>{mode=e.target.value;if(mode==='lab')labStep=0;$('#liveLabel').textContent=mode==='lab'?'LAB fictício':mode==='sim'?'Simulado TSE':'TSE oficial';loadRemote()};
-$('#rnRefresh').onclick=()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRemote()};
+updateSourceUI();
+$('#rnMode').onchange=e=>changeSource(e.target.value);
+$('#rnRefresh').onclick=async()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;updateSourceUI();await loadLeaderMap();await loadRemote()};
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/280';
 $('#rnCopyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
 $('#rnCopyImage').onclick=async()=>{try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
