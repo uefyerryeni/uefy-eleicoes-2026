@@ -745,3 +745,16 @@ body.dark .text-mode-switch button.active{background:#252b31;color:#fff}
   .text-mode-switch{display:grid;width:100%}
   .text-mode-switch button{width:100%}
 }
+
+
+/* Estados oficiais de resultado · 2026-10-02 */
+.candidate-row.outcome-row{background:rgba(245,196,0,.08);border-radius:9px;padding-inline:6px}
+.candidate-row .status-chip.outcome{margin-left:6px;min-height:22px;padding:3px 7px;background:rgba(245,196,0,.18);border-color:rgba(245,196,0,.55);color:#3f3500;vertical-align:middle}
+.rn-election-outcome{margin:10px 0 12px;padding:12px;border:1px solid rgba(245,196,0,.58);border-radius:12px;background:rgba(245,196,0,.12)}
+.rn-election-outcome>span{display:block;font-size:9px;font-weight:850;letter-spacing:.08em;color:#6d5a00;margin-bottom:4px}
+.rn-election-outcome>strong{display:block;font-size:17px;line-height:1.2;letter-spacing:-.02em}
+.rn-election-outcome>small{display:block;margin-top:4px;color:var(--muted);font-size:10px}
+body.dark .candidate-row.outcome-row{background:rgba(245,196,0,.07)}
+body.dark .candidate-row .status-chip.outcome{background:rgba(245,196,0,.13);border-color:rgba(245,196,0,.38);color:#f3df76}
+body.dark .rn-election-outcome{background:rgba(245,196,0,.08);border-color:rgba(245,196,0,.34)}
+body.dark .rn-election-outcome>span{color:#f3df76}
