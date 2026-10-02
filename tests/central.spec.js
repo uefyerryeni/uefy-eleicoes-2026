@@ -363,3 +363,82 @@ test('Navegação usa nomes coerentes com as áreas', async ({page})=>{
   await page.goto('/radar.html?v='+BUILD);
   await expect(page.locator('.nav a.active')).toHaveText('Legislativo RN');
 });
+
+
+test('Senado alterna 1º e 2º colocado no mapa sem confundir com eleito', async ({page})=>{
+  await page.goto('/radar.html?v='+BUILD);
+  await page.selectOption('#radarMode','lab');
+  await page.selectOption('#officeFilter','sen');
+  await expect(page.locator('#senateRankSwitch')).toBeVisible();
+  await expect(page.locator('#radarMapExplanation')).toContainText('duas vagas');
+  await expect(page.locator('#radarElectoralNote')).toContainText('dois candidatos mais votados no estado');
+
+  const firstSummary=await page.locator('#radarLeaderSummary').innerText();
+  await page.click('#senateRankSwitch [data-senate-rank="2"]');
+  await expect(page.locator('#radarMapTitle')).toContainText('2ª maior');
+  await expect(page.locator('#radarLeaderSummary')).toContainText('2º');
+  const secondSummary=await page.locator('#radarLeaderSummary').innerText();
+  expect(secondSummary).not.toBe(firstSummary);
+
+  await page.click('#radarMapPublish');
+  const text=await page.locator('#radarPostText').inputValue();
+  expect(text).toContain('2º COLOCADO');
+  expect(text).toContain('dois candidatos mais votados no estado');
+});
+
+test('Mapas de deputados deixam claro que votação municipal não define eleição', async ({page})=>{
+  await page.goto('/radar.html?v='+BUILD);
+  await page.selectOption('#radarMode','lab');
+  for(const office of ['depf','depe']){
+    await page.selectOption('#officeFilter',office);
+    await expect(page.locator('#senateRankSwitch')).toBeHidden();
+    await expect(page.locator('#radarMapExplanation')).toContainText('não indica candidatura eleita');
+    await expect(page.locator('#radarElectoralNote')).toContainText('sistema proporcional');
+    await page.click('#radarMapPublish');
+    const text=await page.locator('#radarPostText').inputValue();
+    expect(text).toContain('sistema proporcional');
+    expect(text).toContain('não equivale a eleição');
+  }
+});
+
+for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
+  test(\`Simulação operacional de domingo em \${viewport.width}px\`, async ({page})=>{
+    await page.setViewportSize(viewport);
+
+    await page.goto('/index.html?v='+BUILD);
+    await page.selectOption('#modeSelect','lab');
+    for(const office of ['pres','gov','sen','depf','depe']){
+      await page.selectOption('#officeSelect',office);
+      await page.click('#refreshBtn');
+      await expect(page.locator('#postText')).not.toHaveValue('');
+      await expect(page.locator('#shareCanvas')).toBeVisible();
+    }
+    await expect(page.locator('#refreshAll')).toBeAttached();
+    await expect(page.locator('#toTop')).toBeAttached();
+
+    await page.goto('/rn.html?v='+BUILD);
+    await page.selectOption('#rnMode','lab');
+    await page.click('#rnRefresh');
+    await expect(page.locator('#rnPostText')).not.toHaveValue('');
+    await expect(page.locator('#rnCanvas')).toBeVisible();
+    await expect(page.locator('#refreshAll')).toBeAttached();
+    await expect(page.locator('#toTop')).toBeAttached();
+
+    await page.goto('/radar.html?v='+BUILD);
+    await page.selectOption('#radarMode','lab');
+    for(const office of ['sen','depf','depe']){
+      await page.selectOption('#officeFilter',office);
+      await page.selectOption('#radarMunicipality',{label:'Natal'});
+      await expect(page.locator('#radarMunicipalResults .radar-municipal-row').first()).toBeVisible();
+      await page.click('#radarMunicipalPublish');
+      await expect(page.locator('#radarPostText')).not.toHaveValue('');
+      await expect(page.locator('#radarCanvas')).toBeVisible();
+    }
+    await expect(page.locator('#copyRadarText')).toBeEnabled();
+    await expect(page.locator('#copyRadarImage')).toBeEnabled();
+    await expect(page.locator('#openRadarX')).toBeEnabled();
+    await expect(page.locator('#shareRadarBundle')).toBeEnabled();
+    await expect(page.locator('#refreshAll')).toBeAttached();
+    await expect(page.locator('#toTop')).toBeAttached();
+  });
+}
