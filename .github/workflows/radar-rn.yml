@@ -31,6 +31,9 @@ jobs:
       - name: Validar JSON gerado
         run: python -m json.tool data/radar-rn.json > /dev/null
 
+      - name: Auditoria de integridade antes de publicar
+        run: python scripts/qa_static.py
+
       - name: Publicar somente se os dados mudaram
         run: |
           if git diff --quiet -- data/radar-rn.json; then
