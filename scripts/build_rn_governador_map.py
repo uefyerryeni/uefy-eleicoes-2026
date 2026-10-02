@@ -63,13 +63,29 @@ def parse(data):
 def url(code):
     return f'{BASE}/{ELECTION}/dados/rn/rn{code}-c{CARGO}-e{EL}-u.json'
 
-def write_wait(message):
+def write_if_changed(data):
+    """Evita commits/deploys quando apenas o horário local da coleta mudou."""
     OUT.parent.mkdir(parents=True,exist_ok=True)
-    OUT.write_text(json.dumps({
+    old=None
+    try:
+        old=json.loads(OUT.read_text(encoding='utf-8'))
+    except Exception:
+        pass
+    def comparable(obj):
+        if not isinstance(obj,dict):return obj
+        return {k:v for k,v in obj.items() if k!='generated_at'}
+    if old is not None and comparable(old)==comparable(data):
+        print('Sem mudança eleitoral no TSE; snapshot preservado.')
+        return False
+    OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+    return True
+
+def write_wait(message):
+    write_if_changed({
         'status':'waiting','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
         'source_generated_at':None,'municipalities_expected':167,'municipalities_read':0,
         'publication_ready':False,'message':message,'leaders':{},'summary':[]
-    },ensure_ascii=False,indent=2),encoding='utf-8')
+    })
 
 def main():
     try:
@@ -124,9 +140,8 @@ def main():
         'errors':errors,'leaders':leaders,'summary':summary,'natal':natal,
         'message':('Mapa completo e conferido.' if complete else f'Mapa parcial: {read}/{len(mun)} municípios lidos. Publicação bloqueada até completar a base.')
     }
-    OUT.parent.mkdir(parents=True,exist_ok=True)
-    OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(data['message'])
+    changed=write_if_changed(data)
+    print(data['message'] if changed else 'Snapshot já corresponde aos dados atuais do TSE.')
 
 if __name__=='__main__':
     try:main()
