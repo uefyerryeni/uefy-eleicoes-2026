@@ -141,7 +141,7 @@ function renderAll(){
   $('#radarMunicipalOffice').textContent=officeLabel();
   const senate=activeOffice()==='sen';
   $('#senateRankSwitch').hidden=!senate;
-  $('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
+  $$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
   $('#radarMapTitle').textContent=senate
     ?((senateMapRank===1?'Quem teve a maior':'Quem teve a 2ª maior')+' votação nominal para Senador em cada município')
     :'Quem teve a maior votação nominal para '+officeLabel()+' em cada município';
@@ -313,9 +313,9 @@ async function shareRadar(){
 async function openX(text,w=null){const encoded=encodeURIComponent(text),useIntent=encoded.length<=6000,u=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';if(!useIntent)try{await navigator.clipboard.writeText(text)}catch{}if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer');return useIntent}
 
 $('#officeFilter').onchange=()=>{publicationView='map';senateMapRank=1;renderAll()};
-$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
+$$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
   senateMapRank=Number(b.dataset.senateRank)||1;
-  $('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
+  $$('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
   publicationView='map';renderMap();updatePublication();renderAll();
 });
 $('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;publicationView='map';loadRadar()};
