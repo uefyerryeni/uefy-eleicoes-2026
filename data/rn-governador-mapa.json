@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-01T23:26:50-03:00",
+  "generated_at": "2026-10-01T23:40:52-03:00",
   "source_generated_at": "29/09/2026 · 19:29:21",
   "municipalities_expected": 167,
   "municipalities_read": 167,
@@ -13,8 +13,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "ALEXANDRIA": {
-      "code": "16098",
+    "APODI": {
+      "code": "16195",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -23,13 +23,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "ANGICOS": {
-      "code": "16152",
+    "AREZ": {
+      "code": "16233",
       "status": "no_votes",
       "progress": 0.0
     },
-    "APODI": {
-      "code": "16195",
+    "ANGICOS": {
+      "code": "16152",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -43,18 +43,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "AREIA BRANCA": {
-      "code": "16217",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "AREZ": {
-      "code": "16233",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ANTÔNIO MARTINS": {
-      "code": "16179",
+    "ALEXANDRIA": {
+      "code": "16098",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -63,13 +53,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "BARCELONA": {
-      "code": "16292",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BOA SAÚDE": {
-      "code": "17035",
+    "AREIA BRANCA": {
+      "code": "16217",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -78,33 +63,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "BREJINHO": {
-      "code": "16357",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CAIÇARA DO NORTE": {
-      "code": "16047",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BODÓ": {
-      "code": "16101",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BENTO FERNANDES": {
-      "code": "16314",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CAICÓ": {
-      "code": "16390",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BOM JESUS": {
-      "code": "16330",
+    "ANTÔNIO MARTINS": {
+      "code": "16179",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -113,13 +73,48 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "BENTO FERNANDES": {
+      "code": "16314",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BREJINHO": {
+      "code": "16357",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BOA SAÚDE": {
+      "code": "17035",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAICÓ": {
+      "code": "16390",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BARCELONA": {
+      "code": "16292",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "CAIÇARA DO RIO DO VENTO": {
       "code": "16373",
       "status": "no_votes",
       "progress": 0.0
     },
-    "CAMPO REDONDO": {
-      "code": "16411",
+    "BOM JESUS": {
+      "code": "16330",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BODÓ": {
+      "code": "16101",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAIÇARA DO NORTE": {
+      "code": "16047",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -128,13 +123,28 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "CERRO CORÁ": {
+      "code": "16535",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "CARAÚBAS": {
       "code": "16454",
       "status": "no_votes",
       "progress": 0.0
     },
+    "CAMPO REDONDO": {
+      "code": "16411",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "CANGUARETAMA": {
       "code": "16438",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CARNAUBAIS": {
+      "code": "16497",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -148,33 +158,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "CORONEL JOÃO PESSOA": {
-      "code": "16578",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CERRO CORÁ": {
-      "code": "16535",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "CEARÁ-MIRIM": {
       "code": "16519",
       "status": "no_votes",
       "progress": 0.0
     },
-    "CARNAUBAIS": {
-      "code": "16497",
+    "CORONEL JOÃO PESSOA": {
+      "code": "16578",
       "status": "no_votes",
       "progress": 0.0
     },
-    "DOUTOR SEVERIANO": {
-      "code": "16632",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CRUZETA": {
-      "code": "16594",
+    "CURRAIS NOVOS": {
+      "code": "16616",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -183,8 +178,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "CURRAIS NOVOS": {
-      "code": "16616",
+    "CRUZETA": {
+      "code": "16594",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "FELIPE GUERRA": {
+      "code": "16730",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "DOUTOR SEVERIANO": {
+      "code": "16632",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -198,23 +203,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "ESPÍRITO SANTO": {
-      "code": "16691",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FELIPE GUERRA": {
-      "code": "16730",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FERNANDO PEDROZA": {
-      "code": "16144",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FLORÂNIA": {
-      "code": "16756",
+    "EXTREMOZ": {
+      "code": "16713",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -223,13 +213,23 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "ESPÍRITO SANTO": {
+      "code": "16691",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "FERNANDO PEDROZA": {
+      "code": "16144",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "GALINHOS": {
       "code": "16799",
       "status": "no_votes",
       "progress": 0.0
     },
-    "EXTREMOZ": {
-      "code": "16713",
+    "FLORÂNIA": {
+      "code": "16756",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -243,6 +243,16 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "GOIANINHA": {
+      "code": "16810",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "IPUEIRA": {
+      "code": "16934",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "GUAMARÉ": {
       "code": "16870",
       "status": "no_votes",
@@ -253,33 +263,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "ITAJÁ": {
-      "code": "16080",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "IPUEIRA": {
-      "code": "16934",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "IPANGUAÇU": {
       "code": "16918",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JANDUÍS": {
-      "code": "17019",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JAPI": {
-      "code": "17051",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JARDIM DE ANGICOS": {
-      "code": "17078",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -293,13 +278,23 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "GOIANINHA": {
-      "code": "16810",
+    "ITAJÁ": {
+      "code": "16080",
       "status": "no_votes",
       "progress": 0.0
     },
     "JARDIM DE PIRANHAS": {
       "code": "17094",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JANDUÍS": {
+      "code": "17019",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JAPI": {
+      "code": "17051",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -313,43 +308,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "LAGOA DE PEDRAS": {
-      "code": "17256",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JUCURUTU": {
-      "code": "17191",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "LAGOA D'ANTA": {
       "code": "17230",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JUNDIÁ": {
-      "code": "16306",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JOSÉ DA PENHA": {
-      "code": "17175",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "LAGOA DE VELHOS": {
-      "code": "17272",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "LAGOA NOVA": {
-      "code": "17299",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JOÃO CÂMARA": {
-      "code": "17132",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -358,8 +318,53 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "LAJES PINTADAS": {
-      "code": "17353",
+    "JARDIM DE ANGICOS": {
+      "code": "17078",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JOÃO CÂMARA": {
+      "code": "17132",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "LAGOA DE VELHOS": {
+      "code": "17272",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JOSÉ DA PENHA": {
+      "code": "17175",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JUNDIÁ": {
+      "code": "16306",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JUCURUTU": {
+      "code": "17191",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "MACAÍBA": {
+      "code": "17418",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "LAGOA DE PEDRAS": {
+      "code": "17256",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "LAGOA NOVA": {
+      "code": "17299",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "LUCRÉCIA": {
+      "code": "17370",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -373,23 +378,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "LAJES PINTADAS": {
+      "code": "17353",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "LUÍS GOMES": {
       "code": "17396",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "MACAÍBA": {
-      "code": "17418",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "MESSIAS TARGINO": {
-      "code": "17213",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "LUCRÉCIA": {
-      "code": "17370",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -403,8 +398,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MARCELINO VIEIRA": {
-      "code": "17450",
+    "MAXARANGUAPE": {
+      "code": "17493",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "MONTE DAS GAMELEIRAS": {
+      "code": "17574",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "MESSIAS TARGINO": {
+      "code": "17213",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -413,18 +418,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MAXARANGUAPE": {
-      "code": "17493",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "MONTANHAS": {
       "code": "17531",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "MONTE DAS GAMELEIRAS": {
-      "code": "17574",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -438,18 +433,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "OURO BRANCO": {
-      "code": "17698",
+    "MARCELINO VIEIRA": {
+      "code": "17450",
       "status": "no_votes",
       "progress": 0.0
     },
-    "NOVA CRUZ": {
-      "code": "17655",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "OLHO D'ÁGUA DO BORGES": {
-      "code": "17671",
+    "MOSSORÓ": {
+      "code": "17590",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -463,8 +453,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MOSSORÓ": {
-      "code": "17590",
+    "PARAZINHO": {
+      "code": "17752",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -473,8 +463,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PARAZINHO": {
-      "code": "17752",
+    "NOVA CRUZ": {
+      "code": "17655",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -483,8 +473,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PASSA E FICA": {
-      "code": "17817",
+    "OURO BRANCO": {
+      "code": "17698",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "OLHO D'ÁGUA DO BORGES": {
+      "code": "17671",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -498,18 +493,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PEDRO AVELINO": {
-      "code": "17930",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PAU DOS FERROS": {
-      "code": "17876",
+    "PASSA E FICA": {
+      "code": "17817",
       "status": "no_votes",
       "progress": 0.0
     },
     "PEDRA GRANDE": {
       "code": "17892",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PAU DOS FERROS": {
+      "code": "17876",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -523,13 +518,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PENDÊNCIAS": {
-      "code": "17973",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PEDRO VELHO": {
-      "code": "17957",
+    "POÇO BRANCO": {
+      "code": "18015",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -543,23 +533,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PUREZA": {
-      "code": "18074",
+    "PENDÊNCIAS": {
+      "code": "17973",
       "status": "no_votes",
       "progress": 0.0
     },
-    "RAFAEL FERNANDES": {
-      "code": "18090",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RIACHO DA CRUZ": {
-      "code": "18112",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "POÇO BRANCO": {
-      "code": "18015",
+    "PEDRO AVELINO": {
+      "code": "17930",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -568,8 +548,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "RAFAEL GODEIRO": {
-      "code": "18937",
+    "RAFAEL FERNANDES": {
+      "code": "18090",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PUREZA": {
+      "code": "18074",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -578,23 +563,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "PEDRO VELHO": {
+      "code": "17957",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "RAFAEL GODEIRO": {
+      "code": "18937",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "RIACHUELO": {
       "code": "18155",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTA MARIA": {
-      "code": "16241",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RUY BARBOSA": {
-      "code": "18198",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTA CRUZ": {
-      "code": "18236",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -603,13 +583,28 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "SANTA CRUZ": {
+      "code": "18236",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "RUY BARBOSA": {
+      "code": "18198",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SANTA MARIA": {
+      "code": "16241",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "RIO DO FOGO": {
       "code": "16268",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SENADOR ELÓI DE SOUZA": {
-      "code": "18597",
+    "SANTANA DO SERIDÓ": {
+      "code": "18252",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -618,8 +613,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SANTANA DO SERIDÓ": {
-      "code": "18252",
+    "SANTO ANTÔNIO": {
+      "code": "18295",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "RIACHO DA CRUZ": {
+      "code": "18112",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -633,83 +633,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SENADOR GEORGINO AVELINO": {
-      "code": "18619",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRINHA DOS PINTOS": {
-      "code": "16209",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRINHA": {
-      "code": "18678",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTO ANTÔNIO": {
-      "code": "18295",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO FERNANDO": {
-      "code": "18350",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRA NEGRA DO NORTE": {
-      "code": "18651",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SEVERIANO MELO": {
-      "code": "18694",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO BENTO DO TRAIRÍ": {
-      "code": "18333",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO JOSÉ DE MIPIBU": {
-      "code": "18414",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO BENTO DO NORTE": {
-      "code": "18317",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO FRANCISCO DO OESTE": {
-      "code": "18210",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO GONÇALO DO AMARANTE": {
-      "code": "18376",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO JOSÉ DO CAMPESTRE": {
-      "code": "18430",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO PAULO DO POTENGI": {
-      "code": "18490",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO MIGUEL": {
-      "code": "18473",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO JOÃO DO SABUGI": {
-      "code": "18392",
+    "SENADOR ELÓI DE SOUZA": {
+      "code": "18597",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -718,8 +643,63 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO JOSÉ DO SERIDÓ": {
-      "code": "18457",
+    "SENADOR GEORGINO AVELINO": {
+      "code": "18619",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SEVERIANO MELO": {
+      "code": "18694",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SERRINHA DOS PINTOS": {
+      "code": "16209",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO FRANCISCO DO OESTE": {
+      "code": "18210",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO BENTO DO NORTE": {
+      "code": "18317",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO BENTO DO TRAIRÍ": {
+      "code": "18333",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SERRA NEGRA DO NORTE": {
+      "code": "18651",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SERRINHA": {
+      "code": "18678",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO JOSÉ DE MIPIBU": {
+      "code": "18414",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO FERNANDO": {
+      "code": "18350",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO GONÇALO DO AMARANTE": {
+      "code": "18376",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO MIGUEL": {
+      "code": "18473",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -728,13 +708,23 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "SÃO JOSÉ DO CAMPESTRE": {
+      "code": "18430",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO JOSÉ DO SERIDÓ": {
+      "code": "18457",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "SÃO PEDRO": {
       "code": "18511",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO TOMÉ": {
-      "code": "18554",
+    "SÃO JOÃO DO SABUGI": {
+      "code": "18392",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -748,18 +738,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "TANGARÁ": {
-      "code": "18775",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TAIPU": {
-      "code": "18759",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TABOLEIRO GRANDE": {
-      "code": "18732",
+    "SÃO PAULO DO POTENGI": {
+      "code": "18490",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -768,8 +748,23 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "TENENTE ANANIAS": {
-      "code": "18791",
+    "SÃO TOMÉ": {
+      "code": "18554",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TAIPU": {
+      "code": "18759",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TANGARÁ": {
+      "code": "18775",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TABOLEIRO GRANDE": {
+      "code": "18732",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -778,28 +773,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "TIBAU DO SUL": {
-      "code": "18813",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "UMARIZAL": {
-      "code": "18872",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TIBAU": {
-      "code": "16225",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "TIMBAÚBA DOS BATISTAS": {
       "code": "18830",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "VENHA-VER": {
-      "code": "16187",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -808,13 +783,33 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "TENENTE ANANIAS": {
+      "code": "18791",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TIBAU DO SUL": {
+      "code": "18813",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TIBAU": {
+      "code": "16225",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "UMARIZAL": {
+      "code": "18872",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "TOUROS": {
       "code": "18856",
       "status": "no_votes",
       "progress": 0.0
     },
-    "UPANEMA": {
-      "code": "18899",
+    "VENHA-VER": {
+      "code": "16187",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -828,8 +823,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "VÁRZEA": {
-      "code": "18910",
+    "UPANEMA": {
+      "code": "18899",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "VIÇOSA": {
+      "code": "18970",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -838,8 +838,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "VIÇOSA": {
-      "code": "18970",
+    "VÁRZEA": {
+      "code": "18910",
       "status": "no_votes",
       "progress": 0.0
     }
