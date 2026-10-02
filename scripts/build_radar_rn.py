@@ -145,6 +145,26 @@ def main():
                 errors+=1
 
     findings=[]; offices_meta={}; progress_values=[]; stamps=[]
+    municipal_leads={o:defaultdict(int) for o in OFFICES}
+    municipal_lead_ties={o:defaultdict(int) for o in OFFICES}
+    for office in OFFICES:
+        municipality_names=set()
+        for rec in per_office[office].values():
+            municipality_names.update(rec['municipal'].keys())
+        for mun_name in municipality_names:
+            votes_by_candidate=[]
+            for cid,rec in per_office[office].items():
+                votes=int(rec['municipal'].get(mun_name,0) or 0)
+                if votes>0:votes_by_candidate.append((cid,votes))
+            if not votes_by_candidate:continue
+            best=max(v for _,v in votes_by_candidate)
+            winners=[cid for cid,v in votes_by_candidate if v==best]
+            for cid in winners:
+                municipal_leads[office][cid]+=1
+                if len(winners)>1:municipal_lead_ties[office][cid]+=1
+
+    state_candidate_ids_with_votes={o:set() for o in OFFICES}
+    finding_candidate_ids={o:set() for o in OFFICES}
     for office,meta in OFFICES.items():
         state=statewide.get(office)
         if not state: continue
@@ -183,6 +203,20 @@ def main():
                 f'Natal concentra {pct(natal_share)} dos votos de {name} contabilizados no RN; o restante do estado responde por {pct(interior_share)}.',
                 [{'label':'Natal','value':integer(natal)},{'label':'Demais municípios','value':integer(interior)},{'label':'Total no RN','value':integer(total)}]
             ))
+            leads=municipal_leads[office].get(cid,0)
+            ties=municipal_lead_ties[office].get(cid,0)
+            tie_note=(f' Inclui {ties} município(s) com empate na maior votação nominal.' if ties else '')
+            findings.append(finding(
+                f'leads-{office}-{cid}','municipal_leads',office,name,
+                f'{name} está em primeiro lugar em {leads} município(s) do RN na leitura atual.',
+                'O Radar compara os votos nominais de todas as candidaturas do mesmo cargo em cada município e conta onde esta candidatura tem a maior votação.'+tie_note,
+                str(leads),
+                f'{leads} município(s) em que a candidatura tem a maior votação nominal entre as candidaturas do mesmo cargo.'+tie_note,
+                f'{name} aparece em primeiro lugar em {leads} município(s) do Rio Grande do Norte na leitura atual.',
+                [{'label':'Municípios em 1º','value':str(leads)},{'label':'Municípios do RN','value':'167'},{'label':'Empates em 1º','value':str(ties)}]
+            ))
+            state_candidate_ids_with_votes[office].add(cid)
+            finding_candidate_ids[office].add(cid)
             if top3:
                 detail='; '.join([f'{n}: {integer(v)}' for n,v in top3])
                 findings.append(finding(
@@ -196,6 +230,14 @@ def main():
                     card_note=detail
                 ))
         offices_meta[office]={'label':meta['label'],'progress':state['progress'],'candidates_with_votes':sum(1 for c in state['candidates'] if c['votes']>0)}
+        missing=sorted(state_candidate_ids_with_votes[office]-finding_candidate_ids[office])
+        offices_meta[office]['integrity']={
+            'state_candidates_with_votes':len(state_candidate_ids_with_votes[office]),
+            'candidates_with_findings':len(finding_candidate_ids[office]),
+            'missing_candidate_ids':missing
+        }
+        if missing:
+            raise RuntimeError(f'Integridade do Radar falhou em {office}: {len(missing)} candidatura(s) com votos ficaram sem achados.')
 
     findings.sort(key=lambda f:(f['office'],f['candidate'],f['type']))
     now=datetime.now(TZ)
