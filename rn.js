@@ -188,7 +188,7 @@ function mapPostText(){
   (leaderMapData.summary||[]).slice(0,4).forEach(x=>lines.push(x.name+' — '+x.municipalities+' município(s)'));
   if(leaderMapData.natal?.status==='ok')lines.push('','Natal: '+leaderMapData.natal.candidate+' em 1º');
   lines.push('','Fonte: TSE');
-  return lines.join('\n').slice(0,280);
+  return lines.join('\n');
 }
 function drawLeaderMapCanvas(){
   const c=$('#rnCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);
@@ -355,14 +355,7 @@ function renderCurrent(){
     $('#rnProgress').textContent=fmtPct(current.progress);
     $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%;background:'+candidateColor(c.name,c.number)+'"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
   }
-  const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+'/280';drawCanvas();
-}
-function clampPostText(text,footer=''){
-  if(text.length<=280)return text;
-  const suffix=footer?'\n\n'+footer:'';
-  const body=footer&&text.endsWith(suffix)?text.slice(0,-suffix.length):text;
-  const max=Math.max(20,280-suffix.length);
-  return body.slice(0,max-1).trimEnd()+'…'+suffix;
+  const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';drawCanvas();
 }
 function makeText(){
   const name=selectedFeature?.properties?.nome||'Município';
@@ -373,9 +366,9 @@ function makeText(){
     current.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
   }else{
     lines.push((current.progress>=100?'RESULTADO FINAL · ':'PARCIAL · ')+fmtPct(current.progress)+' das seções totalizadas','');
-    current.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
+    current.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.party?' ('+c.party+')':'')+' — '+fmtPct(c.pct)));
   }
-  return clampPostText(lines.join('\n')+'\n\n'+footer,footer);
+  return lines.join('\n')+'\n\n'+footer;
 }
 function drawFeature(ctx,feature,x,y,w,h){
   if(!fc||!feature)return;const proj=projector(fc,w,h,5),g=feature.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
@@ -516,7 +509,7 @@ $('#rnMapPublish')?.addEventListener('click',()=>{
   if(!leaderMapData.publication_ready)return;
   mapPublicationMode=true;
   $('#rnPostText').value=mapPostText();
-  $('#rnChars').textContent=$('#rnPostText').value.length+'/280';
+  $('#rnChars').textContent=$('#rnPostText').value.length+' caracteres';
   drawCanvas();
   $('#rnResultTitle').textContent='Mapa de liderança municipal';
   $('#rnProgress').textContent=leaderMapData.final_result?'Final':'Parcial';
@@ -529,7 +522,7 @@ $('#rnMode').value=mode;
 updateSourceUI();
 $('#rnMode').onchange=e=>changeSource(e.target.value);
 $('#rnRefresh').onclick=async()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;updateSourceUI();await loadLeaderMap();await loadRemote()};
-$('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+'/280';
+$('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+' caracteres';
 $('#rnCopyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
 $('#rnCopyImage').onclick=async()=>{try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
 $('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
