@@ -154,3 +154,36 @@ test('Textos expandidos não usam limite de 280', async ({page})=>{
   await expect(page.locator('#radarChars')).toContainText('caracteres');
   await expect(page.locator('#radarChars')).not.toContainText('/280');
 });
+
+
+test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page})=>{
+  await page.goto('/index.html?v='+BUILD);
+  await page.selectOption('#modeSelect','lab');
+  await page.click('#refreshBtn');
+  const fullGeneral=await page.locator('#postText').inputValue();
+  await page.click('.text-mode-switch [data-text-mode="compact"]');
+  const compactGeneral=await page.locator('#postText').inputValue();
+  expect(fullGeneral.length).toBeGreaterThan(compactGeneral.length);
+  expect(fullGeneral).toContain('Atualização:');
+
+  await page.goto('/rn.html?v='+BUILD);
+  await page.selectOption('#rnMode','lab');
+  await page.click('#rnRefresh');
+  const fullRn=await page.locator('#rnPostText').inputValue();
+  await page.click('.text-mode-switch [data-text-mode="compact"]');
+  const compactRn=await page.locator('#rnPostText').inputValue();
+  expect(fullRn.length).toBeGreaterThan(compactRn.length);
+  expect(fullRn).toContain('Atualização:');
+
+  await page.goto('/radar.html?v='+BUILD);
+  await page.selectOption('#radarMode','lab');
+  const v=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
+  await page.selectOption('#candidateFilter',v);
+  await page.selectOption('#typeFilter','capital_share');
+  const fullRadar=await page.locator('#radarPostText').inputValue();
+  await page.click('.text-mode-switch [data-text-mode="compact"]');
+  const compactRadar=await page.locator('#radarPostText').inputValue();
+  expect(fullRadar.length).toBeGreaterThan(compactRadar.length);
+  expect(fullRadar).toContain('Como foi calculado:');
+  expect(fullRadar).not.toContain('/280');
+});
