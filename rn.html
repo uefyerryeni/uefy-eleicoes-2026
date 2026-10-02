@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20261002-10">
+  <link rel="stylesheet" href="style.css?v=20261002-11">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -61,10 +61,27 @@
     <div class="notice"><b>Fonte:</b> resultados do TSE. Use <b>Oficial TSE</b> para a apuração, <b>Simulado TSE</b> para o teste do tribunal e <b>Laboratório UEFY</b> para dados fictícios locais. Esta página consulta exclusivamente Governador do RN por município.</div>
   </section>
 
+  <section class="card rn-source-control" aria-label="Fonte de dados da página do RN">
+    <div class="rn-source-copy">
+      <span>Fonte de toda a página</span>
+      <strong id="rnSourceTitle">Oficial TSE</strong>
+      <small id="rnSourceHelp">Mapa, município e publicação usam a mesma fonte.</small>
+    </div>
+    <label class="rn-source-select">
+      <span>Fonte dos dados</span>
+      <select id="rnMode">
+        <option value="official">Oficial TSE</option>
+        <option value="sim">Simulado TSE</option>
+        <option value="lab">Laboratório UEFY · dados fictícios</option>
+      </select>
+    </label>
+    <button class="btn primary rn-source-refresh" id="rnRefresh" type="button">Atualizar tudo</button>
+  </section>
+
   <section class="card rn-total-map-section" id="mapa-totalizacao">
     <div class="rn-total-map-head">
       <div>
-        <span class="rn-badge">Totalização estadual</span>
+        <div class="rn-map-titleline"><span class="rn-badge">Totalização estadual</span><span class="rn-source-chip" id="rnSourceBadge">OFICIAL TSE</span></div>
         <h2>Quem lidera em cada município</h2>
         <p>Mapa de governador do RN por município. Cada município assume a cor da candidatura que estiver em 1º lugar naquele recorte.</p>
       </div>
@@ -116,14 +133,8 @@
         </div>
       </div>
 
-      <div class="rn-toolbar">
-        <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Resultado por município</span></div>
-        <select id="rnMode">
-          <option value="official">Oficial TSE</option>
-          <option value="sim">Simulado TSE</option>
-          <option value="lab">Laboratório UEFY · dados fictícios</option>
-        </select>
-        <button class="btn primary" id="rnRefresh">Atualizar</button>
+      <div class="rn-toolbar rn-toolbar-simple">
+        <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Resultado por município · <b id="rnMunicipalSource">Oficial TSE</b></span></div>
       </div>
 
       <div class="rn-list" id="munList" aria-label="Lista de municípios"></div>
@@ -152,6 +163,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">RN</a><a href="radar.html">Radar</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261002-08"></script>
+<script src="rn.js?v=20261002-11"></script>
 </body>
 </html>
