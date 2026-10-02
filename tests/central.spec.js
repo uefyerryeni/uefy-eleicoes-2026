@@ -131,3 +131,26 @@ test('Fonte global do RN sincroniza mapa e consulta municipal', async ({page})=>
   await expect(page.locator('#rnSourceBadge')).toContainText('LAB');
   await expect(page.locator('#rnMunicipalSource')).toHaveText('Laboratório UEFY');
 });
+
+
+test('Textos expandidos não usam limite de 280', async ({page})=>{
+  await page.goto('/index.html?v='+BUILD);
+  await page.selectOption('#modeSelect','lab');
+  await page.click('#refreshBtn');
+  await expect(page.locator('#charCount')).toContainText('caracteres');
+  await expect(page.locator('#charCount')).not.toContainText('/280');
+
+  await page.goto('/rn.html?v='+BUILD);
+  await page.selectOption('#rnMode','lab');
+  await page.click('#rnRefresh');
+  await expect(page.locator('#rnChars')).toContainText('caracteres');
+  await expect(page.locator('#rnChars')).not.toContainText('/280');
+
+  await page.goto('/radar.html?v='+BUILD);
+  await page.selectOption('#radarMode','lab');
+  const v=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
+  await page.selectOption('#candidateFilter',v);
+  await page.selectOption('#typeFilter','capital_share');
+  await expect(page.locator('#radarChars')).toContainText('caracteres');
+  await expect(page.locator('#radarChars')).not.toContainText('/280');
+});
