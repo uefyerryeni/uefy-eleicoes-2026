@@ -51,9 +51,12 @@ def parse(data):
                     rows.append({
                         'number':str(c.get('n') or ''),
                         'name':str(c.get('nmu') or c.get('nm') or ('Número '+str(c.get('n') or ''))),
+                        'party':str(par.get('sg') or ''),
                         'votes':num(c.get('vap')),
                         'pct':pct(c.get('pvap')),
-                        'seq':num(c.get('seq') or 999999)
+                        'seq':num(c.get('seq') or 999999),
+                        'elected':str(c.get('e') or '').lower(),
+                        'totalization_status':str(c.get('st') or '')
                     })
     rows.sort(key=lambda x:(-x['votes'],x['seq']))
     s=data.get('s') or {}
@@ -62,6 +65,34 @@ def parse(data):
 
 def url(code):
     return f'{BASE}/{ELECTION}/dados/rn/rn{code}-c{CARGO}-e{EL}-u.json'
+
+def state_url():
+    return f'{BASE}/{ELECTION}/dados/rn/rn-c{CARGO}-e{EL}-u.json'
+
+def outcome(data):
+    rows,progress,stamp=parse(data)
+    elected=[x for x in rows if x.get('elected')=='s' or str(x.get('totalization_status') or '').lower().startswith('eleito')]
+    second=[x for x in rows if '2º turno' in str(x.get('totalization_status') or '').lower()]
+    md=str(data.get('md') or '').lower()
+    tf=str(data.get('tf') or '').lower()=='s'
+    if md=='s':
+        chosen=second or [x for x in rows if x.get('elected')=='s']
+        kind='second_round'
+    elif md=='e':
+        chosen=elected or rows[:1]
+        kind='elected'
+    elif tf and elected:
+        chosen=elected
+        kind='elected'
+    else:
+        chosen=[]
+        kind='none'
+    return {
+        'kind':kind,'mathematically_defined':md or None,'final_totalization':tf,
+        'tally_phase':str(data.get('and') or '').lower() or None,
+        'progress':round(progress,2),'source_generated_at':stamp or None,
+        'candidates':chosen
+    }
 
 def write_if_changed(data):
     """Evita commits/deploys quando apenas o horário local da coleta mudou."""
@@ -99,6 +130,11 @@ def main():
         return
 
     leaders={}; counts={}; latest=''; errors=[]
+    try:
+        statewide=fetch_json(state_url())
+        statewide_outcome=outcome(statewide)
+    except Exception:
+        statewide_outcome={'kind':'none','mathematically_defined':None,'final_totalization':False,'tally_phase':None,'progress':0,'source_generated_at':None,'candidates':[]}
     def one(m):
         data=fetch_json(url(m['code']))
         rows,progress,stamp=parse(data)
@@ -137,6 +173,7 @@ def main():
         'source_generated_at':latest or None,
         'municipalities_expected':len(mun),'municipalities_read':read,
         'publication_ready':complete,'final_result':final_result,
+        'outcome':statewide_outcome,
         'errors':errors,'leaders':leaders,'summary':summary,'natal':natal,
         'message':('Mapa completo e conferido.' if complete else f'Mapa parcial: {read}/{len(mun)} municípios lidos. Publicação bloqueada até completar a base.')
     }
