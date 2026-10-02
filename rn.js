@@ -127,6 +127,18 @@ async function loadLeaderMap(){
   }
   renderLeaderMap();
 }
+function renderElectionOutcome(){
+  const box=$('#rnElectionOutcome');if(!box)return;
+  const o=leaderMapData?.outcome||{},rows=o.candidates||[];
+  if(mode!=='official'||!rows.length||!['elected','second_round'].includes(o.kind)){box.hidden=true;box.innerHTML='';return}
+  box.hidden=false;
+  if(o.kind==='second_round'){
+    box.innerHTML='<span>2º TURNO CONFIRMADO</span><strong>'+rows.map(x=>esc(x.name)+(x.party?' ('+esc(x.party)+')':'')).join(' × ')+'</strong><small>Situação oficial informada pelo TSE.</small>';
+  }else{
+    const first=rows[0];
+    box.innerHTML='<span>ELEITO</span><strong>'+esc(first.name)+(first.party?' ('+esc(first.party)+')':'')+'</strong><small>'+fmtPct(first.pct)+' · situação oficial informada pelo TSE.</small>';
+  }
+}
 function renderLeaderMap(){
   const svg=$('#rnLeaderMap');if(!svg||!fc)return;
   const proj=projector(fc,760,560,12);
@@ -141,6 +153,7 @@ function renderLeaderMap(){
     if(lead?.status==='ok')setTimeout(()=>{$('#rnStatus').textContent=f.properties.nome+': '+lead.candidate+' está em 1º no recorte municipal do snapshot do mapa.'},0);
     document.querySelector('.rn-side')?.scrollIntoView({behavior:'smooth',block:'start'});
   }));
+  renderElectionOutcome();
   const summary=(leaderMapData.summary||[]);
   const emptyMapMessage=mode==='sim'?'Mapa estadual indisponível no Simulado TSE. Use a consulta municipal abaixo.':mode==='lab'?'Atualize o Laboratório para gerar o cenário fictício.':'Aguardando a apuração oficial.';
   $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">'+emptyMapMessage+'</div>';
@@ -208,7 +221,9 @@ function drawLeaderMapCanvas(){
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
   if(logo.complete)try{ctx.drawImage(logo,70,54,100,100)}catch{}
   fitCanvasText(ctx,'Central das Eleições UEFY',190,112,520,34,27,'700','#17191c');
-  ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText(leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL',70,190);
+  const outcome=leaderMapData?.outcome||{};
+  const canvasStatus=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
+  ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText(canvasStatus,70,190);
   ctx.font='800 56px Inter,Segoe UI,Arial';ctx.fillText('Governador do RN',70,260);
   ctx.fillStyle='#59626b';ctx.font='600 25px Inter,Segoe UI,Arial';ctx.fillText('Quem lidera em cada município',70,305);
   const proj=projector(fc,650,520,8);ctx.save();ctx.translate(40,350);
@@ -294,9 +309,26 @@ function resultUrl(code){
   return base+'/'+election+'/dados/rn/rn'+code+'-c'+OFFICE[office].cargo+'-e'+el+'-u.json';
 }
 function parseEA20(data){
-  const out=[];(data.carg||[]).forEach(c=>(c.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(cand=>out.push({id:String(cand.n||cand.nsqcand||''),number:String(cand.n||''),name:cand.nmu||cand.nm||(cand.n?'Número '+cand.n:'Nome não informado'),pct:Number(String(cand.pvap??0).replace(',','.'))||0,votes:Number(cand.vap||0),seq:Number(cand.seq||999999)})))));
+  const out=[];(data.carg||[]).forEach(c=>(c.agr||[]).forEach(a=>(a.par||[]).forEach(p=>(p.cand||[]).forEach(cand=>out.push({
+    id:String(cand.n||cand.nsqcand||''),
+    number:String(cand.n||''),
+    name:cand.nmu||cand.nm||(cand.n?'Número '+cand.n:'Nome não informado'),
+    party:String(p.sg||''),
+    pct:Number(String(cand.pvap??0).replace(',','.'))||0,
+    votes:Number(cand.vap||0),
+    seq:Number(cand.seq||999999),
+    elected:String(cand.e||'').toLowerCase(),
+    totalizationStatus:String(cand.st||'')
+  })))));
   const progress=data.s&&data.s.pst!=null?Number(String(data.s.pst).replace(',','.')):(data.s&&data.s.ts?Number(data.s.st||0)/Number(data.s.ts)*100:0);
-  return {progress:isFinite(progress)?progress:0,candidates:out.sort((a,b)=>b.pct-a.pct||a.seq-b.seq),generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp()};
+  return {
+    progress:isFinite(progress)?progress:0,
+    candidates:out.sort((a,b)=>b.pct-a.pct||a.seq-b.seq),
+    generatedAt:[data.dg,data.hg].filter(Boolean).join(' · ')||nowStamp(),
+    finalTotalization:String(data.tf||'').toLowerCase()==='s',
+    mathematicallyDefined:String(data.md||'').toLowerCase(),
+    tallyPhase:String(data.and||'').toLowerCase()
+  };
 }
 async function reconcileRnResult(result){
   try{
