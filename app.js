@@ -300,19 +300,25 @@ function selectOffice(k){
   updateScopeMap();
   loadRemote();
 }
+function clampPostText(text,footer=''){
+  if(text.length<=280)return text;
+  const suffix=footer?'\n\n'+footer:'';
+  const body=footer&&text.endsWith(suffix)?text.slice(0,-suffix.length):text;
+  const max=Math.max(20,280-suffix.length);
+  return body.slice(0,max-1).trimEnd()+'…'+suffix;
+}
 function makePostText(){
   const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5);
+  const footer=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE';
   const lines=['ELEIÇÕES 2026'+(time?' | '+time:''),m.title+' · '+scopeLabel()];
   if(mode==='demo'){
     lines.push(d.candidates.length+' candidatura(s) na base oficial','');
     d.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
-    lines.push('','Base oficial TSE · sem votos');
   }else{
-    lines.push(fmtPct(d.progress)+' das seções totalizadas','');
+    lines.push((d.progress>=100?'RESULTADO FINAL · ':'PARCIAL · ')+fmtPct(d.progress)+' das seções totalizadas','');
     d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
-    lines.push('',mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE');
   }
-  return lines.join('\n');
+  return clampPostText(lines.join('\n')+'\n\n'+footer,footer);
 }
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
@@ -330,9 +336,10 @@ function drawCanvas(){
   ctx.clearRect(0,0,1080,1080);
   ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
-  if(logoImg.complete)ctx.drawImage(logoImg,70,54,100,100);
-  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);
-  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':'RESULTADOS TSE',650,105);
+  if(logoImg.complete)try{ctx.drawImage(logoImg,70,54,100,100)}catch{}
+  fitCanvasText(ctx,'Central das Eleições UEFY',190,112,430,34,27,'700','#17191c');
+  ctx.font='600 18px Inter,Segoe UI,Arial';
+  ctx.fillText(mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':d.progress>=100?'RESULTADO FINAL · TSE':'PARCIAL · TSE',650,105);
 
   const fc=featureCollectionForScope();
   if(fc&&fc.features?.length){
