@@ -1,7 +1,7 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-02T15:38:08-03:00",
-  "source_generated_at": "29/09/2026 · 19:31:03",
+  "generated_at": "2026-10-02T19:25:38-03:00",
+  "source_generated_at": "02/10/2026 · 18:30:11",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
   "progress": 0.0,
@@ -40,6 +40,26 @@
   },
   "municipalities": 167,
   "request_errors": 0,
+  "municipal_maps": {
+    "sen": {
+      "leaders": {},
+      "results": {},
+      "summary": [],
+      "municipalities_read": 0
+    },
+    "depf": {
+      "leaders": {},
+      "results": {},
+      "summary": [],
+      "municipalities_read": 0
+    },
+    "depe": {
+      "leaders": {},
+      "results": {},
+      "summary": [],
+      "municipalities_read": 0
+    }
+  },
   "findings": [],
-  "methodology_version": "2.0"
+  "methodology_version": "3.0"
 }
