@@ -733,3 +733,15 @@ body.dark .rn-source-chip[data-mode="sim"]{background:#1b2944;border-color:#415b
   .rn-source-control{grid-template-columns:1fr}
   .rn-source-refresh{width:100%}
 }
+
+
+/* Modo de texto da publicação · 2026-10-02 */
+.text-mode-switch{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:0 0 8px;border:1px solid var(--rule);border-radius:10px;background:var(--soft)}
+.text-mode-switch button{min-height:34px;border:0;border-radius:7px;padding:6px 12px;background:transparent;color:var(--muted);font-size:11px;font-weight:700}
+.text-mode-switch button.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(25,31,38,.1)}
+body.dark .text-mode-switch{background:#14191d}
+body.dark .text-mode-switch button.active{background:#252b31;color:#fff}
+@media(max-width:560px){
+  .text-mode-switch{display:grid;width:100%}
+  .text-mode-switch button{width:100%}
+}
