@@ -7,8 +7,12 @@ async function installCanvasGuard(page){
     CanvasRenderingContext2D.prototype.fillText=function(text,x,y,maxWidth){
       try{
         const w=this.measureText(String(text)).width;
-        if(x < -1 || x+w > this.canvas.width+1){
-          window.__canvasOverflows.push({text:String(text),x,w,width:this.canvas.width});
+        const align=this.textAlign||'start';
+        let left=x,right=x+w;
+        if(align==='right'||align==='end'){left=x-w;right=x}
+        else if(align==='center'){left=x-w/2;right=x+w/2}
+        if(left < -1 || right > this.canvas.width+1){
+          window.__canvasOverflows.push({text:String(text),left,right,width:this.canvas.width,align});
         }
       }catch{}
       return original.apply(this,arguments);
