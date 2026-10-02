@@ -1,3 +1,4 @@
+const BUILD=require('../version.json').build;
 const { test, expect } = require('@playwright/test');
 
 async function installCanvasGuard(page){
@@ -33,7 +34,7 @@ async function noOverlap(page,a,b){
 
 test('Radar LAB cobre primeiro, meio e último candidato de todos os cargos e gera cards', async ({page})=>{
   await installCanvasGuard(page);
-  await page.goto('/radar.html');
+  await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
   await expect(page.locator('#radarStatus')).toContainText('LABORATÓRIO UEFY');
 
@@ -59,7 +60,7 @@ test('Radar LAB cobre primeiro, meio e último candidato de todos os cargos e ge
 });
 
 test('Radar libera publicação somente após conferência', async ({page})=>{
-  await page.goto('/radar.html');
+  await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
   const value=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
   await page.selectOption('#candidateFilter',value);
@@ -72,14 +73,14 @@ test('Radar libera publicação somente após conferência', async ({page})=>{
 
 test('Geral e RN geram card LAB sem overflow', async ({page})=>{
   await installCanvasGuard(page);
-  await page.goto('/index.html');
+  await page.goto('/index.html?v='+BUILD);
   await page.selectOption('#modeSelect','lab');
   await resetGuard(page);
   await page.click('#refreshBtn');
   await expect(page.locator('#postText')).not.toHaveValue('');
   await expectNoCanvasOverflow(page);
 
-  await page.goto('/rn.html');
+  await page.goto('/rn.html?v='+BUILD);
   await page.selectOption('#rnMode','lab');
   await resetGuard(page);
   await page.click('#rnRefresh');
@@ -88,7 +89,7 @@ test('Geral e RN geram card LAB sem overflow', async ({page})=>{
 });
 
 test('Cores de governador são fixas e exclusivas', async ({page})=>{
-  await page.goto('/rn.html');
+  await page.goto('/rn.html?v='+BUILD);
   const colors=await page.evaluate(()=>{
     const nums=['13','16','22','27','29','36','44','50','80'];
     return nums.map(n=>candidateColor('',n));
@@ -103,7 +104,7 @@ for(const viewport of [{width:1440,height:900},{width:390,height:844}]){
   test(`Controles flutuantes não se sobrepõem em ${viewport.width}px`, async ({page})=>{
     await page.setViewportSize(viewport);
     for(const path of ['/index.html','/rn.html']){
-      await page.goto(path);
+      await page.goto(path+'?v='+BUILD);
       await page.evaluate(()=>scrollTo(0,1000));
       await page.waitForTimeout(150);
       await noOverlap(page,'.float-refresh','.to-top');
