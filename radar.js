@@ -20,10 +20,10 @@ function labFinding(id,office,type,candidate,value,headline,summary,calculation,
 function buildLabRadar(){
   const progress=LAB_STEPS[labStep%LAB_STEPS.length],findings=[],offices={};
   Object.keys(OFFICE_LABELS).forEach((office,oi)=>{
-    const regs=registryForOffice(office).slice(0,Math.min(10,registryForOffice(office).length));
+    const regs=registryForOffice(office);
     offices[office]={label:OFFICE_LABELS[office],progress,candidates_with_votes:progress?regs.length:0};
     if(!progress)return;
-    regs.slice(0,6).forEach((c,i)=>{
+    regs.forEach((c,i)=>{
       const coverage=Math.min(167,Math.round((progress/100)*167*(.72+((i+oi)%4)*.07)));
       const natal=12+((i*9+labStep*4+oi*5)%47),top3=28+((i*7+labStep*3)%39),leads=Math.min(167,Math.round(coverage*(.08+((i+labStep)%5)*.08)));
       const base=(c.nome||'Candidatura')+' · '+(c.numero||'');
