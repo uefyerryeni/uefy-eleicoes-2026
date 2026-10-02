@@ -137,8 +137,8 @@ function mapPostText(){
 function drawLeaderMapCanvas(){
   const c=$('#rnCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
-  if(logo.complete)ctx.drawImage(logo,70,54,100,100);
-  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);
+  if(logo.complete)try{ctx.drawImage(logo,70,54,100,100)}catch{}
+  fitCanvasText(ctx,'Central das Eleições UEFY',190,112,520,34,27,'700','#17191c');
   ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText(leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL',70,190);
   ctx.font='800 56px Inter,Segoe UI,Arial';ctx.fillText('Governador do RN',70,260);
   ctx.fillStyle='#59626b';ctx.font='600 25px Inter,Segoe UI,Arial';ctx.fillText('Quem lidera em cada município',70,305);
@@ -301,19 +301,25 @@ function renderCurrent(){
   }
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+'/280';drawCanvas();
 }
+function clampPostText(text,footer=''){
+  if(text.length<=280)return text;
+  const suffix=footer?'\n\n'+footer:'';
+  const body=footer&&text.endsWith(suffix)?text.slice(0,-suffix.length):text;
+  const max=Math.max(20,280-suffix.length);
+  return body.slice(0,max-1).trimEnd()+'…'+suffix;
+}
 function makeText(){
   const name=selectedFeature?.properties?.nome||'Município';
+  const footer=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE';
   const lines=['ELEIÇÕES 2026',OFFICE[office].title+' · '+name+' (RN)'];
   if(mode==='demo'){
     lines.push(current.candidates.length+' candidatura(s) na base oficial','');
     current.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
-    lines.push('','Base oficial TSE · sem votos');
   }else{
-    lines.push(fmtPct(current.progress)+' das seções totalizadas','');
+    lines.push((current.progress>=100?'RESULTADO FINAL · ':'PARCIAL · ')+fmtPct(current.progress)+' das seções totalizadas','');
     current.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
-    lines.push('',mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE');
   }
-  return lines.join('\n');
+  return clampPostText(lines.join('\n')+'\n\n'+footer,footer);
 }
 function drawFeature(ctx,feature,x,y,w,h){
   if(!fc||!feature)return;const proj=projector(fc,w,h,5),g=feature.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
@@ -343,9 +349,9 @@ function drawCanvas(){
   const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=selectedFeature.properties.nome;
   ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f4f6f7';ctx.fillRect(0,0,1080,1080);
   ctx.fillStyle='rgba(245,196,0,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
-  if(logo.complete)ctx.drawImage(logo,70,54,100,100);
-  ctx.fillStyle='#17191c';ctx.font='700 40px Inter,Segoe UI,Arial';ctx.fillText('UEFY Eleições',190,112);
-  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':'RESULTADOS TSE',690,105);
+  if(logo.complete)try{ctx.drawImage(logo,70,54,100,100)}catch{}
+  fitCanvasText(ctx,'Central das Eleições UEFY',190,112,450,34,27,'700','#17191c');
+  ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':current.progress>=100?'RESULTADO FINAL · TSE':'PARCIAL · TSE',690,105);
   drawFocusedMunicipality(ctx,selectedFeature,555,115,470,350);
   ctx.fillStyle='#17191c';ctx.font='700 76px Inter,Segoe UI,Arial';ctx.fillText('Eleições 2026',70,235);
   fitCanvasText(ctx,OFFICE[office].title,70,300,440,44,32,'700','#17191c');
