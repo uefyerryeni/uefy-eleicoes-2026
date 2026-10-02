@@ -4,6 +4,7 @@ const OFFICE={gov:{title:'Governador',cargo:'0003'}};
 let fc=null,selectedFeature=null,office='gov',mode='official',current={progress:0,candidates:[],generatedAt:null};
 const LAB_STEPS=[0,8,22,41,63,81,95,100];let labStep=0;
 let leaderMapData={status:'waiting',leaders:{},summary:[],publication_ready:false}, mapPublicationMode=false;
+let publicationTextMode='full';
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
 
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
@@ -182,12 +183,24 @@ async function changeSource(next){
   await loadLeaderMap();
   await loadRemote();
 }
+function partyByNumber(number){
+  const row=(rnCandidateBase?.candidates||[]).find(x=>Number(x.cargo)===3&&String(x.numero)===String(number||''));
+  return row?.partido||'';
+}
+function labeledCandidate(name,party=''){return name+(party?' ('+party+')':'')}
 function mapPostText(){
-  const status=leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
-  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status+' — liderança por município',''];
-  (leaderMapData.summary||[]).slice(0,4).forEach(x=>lines.push(x.name+' — '+x.municipalities+' município(s)'));
-  if(leaderMapData.natal?.status==='ok')lines.push('','Natal: '+leaderMapData.natal.candidate+' em 1º');
-  lines.push('','Fonte: TSE');
+  const final=leaderMapData.final_result;
+  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',final?'RESULTADO FINAL':'MAPA PARCIAL — liderança por município',''];
+  (leaderMapData.summary||[]).slice(0,6).forEach(x=>lines.push(labeledCandidate(x.name,partyByNumber(x.number))+' — '+x.municipalities+' município(s)'));
+  if(leaderMapData.natal?.status==='ok'){
+    lines.push('','Natal: '+labeledCandidate(leaderMapData.natal.candidate,partyByNumber(leaderMapData.natal.candidate_number))+' aparece em 1º neste snapshot.');
+  }
+  if(publicationTextMode==='full'&&!final){
+    lines.push('','O mapa representa o snapshot atual da apuração. As lideranças municipais podem mudar conforme novas seções forem totalizadas.');
+    lines.push('Base municipal: '+Number(leaderMapData.municipalities_read||0)+'/'+Number(leaderMapData.municipalities_expected||167)+' municípios lidos.');
+  }
+  if(publicationTextMode==='full'&&leaderMapData.source_generated_at)lines.push('','Atualização: '+leaderMapData.source_generated_at);
+  lines.push('','Fonte: Tribunal Superior Eleitoral');
   return lines.join('\n');
 }
 function drawLeaderMapCanvas(){
@@ -358,17 +371,24 @@ function renderCurrent(){
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';drawCanvas();
 }
 function makeText(){
+  if(mapPublicationMode)return mapPostText();
   const name=selectedFeature?.properties?.nome||'Município';
-  const footer=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE';
-  const lines=['ELEIÇÕES 2026',OFFICE[office].title+' · '+name+' (RN)'];
+  const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
+  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
   if(mode==='demo'){
-    lines.push(current.candidates.length+' candidatura(s) na base oficial','');
-    current.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
+    lines.push('',current.candidates.length+' candidatura(s) registradas na base eleitoral.');
+    current.candidates.slice(0,4).forEach(c=>lines.push(labeledCandidate(c.name,c.party)+(c.number?' · nº '+c.number:'')));
   }else{
-    lines.push((current.progress>=100?'RESULTADO FINAL · ':'PARCIAL · ')+fmtPct(current.progress)+' das seções totalizadas','');
-    current.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.party?' ('+c.party+')':'')+' — '+fmtPct(c.pct)));
+    const final=current.progress>=100;
+    lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(current.progress)+' das seções totalizadas','');
+    current.candidates.slice(0,4).forEach(c=>lines.push(labeledCandidate(c.name,c.party)+' — '+fmtPct(c.pct)));
+    if(publicationTextMode==='full'&&!final&&mode!=='lab'){
+      lines.push('','Os percentuais refletem o resultado deste município no momento da atualização e podem mudar até a conclusão da totalização.');
+    }
   }
-  return lines.join('\n')+'\n\n'+footer;
+  if(publicationTextMode==='full'&&current.generatedAt)lines.push('','Atualização: '+current.generatedAt);
+  lines.push('',source);
+  return lines.join('\n');
 }
 function drawFeature(ctx,feature,x,y,w,h){
   if(!fc||!feature)return;const proj=projector(fc,w,h,5),g=feature.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
@@ -456,9 +476,15 @@ async function copyRnImage(){
   await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
   return blob;
 }
-function openRnXIntent(text,preopened=null){
-  const url='https://twitter.com/intent/tweet?text='+encodeURIComponent(text);
+async function openRnXIntent(text,preopened=null){
+  const encoded=encodeURIComponent(text);
+  const useIntent=encoded.length<=6000;
+  const url=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';
+  if(!useIntent){
+    try{await navigator.clipboard.writeText(text)}catch{}
+  }
   if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
+  return useIntent;
 }
 async function shareRNImageAndText(openX=false,preopened=null){
   const text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
@@ -479,8 +505,8 @@ async function shareRNImageAndText(openX=false,preopened=null){
         copied=true;
       }
     }catch{}
-    openRnXIntent(text,preopened);
-    flashRN($('#rnOpenX'),copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”');
+    const prefilled=await openRnXIntent(text,preopened);
+    flashRN($('#rnOpenX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”'):'Texto copiado · cole no X');
     return;
   }
 
@@ -502,8 +528,8 @@ async function shareRNImageAndText(openX=false,preopened=null){
     return;
   }
 
-  openRnXIntent(text,preopened);
-  flashRN($('#rnOpenX'),'X aberto com o texto');
+  const prefilled=await openRnXIntent(text,preopened);
+  flashRN($('#rnOpenX'),prefilled?'X aberto com o texto':'Texto copiado · cole no X');
 }
 $('#rnMapPublish')?.addEventListener('click',()=>{
   if(!leaderMapData.publication_ready)return;
@@ -522,6 +548,16 @@ $('#rnMode').value=mode;
 updateSourceUI();
 $('#rnMode').onchange=e=>changeSource(e.target.value);
 $('#rnRefresh').onclick=async()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;updateSourceUI();await loadLeaderMap();await loadRemote()};
+function syncRnTextModeButtons(){
+  document.querySelectorAll('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
+}
+document.querySelectorAll('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
+  publicationTextMode=b.dataset.textMode;
+  syncRnTextModeButtons();
+  const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';
+});
+syncRnTextModeButtons();
+
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+' caracteres';
 $('#rnCopyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
 $('#rnCopyImage').onclick=async()=>{try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
