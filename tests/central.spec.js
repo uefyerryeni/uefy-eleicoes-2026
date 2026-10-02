@@ -32,7 +32,7 @@ async function noOverlap(page,a,b){
   expect(overlap).toBeFalsy();
 }
 
-test('Radar LAB cobre primeiro, meio e último candidato de todos os cargos e gera cards', async ({page})=>{
+test('Radar Legislativo LAB gera mapas e resultado municipal em todos os cargos', async ({page})=>{
   await installCanvasGuard(page);
   await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
@@ -40,35 +40,38 @@ test('Radar LAB cobre primeiro, meio e último candidato de todos os cargos e ge
 
   for(const office of ['sen','depf','depe']){
     await page.selectOption('#officeFilter',office);
-    const count=await page.locator('#candidateFilter option').count();
-    expect(count).toBeGreaterThan(3);
-    const idx=[1,Math.max(1,Math.floor((count-1)/2)),count-1];
-    const values=[];
-    for(const i of idx) values.push(await page.locator('#candidateFilter option').nth(i).getAttribute('value'));
-    for(const candidate of [...new Set(values)]){
-      await page.selectOption('#candidateFilter',candidate);
-      for(const typ of ['territorial_coverage','capital_share','top_municipalities','municipal_leads']){
-        await resetGuard(page);
-        await page.selectOption('#typeFilter',typ);
-        await expect(page.locator('#findingCount')).not.toContainText('0 achados');
-        await expect(page.locator('#detailContent')).toBeVisible();
-        await expect(page.locator('#radarPostText')).not.toHaveValue('');
-        await expectNoCanvasOverflow(page);
-      }
-    }
+    await expect(page.locator('#radarLegMap .radar-map-feature')).toHaveCount(167);
+    await expect(page.locator('#radarLeaderSummary')).not.toContainText('Aguardando votos');
+    await expect(page.locator('#radarMapPublish')).toBeEnabled();
+
+    await page.selectOption('#radarMunicipality',{label:'Natal'});
+    await expect(page.locator('#radarMunicipalResults .radar-municipal-row').first()).toBeVisible();
+    await expect(page.locator('#radarMunicipalPublish')).toBeEnabled();
+
+    await resetGuard(page);
+    await page.click('#radarMapPublish');
+    await expect(page.locator('#radarPostText')).not.toHaveValue('');
+    await expect(page.locator('#publicationContextTitle')).toContainText('Mapa legislativo');
+    await expectNoCanvasOverflow(page);
+
+    await resetGuard(page);
+    await page.click('#radarMunicipalPublish');
+    await expect(page.locator('#publicationContextTitle')).toContainText('Natal');
+    await expectNoCanvasOverflow(page);
   }
 });
 
-test('Radar libera publicação somente após conferência', async ({page})=>{
+test('Radar mantém análises adicionais sem controlar a navegação principal', async ({page})=>{
   await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
-  const value=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
-  await page.selectOption('#candidateFilter',value);
+  await page.locator('#analises').evaluate(el=>el.open=true);
+  const candidate=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
+  await page.selectOption('#candidateFilter',candidate);
   await page.selectOption('#typeFilter','capital_share');
-  await expect(page.locator('#copyRadarImage')).toBeDisabled();
-  await page.check('#reviewCheck');
-  await expect(page.locator('#copyRadarImage')).toBeEnabled();
-  await expect(page.locator('#shareRadarBundle')).toBeEnabled();
+  await expect(page.locator('#findingCount')).not.toContainText('0 análise');
+  await expect(page.locator('#findingsGrid .finding-card').first()).toBeVisible();
+  await expect(page.locator('#radarMapPublish')).toBeEnabled();
+  await expect(page.locator('#radarMunicipalPublish')).toBeEnabled();
 });
 
 test('Geral e RN geram card LAB sem overflow', async ({page})=>{
@@ -148,9 +151,7 @@ test('Textos expandidos não usam limite de 280', async ({page})=>{
 
   await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
-  const v=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
-  await page.selectOption('#candidateFilter',v);
-  await page.selectOption('#typeFilter','capital_share');
+  await page.click('#radarMapPublish');
   await expect(page.locator('#radarChars')).toContainText('caracteres');
   await expect(page.locator('#radarChars')).not.toContainText('/280');
 });
@@ -181,16 +182,15 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
 
   await page.goto('/radar.html?v='+BUILD);
   await page.selectOption('#radarMode','lab');
-  const v=await page.locator('#candidateFilter option').nth(1).getAttribute('value');
-  await page.selectOption('#candidateFilter',v);
-  await page.selectOption('#typeFilter','capital_share');
+  await page.click('#radarMapPublish');
   const fullRadar=await page.locator('#radarPostText').inputValue();
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactRadar=await page.locator('#radarPostText').inputValue();
   expect(fullRadar.length-compactRadar.length).toBeGreaterThan(80);
   expect(compactRadar.length).toBeLessThan(fullRadar.length*0.7);
-  expect(fullRadar).toContain('Como foi calculado:');
-  expect(fullRadar).toContain('Dados do recorte:');
+  expect(fullRadar).toContain('Base municipal:');
+  expect(fullRadar).toContain('Natal:');
+  expect(compactRadar).not.toContain('Base municipal:');
   expect(fullRadar).not.toContain('/280');
 });
 
