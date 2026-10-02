@@ -27,13 +27,14 @@ for pattern in (r"registryForOffice\([^\)]*\)\.slice\(", r"regs\.slice\(0\s*,\s*
     if re.search(pattern,radar_js):
         fail("Radar LAB contém corte de candidaturas: "+pattern)
 
-# 2b) Proteção contra seletor único usado com forEach em controles múltiplos.
-for js_name in ("app.js","radar.js"):
+# 2b) Proteção contra seletor único usado com forEach.
+# $() retorna um único elemento; qualquer "$(...).forEach" é regressão de JavaScript.
+for js_name in ("app.js","rn.js","radar.js"):
     js=(ROOT/js_name).read_text(encoding="utf-8")
     for line in js.splitlines():
         stripped=line.lstrip()
-        if stripped.startswith("$(") and ".text-mode-switch [data-text-mode]" in stripped and ".forEach" in stripped:
-            fail(f"{js_name} usa seletor único $() com forEach nos modos de texto.")
+        if stripped.startswith("$(") and ").forEach" in stripped:
+            fail(f"{js_name} usa seletor único $() com forEach: {stripped[:120]}")
             break
 
 # 3) Snapshot do Radar: quando oficial estiver ativo, toda candidatura com achados
