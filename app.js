@@ -300,13 +300,6 @@ function selectOffice(k){
   updateScopeMap();
   loadRemote();
 }
-function clampPostText(text,footer=''){
-  if(text.length<=280)return text;
-  const suffix=footer?'\n\n'+footer:'';
-  const body=footer&&text.endsWith(suffix)?text.slice(0,-suffix.length):text;
-  const max=Math.max(20,280-suffix.length);
-  return body.slice(0,max-1).trimEnd()+'…'+suffix;
-}
 function makePostText(){
   const d=state[selectedOffice],m=officeMeta[selectedOffice],time=(d.generatedAt||'').split('·').pop().trim().slice(0,5);
   const footer=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: TSE';
@@ -316,9 +309,9 @@ function makePostText(){
     d.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.number?' · '+c.number:'')+(c.party?' '+c.party:'')));
   }else{
     lines.push((d.progress>=100?'RESULTADO FINAL · ':'PARCIAL · ')+fmtPct(d.progress)+' das seções totalizadas','');
-    d.candidates.slice(0,4).forEach(c=>lines.push(c.name+' — '+fmtPct(c.pct)));
+    d.candidates.slice(0,4).forEach(c=>lines.push(c.name+(c.party?' ('+c.party+')':'')+' — '+fmtPct(c.pct)));
   }
-  return clampPostText(lines.join('\n')+'\n\n'+footer,footer);
+  return lines.join('\n')+'\n\n'+footer;
 }
 function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath()}
 function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
@@ -382,7 +375,7 @@ function drawCanvas(){
   ctx.fillText(mode==='lab'?'LABORATÓRIO UEFY · NÃO É RESULTADO ELEITORAL':mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':'Fonte: Tribunal Superior Eleitoral',70,1008);
   ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
-function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+'/280';drawCanvas()}
+function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+' caracteres';drawCanvas()}
 function flash(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
 async function canvasPngBlob(canvas){
   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a imagem.')),'image/png'));
@@ -453,7 +446,7 @@ async function shareImageAndText(openX=false,preopened=null){
 }$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();loadRemote()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
 $('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;if(mode==='lab')labStep=0;loadRemote()};$('#refreshBtn').onclick=()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRemote()};
 
-$('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+'/280';
+$('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+' caracteres';
 $('#copyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Texto copiado!')}catch{flash($('#copyText'),'Cópia bloqueada')}};
 $('#copyImage').onclick=async()=>{try{await copyCanvasImage($('#shareCanvas'));flash($('#copyImage'),'Imagem copiada!')}catch{flash($('#copyImage'),'Cópia bloqueada')}};
 $('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};
