@@ -79,3 +79,18 @@ body.dark .radar-municipal-row .bar{background:#30383f}
   .radar-municipal-row .bar{display:none}
   .radar-analysis-controls{grid-template-columns:1fr}
 }
+
+
+/* Regras eleitorais do mapa legislativo · 2026-10-02 */
+.senate-rank-switch{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:12px;padding:4px;border:1px solid var(--rule);border-radius:10px;background:var(--soft)}
+.senate-rank-switch[hidden]{display:none}
+.senate-rank-switch button{border:0;border-radius:7px;background:transparent;color:var(--muted);padding:7px 11px;font-size:10px;font-weight:800}
+.senate-rank-switch button.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(25,31,38,.1)}
+.radar-electoral-note{margin:12px 18px 18px;padding:11px 13px;border:1px solid rgba(245,196,0,.58);border-radius:11px;background:rgba(245,196,0,.1);font-size:10px;line-height:1.45;color:#5f520d}
+body.dark .senate-rank-switch{background:#14191d}
+body.dark .senate-rank-switch button.active{background:#252b31;color:#fff}
+body.dark .radar-electoral-note{background:rgba(245,196,0,.08);border-color:rgba(245,196,0,.32);color:#f0df86}
+@media(max-width:560px){
+  .senate-rank-switch{display:grid;width:100%}
+  .radar-electoral-note{margin:10px 12px 14px}
+}
