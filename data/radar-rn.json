@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-02T12:36:13-03:00",
+  "generated_at": "2026-10-02T13:22:30-03:00",
   "source_generated_at": "29/09/2026 · 19:31:03",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
@@ -10,17 +10,32 @@
     "sen": {
       "label": "Senador",
       "progress": 0.0,
-      "candidates_with_votes": 0
+      "candidates_with_votes": 0,
+      "integrity": {
+        "state_candidates_with_votes": 0,
+        "candidates_with_findings": 0,
+        "missing_candidate_ids": []
+      }
     },
     "depf": {
       "label": "Deputado federal",
       "progress": 0.0,
-      "candidates_with_votes": 0
+      "candidates_with_votes": 0,
+      "integrity": {
+        "state_candidates_with_votes": 0,
+        "candidates_with_findings": 0,
+        "missing_candidate_ids": []
+      }
     },
     "depe": {
       "label": "Deputado estadual",
       "progress": 0.0,
-      "candidates_with_votes": 0
+      "candidates_with_votes": 0,
+      "integrity": {
+        "state_candidates_with_votes": 0,
+        "candidates_with_findings": 0,
+        "missing_candidate_ids": []
+      }
     }
   },
   "municipalities": 167,
