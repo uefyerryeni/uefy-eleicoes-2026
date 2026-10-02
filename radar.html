@@ -81,8 +81,12 @@
     <div class="rn-map-head">
       <div>
         <div class="rn-map-titleline"><span class="rn-badge">Mapa legislativo</span><span class="rn-source-chip" id="radarSourceBadge">OFICIAL TSE</span></div>
-        <h2 id="radarMapTitle">Quem lidera para Senador em cada município</h2>
-        <p>As cores mostram a candidatura com mais votos nominais no município para o cargo selecionado.</p>
+        <h2 id="radarMapTitle">Quem teve a maior votação nominal para Senador em cada município</h2>
+        <p id="radarMapExplanation">O mapa mostra a posição local da votação nominal. Para Senado, duas vagas estão em disputa no estado; o resultado municipal não define quem será eleito.</p>
+        <div class="senate-rank-switch" id="senateRankSwitch" role="group" aria-label="Posição mostrada no mapa do Senado">
+          <button type="button" class="active" data-senate-rank="1">1º no município</button>
+          <button type="button" data-senate-rank="2">2º no município</button>
+        </div>
       </div>
       <button class="btn primary" id="radarMapPublish" type="button" disabled>Gerar publicação do mapa</button>
     </div>
@@ -104,6 +108,9 @@
     <div class="rn-map-foot">
       <span id="radarMapCoverage">0/167 municípios lidos</span>
       <span id="radarMapProgress">Aguardando apuração oficial</span>
+    </div>
+    <div class="radar-electoral-note" id="radarElectoralNote">
+      O mapa representa votação nominal por município e não, por si só, a situação de candidatura eleita.
     </div>
   </section>
 
