@@ -164,6 +164,7 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactGeneral=await page.locator('#postText').inputValue();
   expect(fullGeneral.length-compactGeneral.length).toBeGreaterThan(80);
+  expect(compactGeneral.length).toBeLessThan(fullGeneral.length*0.7);
   expect(fullGeneral).toContain('Atualização:');
   expect(fullGeneral).toContain('1º lugar');
 
@@ -174,6 +175,7 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactRn=await page.locator('#rnPostText').inputValue();
   expect(fullRn.length-compactRn.length).toBeGreaterThan(80);
+  expect(compactRn.length).toBeLessThan(fullRn.length*0.7);
   expect(fullRn).toContain('Atualização:');
   expect(fullRn).toContain('1º lugar');
 
@@ -186,6 +188,7 @@ test('Modos Completo e Enxuto regeneram os textos sem truncamento', async ({page
   await page.click('.text-mode-switch [data-text-mode="compact"]');
   const compactRadar=await page.locator('#radarPostText').inputValue();
   expect(fullRadar.length-compactRadar.length).toBeGreaterThan(80);
+  expect(compactRadar.length).toBeLessThan(fullRadar.length*0.7);
   expect(fullRadar).toContain('Como foi calculado:');
   expect(fullRadar).toContain('Dados do recorte:');
   expect(fullRadar).not.toContain('/280');
@@ -283,4 +286,61 @@ test('Quadro de revisão do texto é ampliado', async ({page})=>{
     expect(box).not.toBeNull();
     expect(box.height).toBeGreaterThanOrEqual(275);
   }
+});
+
+
+test('Mapa RN também diferencia Completo de Enxuto', async ({page})=>{
+  await page.goto('/rn.html?v='+BUILD);
+  const sizes=await page.evaluate(()=>{
+    mode='official';
+    mapPublicationMode=true;
+    leaderMapData={
+      final_result:false,
+      source_generated_at:'02/10/2026 · 19:00:00',
+      municipalities_read:167,municipalities_expected:167,
+      outcome:{kind:'none',candidates:[]},
+      summary:[
+        {name:'CANDIDATO A',number:'10',municipalities:70},
+        {name:'CANDIDATO B',number:'20',municipalities:55},
+        {name:'CANDIDATO C',number:'30',municipalities:25},
+        {name:'CANDIDATO D',number:'40',municipalities:10},
+        {name:'CANDIDATO E',number:'50',municipalities:5},
+        {name:'CANDIDATO F',number:'60',municipalities:2}
+      ],
+      natal:{status:'ok',candidate:'CANDIDATO A',candidate_number:'10'}
+    };
+    publicationTextMode='full';
+    const full=mapPostText();
+    publicationTextMode='compact';
+    const compact=mapPostText();
+    return {full,compact};
+  });
+  expect(sizes.full).toContain('Base municipal:');
+  expect(sizes.full).toContain('Natal:');
+  expect(sizes.compact).not.toContain('Base municipal:');
+  expect(sizes.compact).not.toContain('Natal:');
+  expect(sizes.compact.length).toBeLessThan(sizes.full.length*0.7);
+});
+
+test('Resultado eleito mantém versões editorialmente diferentes', async ({page})=>{
+  await page.goto('/index.html?v='+BUILD);
+  const sizes=await page.evaluate(()=>{
+    mode='official';selectedOffice='gov';selectedScope='uf_rn';
+    state.gov={
+      progress:92.4,finalTotalization:false,mathematicallyDefined:'e',generatedAt:'02/10/2026 · 19:05:00',
+      candidates:[
+        {id:'10',number:'10',name:'CANDIDATO A',party:'AAA',pct:54.2,votes:540000,elected:'s',totalizationStatus:''},
+        {id:'20',number:'20',name:'CANDIDATO B',party:'BBB',pct:40.1,votes:399000,elected:'n',totalizationStatus:''},
+        {id:'30',number:'30',name:'CANDIDATO C',party:'CCC',pct:5.7,votes:57000,elected:'n',totalizationStatus:''}
+      ]
+    };
+    publicationTextMode='full';const full=makePostText();
+    publicationTextMode='compact';const compact=makePostText();
+    return {full,compact};
+  });
+  expect(sizes.full).toContain('Eleição matematicamente definida');
+  expect(sizes.full).toContain('votos');
+  expect(sizes.compact).toContain('ELEITO');
+  expect(sizes.compact).not.toContain('matematicamente definida');
+  expect(sizes.compact.length).toBeLessThan(sizes.full.length*0.7);
 });
