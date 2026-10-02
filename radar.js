@@ -137,7 +137,12 @@ function makePost(f){
     const explanation=String(f.explanation||f.summary||'').trim();
     const calculation=String(f.calculation||'').trim();
     if(explanation&&explanation!==f.headline)lines.push('',explanation.replace(f.candidate,candidateLabel));
+    if(Array.isArray(f.breakdown)&&f.breakdown.length){
+      lines.push('','Dados do recorte:');
+      f.breakdown.slice(0,4).forEach(x=>lines.push('• '+x.label+': '+x.value));
+    }
     if(calculation)lines.push('','Como foi calculado: '+calculation);
+    if(radarMode!=='lab')lines.push('','O Radar descreve o retrato disponível no momento da atualização; os números podem mudar enquanto a apuração estiver em andamento.');
   }
   if(radarMode==='lab'){
     lines.push('','LABORATÓRIO UEFY · DADOS FICTÍCIOS');
