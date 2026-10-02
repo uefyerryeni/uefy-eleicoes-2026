@@ -408,7 +408,9 @@ function drawCanvas(){
   if(logoImg.complete)try{ctx.drawImage(logoImg,70,54,100,100)}catch{}
   fitCanvasText(ctx,'Central das Eleições UEFY',190,112,430,34,27,'700','#17191c');
   ctx.font='600 18px Inter,Segoe UI,Arial';
-  ctx.fillText(mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':d.progress>=100?'RESULTADO FINAL · TSE':'PARCIAL · TSE',650,105);
+  const outcome=officialOutcome(d);
+  const topStatus=mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':outcome.kind==='elected'?'ELEITO · TSE':outcome.kind==='second_round'?'2º TURNO · TSE':outcome.kind==='elected_multiple'?'ELEITOS · TSE':d.finalTotalization?'RESULTADO FINAL · TSE':'PARCIAL · TSE';
+  ctx.fillText(topStatus,650,105);
 
   const fc=featureCollectionForScope();
   if(fc&&fc.features?.length){
@@ -437,10 +439,13 @@ function drawCanvas(){
     ctx.fillStyle='#f5c400';roundRect(ctx,285,492,690*Math.min(100,d.progress)/100,22,11);ctx.fill();
     let yy=620;
     d.candidates.slice(0,4).forEach((cand,i)=>{
-      ctx.fillStyle='#25292e';ctx.font='700 29px Inter,Segoe UI,Arial';
-      ctx.fillText(cand.name.length>27?cand.name.slice(0,26)+'…':cand.name,70,yy);
+      ctx.fillStyle='#25292e';
+      const tag=candidateOfficialTag(d,cand);
+      const rowName=cand.name+(tag?' · '+String(tag).toUpperCase():'');
+      fitCanvasText(ctx,rowName,70,yy,700,29,20,'700','#25292e');
       ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+23,700,21,11);ctx.fill();
-      ctx.fillStyle=i===0?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+23,700*Math.min(100,cand.pct)/100,21,11);ctx.fill();
+      const highlighted=!!tag||i===0;
+      ctx.fillStyle=highlighted?'#f5c400':'#a8b2bc';roundRect(ctx,70,yy+23,700*Math.min(100,cand.pct)/100,21,11);ctx.fill();
       ctx.fillStyle='#17191c';ctx.font='800 33px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+6);ctx.textAlign='left';
       yy+=82;
     });
