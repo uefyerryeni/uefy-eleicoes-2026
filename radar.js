@@ -278,6 +278,11 @@ async function openX(text,w=null){const encoded=encodeURIComponent(text),useInte
 $('#officeFilter').onchange=()=>{publicationView='map';renderAll()};
 $('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;publicationView='map';loadRadar()};
 $('#refreshRadar').onclick=()=>{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRadar()};
+document.querySelector('#refreshAll')?.addEventListener('click',async e=>{
+  const b=e.currentTarget;b.classList.add('loading');b.disabled=true;
+  try{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;await loadRadar()}
+  finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}
+});
 $('#radarMunicipality').onchange=e=>selectMunicipality(e.target.value,false);
 $('#radarMapPublish').onclick=()=>{publicationView='map';updatePublication();$('#publicacao')?.scrollIntoView({behavior:'smooth',block:'start'})};
 $('#radarMunicipalPublish').onclick=()=>{publicationView='municipality';updatePublication();$('#publicacao')?.scrollIntoView({behavior:'smooth',block:'start'})};
