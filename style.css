@@ -671,3 +671,36 @@ body.dark .rn-leader-mun:hover{stroke:#fff}
 
 /* Laboratório UEFY · dados fictícios */
 body:has(#modeSelect option:checked[value="lab"]) #sourceHint,body:has(#rnMode option:checked[value="lab"]) .live{outline:2px solid #f5c400;outline-offset:2px}
+
+
+/* Correção definitiva dos controles flutuantes · 2026-10-02 */
+@media(min-width:821px){
+  .float-refresh{
+    right:20px;
+    bottom:20px;
+  }
+  .to-top{
+    right:78px;
+    bottom:21px;
+  }
+}
+@media(max-width:820px) and (min-width:601px){
+  .float-refresh{
+    right:14px;
+    bottom:18px;
+  }
+  .to-top{
+    right:74px;
+    bottom:21px;
+  }
+}
+@media(max-width:600px){
+  .float-refresh{
+    right:12px;
+    bottom:calc(78px + env(safe-area-inset-bottom));
+  }
+  .to-top{
+    right:74px;
+    bottom:calc(82px + env(safe-area-inset-bottom));
+  }
+}
