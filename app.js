@@ -1,8 +1,8 @@
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
-const MODE_LABELS={sim:'simulado TSE',official:'oficial TSE',lab:'Laboratório UEFY'};
-const LAB_STEPS=[0,8,22,41,63,81,95,100];
-let labStep=0;
+const MODE_LABELS={sim:'simulado TSE',official:'oficial TSE'};
+const AUTO_REFRESH_MS=60000;
+let remoteLoading=false,autoRefreshTimer=null,lastSuccessfulFetch=null;
 const REGION_STATES={
   reg_norte:['ac','ap','am','pa','ro','rr','to'],
   reg_nordeste:['al','ba','ce','ma','pb','pe','pi','rn','se'],
@@ -204,39 +204,22 @@ async function reconcileResult(result,office){
   }
   return result;
 }
-async function loadLab(){
-  const registry=await registryForResult(selectedOffice);
-  const progress=LAB_STEPS[labStep%LAB_STEPS.length];
-  const seed=(selectedOffice.charCodeAt(0)+(scopeLabel().length*7)+labStep*13);
-  const rows=(registry||[]).slice(0,Math.max(4,registry.length)).map((x,i)=>{
-    const base=Math.max(4,42-i*8);
-    const swing=((seed+i*17)%13)-6;
-    return {id:String(x.seq||x.numero||i),number:String(x.numero||''),name:x.nome||('Candidato '+(i+1)),party:x.partido||'',status:x.situacao||'',votes:progress?Math.max(0,Math.round((base+swing)*progress*137)):0,seq:i+1};
-  });
-  if(progress>=41&&rows.length>1){rows[0].votes=Math.round(rows[0].votes*.92);rows[1].votes=Math.round(rows[1].votes*1.13)}
-  const total=rows.reduce((s,x)=>s+x.votes,0);rows.forEach(x=>x.pct=total?x.votes/total*100:0);rows.sort((x,y)=>y.votes-x.votes||x.seq-y.seq);
-  state[selectedOffice]={progress,candidates:rows,generatedAt:nowStamp(),lab:true};
-  $('#statusTitle').textContent='Laboratório UEFY · dados fictícios';
-  $('#statusText').textContent='Cenário '+(labStep+1)+'/'+LAB_STEPS.length+' · '+fmtPct(progress)+' das seções simuladas. Atualize para avançar a apuração.';
-  renderAll();
-}
-async function loadRemote(){
-  if(mode==='lab'){try{await loadLab()}catch(e){$('#statusTitle').textContent='Laboratório indisponível';$('#statusText').textContent='Não foi possível montar o cenário fictício: '+e.message}return}
-  state[selectedOffice]={progress:0,candidates:[],generatedAt:null};
-  renderAll();
-  $('#statusTitle').textContent='Consultando o TSE…';
-  $('#statusText').textContent='Carregando '+MODE_LABELS[mode]+' para '+scopeLabel()+'.';
+async function loadRemote({silent=false}={}){
+  if(remoteLoading)return;
+  remoteLoading=true;
+  const previous=state[selectedOffice];
+  if(!silent){$('#statusTitle').textContent='Consultando o TSE…';$('#statusText').textContent='Carregando '+MODE_LABELS[mode]+' para '+scopeLabel()+'.'}
   $('#refreshBtn').textContent='Carregando…';$('#refreshBtn').disabled=true;
   try{
     let result;
     if(selectedOffice==='pres' && selectedScope.startsWith('reg_')){
-      const ufs=REGION_STATES[selectedScope],parts=await Promise.all(ufs.map(uf=>fetch(endpointFor('pres',uf)).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(parseEA20)));result=aggregateResults(parts);
+      const ufs=REGION_STATES[selectedScope],parts=await Promise.all(ufs.map(uf=>fetch(endpointFor('pres',uf),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(parseEA20)));result=aggregateResults(parts);
     }else{
       const uf=selectedOffice==='pres'?(selectedScope==='br'?'br':scopeCode()):scopeCode();
       const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store'});if(!r.ok)throw new Error(r.status);result=parseEA20(await r.json());
     }
     if(mode==='official')result=await reconcileResult(result,selectedOffice);
-    state[selectedOffice]=result;
+    state[selectedOffice]=result;lastSuccessfulFetch=new Date();
     if(mode==='sim'){
       $('#statusTitle').textContent='Simulado TSE carregado';
       $('#statusText').textContent='Dados do Simulado TSE. Não representam a apuração oficial.';
@@ -244,10 +227,9 @@ async function loadRemote(){
       const outcome=officialOutcome(result,selectedOffice,selectedScope);
       $('#statusTitle').textContent=outcome.kind==='second_round'?'2º turno confirmado pelo TSE':(outcome.kind==='elected'?'Eleito definido pelo TSE':(outcome.kind==='elected_multiple'?'Eleitos definidos pelo TSE':'Resultados oficiais carregados'));
       if(result.integrity?.unmatched){
-        $('#statusText').textContent='Atenção: '+result.integrity.unmatched+' registro(s) do resultado oficial não corresponderam à base de candidaturas.';
+        $('#statusText').textContent='VERIFICAÇÃO NECESSÁRIA · '+result.integrity.unmatched+' registro(s) não corresponderam à base oficial de candidaturas. Publicação bloqueada até nova leitura.';
       }else if(outcome.kind!=='none'){
-        const names=outcome.candidates.map(candidateLabel).join(', ');
-        $('#statusText').textContent=outcome.label+' · '+names+' · situação informada pelo EA20 oficial do TSE.';
+        $('#statusText').textContent=outcome.label+' · '+outcome.candidates.map(candidateLabel).join(', ')+' · situação informada pelo EA20 oficial do TSE.';
       }else{
         $('#statusText').textContent='EA20 oficial · '+result.integrity.matched+'/'+result.integrity.total+' candidatura(s) conferida(s) com a base oficial.';
       }
@@ -255,11 +237,36 @@ async function loadRemote(){
     renderAll();
   }catch(e){
     const notPublished=mode==='official'&&String(e?.message||e).includes('404');
-    $('#statusTitle').textContent=notPublished?'Resultado oficial ainda não disponível':'Fonte indisponível';
-    $('#statusText').textContent=notPublished?'O resultado oficial deste recorte ainda não está disponível no TSE. Use o Simulado TSE apenas para testar a ferramenta.':'Não foi possível carregar este recorte agora. Tente atualizar; para testar a ferramenta, selecione Simulado TSE.';
+    const hasPrevious=previous?.candidates?.length;
+    if(hasPrevious)state[selectedOffice]=previous;
+    $('#statusTitle').textContent=notPublished?'Resultado oficial ainda não disponível':'Consulta ao TSE indisponível';
+    $('#statusText').textContent=hasPrevious
+      ?'Mantendo o último resultado válido ('+(previous.generatedAt||'horário anterior')+'). A nova consulta falhou; nenhum dado foi zerado ou substituído.'
+      :(notPublished?'O resultado oficial deste recorte ainda não está disponível no TSE. O Simulado TSE continua disponível apenas para conferência técnica.':'Não foi possível carregar este recorte agora. Tente novamente.');
+    renderAll();
+  }finally{
+    remoteLoading=false;$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false;
+    updateAutoRefreshLabel();
   }
-  finally{$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false}
 }
+function publicationIsSafe(){
+  const d=state[selectedOffice];
+  return !(mode==='official'&&d?.integrity?.unmatched>0);
+}
+function updateAutoRefreshLabel(){
+  const el=$('#autoRefreshState');if(!el)return;
+  const d=state[selectedOffice];
+  if(mode!=='official'){el.textContent='Atualização automática pausada no Simulado';return}
+  if(d?.finalTotalization){el.textContent='Resultado final · atualização automática encerrada';return}
+  el.textContent=document.hidden?'Atualização automática pausada em segundo plano':'Atualização automática · a cada 60 s';
+}
+function scheduleAutoRefresh(){
+  if(autoRefreshTimer)clearInterval(autoRefreshTimer);
+  autoRefreshTimer=setInterval(()=>{const d=state[selectedOffice];if(mode==='official'&&!document.hidden&&!d?.finalTotalization)loadRemote({silent:true})},AUTO_REFRESH_MS);
+  updateAutoRefreshLabel();
+}
+document.addEventListener('visibilitychange',()=>{updateAutoRefreshLabel();if(!document.hidden&&mode==='official'&&!state[selectedOffice]?.finalTotalization)loadRemote({silent:true})});
+
 function renderRows(k){
   const box=$('#'+k+'Rows'),small=$('#'+k+'Small'),more=$('#'+k+'More');
   if(!box)return;
@@ -305,7 +312,7 @@ function renderAll(){
   updateScopeMap();
   setText('#updatedAt',state[selectedOffice]?.generatedAt||'—');
   setText('#sourceHint','Resultados · '+MODE_LABELS[mode]);
-  setText('#liveLabel',mode==='lab'?'LAB fictício':mode==='sim'?'Simulado TSE':'TSE oficial');
+  setText('#liveLabel',mode==='sim'?'Simulado TSE':'TSE oficial');
   const modeSelect=$('#modeSelect');if(modeSelect)modeSelect.value=mode;
   updateCardVisibility();
   regenerate();
@@ -353,9 +360,9 @@ function candidateOfficialTag(d,c,office=selectedOffice,scope=selectedScope){
 }
 function makePostText(){
   const d=state[selectedOffice],m=officeMeta[selectedOffice];
-  const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
+  const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
   const outcome=mode==='demo'?{kind:'none',candidates:[]}:officialOutcome(d);
-  const final=mode==='lab'?d.progress>=100:!!d.finalTotalization;
+  const final=!!d.finalTotalization;
 
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | '+m.title.toUpperCase(),scopeLabel()];
@@ -404,8 +411,7 @@ function makePostText(){
       const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
       lines.push('','Neste recorte, '+candidateLabel(leader)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+candidateLabel(runner)+'.');
     }
-    if(!final&&mode!=='lab')lines.push('','A apuração ainda está em andamento e a ordem pode mudar conforme novas seções forem totalizadas.');
-    if(mode==='lab')lines.push('','Cenário fictício criado exclusivamente para testar a Central; não representa resultado eleitoral.');
+    if(!final)lines.push('','A apuração ainda está em andamento e a ordem pode mudar conforme novas seções forem totalizadas.');
   }
   if(d.generatedAt)lines.push('','Atualização: '+d.generatedAt);
   lines.push('',source);
@@ -431,7 +437,7 @@ function drawCanvas(){
   fitCanvasText(ctx,'Central das Eleições UEFY',190,112,430,34,27,'700','#17191c');
   ctx.font='600 18px Inter,Segoe UI,Arial';
   const outcome=officialOutcome(d);
-  const topStatus=mode==='lab'?'LAB · DADOS FICTÍCIOS':mode==='sim'?'SIMULADO TSE':outcome.kind==='elected'?'ELEITO · TSE':outcome.kind==='second_round'?'2º TURNO · TSE':outcome.kind==='elected_multiple'?'ELEITOS · TSE':d.finalTotalization?'RESULTADO FINAL · TSE':'PARCIAL · TSE';
+  const topStatus=mode==='sim'?'SIMULADO TSE':outcome.kind==='elected'?'ELEITO · TSE':outcome.kind==='second_round'?'2º TURNO · TSE':outcome.kind==='elected_multiple'?'ELEITOS · TSE':d.finalTotalization?'RESULTADO FINAL · TSE':'PARCIAL · TSE';
   ctx.fillText(topStatus,650,105);
 
   const fc=featureCollectionForScope();
@@ -475,10 +481,10 @@ function drawCanvas(){
 
   ctx.strokeStyle='#d3d9de';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();
   ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';
-  ctx.fillText(mode==='lab'?'LABORATÓRIO UEFY · NÃO É RESULTADO ELEITORAL':mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':'Fonte: Tribunal Superior Eleitoral',70,1008);
+  ctx.fillText(mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral',70,1008);
   ctx.textAlign='right';ctx.fillText(d.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
-function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+' caracteres';drawCanvas()}
+function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+' caracteres';drawCanvas();const safe=publicationIsSafe();['#copyImage','#openX','#downloadImage','#shareBundle'].forEach(id=>{const el=$(id);if(el)el.disabled=!safe})}
 function flash(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
 async function canvasPngBlob(canvas){
   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a imagem.')),'image/png'));
@@ -509,6 +515,7 @@ async function openXIntent(text,preopened=null){
   return useIntent;
 }
 async function shareImageAndText(openX=false,preopened=null){
+  if(!publicationIsSafe()){if(preopened)preopened.close();flash(openX?$('#openX'):$('#shareBundle'),'Verificação necessária');return}
   const canvas=$('#shareCanvas'),text=$('#postText').value;
   let blob;
   try{blob=await canvasPngBlob(canvas)}catch{if(preopened)preopened.close();flash(openX?$('#openX'):$('#shareBundle'),'Falha ao gerar imagem');return}
@@ -553,7 +560,7 @@ async function shareImageAndText(openX=false,preopened=null){
   const prefilled=await openXIntent(text,preopened);
   flash($('#openX'),prefilled?'X aberto com o texto':'Texto copiado · cole no X');
 }$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();loadRemote()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
-$('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;if(mode==='lab')labStep=0;loadRemote()};$('#refreshBtn').onclick=()=>{if(mode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRemote()};
+$('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;loadRemote();updateAutoRefreshLabel()};$('#refreshBtn').onclick=()=>loadRemote();
 
 function syncTextModeButtons(){
   $$('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
