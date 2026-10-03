@@ -615,8 +615,9 @@ function syncTheme(){
 }
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
-rnAutoTimer=setInterval(()=>{if(mode==='official'&&!document.hidden&&!current?.finalTotalization){loadLeaderMap();loadRemote()}},AUTO_REFRESH_MS);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='official'){loadLeaderMap();loadRemote()}});
+function inFirstRoundPollingWindow(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const get=t=>p.find(x=>x.type===t)?.value||'';const day=get('year')+'-'+get('month')+'-'+get('day'),hour=Number(get('hour'));return (day==='2026-10-04'&&hour>=17)||(day==='2026-10-05'&&hour<3)}
+rnAutoTimer=setInterval(()=>{if(mode==='official'&&!document.hidden&&!current?.finalTotalization&&inFirstRoundPollingWindow()){loadLeaderMap();loadRemote()}},AUTO_REFRESH_MS);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='official'&&inFirstRoundPollingWindow()){loadLeaderMap();loadRemote()}});
 init().catch(e=>{$('#rnStatus').textContent='Erro ao carregar o mapa: '+e.message});
 
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn?.classList.toggle('show',scrollY>420),{passive:true});if(topBtn)topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
