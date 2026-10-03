@@ -568,7 +568,7 @@ function syncTheme(){
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
-populateScopeSelect();updateCardVisibility();$('#modeSelect').value=mode;loadRemote();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
+populateScopeSelect();updateCardVisibility();$('#modeSelect').value=mode;if(mode==='official'&&!inFirstRoundPollingWindow()){renderAll();$('#statusTitle').textContent='Pronto para a apuração';$('#statusText').textContent='A consulta automática aos resultados oficiais começa às 17h, horário de Brasília.'}else loadRemote();scheduleAutoRefresh();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
 
 /* Favoritos e atualização operacional */
