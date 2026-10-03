@@ -140,7 +140,7 @@ function renderLeaderMap(){
   }));
   renderElectionOutcome();
   const summary=(leaderMapData.summary||[]);
-  const emptyMapMessage=mode==='sim'?'Mapa estadual indisponível no Simulado TSE. Use a consulta municipal abaixo.':mode==='lab'?'Atualize o Laboratório para gerar o cenário fictício.':'Aguardando a apuração oficial.';
+  const emptyMapMessage=mode==='sim'?'Mapa estadual indisponível no Simulado TSE. Use a consulta municipal abaixo.':'Aguardando a apuração oficial.';
   $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">'+emptyMapMessage+'</div>';
   $('#rnLeaderLegend').innerHTML=summary.length?summary.map(x=>'<span><i style="background:'+candidateColor(x.name,x.number)+'"></i>'+esc(x.name)+'</span>').join(''):'<span><i style="background:#d9dee2"></i>Aguardando resultado</span>';
   const read=Number(leaderMapData.municipalities_read||0),expected=Number(leaderMapData.municipalities_expected||167);
@@ -150,8 +150,8 @@ function renderLeaderMap(){
   if(natal?.status==='ok'){
     $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+esc(natal.candidate)+'</strong><span>'+Number(natal.votes||0).toLocaleString('pt-BR')+' votos · '+fmtPct(natal.pct)+' · '+fmtPct(natal.progress)+' das seções</span>';
   }else{
-    const natalTitle=mode==='sim'?'Mapa estadual indisponível no Simulado':mode==='lab'?'Aguardando cenário do Laboratório':'Aguardando apuração oficial';
-    const natalText=mode==='sim'?'Consulte Natal na área municipal abaixo.':mode==='lab'?'Atualize para avançar o cenário fictício.':'O destaque da capital aparecerá quando houver votos.';
+    const natalTitle=mode==='sim'?'Mapa estadual indisponível no Simulado':'Aguardando apuração oficial';
+    const natalText=mode==='sim'?'Consulte Natal na área municipal abaixo.':'O destaque da capital aparecerá quando houver votos.';
     $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+natalTitle+'</strong><span>'+natalText+'</span>';
   }
   const btn=$('#rnMapPublish'),note=$('#rnMapPublishNote');
@@ -159,7 +159,6 @@ function renderLeaderMap(){
   if(note)note.textContent=leaderMapData.publication_ready?(leaderMapData.final_result?'Base completa e totalização final.':'Base municipal completa. O card será identificado como resultado parcial.'):(leaderMapData.message||'A publicação será liberada quando a base municipal estiver completa e conferida.');
 }
 function sourceMeta(){
-  if(mode==='lab')return {title:'Laboratório UEFY',badge:'LAB · DADOS FICTÍCIOS',municipal:'Laboratório UEFY',help:'Mapa, município e publicação usam dados fictícios claramente identificados como teste.'};
   if(mode==='sim')return {title:'Simulado TSE',badge:'SIMULADO TSE',municipal:'Simulado TSE',help:'A consulta municipal usa o ambiente de teste do TSE. O mapa estadual fica desativado para não misturar fontes.'};
   return {title:'Oficial TSE',badge:'OFICIAL TSE',municipal:'Oficial TSE',help:'Mapa, município e publicação usam os resultados oficiais do TSE.'};
 }
@@ -176,7 +175,6 @@ function updateSourceUI(){
 async function changeSource(next){
   mode=next;
   mapPublicationMode=false;
-  if(mode==='lab')labStep=0;
   updateSourceUI();
   await loadLeaderMap();
   await loadRemote();
@@ -400,7 +398,7 @@ function makeText(){
   if(mapPublicationMode)return mapPostText();
   const name=selectedFeature?.properties?.nome||'Município';
   const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
-  const final=mode==='lab'?current.progress>=100:!!current.finalTotalization;
+  const final=!!current.finalTotalization;
 
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
@@ -427,8 +425,7 @@ function makeText(){
       const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
       lines.push('','Em '+name+', '+labeledCandidate(leader.name,leader.party)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+labeledCandidate(runner.name,runner.party)+'.');
     }
-    if(!final&&mode!=='lab')lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
-    if(mode==='lab')lines.push('','Cenário fictício criado exclusivamente para testar a Central; não representa resultado eleitoral.');
+    if(!final)lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
   }
   if(current.generatedAt)lines.push('','Atualização: '+current.generatedAt);
   lines.push('',source);
@@ -499,7 +496,7 @@ function drawCanvas(){
 
   ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();
   ctx.fillStyle='#58616a';ctx.font='600 20px Inter,Segoe UI,Arial';
-  ctx.fillText(mode==='lab'?'LABORATÓRIO UEFY · NÃO É RESULTADO ELEITORAL':mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':'Fonte: Tribunal Superior Eleitoral',70,1008);
+  ctx.fillText(mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral',70,1008);
   ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
 }
 function flashRN(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
