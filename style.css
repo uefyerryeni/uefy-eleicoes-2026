@@ -812,3 +812,6 @@ body{
 @media(max-width:600px){
   .mobile-dock{background:rgba(31,30,27,.96);border-color:#48443c}
 }
+
+.auto-refresh-state{margin-top:10px;font-size:13px;font-weight:800;color:#59616a}.dark .auto-refresh-state{color:#b8c0c7}
+button:disabled{opacity:.5;cursor:not-allowed}
