@@ -35,6 +35,9 @@ jobs:
       - name: QA estático e integridade dos dados
         run: python scripts/qa_static.py
 
+      - name: Sintaxe JavaScript
+        run: node --check app.js && node --check rn.js && node --check radar.js
+
       - name: Instalar testes de navegador
         run: npm install
 
