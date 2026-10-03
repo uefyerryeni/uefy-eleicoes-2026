@@ -78,7 +78,8 @@ function flattenCandidates(data){
     votes:Number(cand.vap||0),
     seq:Number(cand.seq||999999),
     elected:String(cand.e||'').toLowerCase(),
-    totalizationStatus:String(cand.st||'')
+    totalizationStatus:String(cand.st||''),
+    voteDestination:String(cand.dvt||'')
   })))));
   return out.sort((a,b)=>a.seq-b.seq);
 }
@@ -338,9 +339,9 @@ function selectOffice(k){
   updateScopeMap();
   loadRemote();
 }
-function candidateLabel(c){
-  return c.name+(c.party?' ('+c.party+')':'');
-}
+function candidateLabel(c){return c.name+(c.party?' ('+c.party+')':'')}
+function voteDestinationTag(c){const d=String(c?.voteDestination||'').trim();return d&&!/^válido$/i.test(d)?d:''}
+function candidatePublicationLabel(c){const d=voteDestinationTag(c);return candidateLabel(c)+(d?' · '+d:'')}
 function decisiveScope(office=selectedOffice,scope=selectedScope){
   return office==='pres'?scope==='br':scope.startsWith('uf_');
 }
@@ -358,6 +359,7 @@ function officialOutcome(d=state[selectedOffice],office=selectedOffice,scope=sel
 }
 function candidateOfficialTag(d,c,office=selectedOffice,scope=selectedScope){
   if(mode!=='official'||!decisiveScope(office,scope))return '';
+  const destination=voteDestinationTag(c);if(destination)return destination;
   if(c.totalizationStatus)return c.totalizationStatus;
   const outcome=officialOutcome(d,office,scope);
   if(outcome.kind==='second_round'&&outcome.candidates.some(x=>x.id===c.id||x.number===c.number))return '2º turno';
@@ -376,17 +378,17 @@ function makePostText(){
       lines.push('',d.candidates.length+' candidatura(s) registradas.');
     }else if(outcome.kind==='elected'&&outcome.candidates.length){
       const winner=outcome.candidates[0];
-      lines.push('','ELEITO · '+candidateLabel(winner)+' — '+fmtPct(winner.pct));
+      lines.push('','ELEITO · '+candidatePublicationLabel(winner)+' — '+fmtPct(winner.pct));
     }else if(outcome.kind==='second_round'){
       lines.push('','2º TURNO CONFIRMADO');
-      outcome.candidates.slice(0,2).forEach(x=>lines.push(candidateLabel(x)+' — '+fmtPct(x.pct)));
+      outcome.candidates.slice(0,2).forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)));
     }else if(outcome.kind==='elected_multiple'){
       lines.push('','ELEITOS DEFINIDOS · '+outcome.candidates.length);
-      outcome.candidates.slice(0,3).forEach(x=>lines.push(candidateLabel(x)));
+      outcome.candidates.slice(0,3).forEach(x=>lines.push(candidatePublicationLabel(x)));
       if(outcome.candidates.length>3)lines.push('e mais '+(outcome.candidates.length-3)+'.');
     }else{
       lines.push('',(final?'RESULTADO FINAL':'PARCIAL')+' · '+fmtPct(d.progress));
-      d.candidates.slice(0,2).forEach(x=>lines.push(candidateLabel(x)+' — '+fmtPct(x.pct)));
+      d.candidates.slice(0,2).forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)));
     }
     lines.push('',source);
     return lines.join('\n');
@@ -395,27 +397,27 @@ function makePostText(){
   const lines=['ELEIÇÕES 2026 | '+m.title.toUpperCase(),scopeLabel()];
   if(mode==='demo'){
     lines.push('',d.candidates.length+' candidatura(s) registradas na base eleitoral.');
-    d.candidates.slice(0,6).forEach(x=>lines.push(candidateLabel(x)+(x.number?' · nº '+x.number:'')));
+    d.candidates.slice(0,6).forEach(x=>lines.push(candidatePublicationLabel(x)+(x.number?' · nº '+x.number:'')));
     lines.push('','A lista acima corresponde ao cadastro eleitoral disponível para este recorte.');
   }else if(outcome.kind==='elected'&&outcome.candidates.length){
     const winner=outcome.candidates[0];
-    lines.push('','ELEITO · '+candidateLabel(winner)+' — '+fmtPct(winner.pct));
+    lines.push('','ELEITO · '+candidatePublicationLabel(winner)+' — '+fmtPct(winner.pct));
     lines.push('',final?'Totalização final oficial.':'Eleição matematicamente definida pelo TSE antes da totalização final.');
-    d.candidates.slice(0,5).forEach(x=>lines.push(candidateLabel(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
+    d.candidates.slice(0,5).forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
   }else if(outcome.kind==='second_round'){
     lines.push('','2º TURNO CONFIRMADO');
-    outcome.candidates.forEach(x=>lines.push(candidateLabel(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
+    outcome.candidates.forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
     lines.push('','Situação matematicamente definida pelo TSE; a totalização ainda pode estar em andamento.');
   }else if(outcome.kind==='elected_multiple'){
     lines.push('','ELEITOS DEFINIDOS · '+outcome.candidates.length);
-    outcome.candidates.forEach(x=>lines.push(candidateLabel(x)+' — '+(x.totalizationStatus||'Eleito')+' · '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
+    outcome.candidates.forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+(x.totalizationStatus||'Eleito')+' · '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
   }else{
     lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(d.progress)+' das seções totalizadas','');
-    d.candidates.slice(0,5).forEach(x=>lines.push(candidateLabel(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
+    d.candidates.slice(0,5).forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
     const leader=d.candidates[0],runner=d.candidates[1];
     if(leader&&runner){
       const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
-      lines.push('','Neste recorte, '+candidateLabel(leader)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+candidateLabel(runner)+'.');
+      lines.push('','Neste recorte, '+candidatePublicationLabel(leader)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+candidatePublicationLabel(runner)+'.');
     }
     if(!final)lines.push('','A apuração ainda está em andamento e a ordem pode mudar conforme novas seções forem totalizadas.');
   }
