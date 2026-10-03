@@ -285,9 +285,7 @@ $$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
   $$('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
   publicationView='map';renderMap();updatePublication();renderAll();
 });
-$('#refreshRadar').onclick=()=>radarAutoTimer=setInterval(()=>{if(!document.hidden)loadRadar({silent:true})},60000);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadRadar({silent:true})});
-loadRadar();
+$('#refreshRadar').onclick=()=>loadRadar();
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{
   const b=e.currentTarget;b.classList.add('loading');b.disabled=true;
   try{await loadRadar()}
@@ -308,4 +306,6 @@ $('#shareRadarBundle').onclick=async()=>{try{const native=await shareRadar();if(
 const theme=$('#themeToggle');if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');function syncTheme(){const d=document.body.classList.contains('dark');theme.textContent=d?'☀':'◐';theme.title=d?'Usar tema claro':'Usar tema escuro'}syncTheme();theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme();drawCanvas()};
 const topBtn=$('#toTop');addEventListener('scroll',()=>topBtn?.classList.toggle('show',scrollY>420),{passive:true});if(topBtn)topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
+radarAutoTimer=setInterval(()=>{if(!document.hidden)loadRadar({silent:true})},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadRadar({silent:true})});
 loadRadar();
