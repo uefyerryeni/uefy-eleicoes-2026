@@ -347,8 +347,9 @@ function decisiveScope(office=selectedOffice,scope=selectedScope){
 }
 function officialOutcome(d=state[selectedOffice],office=selectedOffice,scope=selectedScope){
   if(mode!=='official'||!d||!decisiveScope(office,scope))return {kind:'none',candidates:[]};
-  const elected=(d.candidates||[]).filter(c=>c.elected==='s'||/^eleito/i.test(c.totalizationStatus||''));
-  const second=(d.candidates||[]).filter(c=>/2º\s*turno/i.test(c.totalizationStatus||'')||(d.mathematicallyDefined==='s'&&c.elected==='s'));
+  const eligible=(d.candidates||[]).filter(c=>!voteDestinationTag(c));
+  const elected=eligible.filter(c=>c.elected==='s'||/^eleito/i.test(c.totalizationStatus||''));
+  const second=eligible.filter(c=>/2º\s*turno/i.test(c.totalizationStatus||'')||(d.mathematicallyDefined==='s'&&c.elected==='s'));
   if(d.mathematicallyDefined==='s')return {kind:'second_round',label:'2º TURNO CONFIRMADO',candidates:second.length?second:elected};
   if(d.mathematicallyDefined==='e')return {kind:'elected',label:'ELEITO',candidates:elected.length?elected:(d.candidates||[]).slice(0,1)};
   if(d.finalTotalization&&elected.length){
