@@ -21,11 +21,22 @@ for cargo in (3,5,6,7):
     if not any(int(x.get("cargo",0))==cargo for x in rn):
         fail(f"Cargo {cargo} sem candidaturas no RN.")
 
-# 2) Proteção contra o bug que limitava candidatos do Laboratório.
+# 2) A versão operacional não pode expor nem executar o antigo Laboratório UEFY.
+for name in ("index.html","rn.html","radar.html","app.js","rn.js","radar.js"):
+    txt=(ROOT/name).read_text(encoding="utf-8")
+    if re.search(r"Laboratório UEFY|LAB_STEPS|value=[\"']lab[\"']|mode===?[\"']lab[\"']|radarMode===?[\"']lab[\"']",txt,re.I):
+        fail(f"{name} ainda contém lógica ou interface do laboratório.")
+
+# 2a) Guardas operacionais da apuração.
+app_js=(ROOT/"app.js").read_text(encoding="utf-8")
+rn_js=(ROOT/"rn.js").read_text(encoding="utf-8")
 radar_js=(ROOT/"radar.js").read_text(encoding="utf-8")
-for pattern in (r"registryForOffice\([^\)]*\)\.slice\(", r"regs\.slice\(0\s*,\s*6", r"regs\.slice\(0\s*,"):
-    if re.search(pattern,radar_js):
-        fail("Radar LAB contém corte de candidaturas: "+pattern)
+if "AUTO_REFRESH_MS=60000" not in app_js: fail("Geral sem atualização automática de 60 s.")
+if "AUTO_REFRESH_MS=60000" not in rn_js: fail("RN sem atualização automática de 60 s.")
+if "setInterval" not in radar_js or "60000" not in radar_js: fail("Radar sem releitura automática.")
+if "Mantendo o último resultado válido" not in app_js: fail("Geral sem retenção explícita do último dado válido.")
+if "Mantendo o último resultado válido" not in rn_js: fail("RN sem retenção explícita do último dado válido.")
+if "publicationIsSafe" not in app_js: fail("Geral sem bloqueio de publicação quando a conciliação falha.")
 
 # 2b) Proteção contra seletor único usado diretamente com forEach.
 # $() retorna um único elemento; "$(...).forEach(...)" é inválido.
