@@ -56,7 +56,8 @@ def parse(data):
                         'pct':pct(c.get('pvap')),
                         'seq':num(c.get('seq') or 999999),
                         'elected':str(c.get('e') or '').lower(),
-                        'totalization_status':str(c.get('st') or '')
+                        'totalization_status':str(c.get('st') or ''),
+                        'vote_destination':str(c.get('dvt') or '')
                     })
     rows.sort(key=lambda x:(-x['votes'],x['seq']))
     s=data.get('s') or {}
