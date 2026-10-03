@@ -777,3 +777,38 @@ body.dark .rn-election-outcome>span{color:#f3df76}
   .publisher textarea,
   #postText,#rnPostText,#radarPostText{min-height:220px;font-size:13px}
 }
+
+
+/* Off-white editorial · 2026-10-02 */
+:root{
+  --bg:#f3f0e8;
+  --surface:#fffdf8;
+  --soft:#f8f5ee;
+  --rule:#ddd7cb;
+  --text:#24231f;
+  --muted:#68645d;
+  --ink:#1e1e1b;
+  --shadow:0 10px 28px rgba(54,48,37,.07);
+}
+body{
+  background:
+    radial-gradient(circle at 90% 0%,rgba(245,196,0,.11),transparent 25rem),
+    linear-gradient(180deg,#f8f5ee 0%,#f1eee6 72%,#ece8de 100%);
+}
+.topbar{background:rgba(248,245,238,.92);border-bottom-color:rgba(66,58,45,.10)}
+.card{background:rgba(255,253,248,.96);border-color:#ddd7cb}
+.toolbar,.map-card,.result-card,.metric,.rn-map-panel,.rn-side,.rn-total-map-section{border-color:#ddd7cb}
+.mode,.favorite-btn,.section-head #sourceHint,.map-source,.metric,.result-card,.pick,.btn,textarea,.rn-map-summary,.rn-natal-highlight,.rn-map-publish{background:#fffdf8}
+.status-top{background:#faf7f0;border-bottom-color:#e4ded3}
+.map-card{background:linear-gradient(180deg,#fffdf9,#faf7f0)}
+.canvas-box,.publisher .canvas-box{background:#f4f0e7;border-color:#ddd7cb}
+.rn-map-large{background:linear-gradient(180deg,#fffdf9,#f8f4ec);border-color:#ddd7cb}
+.rn-total-map-card,.rn-map-audit,.rn-fixed-office,.status-chip,.text-mode-switch{background:#f7f3eb}
+.rn-list,.rn-toolbar select,.rn-search,.rn-source-select select{background:#fffdf8}
+.candidate-row{border-bottom-color:#e9e3d9}
+.candidate-row .bar,.progress,.rn-result-line .bar{background:#e9e4da}
+.notice{background:rgba(255,253,248,.76);color:#514d45}
+.footline{border-top-color:rgba(66,58,45,.14)}
+@media(max-width:600px){
+  .mobile-dock{background:rgba(31,30,27,.96);border-color:#48443c}
+}
