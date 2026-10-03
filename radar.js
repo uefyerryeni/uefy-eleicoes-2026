@@ -28,7 +28,8 @@ function candidateMeta(number,name=''){
 }
 function candidateLabel(row){
   const meta=candidateMeta(row?.number,row?.name);
-  return (row?.name||meta.name||'Candidatura')+(row?.party||meta.party?' ('+(row?.party||meta.party)+')':'');
+  const base=(row?.name||meta.name||'Candidatura')+(row?.party||meta.party?' ('+(row?.party||meta.party)+')':'');
+  const d=String(row?.vote_destination||'').trim();return base+(d&&!/^válido$/i.test(d)?' · '+d:'');
 }
 function candidateColor(number,name=''){
   const key=String(number||name||'0');
