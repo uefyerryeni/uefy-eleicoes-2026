@@ -59,7 +59,7 @@ def flatten_candidates(data):
                     number=str(cand.get('n') or cand.get('nsqcand') or '')
                     name=str(cand.get('nmu') or cand.get('nm') or ('Número '+number if number else 'Nome não informado'))
                     votes=parse_number(cand.get('vap'))
-                    out.append({'id':number or name,'number':number,'name':name,'party':str(par.get('sg') or ''),'votes':votes,'pct':parse_pct(cand.get('pvap')),'seq':parse_number(cand.get('seq') or 999999)})
+                    out.append({'id':number or name,'number':number,'name':name,'party':str(par.get('sg') or ''),'votes':votes,'pct':parse_pct(cand.get('pvap')),'seq':parse_number(cand.get('seq') or 999999),'vote_destination':str(cand.get('dvt') or '')})
     return out
 
 def progress_of(data):
