@@ -37,6 +37,9 @@ if "setInterval" not in radar_js or "60000" not in radar_js: fail("Radar sem rel
 if "Mantendo o último resultado válido" not in app_js: fail("Geral sem retenção explícita do último dado válido.")
 if "Mantendo o último resultado válido" not in rn_js: fail("RN sem retenção explícita do último dado válido.")
 if "publicationIsSafe" not in app_js: fail("Geral sem bloqueio de publicação quando a conciliação falha.")
+if "voteDestination:String(cand.dvt" not in app_js: fail("Geral não preserva a destinação de votos do EA20.")
+if "voteDestination:String(cand.dvt" not in rn_js: fail("RN não preserva a destinação de votos do EA20.")
+if "vote_destination" not in radar_js: fail("Radar não exibe a destinação diferenciada de votos.")
 
 # 2b) Proteção contra seletor único usado diretamente com forEach.
 # $() retorna um único elemento; "$(...).forEach(...)" é inválido.
