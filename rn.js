@@ -51,7 +51,7 @@ function markSelection(){
 function selectMunicipality(feature){
   mapPublicationMode=false;
   selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
-  loadRemote();
+  if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
 }
 
 const GOVERNOR_COLORS_BY_NUMBER={
