@@ -248,7 +248,7 @@ function drawCanvas(){
   ctx.fillStyle='#59626b';ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText('RADAR LEGISLATIVO · RN',70,190);
   fitText(ctx,officeLabel(),70,255,450,55,36,'800');
   if(publicationView==='map')drawMapCanvas(ctx);else drawMunicipalityCanvas(ctx);
-  ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText(radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: Tribunal Superior Eleitoral',70,1005);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1035);ctx.textAlign='left';
+  ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();ctx.fillStyle='#58616a';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral',70,1005);ctx.textAlign='right';ctx.fillText(radar.source_generated_at||radar.generated_at||'',1010,1035);ctx.textAlign='left';
 }
 function drawMapCanvas(ctx){
   const m=officeMapData(),rank=effectiveMapRank(),summary=mapSummary();
