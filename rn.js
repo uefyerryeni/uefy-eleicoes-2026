@@ -319,7 +319,8 @@ function parseEA20(data){
     votes:Number(cand.vap||0),
     seq:Number(cand.seq||999999),
     elected:String(cand.e||'').toLowerCase(),
-    totalizationStatus:String(cand.st||'')
+    totalizationStatus:String(cand.st||''),
+    voteDestination:String(cand.dvt||'')
   })))));
   const progress=data.s&&data.s.pst!=null?Number(String(data.s.pst).replace(',','.')):(data.s&&data.s.ts?Number(data.s.st||0)/Number(data.s.ts)*100:0);
   return {
@@ -406,7 +407,7 @@ function makeText(){
       lines.push('',current.candidates.length+' candidatura(s) registradas.');
     }else{
       lines.push('',(final?'RESULTADO FINAL':'PARCIAL')+' · '+fmtPct(current.progress));
-      current.candidates.slice(0,2).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+' — '+fmtPct(x.pct)));
+      current.candidates.slice(0,2).forEach(x=>lines.push(publicationCandidate(x)+' — '+fmtPct(x.pct)));
     }
     lines.push('',source);
     return lines.join('\n');
@@ -415,15 +416,15 @@ function makeText(){
   const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
   if(mode==='demo'){
     lines.push('',current.candidates.length+' candidatura(s) registradas na base eleitoral.');
-    current.candidates.slice(0,6).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+(x.number?' · nº '+x.number:'')));
+    current.candidates.slice(0,6).forEach(x=>lines.push(publicationCandidate(x)+(x.number?' · nº '+x.number:'')));
     lines.push('','Cadastro eleitoral disponível para o município selecionado.');
   }else{
     lines.push('',(final?'RESULTADO FINAL':'APURAÇÃO PARCIAL')+' · '+fmtPct(current.progress)+' das seções totalizadas','');
-    current.candidates.slice(0,5).forEach(x=>lines.push(labeledCandidate(x.name,x.party)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
+    current.candidates.slice(0,5).forEach(x=>lines.push(publicationCandidate(x)+' — '+fmtPct(x.pct)+(x.votes?' · '+Number(x.votes).toLocaleString('pt-BR')+' votos':'')));
     const leader=current.candidates[0],runner=current.candidates[1];
     if(leader&&runner){
       const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
-      lines.push('','Em '+name+', '+labeledCandidate(leader.name,leader.party)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+labeledCandidate(runner.name,runner.party)+'.');
+      lines.push('','Em '+name+', '+publicationCandidate(leader)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+publicationCandidate(runner)+'.');
     }
     if(!final)lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
   }
