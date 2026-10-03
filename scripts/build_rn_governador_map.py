@@ -72,8 +72,9 @@ def state_url():
 
 def outcome(data):
     rows,progress,stamp=parse(data)
-    elected=[x for x in rows if x.get('elected')=='s' or str(x.get('totalization_status') or '').lower().startswith('eleito')]
-    second=[x for x in rows if '2º turno' in str(x.get('totalization_status') or '').lower()]
+    eligible=[x for x in rows if str(x.get('vote_destination') or '').strip().lower() in ('','válido','valido')]
+    elected=[x for x in eligible if x.get('elected')=='s' or str(x.get('totalization_status') or '').lower().startswith('eleito')]
+    second=[x for x in eligible if '2º turno' in str(x.get('totalization_status') or '').lower()]
     md=str(data.get('md') or '').lower()
     tf=str(data.get('tf') or '').lower()=='s'
     if md=='s':
