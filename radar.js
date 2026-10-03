@@ -6,11 +6,10 @@ const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadual'};
 const OFFICE_CARGO={sen:5,depf:6,depe:7};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
-const LAB_STEPS=[8,22,41,63,81,95,100];
 const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b','#c2185b','#6d4c41','#455a64','#5c6bc0','#ad1457','#558b2f','#00838f','#6a1b9a','#f57c00','#3949ab'];
 
 let radar={status:'loading',findings:[],offices:{},municipal_maps:{}};
-let candidateRegistry=[],rnMap=null,radarMode='official',labStep=0,publicationTextMode='full';
+let candidateRegistry=[],rnMap=null,radarMode='official',publicationTextMode='full',radarLoading=false,radarAutoTimer=null;
 let selectedMunicipality='Natal',publicationView='map',senateMapRank=1;
 
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%';
@@ -21,7 +20,7 @@ function flash(btn,text){if(!btn)return;const old=btn.textContent;btn.textConten
 function setStatus(msg,error=false){const el=$('#radarStatus');if(!el)return;el.hidden=!msg;el.textContent=msg||'';el.classList.toggle('error',error)}
 function activeOffice(){return $('#officeFilter')?.value||'sen'}
 function officeLabel(){return OFFICE_LABELS[activeOffice()]||'Legislativo'}
-function publicationSource(){return radarMode==='lab'?'LABORATÓRIO UEFY · DADOS FICTÍCIOS':'Fonte: Tribunal Superior Eleitoral'}
+function publicationSource(){return 'Fonte: Tribunal Superior Eleitoral'}
 function registryForOffice(office=activeOffice()){return candidateRegistry.filter(x=>Number(x.cargo)===OFFICE_CARGO[office]).sort((a,b)=>String(a.nome).localeCompare(String(b.nome),'pt-BR'))}
 function candidateMeta(number,name=''){
   const row=registryForOffice().find(x=>String(x.numero)===String(number))||candidateRegistry.find(x=>String(x.nome)===String(name));
@@ -84,40 +83,10 @@ function geometryPath(g,proj){
   return '';
 }
 
-function buildLabRadar(){
-  const progress=LAB_STEPS[labStep%LAB_STEPS.length],maps={},findings=[];
-  const names=municipalityNames();
-  Object.keys(OFFICE_LABELS).forEach((office,oi)=>{
-    const regs=registryForOffice(office),leaders={},results={},counts=new Map();
-    names.forEach((mun,mi)=>{
-      const ranked=regs.map((c,ci)=>{
-        const seed=((mi+3)*97+(ci+5)*43+(labStep+1)*71+(oi+1)*29)%997;
-        const votes=progress?Math.max(0,Math.round((1200+seed*9)*(progress/100)*(1/(1+ci*.045)))):0;
-        return {id:String(c.seq||c.numero||ci),number:String(c.numero||''),name:c.nome,party:c.partido||'',votes};
-      }).filter(x=>x.votes>0).sort((a,b)=>b.votes-a.votes);
-      const total=ranked.reduce((s,x)=>s+x.votes,0);ranked.forEach(x=>x.pct=total?x.votes/total*100:0);
-      const top=ranked[0];if(!top)return;
-      leaders[mun]=top;results[mun]=ranked.slice(0,8);
-      const k=top.number||top.name;if(!counts.has(k))counts.set(k,{number:top.number,name:top.name,party:top.party,municipalities:0});counts.get(k).municipalities++;
-    });
-    const summary=[...counts.values()].sort((a,b)=>b.municipalities-a.municipalities||a.name.localeCompare(b.name,'pt-BR'));
-    maps[office]={leaders,results,summary,municipalities_read:names.length};
-    const regsForFind=regs;
-    regsForFind.forEach((c,i)=>{
-      const coverage=Math.min(167,Math.round((progress/100)*167*(.72+((i+oi)%4)*.07)));
-      const natal=12+((i*9+labStep*4+oi*5)%47),top3=28+((i*7+labStep*3)%39);
-      const leads=summary.find(x=>x.number===String(c.numero))?.municipalities||0;
-      findings.push({id:'lab-'+office+'-'+i+'-cov',office,type:'territorial_coverage',candidate:c.nome,display_value:coverage+'/167',headline:c.nome+' registra votos em '+coverage+' municípios no cenário de teste.',summary:'Indicador fictício de presença municipal.',explanation:'Indicador fictício de presença municipal para validar o Radar.',calculation:'Municípios com votos fictícios ÷ 167 municípios do RN.',breakdown:[{label:'Municípios com votos',value:String(coverage)},{label:'Total do RN',value:'167'}]});
-      findings.push({id:'lab-'+office+'-'+i+'-nat',office,type:'capital_share',candidate:c.nome,display_value:pct(natal),headline:pct(natal)+' da votação fictícia de '+c.nome+' está em Natal.',summary:'Comparação fictícia entre capital e interior.',explanation:'Comparação fictícia entre capital e interior.',calculation:'Votos fictícios em Natal ÷ votos fictícios totais.',breakdown:[{label:'Natal',value:pct(natal)},{label:'Interior',value:pct(100-natal)}]});
-      findings.push({id:'lab-'+office+'-'+i+'-top',office,type:'top_municipalities',candidate:c.nome,display_value:pct(top3),headline:'Os três maiores municípios concentram '+pct(top3)+' da votação fictícia de '+c.nome+'.',summary:'Concentração territorial fictícia.',explanation:'Concentração territorial fictícia.',calculation:'Top 3 ÷ total fictício.',breakdown:[]});
-      findings.push({id:'lab-'+office+'-'+i+'-lead',office,type:'municipal_leads',candidate:c.nome,display_value:String(leads),headline:c.nome+' aparece em primeiro em '+leads+' municípios no cenário fictício.',summary:'Contagem simulada de lideranças municipais.',explanation:'Contagem simulada de lideranças municipais.',calculation:'Municípios em que a candidatura ocupa o 1º lugar.',breakdown:[]});
-    });
-  });
-  radar={status:'ok',generated_at:new Date().toLocaleString('pt-BR'),source_generated_at:'LAB · cenário '+(labStep+1)+'/'+LAB_STEPS.length,source_name:'Laboratório UEFY · dados fictícios',progress,scope:'Rio Grande do Norte',municipalities:167,request_errors:0,municipal_maps:maps,findings,offices:Object.fromEntries(Object.keys(OFFICE_LABELS).map(o=>[o,{label:OFFICE_LABELS[o],progress}]))};
-}
-
-async function loadRadar(){
-  setStatus(radarMode==='lab'?'Montando cenário fictício do Radar Legislativo…':'Carregando a leitura oficial do Radar Legislativo…');
+async function loadRadar({silent=false}={}){
+  if(radarLoading)return;radarLoading=true;
+  const previous=radar;
+  if(!silent)setStatus('Carregando a leitura oficial do Radar Legislativo…');
   try{
     const [radarRes,candRes,mapRes]=await Promise.all([
       fetch(DATA_URL+'?ts='+Date.now(),{cache:'no-store'}),
@@ -127,14 +96,13 @@ async function loadRadar(){
     if(!radarRes.ok||!mapRes.ok)throw new Error('Base indisponível');
     radar=await radarRes.json();rnMap=await mapRes.json();
     if(candRes.ok){const base=await candRes.json();candidateRegistry=Array.isArray(base?.rn?.candidates)?base.rn.candidates:[]}else candidateRegistry=[];
-    if(radarMode==='lab')buildLabRadar();
     renderAll();
   }catch(e){
-    setStatus('Não foi possível carregar o Radar Legislativo agora. Tente atualizar a página.',true);
-    radar={status:'error',findings:[],offices:{},municipal_maps:{}};renderAll();
-  }
+    if(previous?.status==='ok')radar=previous;
+    setStatus(previous?.status==='ok'?'Nova leitura indisponível. Mantendo o último snapshot oficial válido ('+(previous.source_generated_at||previous.generated_at||'horário anterior')+').':'Não foi possível carregar o Radar Legislativo agora. Tente atualizar a página.',true);
+    renderAll();
+  }finally{radarLoading=false}
 }
-
 function renderAll(){
   $('#radarOfficeTitle').textContent=officeLabel();
   $('#radarSummaryOffice').textContent=officeLabel();
@@ -151,12 +119,12 @@ function renderAll(){
   $('#radarElectoralNote').textContent=senate
     ?'Senado: o mapa municipal é descritivo. Os dois candidatos mais votados no estado são eleitos; liderar um município, isoladamente, não define o resultado estadual.'
     :'Deputados: o mapa municipal mostra votação nominal local. A eleição depende do sistema proporcional e da distribuição de vagas entre partidos e federações.';
-  $('#radarSourceBadge').textContent=radarMode==='lab'?'LAB · DADOS FICTÍCIOS':'OFICIAL TSE';
+  $('#radarSourceBadge').textContent='OFICIAL TSE';
   $('#radarSourceBadge').dataset.mode=radarMode;
   $('#sourceGenerated').textContent=radar.source_generated_at||radar.generated_at||'Aguardando resultados';
   const prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0;
   $('#sourceMeta').textContent=(radar.source_name||'Tribunal Superior Eleitoral')+' · '+pct(prog)+' das seções';
-  $('#radarLive').textContent=radarMode==='lab'?'LAB fictício':(radar.status==='ok'?'TSE oficial':'Aguardando apuração');
+  $('#radarLive').textContent=radar.status==='ok'?'TSE oficial':'Aguardando apuração';
   populateMunicipalities();
   renderMap();
   renderMunicipality();
@@ -164,8 +132,7 @@ function renderAll(){
   renderFindings();
   updatePublication();
   const m=officeMapData();
-  if(radarMode==='lab')setStatus('LABORATÓRIO UEFY · DADOS FICTÍCIOS · cenário '+(labStep+1)+'/'+LAB_STEPS.length+'.',false);
-  else if(!m.municipalities_read)setStatus('Aguardando a primeira leitura municipal do Radar Legislativo. O mapa será preenchido automaticamente quando houver votos oficiais.',false);
+  if(!m.municipalities_read)setStatus('Aguardando a primeira leitura municipal do Radar Legislativo. O mapa será preenchido automaticamente quando houver votos oficiais.',false);
   else setStatus('');
 }
 
@@ -318,11 +285,12 @@ $$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
   $$('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
   publicationView='map';renderMap();updatePublication();renderAll();
 });
-$('#radarMode').onchange=e=>{radarMode=e.target.value;labStep=0;publicationView='map';loadRadar()};
-$('#refreshRadar').onclick=()=>{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;loadRadar()};
+$('#refreshRadar').onclick=()=>radarAutoTimer=setInterval(()=>{if(!document.hidden)loadRadar({silent:true})},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)loadRadar({silent:true})});
+loadRadar();
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{
   const b=e.currentTarget;b.classList.add('loading');b.disabled=true;
-  try{if(radarMode==='lab')labStep=(labStep+1)%LAB_STEPS.length;await loadRadar()}
+  try{await loadRadar()}
   finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}
 });
 $('#radarMunicipality').onchange=e=>selectMunicipality(e.target.value,false);
