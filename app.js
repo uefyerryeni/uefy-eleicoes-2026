@@ -258,14 +258,20 @@ function updateAutoRefreshLabel(){
   const d=state[selectedOffice];
   if(mode!=='official'){el.textContent='Atualização automática pausada no Simulado';return}
   if(d?.finalTotalization){el.textContent='Resultado final · atualização automática encerrada';return}
+  if(!inFirstRoundPollingWindow()){el.textContent='Atualização automática preparada para a apuração a partir das 17h';return}
   el.textContent=document.hidden?'Atualização automática pausada em segundo plano':'Atualização automática · a cada 60 s';
+}
+function inFirstRoundPollingWindow(){
+  const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+  const get=t=>p.find(x=>x.type===t)?.value||'';const day=get('year')+'-'+get('month')+'-'+get('day'),hour=Number(get('hour'));
+  return (day==='2026-10-04'&&hour>=17)||(day==='2026-10-05'&&hour<3);
 }
 function scheduleAutoRefresh(){
   if(autoRefreshTimer)clearInterval(autoRefreshTimer);
-  autoRefreshTimer=setInterval(()=>{const d=state[selectedOffice];if(mode==='official'&&!document.hidden&&!d?.finalTotalization)loadRemote({silent:true})},AUTO_REFRESH_MS);
+  autoRefreshTimer=setInterval(()=>{const d=state[selectedOffice];if(mode==='official'&&!document.hidden&&!d?.finalTotalization&&inFirstRoundPollingWindow())loadRemote({silent:true})},AUTO_REFRESH_MS);
   updateAutoRefreshLabel();
 }
-document.addEventListener('visibilitychange',()=>{updateAutoRefreshLabel();if(!document.hidden&&mode==='official'&&!state[selectedOffice]?.finalTotalization)loadRemote({silent:true})});
+document.addEventListener('visibilitychange',()=>{updateAutoRefreshLabel();if(!document.hidden&&mode==='official'&&!state[selectedOffice]?.finalTotalization&&inFirstRoundPollingWindow())loadRemote({silent:true})});
 
 function renderRows(k){
   const box=$('#'+k+'Rows'),small=$('#'+k+'Small'),more=$('#'+k+'More');
