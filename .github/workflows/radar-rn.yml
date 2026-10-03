@@ -7,7 +7,7 @@ on:
       - '.github/workflows/radar-rn.yml'
       - 'scripts/build_radar_rn.py'
   schedule:
-    - cron: '17 */3 * * *'
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
