@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-04T19:35:12-03:00",
+  "generated_at": "2026-10-04T19:52:29-03:00",
   "source_generated_at": "04/10/2026 · 19:32:09",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
@@ -39,7 +39,7 @@
     }
   },
   "municipalities": 167,
-  "request_errors": 0,
+  "request_errors": 1,
   "municipal_maps": {
     "sen": {
       "leaders": {
@@ -223,8 +223,8 @@
           "id": "200",
           "number": "200",
           "name": "STYVENSON VALENTIM",
-          "votes": 3203,
-          "pct": 31.11,
+          "votes": 3768,
+          "pct": 31.15,
           "party": "PODE"
         },
         "CAMPO REDONDO": {
@@ -2676,58 +2676,58 @@
             "id": "200",
             "number": "200",
             "name": "STYVENSON VALENTIM",
-            "votes": 3203,
-            "pct": 31.11,
+            "votes": 3768,
+            "pct": 31.15,
             "party": "PODE"
           },
           {
             "id": "131",
             "number": "131",
             "name": "SAMANDA DE LULA",
-            "votes": 2535,
-            "pct": 24.62
+            "votes": 3030,
+            "pct": 25.05
           },
           {
             "id": "123",
             "number": "123",
             "name": "RAFAEL MOTTA",
-            "votes": 1539,
-            "pct": 14.95
-          },
-          {
-            "id": "222",
-            "number": "222",
-            "name": "CORONEL HÉLIO",
-            "votes": 1414,
-            "pct": 13.73
+            "votes": 1932,
+            "pct": 15.97
           },
           {
             "id": "555",
             "number": "555",
             "name": "ZENAIDE MAIA",
-            "votes": 1396,
-            "pct": 13.56
+            "votes": 1602,
+            "pct": 13.24
+          },
+          {
+            "id": "222",
+            "number": "222",
+            "name": "CORONEL HÉLIO",
+            "votes": 1524,
+            "pct": 12.6
           },
           {
             "id": "444",
             "number": "444",
             "name": "TÉRCIO TINÔCO",
-            "votes": 140,
-            "pct": 1.36
+            "votes": 158,
+            "pct": 1.31
           },
           {
             "id": "500",
             "number": "500",
             "name": "SANDRO PIMENTEL",
-            "votes": 25,
-            "pct": 0.24
+            "votes": 32,
+            "pct": 0.26
           },
           {
             "id": "501",
             "number": "501",
             "name": "SONIA GODEIRO",
-            "votes": 25,
-            "pct": 0.24
+            "votes": 31,
+            "pct": 0.26
           }
         ],
         "CAMPO REDONDO": [
@@ -11370,8 +11370,8 @@
           "id": "2222",
           "number": "2222",
           "name": "SARGENTO GONÇALVES",
-          "votes": 1350,
-          "pct": 24.06,
+          "votes": 1599,
+          "pct": 24.25,
           "party": "PL"
         },
         "CAMPO REDONDO": {
@@ -11741,14 +11741,6 @@
           "votes": 1043,
           "pct": 41.41,
           "party": "UNIÃO"
-        },
-        "LAGOA NOVA": {
-          "id": "1345",
-          "number": "1345",
-          "name": "ODON JUNIOR",
-          "votes": 3450,
-          "pct": 38.91,
-          "party": "PT"
         },
         "LAGOA SALGADA": {
           "id": "2233",
@@ -13823,58 +13815,58 @@
             "id": "2222",
             "number": "2222",
             "name": "SARGENTO GONÇALVES",
-            "votes": 1350,
-            "pct": 24.06,
+            "votes": 1599,
+            "pct": 24.25,
             "party": "PL"
           },
           {
             "id": "2200",
             "number": "2200",
             "name": "JUNINHO SAIA RODADA",
-            "votes": 971,
-            "pct": 17.31
+            "votes": 1335,
+            "pct": 20.25
           },
           {
             "id": "4300",
             "number": "4300",
             "name": "DR. BERNARDO",
-            "votes": 782,
-            "pct": 13.94
+            "votes": 814,
+            "pct": 12.34
           },
           {
             "id": "1311",
             "number": "1311",
             "name": "NATÁLIA BONAVIDES",
-            "votes": 601,
-            "pct": 10.71
-          },
-          {
-            "id": "4444",
-            "number": "4444",
-            "name": "BENES LEOCÁDIO",
-            "votes": 441,
-            "pct": 7.86
+            "votes": 638,
+            "pct": 9.68
           },
           {
             "id": "1111",
             "number": "1111",
             "name": "JOÃO MAIA",
-            "votes": 434,
-            "pct": 7.74
+            "votes": 619,
+            "pct": 9.39
+          },
+          {
+            "id": "4444",
+            "number": "4444",
+            "name": "BENES LEOCÁDIO",
+            "votes": 477,
+            "pct": 7.23
           },
           {
             "id": "2288",
             "number": "2288",
             "name": "CABO DEYVISON",
-            "votes": 215,
-            "pct": 3.83
+            "votes": 245,
+            "pct": 3.72
           },
           {
             "id": "1345",
             "number": "1345",
             "name": "ODON JUNIOR",
-            "votes": 176,
-            "pct": 3.14
+            "votes": 183,
+            "pct": 2.78
           }
         ],
         "CAMPO REDONDO": [
@@ -16589,65 +16581,6 @@
             "name": "FAUSTINO",
             "votes": 59,
             "pct": 2.34
-          }
-        ],
-        "LAGOA NOVA": [
-          {
-            "id": "1345",
-            "number": "1345",
-            "name": "ODON JUNIOR",
-            "votes": 3450,
-            "pct": 38.91,
-            "party": "PT"
-          },
-          {
-            "id": "2210",
-            "number": "2210",
-            "name": "GENERAL GIRÃO",
-            "votes": 1318,
-            "pct": 14.86
-          },
-          {
-            "id": "2200",
-            "number": "2200",
-            "name": "JUNINHO SAIA RODADA",
-            "votes": 785,
-            "pct": 8.85
-          },
-          {
-            "id": "1111",
-            "number": "1111",
-            "name": "JOÃO MAIA",
-            "votes": 516,
-            "pct": 5.82
-          },
-          {
-            "id": "4444",
-            "number": "4444",
-            "name": "BENES LEOCÁDIO",
-            "votes": 480,
-            "pct": 5.41
-          },
-          {
-            "id": "2222",
-            "number": "2222",
-            "name": "SARGENTO GONÇALVES",
-            "votes": 419,
-            "pct": 4.73
-          },
-          {
-            "id": "2233",
-            "number": "2233",
-            "name": "NINA",
-            "votes": 363,
-            "pct": 4.09
-          },
-          {
-            "id": "4300",
-            "number": "4300",
-            "name": "DR. BERNARDO",
-            "votes": 309,
-            "pct": 3.48
           }
         ],
         "LAGOA SALGADA": [
@@ -22389,15 +22322,15 @@
           "municipalities": 2
         },
         {
-          "number": "1345",
-          "name": "ODON JUNIOR",
-          "party": "PT",
-          "municipalities": 2
-        },
-        {
           "number": "4555",
           "name": "NEGA DE NENEM BORGES",
           "party": "PSDB",
+          "municipalities": 1
+        },
+        {
+          "number": "1345",
+          "name": "ODON JUNIOR",
+          "party": "PT",
           "municipalities": 1
         },
         {
@@ -22407,7 +22340,7 @@
           "municipalities": 1
         }
       ],
-      "municipalities_read": 166
+      "municipalities_read": 165
     },
     "depe": {
       "leaders": {
@@ -22711,8 +22644,8 @@
           "id": "45678",
           "number": "45678",
           "name": "EZEQUIEL",
-          "votes": 1607,
-          "pct": 38.41,
+          "votes": 1759,
+          "pct": 38.32,
           "party": "PSDB"
         },
         "EXTREMOZ": {
@@ -25929,58 +25862,58 @@
             "id": "45678",
             "number": "45678",
             "name": "EZEQUIEL",
-            "votes": 1607,
-            "pct": 38.41,
+            "votes": 1759,
+            "pct": 38.32,
             "party": "PSDB"
           },
           {
             "id": "43222",
             "number": "43222",
             "name": "UBALDO FERNANDES",
-            "votes": 448,
-            "pct": 10.71
+            "votes": 467,
+            "pct": 10.17
           },
           {
             "id": "11999",
             "number": "11999",
             "name": "KLEBER RODRIGUES",
-            "votes": 302,
-            "pct": 7.22
-          },
-          {
-            "id": "15678",
-            "number": "15678",
-            "name": "WALTER ALVES",
-            "votes": 214,
-            "pct": 5.11
+            "votes": 318,
+            "pct": 6.93
           },
           {
             "id": "45000",
             "number": "45000",
             "name": "TAVEIRA JÚNIOR",
-            "votes": 206,
-            "pct": 4.92
+            "votes": 240,
+            "pct": 5.23
+          },
+          {
+            "id": "15678",
+            "number": "15678",
+            "name": "WALTER ALVES",
+            "votes": 238,
+            "pct": 5.19
           },
           {
             "id": "44544",
             "number": "44544",
             "name": "GALENO TORQUATO",
-            "votes": 168,
-            "pct": 4.02
-          },
-          {
-            "id": "15133",
-            "number": "15133",
-            "name": "DR ANTÔNIO JÁCOME",
-            "votes": 153,
-            "pct": 3.66
+            "votes": 195,
+            "pct": 4.25
           },
           {
             "id": "45123",
             "number": "45123",
             "name": "DR GUSTAVO SOARES",
-            "votes": 149,
-            "pct": 3.56
+            "votes": 179,
+            "pct": 3.9
+          },
+          {
+            "id": "15133",
+            "number": "15133",
+            "name": "DR ANTÔNIO JÁCOME",
+            "votes": 160,
+            "pct": 3.49
           }
         ],
         "EXTREMOZ": [
@@ -35503,15 +35436,15 @@
       "type": "territorial_coverage",
       "office": "depe",
       "candidate": "CABO RALPH",
-      "headline": "CABO RALPH recebeu votos em 35 dos 167 municípios do RN.",
+      "headline": "CABO RALPH recebeu votos em 36 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "35/167",
-      "calculation": "35 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "CABO RALPH recebeu votos em 35 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "36/167",
+      "calculation": "36 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "CABO RALPH recebeu votos em 36 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "35"
+          "value": "36"
         },
         {
           "label": "Municípios do RN",
@@ -49759,15 +49692,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ABEL FARIAS",
-      "headline": "ABEL FARIAS recebeu votos em 55 dos 167 municípios do RN.",
+      "headline": "ABEL FARIAS recebeu votos em 54 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "55/167",
-      "calculation": "55 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ABEL FARIAS recebeu votos em 55 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "54/167",
+      "calculation": "54 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ABEL FARIAS recebeu votos em 54 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "55"
+          "value": "54"
         },
         {
           "label": "Municípios do RN",
@@ -49867,15 +49800,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ABIMAEL COSTA",
-      "headline": "ABIMAEL COSTA recebeu votos em 118 dos 167 municípios do RN.",
+      "headline": "ABIMAEL COSTA recebeu votos em 117 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "118/167",
-      "calculation": "118 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ABIMAEL COSTA recebeu votos em 118 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "117/167",
+      "calculation": "117 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ABIMAEL COSTA recebeu votos em 117 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "118"
+          "value": "117"
         },
         {
           "label": "Municípios do RN",
@@ -50515,15 +50448,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ANA CLARA GURGEL",
-      "headline": "ANA CLARA GURGEL recebeu votos em 132 dos 167 municípios do RN.",
+      "headline": "ANA CLARA GURGEL recebeu votos em 131 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "132/167",
-      "calculation": "132 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ANA CLARA GURGEL recebeu votos em 132 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "131/167",
+      "calculation": "131 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ANA CLARA GURGEL recebeu votos em 131 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "132"
+          "value": "131"
         },
         {
           "label": "Municípios do RN",
@@ -50731,15 +50664,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ANNE BEZERRA",
-      "headline": "ANNE BEZERRA recebeu votos em 51 dos 167 municípios do RN.",
+      "headline": "ANNE BEZERRA recebeu votos em 50 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "51/167",
-      "calculation": "51 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ANNE BEZERRA recebeu votos em 51 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "50/167",
+      "calculation": "50 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ANNE BEZERRA recebeu votos em 50 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "51"
+          "value": "50"
         },
         {
           "label": "Municípios do RN",
@@ -50839,15 +50772,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "APOLLIANE SOUZA",
-      "headline": "APOLLIANE SOUZA recebeu votos em 41 dos 167 municípios do RN.",
+      "headline": "APOLLIANE SOUZA recebeu votos em 40 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "41/167",
-      "calculation": "41 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "APOLLIANE SOUZA recebeu votos em 41 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "40/167",
+      "calculation": "40 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "APOLLIANE SOUZA recebeu votos em 40 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "41"
+          "value": "40"
         },
         {
           "label": "Municípios do RN",
@@ -50947,15 +50880,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ARAPUÁ DE MACAU",
-      "headline": "ARAPUÁ DE MACAU recebeu votos em 23 dos 167 municípios do RN.",
+      "headline": "ARAPUÁ DE MACAU recebeu votos em 22 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "23/167",
-      "calculation": "23 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ARAPUÁ DE MACAU recebeu votos em 23 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "22/167",
+      "calculation": "22 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ARAPUÁ DE MACAU recebeu votos em 22 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "23"
+          "value": "22"
         },
         {
           "label": "Municípios do RN",
@@ -51055,15 +50988,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "BENES LEOCÁDIO",
-      "headline": "BENES LEOCÁDIO recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "BENES LEOCÁDIO recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "BENES LEOCÁDIO recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "BENES LEOCÁDIO recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -51271,15 +51204,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "BRISA",
-      "headline": "BRISA recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "BRISA recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "BRISA recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "BRISA recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -51379,15 +51312,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "CABO DEYVISON",
-      "headline": "CABO DEYVISON recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "CABO DEYVISON recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "CABO DEYVISON recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "CABO DEYVISON recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -51595,15 +51528,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "CARLA DICKSON",
-      "headline": "CARLA DICKSON recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "CARLA DICKSON recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "CARLA DICKSON recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "CARLA DICKSON recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -51919,15 +51852,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "CORONEL BRILHANTE",
-      "headline": "CORONEL BRILHANTE recebeu votos em 163 dos 167 municípios do RN.",
+      "headline": "CORONEL BRILHANTE recebeu votos em 162 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "163/167",
-      "calculation": "163 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "CORONEL BRILHANTE recebeu votos em 163 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "162/167",
+      "calculation": "162 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "CORONEL BRILHANTE recebeu votos em 162 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "163"
+          "value": "162"
         },
         {
           "label": "Municípios do RN",
@@ -52027,15 +51960,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "CRISTIANI ARTESÃ",
-      "headline": "CRISTIANI ARTESÃ recebeu votos em 20 dos 167 municípios do RN.",
+      "headline": "CRISTIANI ARTESÃ recebeu votos em 21 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "20/167",
-      "calculation": "20 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "CRISTIANI ARTESÃ recebeu votos em 20 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "21/167",
+      "calculation": "21 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "CRISTIANI ARTESÃ recebeu votos em 21 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "20"
+          "value": "21"
         },
         {
           "label": "Municípios do RN",
@@ -52135,15 +52068,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "DANI RIBEIRO",
-      "headline": "DANI RIBEIRO recebeu votos em 133 dos 167 municípios do RN.",
+      "headline": "DANI RIBEIRO recebeu votos em 132 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "133/167",
-      "calculation": "133 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "DANI RIBEIRO recebeu votos em 133 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "132/167",
+      "calculation": "132 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "DANI RIBEIRO recebeu votos em 132 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "133"
+          "value": "132"
         },
         {
           "label": "Municípios do RN",
@@ -52675,15 +52608,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "DR. BERNARDO",
-      "headline": "DR. BERNARDO recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "DR. BERNARDO recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "DR. BERNARDO recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "DR. BERNARDO recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -52891,15 +52824,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "DR. SALOMÃO",
-      "headline": "DR. SALOMÃO recebeu votos em 84 dos 167 municípios do RN.",
+      "headline": "DR. SALOMÃO recebeu votos em 83 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "84/167",
-      "calculation": "84 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "DR. SALOMÃO recebeu votos em 84 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "83/167",
+      "calculation": "83 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "DR. SALOMÃO recebeu votos em 83 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "84"
+          "value": "83"
         },
         {
           "label": "Municípios do RN",
@@ -53431,15 +53364,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ERMINIO FELIX",
-      "headline": "ERMINIO FELIX recebeu votos em 88 dos 167 municípios do RN.",
+      "headline": "ERMINIO FELIX recebeu votos em 87 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "88/167",
-      "calculation": "88 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ERMINIO FELIX recebeu votos em 88 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "87/167",
+      "calculation": "87 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ERMINIO FELIX recebeu votos em 87 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "88"
+          "value": "87"
         },
         {
           "label": "Municípios do RN",
@@ -53539,15 +53472,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "FAUSTINO",
-      "headline": "FAUSTINO recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "FAUSTINO recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "FAUSTINO recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "FAUSTINO recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -53755,15 +53688,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "FLAVIO LUIZ",
-      "headline": "FLAVIO LUIZ recebeu votos em 83 dos 167 municípios do RN.",
+      "headline": "FLAVIO LUIZ recebeu votos em 82 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "83/167",
-      "calculation": "83 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "FLAVIO LUIZ recebeu votos em 83 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "82/167",
+      "calculation": "82 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "FLAVIO LUIZ recebeu votos em 82 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "83"
+          "value": "82"
         },
         {
           "label": "Municípios do RN",
@@ -53863,15 +53796,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "FRAN BARBEIRO",
-      "headline": "FRAN BARBEIRO recebeu votos em 25 dos 167 municípios do RN.",
+      "headline": "FRAN BARBEIRO recebeu votos em 24 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "25/167",
-      "calculation": "25 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "FRAN BARBEIRO recebeu votos em 25 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "24/167",
+      "calculation": "24 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "FRAN BARBEIRO recebeu votos em 24 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "25"
+          "value": "24"
         },
         {
           "label": "Municípios do RN",
@@ -54079,15 +54012,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "GABI TRAJANO",
-      "headline": "GABI TRAJANO recebeu votos em 103 dos 167 municípios do RN.",
+      "headline": "GABI TRAJANO recebeu votos em 102 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "103/167",
-      "calculation": "103 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "GABI TRAJANO recebeu votos em 103 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "102/167",
+      "calculation": "102 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "GABI TRAJANO recebeu votos em 102 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "103"
+          "value": "102"
         },
         {
           "label": "Municípios do RN",
@@ -54187,15 +54120,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "GABRIEL BOTELHO",
-      "headline": "GABRIEL BOTELHO recebeu votos em 57 dos 167 municípios do RN.",
+      "headline": "GABRIEL BOTELHO recebeu votos em 56 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "57/167",
-      "calculation": "57 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "GABRIEL BOTELHO recebeu votos em 57 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "56/167",
+      "calculation": "56 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "GABRIEL BOTELHO recebeu votos em 56 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "57"
+          "value": "56"
         },
         {
           "label": "Municípios do RN",
@@ -54295,15 +54228,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "GABRIEL NUNES",
-      "headline": "GABRIEL NUNES recebeu votos em 71 dos 167 municípios do RN.",
+      "headline": "GABRIEL NUNES recebeu votos em 70 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "71/167",
-      "calculation": "71 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "GABRIEL NUNES recebeu votos em 71 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "70/167",
+      "calculation": "70 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "GABRIEL NUNES recebeu votos em 70 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "71"
+          "value": "70"
         },
         {
           "label": "Municípios do RN",
@@ -54511,15 +54444,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "GENERAL GIRÃO",
-      "headline": "GENERAL GIRÃO recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "GENERAL GIRÃO recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "GENERAL GIRÃO recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "GENERAL GIRÃO recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -54943,15 +54876,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "IGOR RAYAN",
-      "headline": "IGOR RAYAN recebeu votos em 74 dos 167 municípios do RN.",
+      "headline": "IGOR RAYAN recebeu votos em 73 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "74/167",
-      "calculation": "74 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "IGOR RAYAN recebeu votos em 74 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "73/167",
+      "calculation": "73 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "IGOR RAYAN recebeu votos em 73 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "74"
+          "value": "73"
         },
         {
           "label": "Municípios do RN",
@@ -55267,15 +55200,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "JOÃO MAIA",
-      "headline": "JOÃO MAIA recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "JOÃO MAIA recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "JOÃO MAIA recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "JOÃO MAIA recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -55375,15 +55308,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "JUNINHO SAIA RODADA",
-      "headline": "JUNINHO SAIA RODADA recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "JUNINHO SAIA RODADA recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "JUNINHO SAIA RODADA recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "JUNINHO SAIA RODADA recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -55699,15 +55632,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "LEILA MAIA",
-      "headline": "LEILA MAIA recebeu votos em 130 dos 167 municípios do RN.",
+      "headline": "LEILA MAIA recebeu votos em 129 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "130/167",
-      "calculation": "130 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "LEILA MAIA recebeu votos em 130 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "129/167",
+      "calculation": "129 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "LEILA MAIA recebeu votos em 129 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "130"
+          "value": "129"
         },
         {
           "label": "Municípios do RN",
@@ -56023,15 +55956,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "MARLEIDE CUNHA",
-      "headline": "MARLEIDE CUNHA recebeu votos em 144 dos 167 municípios do RN.",
+      "headline": "MARLEIDE CUNHA recebeu votos em 143 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "144/167",
-      "calculation": "144 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "MARLEIDE CUNHA recebeu votos em 144 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "143/167",
+      "calculation": "143 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "MARLEIDE CUNHA recebeu votos em 143 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "144"
+          "value": "143"
         },
         {
           "label": "Municípios do RN",
@@ -56131,15 +56064,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "MINEIRO",
-      "headline": "MINEIRO recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "MINEIRO recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "MINEIRO recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "MINEIRO recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -56671,15 +56604,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "NATÁLIA BONAVIDES",
-      "headline": "NATÁLIA BONAVIDES recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "NATÁLIA BONAVIDES recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "NATÁLIA BONAVIDES recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "NATÁLIA BONAVIDES recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -56779,15 +56712,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "NAXSON PALHARES",
-      "headline": "NAXSON PALHARES recebeu votos em 78 dos 167 municípios do RN.",
+      "headline": "NAXSON PALHARES recebeu votos em 77 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "78/167",
-      "calculation": "78 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "NAXSON PALHARES recebeu votos em 78 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "77/167",
+      "calculation": "77 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "NAXSON PALHARES recebeu votos em 77 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "78"
+          "value": "77"
         },
         {
           "label": "Municípios do RN",
@@ -56887,15 +56820,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "NEGA DE NENEM BORGES",
-      "headline": "NEGA DE NENEM BORGES recebeu votos em 114 dos 167 municípios do RN.",
+      "headline": "NEGA DE NENEM BORGES recebeu votos em 113 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "114/167",
-      "calculation": "114 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "NEGA DE NENEM BORGES recebeu votos em 114 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "113/167",
+      "calculation": "113 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "NEGA DE NENEM BORGES recebeu votos em 113 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "114"
+          "value": "113"
         },
         {
           "label": "Municípios do RN",
@@ -56995,15 +56928,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "NINA",
-      "headline": "NINA recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "NINA recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "NINA recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "NINA recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -57076,15 +57009,15 @@
       "type": "municipal_leads",
       "office": "depf",
       "candidate": "ODON JUNIOR",
-      "headline": "ODON JUNIOR está em primeiro lugar em 2 município(s) do RN na leitura atual.",
+      "headline": "ODON JUNIOR está em primeiro lugar em 1 município(s) do RN na leitura atual.",
       "summary": "O Radar compara os votos nominais de todas as candidaturas do mesmo cargo em cada município e conta onde esta candidatura tem a maior votação.",
-      "display_value": "2",
-      "calculation": "2 município(s) em que a candidatura tem a maior votação nominal entre as candidaturas do mesmo cargo.",
-      "post_text": "ODON JUNIOR aparece em primeiro lugar em 2 município(s) do Rio Grande do Norte na leitura atual.",
+      "display_value": "1",
+      "calculation": "1 município(s) em que a candidatura tem a maior votação nominal entre as candidaturas do mesmo cargo.",
+      "post_text": "ODON JUNIOR aparece em primeiro lugar em 1 município(s) do Rio Grande do Norte na leitura atual.",
       "breakdown": [
         {
           "label": "Municípios em 1º",
-          "value": "2"
+          "value": "1"
         },
         {
           "label": "Municípios do RN",
@@ -57103,15 +57036,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ODON JUNIOR",
-      "headline": "ODON JUNIOR recebeu votos em 165 dos 167 municípios do RN.",
+      "headline": "ODON JUNIOR recebeu votos em 164 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "165/167",
-      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ODON JUNIOR recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "164/167",
+      "calculation": "164 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ODON JUNIOR recebeu votos em 164 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "165"
+          "value": "164"
         },
         {
           "label": "Municípios do RN",
@@ -57130,15 +57063,15 @@
       "type": "top_municipalities",
       "office": "depf",
       "candidate": "ODON JUNIOR",
-      "headline": "Os três municípios com mais votos para ODON JUNIOR somam 47,5% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para ODON JUNIOR somam 44,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é CURRAIS NOVOS, com 14.477 votos (30,4% do total estadual).",
-      "display_value": "47,5%",
-      "calculation": "22.613 votos nos três municípios com maior votação ÷ 47.625 votos no RN = 47,5%.",
-      "post_text": "Os três municípios com mais votos para ODON JUNIOR somam 47,5% da votação estadual registrada da candidatura.",
+      "display_value": "44,5%",
+      "calculation": "21.208 votos nos três municípios com maior votação ÷ 47.625 votos no RN = 44,5%.",
+      "post_text": "Os três municípios com mais votos para ODON JUNIOR somam 44,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
-          "value": "22.613"
+          "value": "21.208"
         },
         {
           "label": "Total no RN",
@@ -57150,7 +57083,7 @@
         }
       ],
       "explanation": "O município com maior número de votos nominais para esta candidatura é CURRAIS NOVOS, com 14.477 votos (30,4% do total estadual).",
-      "card_note": "CURRAIS NOVOS: 14.477; NATAL: 4.686; LAGOA NOVA: 3.450"
+      "card_note": "CURRAIS NOVOS: 14.477; NATAL: 4.686; PARELHAS: 2.045"
     },
     {
       "id": "capital-depf-7011",
@@ -57211,15 +57144,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PALHAÇO  FUXIQUINHO",
-      "headline": "PALHAÇO  FUXIQUINHO recebeu votos em 91 dos 167 municípios do RN.",
+      "headline": "PALHAÇO  FUXIQUINHO recebeu votos em 90 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "91/167",
-      "calculation": "91 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PALHAÇO  FUXIQUINHO recebeu votos em 91 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "90/167",
+      "calculation": "90 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PALHAÇO  FUXIQUINHO recebeu votos em 90 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "91"
+          "value": "90"
         },
         {
           "label": "Municípios do RN",
@@ -57643,15 +57576,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PAULINHA GALDINO",
-      "headline": "PAULINHA GALDINO recebeu votos em 132 dos 167 municípios do RN.",
+      "headline": "PAULINHA GALDINO recebeu votos em 131 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "132/167",
-      "calculation": "132 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PAULINHA GALDINO recebeu votos em 132 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "131/167",
+      "calculation": "131 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PAULINHA GALDINO recebeu votos em 131 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "132"
+          "value": "131"
         },
         {
           "label": "Municípios do RN",
@@ -57751,15 +57684,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PAULO OVÍDIO",
-      "headline": "PAULO OVÍDIO recebeu votos em 34 dos 167 municípios do RN.",
+      "headline": "PAULO OVÍDIO recebeu votos em 33 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "34/167",
-      "calculation": "34 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PAULO OVÍDIO recebeu votos em 34 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "33/167",
+      "calculation": "33 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PAULO OVÍDIO recebeu votos em 33 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "34"
+          "value": "33"
         },
         {
           "label": "Municípios do RN",
@@ -57967,15 +57900,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PEDRO FILHO",
-      "headline": "PEDRO FILHO recebeu votos em 163 dos 167 municípios do RN.",
+      "headline": "PEDRO FILHO recebeu votos em 162 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "163/167",
-      "calculation": "163 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PEDRO FILHO recebeu votos em 163 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "162/167",
+      "calculation": "162 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PEDRO FILHO recebeu votos em 162 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "163"
+          "value": "162"
         },
         {
           "label": "Municípios do RN",
@@ -58075,15 +58008,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PHILIPE DO VAT",
-      "headline": "PHILIPE DO VAT recebeu votos em 35 dos 167 municípios do RN.",
+      "headline": "PHILIPE DO VAT recebeu votos em 34 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "35/167",
-      "calculation": "35 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PHILIPE DO VAT recebeu votos em 35 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "34/167",
+      "calculation": "34 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PHILIPE DO VAT recebeu votos em 34 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "35"
+          "value": "34"
         },
         {
           "label": "Municípios do RN",
@@ -58183,15 +58116,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PROFESSOR EDVALDO JÚNIOR",
-      "headline": "PROFESSOR EDVALDO JÚNIOR recebeu votos em 50 dos 167 municípios do RN.",
+      "headline": "PROFESSOR EDVALDO JÚNIOR recebeu votos em 49 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "50/167",
-      "calculation": "50 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PROFESSOR EDVALDO JÚNIOR recebeu votos em 50 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "49/167",
+      "calculation": "49 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PROFESSOR EDVALDO JÚNIOR recebeu votos em 49 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "50"
+          "value": "49"
         },
         {
           "label": "Municípios do RN",
@@ -58399,15 +58332,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "PROFESSORA SÂMELA",
-      "headline": "PROFESSORA SÂMELA recebeu votos em 56 dos 167 municípios do RN.",
+      "headline": "PROFESSORA SÂMELA recebeu votos em 55 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "56/167",
-      "calculation": "56 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "PROFESSORA SÂMELA recebeu votos em 56 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "55/167",
+      "calculation": "55 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "PROFESSORA SÂMELA recebeu votos em 55 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "56"
+          "value": "55"
         },
         {
           "label": "Municípios do RN",
@@ -58723,15 +58656,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "RAPOSINHA",
-      "headline": "RAPOSINHA recebeu votos em 145 dos 167 municípios do RN.",
+      "headline": "RAPOSINHA recebeu votos em 144 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "145/167",
-      "calculation": "145 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "RAPOSINHA recebeu votos em 145 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "144/167",
+      "calculation": "144 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "RAPOSINHA recebeu votos em 144 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "145"
+          "value": "144"
         },
         {
           "label": "Municípios do RN",
@@ -58939,15 +58872,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "ROBINSON FARIA",
-      "headline": "ROBINSON FARIA recebeu votos em 164 dos 167 municípios do RN.",
+      "headline": "ROBINSON FARIA recebeu votos em 163 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "164/167",
-      "calculation": "164 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "ROBINSON FARIA recebeu votos em 164 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "163/167",
+      "calculation": "163 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "ROBINSON FARIA recebeu votos em 163 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "164"
+          "value": "163"
         },
         {
           "label": "Municípios do RN",
@@ -59047,15 +58980,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "SAMARA TORRES",
-      "headline": "SAMARA TORRES recebeu votos em 36 dos 167 municípios do RN.",
+      "headline": "SAMARA TORRES recebeu votos em 35 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "36/167",
-      "calculation": "36 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "SAMARA TORRES recebeu votos em 36 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "35/167",
+      "calculation": "35 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "SAMARA TORRES recebeu votos em 35 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "36"
+          "value": "35"
         },
         {
           "label": "Municípios do RN",
@@ -59155,15 +59088,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "SARGENTO GONÇALVES",
-      "headline": "SARGENTO GONÇALVES recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "SARGENTO GONÇALVES recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "SARGENTO GONÇALVES recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "SARGENTO GONÇALVES recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -59371,15 +59304,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "SUSAPE AUGUSTO",
-      "headline": "SUSAPE AUGUSTO recebeu votos em 144 dos 167 municípios do RN.",
+      "headline": "SUSAPE AUGUSTO recebeu votos em 143 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "144/167",
-      "calculation": "144 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "SUSAPE AUGUSTO recebeu votos em 144 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "143/167",
+      "calculation": "143 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "SUSAPE AUGUSTO recebeu votos em 143 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "144"
+          "value": "143"
         },
         {
           "label": "Municípios do RN",
@@ -59587,15 +59520,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "THABATTA PIMENTA",
-      "headline": "THABATTA PIMENTA recebeu votos em 166 dos 167 municípios do RN.",
+      "headline": "THABATTA PIMENTA recebeu votos em 165 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "166/167",
-      "calculation": "166 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "THABATTA PIMENTA recebeu votos em 166 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "165/167",
+      "calculation": "165 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "THABATTA PIMENTA recebeu votos em 165 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "166"
+          "value": "165"
         },
         {
           "label": "Municípios do RN",
@@ -59803,15 +59736,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "VICTOR HUGO",
-      "headline": "VICTOR HUGO recebeu votos em 52 dos 167 municípios do RN.",
+      "headline": "VICTOR HUGO recebeu votos em 53 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "52/167",
-      "calculation": "52 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "VICTOR HUGO recebeu votos em 52 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "53/167",
+      "calculation": "53 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "VICTOR HUGO recebeu votos em 53 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "52"
+          "value": "53"
         },
         {
           "label": "Municípios do RN",
@@ -59911,15 +59844,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "VITOR MARQUES",
-      "headline": "VITOR MARQUES recebeu votos em 47 dos 167 municípios do RN.",
+      "headline": "VITOR MARQUES recebeu votos em 46 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "47/167",
-      "calculation": "47 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "VITOR MARQUES recebeu votos em 47 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "46/167",
+      "calculation": "46 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "VITOR MARQUES recebeu votos em 46 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "47"
+          "value": "46"
         },
         {
           "label": "Municípios do RN",
@@ -60019,15 +59952,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "VIVIANE AVELINO",
-      "headline": "VIVIANE AVELINO recebeu votos em 142 dos 167 municípios do RN.",
+      "headline": "VIVIANE AVELINO recebeu votos em 141 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "142/167",
-      "calculation": "142 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "VIVIANE AVELINO recebeu votos em 142 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "141/167",
+      "calculation": "141 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "VIVIANE AVELINO recebeu votos em 141 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "142"
+          "value": "141"
         },
         {
           "label": "Municípios do RN",
@@ -60127,15 +60060,15 @@
       "type": "territorial_coverage",
       "office": "depf",
       "candidate": "WENDER ANDRADE",
-      "headline": "WENDER ANDRADE recebeu votos em 90 dos 167 municípios do RN.",
+      "headline": "WENDER ANDRADE recebeu votos em 89 dos 167 municípios do RN.",
       "summary": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
-      "display_value": "90/167",
-      "calculation": "90 municípios com voto nominal registrado ÷ 167 municípios do RN.",
-      "post_text": "WENDER ANDRADE recebeu votos em 90 dos 167 municípios do Rio Grande do Norte.",
+      "display_value": "89/167",
+      "calculation": "89 municípios com voto nominal registrado ÷ 167 municípios do RN.",
+      "post_text": "WENDER ANDRADE recebeu votos em 89 dos 167 municípios do Rio Grande do Norte.",
       "breakdown": [
         {
           "label": "Municípios com votos",
-          "value": "90"
+          "value": "89"
         },
         {
           "label": "Municípios do RN",
