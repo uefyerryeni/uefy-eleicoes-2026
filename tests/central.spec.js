@@ -22,4 +22,7 @@ test('fontes restantes são Oficial e Simulado onde aplicável',async({page})=>{
 
 for(const viewport of [{width:1440,height:900},{width:390,height:844}]){test('controles flutuantes não se sobrepõem em '+viewport.width+'px',async({page})=>{await page.setViewportSize(viewport);for(const path of ['/index.html','/rn.html','/radar.html']){await page.goto(path+'?v='+BUILD);await page.evaluate(()=>scrollTo(0,1000));await page.waitForTimeout(120);await noOverlap(page,'.float-refresh','.to-top');if(viewport.width<=600)await noOverlap(page,'.float-refresh','.mobile-dock')}})}
 
+
+test('Radar bloqueia ações finais sem snapshot publicável',async({page})=>{await page.goto('/radar.html?v='+BUILD);const disabled=await page.evaluate(()=>{radar={status:'waiting',offices:{},municipal_maps:{}};publicationView='map';renderAll();return document.querySelector('#openRadarX').disabled&&document.querySelector('#copyRadarImage').disabled&&document.querySelector('#shareRadarBundle').disabled});expect(disabled).toBeTruthy()});
+
 test('contadores de publicação não impõem limite de 280',async({page})=>{await page.goto('/index.html?v='+BUILD);await expect(page.locator('#charCount')).not.toContainText('/280');await page.goto('/rn.html?v='+BUILD);await expect(page.locator('#rnChars')).not.toContainText('/280');await page.goto('/radar.html?v='+BUILD);await expect(page.locator('#radarChars')).not.toContainText('/280')});
