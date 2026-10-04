@@ -189,6 +189,7 @@ function partyByNumber(number){
   return row?.partido||'';
 }
 function labeledCandidate(name,party=''){return name+(party?' ('+party+')':'')}
+function publicationCandidate(candidate){return labeledCandidate(candidate?.name||'Candidatura',candidate?.party||'')}
 function mapPostText(){
   const final=leaderMapData.final_result,outcome=leaderMapData?.outcome||{};
   const status=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':final?'RESULTADO FINAL':'MAPA PARCIAL';
