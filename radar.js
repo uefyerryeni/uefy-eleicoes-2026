@@ -15,7 +15,9 @@ let selectedMunicipality='Natal',publicationView='map',senateMapRank=1;
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%';
 const int=v=>Number(v||0).toLocaleString('pt-BR');
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
-const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const MUNICIPALITY_ALIASES={acu:'assu',ares:'arez',januariocicco:'boasaude'};
+const municipalityKey=name=>MUNICIPALITY_ALIASES[norm(name)]||norm(name);
 function flash(btn,text){if(!btn)return;const old=btn.textContent;btn.textContent=text;setTimeout(()=>btn.textContent=old,1800)}
 function setStatus(msg,error=false){const el=$('#radarStatus');if(!el)return;el.hidden=!msg;el.textContent=msg||'';el.classList.toggle('error',error)}
 function activeOffice(){return $('#officeFilter')?.value||'sen'}
@@ -44,10 +46,12 @@ function municipalityNames(){
   return rnMap.features.map(f=>f.properties?.nome).filter(Boolean).sort((a,b)=>a.localeCompare(b,'pt-BR'));
 }
 function municipalityResult(name=selectedMunicipality){
-  return officeMapData().results?.[name]||[];
+  const results=officeMapData().results||{},target=municipalityKey(name);
+  const hit=Object.entries(results).find(([key])=>municipalityKey(key)===target);
+  return hit?hit[1]:[];
 }
 function municipalityRankedCandidate(name=selectedMunicipality,rank=1){
-  const rows=officeMapData().results?.[name]||[];
+  const rows=municipalityResult(name);
   return rows[Math.max(0,Number(rank||1)-1)]||null;
 }
 function municipalityLeader(name=selectedMunicipality){
