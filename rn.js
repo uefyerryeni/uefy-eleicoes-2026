@@ -50,7 +50,7 @@ function markSelection(){
 }
 function selectMunicipality(feature){
   mapPublicationMode=false;
-  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
+  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();\n  const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
   if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
 }
 
@@ -376,7 +376,7 @@ async function loadRemote(){
     $('#rnStatus').textContent=previous?.candidates?.length?'Nova consulta indisponível. Mantendo o último resultado válido ('+(previous.generatedAt||'horário anterior')+').':(notPublished?'O arquivo oficial deste município ainda não foi publicado pelo TSE.':'Não foi possível carregar este município agora: '+e.message);
     renderCurrent();
   }
-  finally{rnLoading=false;$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar'}
+  finally{rnLoading=false;$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar';$('#publicacao')?.classList.remove('loading-municipality')}
 }
 function renderCurrent(){
   const title=$('#rnResultTitle');
