@@ -252,7 +252,9 @@ async function loadRemote({silent=false}={}){
 }
 function publicationIsSafe(){
   const d=state[selectedOffice];
-  return !(mode==='official'&&d?.integrity?.unmatched>0);
+  if(!(d?.candidates||[]).length)return false;
+  if(mode==='official'&&(d?.integrity?.error||Number(d?.integrity?.unmatched||0)>0))return false;
+  return true;
 }
 function updateAutoRefreshLabel(){
   const el=$('#autoRefreshState');if(!el)return;
@@ -465,7 +467,7 @@ function drawCanvas(){
   if(selectedOffice==='depf'||selectedOffice==='depe'){ctx.fillStyle='#6C7379';ctx.font='600 15px Inter,Segoe UI,Arial';ctx.fillText('Ordem por votação nominal; eleição depende do sistema proporcional e da situação oficial do TSE.',70,1047)}
   else if(selectedOffice==='sen'){ctx.fillStyle='#6C7379';ctx.font='600 15px Inter,Segoe UI,Arial';ctx.fillText('Duas vagas em disputa; situação de eleitos somente quando informada oficialmente pelo TSE.',70,1047)}
 }
-function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+' caracteres';drawCanvas();const safe=publicationIsSafe();['#copyImage','#openX','#downloadImage','#shareBundle'].forEach(id=>{const el=$(id);if(el)el.disabled=!safe})}
+function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+' caracteres';drawCanvas();const safe=publicationIsSafe();['#copyText','#copyImage','#openX','#downloadImage','#shareBundle'].forEach(id=>{const el=$(id);if(el)el.disabled=!safe})}
 function flash(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
 async function canvasPngBlob(canvas){
   const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('Não foi possível gerar a imagem.')),'image/png'));
@@ -554,7 +556,7 @@ $$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
 syncTextModeButtons();
 
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+' caracteres';
-$('#copyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Texto copiado!')}catch{flash($('#copyText'),'Cópia bloqueada')}};
+$('#copyText').onclick=async()=>{if(!publicationIsSafe())return flash($('#copyText'),'Verificação necessária');try{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Texto copiado!')}catch{flash($('#copyText'),'Cópia bloqueada')}};
 $('#copyImage').onclick=async()=>{try{await copyCanvasImage($('#shareCanvas'));flash($('#copyImage'),'Imagem copiada!')}catch{flash($('#copyImage'),'Cópia bloqueada')}};
 $('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};
 $('#openX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareImageAndText(true,w)};
