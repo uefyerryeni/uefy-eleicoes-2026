@@ -584,7 +584,6 @@ function renderFavStrip(){const box=document.querySelector('#liveStripItems');if
 document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
 document.querySelector('#officeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));document.querySelector('#scopeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));renderFavStrip();syncFavButton();
-\n
 /* Evolução da apuração — histórico oficial TSE */
 let evoData=null,evoRace='gov',evoAxis='time';
 const EVO_LABEL={gov:'GOVERNADOR DO RN',sen:'SENADO · RN',pres:'PRESIDÊNCIA'};
