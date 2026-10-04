@@ -16,6 +16,24 @@ test('RN bloqueia publicação quando a conciliação falha',async({page})=>{awa
 
 test('RN limpa resultado ao trocar de município',async({page})=>{await page.goto('/rn.html?v='+BUILD);await page.waitForFunction(()=>typeof selectedFeature!=='undefined'&&selectedFeature!==null);const clean=await page.evaluate(()=>{const old=selectedFeature;const next=fc.features.find(x=>x!==old);current={progress:55,generatedAt:'teste',municipality:old.properties.nome,integrity:{matched:1,total:1,unmatched:0},candidates:[{id:'1',name:'A',number:'13',votes:10,pct:55}]};selectMunicipality(next);return current.municipality===next.properties.nome&&current.candidates.length===0});expect(clean).toBeTruthy()});
 
+
+test('aliases municipais do RN casam GeoJSON com TSE',async({page})=>{
+  await page.goto('/rn.html?v='+BUILD);
+  const rnAliases=await page.evaluate(()=>({
+    acu:municipalityKey('Açu')===municipalityKey('ASSÚ'),
+    ares:municipalityKey('Arês')===municipalityKey('AREZ'),
+    boaSaude:municipalityKey('Januário Cicco')===municipalityKey('BOA SAÚDE')
+  }));
+  expect(rnAliases).toEqual({acu:true,ares:true,boaSaude:true});
+  await page.goto('/radar.html?v='+BUILD);
+  const radarAliases=await page.evaluate(()=>({
+    acu:municipalityKey('Açu')===municipalityKey('ASSÚ'),
+    ares:municipalityKey('Arês')===municipalityKey('AREZ'),
+    boaSaude:municipalityKey('Januário Cicco')===municipalityKey('BOA SAÚDE')
+  }));
+  expect(radarAliases).toEqual({acu:true,ares:true,boaSaude:true});
+});
+
 test('RN mantém cores fixas de governador',async({page})=>{await page.goto('/rn.html?v='+BUILD);const colors=await page.evaluate(()=>['13','16','22','27','29','36','44','50','80'].map(n=>candidateColor('',n)));expect(colors[0]).toBe('#d62828');expect(colors[2]).toBe('#2e7d32');expect(colors[6]).toBe('#1976d2');expect(new Set(colors).size).toBe(colors.length)});
 
 test('fontes restantes são Oficial e Simulado onde aplicável',async({page})=>{await page.goto('/index.html?v='+BUILD);await expect(page.locator('#modeSelect option')).toHaveCount(2);await expect(page.locator('#modeSelect')).toHaveValue('official');await page.goto('/rn.html?v='+BUILD);await expect(page.locator('#rnMode option')).toHaveCount(2);await expect(page.locator('#rnMode')).toHaveValue('official');await page.goto('/radar.html?v='+BUILD);await expect(page.locator('#radarMode')).toHaveCount(0)});
