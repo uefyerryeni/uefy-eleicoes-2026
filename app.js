@@ -584,3 +584,54 @@ function renderFavStrip(){const box=document.querySelector('#liveStripItems');if
 document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
 document.querySelector('#officeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));document.querySelector('#scopeSelect')?.addEventListener('change',()=>setTimeout(syncFavButton));renderFavStrip();syncFavButton();
+\n
+/* Evolução da apuração — histórico oficial TSE */
+let evoData=null,evoRace='gov',evoAxis='time';
+const EVO_LABEL={gov:'GOVERNADOR DO RN',sen:'SENADO · RN',pres:'PRESIDÊNCIA'};
+const EVO_COLORS=['#d52b1e','#087f5b','#1769aa'];
+function evoClock(s){try{return new Date(s).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})}catch{return '—'}}
+function evoCurrent(){return evoData?.races?.[evoRace]||[]}
+function evoText(){
+ const pts=evoCurrent(); if(!pts.length)return 'Evolução da apuração ainda sem pontos disponíveis.';
+ const first=pts[0],last=pts[pts.length-1],top=last.candidates||[];
+ const lines=['ELEIÇÕES 2026 | EVOLUÇÃO DA APURAÇÃO',EVO_LABEL[evoRace],''];
+ if(pts.length>1)lines.push(evoClock(first.collected_at)+' → '+evoClock(last.collected_at)+' · '+Number(last.progress||0).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% das seções totalizadas','');
+ else lines.push('Primeiro registro · '+evoClock(last.collected_at)+' · '+Number(last.progress||0).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% das seções totalizadas','');
+ top.slice(0,3).forEach(x=>lines.push(x.name+(x.party?' ('+x.party+')':'')+' — '+Number(x.pct||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+'%'));
+ lines.push('','Fonte: Tribunal Superior Eleitoral · histórico UEFY');
+ return lines.join('\n');
+}
+function drawEvo(){
+ const canvas=document.querySelector('#evoCanvas');if(!canvas)return;
+ const ctx=canvas.getContext('2d'),pts=evoCurrent();ctx.fillStyle='#f7f4e8';ctx.fillRect(0,0,1080,650);
+ ctx.fillStyle='#17191c';ctx.font='900 42px Inter,Segoe UI,Arial';ctx.fillText('EVOLUÇÃO DA APURAÇÃO',58,70);
+ ctx.font='800 27px Inter,Segoe UI,Arial';ctx.fillText(EVO_LABEL[evoRace],58,110);
+ if(!pts.length){ctx.font='600 25px Inter,Segoe UI,Arial';ctx.fillText('Aguardando o primeiro snapshot oficial do TSE.',58,210);return}
+ const left=75,right=1030,top=165,bottom=525,w=right-left,h=bottom-top;
+ const candidates=[];pts.forEach(p=>(p.candidates||[]).slice(0,3).forEach(c=>{if(!candidates.some(x=>x.number===c.number))candidates.push(c)}));
+ const chosen=candidates.slice(0,3),vals=pts.flatMap(p=>(p.candidates||[]).filter(c=>chosen.some(x=>x.number===c.number)).map(c=>Number(c.pct||0)));
+ let ymin=Math.max(0,Math.floor(Math.min(...vals,0)/5)*5-2),ymax=Math.min(100,Math.ceil(Math.max(...vals,1)/5)*5+2);if(ymax-ymin<10)ymax=Math.min(100,ymin+10);
+ ctx.strokeStyle='#cbc6b8';ctx.lineWidth=1;ctx.font='600 16px Inter,Segoe UI,Arial';ctx.fillStyle='#5d6064';
+ for(let i=0;i<=4;i++){const y=top+h*i/4,v=ymax-(ymax-ymin)*i/4;ctx.beginPath();ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillText(v.toFixed(1).replace('.',',')+'%',12,y+5)}
+ const xs=pts.map((p,i)=>evoAxis==='progress'?Number(p.progress||0):i),xmin=Math.min(...xs),xmax=Math.max(...xs);
+ const xp=(v,i)=>xmax===xmin?left+w/2:left+(v-xmin)/(xmax-xmin)*w,yp=v=>bottom-(v-ymin)/(ymax-ymin)*h;
+ chosen.forEach((base,ci)=>{ctx.strokeStyle=EVO_COLORS[ci];ctx.fillStyle=EVO_COLORS[ci];ctx.lineWidth=5;ctx.beginPath();let started=false;
+   pts.forEach((p,i)=>{const c=(p.candidates||[]).find(x=>x.number===base.number);if(!c)return;const x=xp(xs[i],i),y=yp(Number(c.pct||0));started?ctx.lineTo(x,y):ctx.moveTo(x,y);started=true});ctx.stroke();
+   pts.forEach((p,i)=>{const c=(p.candidates||[]).find(x=>x.number===base.number);if(!c)return;const x=xp(xs[i],i),y=yp(Number(c.pct||0));ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fill()});
+ });
+ let lx=58;chosen.forEach((c,i)=>{ctx.fillStyle=EVO_COLORS[i];ctx.fillRect(lx,565,22,22);ctx.fillStyle='#17191c';ctx.font='800 19px Inter,Segoe UI,Arial';const label=c.name+' '+Number((pts.at(-1).candidates.find(x=>x.number===c.number)||{}).pct||0).toFixed(2).replace('.',',')+'%';ctx.fillText(label,lx+31,583);lx+=Math.min(320,ctx.measureText(label).width+70)});
+ ctx.fillStyle='#6c7379';ctx.font='600 15px Inter,Segoe UI,Arial';ctx.fillText((evoAxis==='time'?'Eixo: horário da coleta':'Eixo: % das seções totalizadas')+' · Fonte: TSE · histórico UEFY',58,625);
+}
+function renderEvo(){
+ const pts=evoCurrent(),status=document.querySelector('#evoStatus'),ta=document.querySelector('#evoText');if(status)status.textContent=!pts.length?'Aguardando o primeiro registro oficial.':pts.length===1?'Primeiro registro salvo. A linha aparecerá no próximo ponto com mudança real.':pts.length+' registros oficiais · '+evoClock(pts[0].collected_at)+' → '+evoClock(pts.at(-1).collected_at);
+ if(ta)ta.value=evoText();drawEvo();
+}
+async function loadEvo(){try{const r=await fetch('data/evolucao-rn.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error(r.status);evoData=await r.json()}catch(e){evoData={races:{gov:[],sen:[],pres:[]}}}renderEvo()}
+document.querySelectorAll('[data-evo]').forEach(b=>b.addEventListener('click',()=>{evoRace=b.dataset.evo;document.querySelectorAll('[data-evo]').forEach(x=>x.classList.toggle('active',x===b));renderEvo()}));
+document.querySelectorAll('[data-evo-axis]').forEach(b=>b.addEventListener('click',()=>{evoAxis=b.dataset.evoAxis;document.querySelectorAll('[data-evo-axis]').forEach(x=>x.classList.toggle('active',x===b));renderEvo()}));
+async function evoCopyCanvas(){const c=document.querySelector('#evoCanvas');return new Promise((resolve,reject)=>c.toBlob(async blob=>{try{await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);resolve()}catch(e){reject(e)}},'image/png'))}
+document.querySelector('#evoCopyText')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(evoText())}catch{}});
+document.querySelector('#evoCopyImage')?.addEventListener('click',async()=>{try{await evoCopyCanvas()}catch{}});
+document.querySelector('#evoOpenX')?.addEventListener('click',async()=>{const t=evoText();try{await evoCopyCanvas()}catch{}window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(t),'_blank','noopener')});
+document.querySelector('#evoDownload')?.addEventListener('click',()=>{const a=document.createElement('a');a.download='uefy-evolucao-'+evoRace+'.png';a.href=document.querySelector('#evoCanvas').toDataURL('image/png');a.click()});
+loadEvo();setInterval(loadEvo,60000);
