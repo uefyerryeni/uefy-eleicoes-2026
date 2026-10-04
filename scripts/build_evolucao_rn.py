@@ -60,3 +60,4 @@ def main():
   print('Histórico atualizado.')
  else: print('Sem mudança eleitoral; histórico preservado.')
 if __name__=='__main__':main()
+\n
