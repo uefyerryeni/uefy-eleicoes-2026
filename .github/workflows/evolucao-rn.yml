@@ -27,7 +27,8 @@ jobs:
           if [ -f data/evolucao-rn.json ]; then python -m json.tool data/evolucao-rn.json > /dev/null; fi
       - name: Salvar
         run: |
-          if [ ! -f data/evolucao-rn.json ] || git diff --quiet -- data/evolucao-rn.json; then exit 0; fi
+          if [ ! -f data/evolucao-rn.json ]; then exit 0; fi
+          if [ -z "$(git status --porcelain -- data/evolucao-rn.json)" ]; then exit 0; fi
           git config user.name github-actions
           git config user.email actions@github.com
           git add data/evolucao-rn.json
