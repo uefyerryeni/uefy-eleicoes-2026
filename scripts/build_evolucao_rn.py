@@ -44,7 +44,7 @@ def main():
    rows,progress,source_stamp=parse(fetch(url(*args)))
   except Exception as e:
    print(key,'indisponível:',e);continue
-  if not rows or progress<=0:continue
+  if not rows: continue
   top=rows[:3]
   point={'collected_at':now,'source_generated_at':source_stamp or None,'progress':progress,'candidates':top}
   prev=(hist.get('races',{}).get(key) or [])
