@@ -8,6 +8,8 @@ let publicationTextMode='full';
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
 
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
+const MUNICIPALITY_ALIASES={acu:'assu',ares:'arez',januariocicco:'boasaude'};
+function municipalityKey(name){const n=norm(name);return MUNICIPALITY_ALIASES[n]||n}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
 function fmtPct(v){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%'}
 function nowStamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
@@ -93,9 +95,9 @@ function candidateColor(name,number=''){
   return 'hsl('+hue.toFixed(1)+' 58% 42%)';
 }
 function leaderForFeature(feature){
-  const name=norm(feature?.properties?.nome);
+  const name=municipalityKey(feature?.properties?.nome);
   const entries=Object.entries(leaderMapData?.leaders||{});
-  const found=entries.find(([k])=>norm(k)===name);
+  const found=entries.find(([k])=>municipalityKey(k)===name);
   return found?found[1]:null;
 }
 async function loadLeaderMap(){
@@ -306,8 +308,8 @@ async function municipalityCode(){
     municipalityConfigCache[key]=extractMunicipalities(await cfg.json());
   }
   const all=municipalityConfigCache[key];
-  const target=norm(selectedFeature.properties.nome);
-  const found=all.find(m=>m.uf==='rn'&&norm(m.name)===target);
+  const target=municipalityKey(selectedFeature.properties.nome);
+  const found=all.find(m=>m.uf==='rn'&&municipalityKey(m.name)===target);
   if(!found)throw new Error('Município não encontrado na configuração do TSE');
   return found.code;
 }
