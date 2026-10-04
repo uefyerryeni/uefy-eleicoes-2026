@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20261003-04">
+  <link rel="stylesheet" href="style.css?v=20261004-munpub">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -138,9 +138,9 @@
         <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Resultado por município · <b id="rnMunicipalSource">Oficial TSE</b></span></div>
       </div>
 
-      <div class="rn-list" id="munList" aria-label="Lista de municípios"></div>
+      <details class="rn-municipality-list"><summary>Ver lista de municípios</summary><div class="rn-list" id="munList" aria-label="Lista de municípios"></div></details>
 
-      <div class="rn-publisher" id="publicacao">
+      <div class="rn-publisher rn-publisher-priority" id="publicacao">
         <div class="block-title"><span id="rnResultTitle">Resultado do município</span><span id="rnProgress">—</span></div>
         <div class="rn-result-lines" id="rnResults"></div>
         <div class="rn-note" id="rnStatus">Aguardando consulta ao TSE.</div>
@@ -168,6 +168,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">Governador RN</a><a href="radar.html">Legislativo</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261003-04"></script>
+<script src="rn.js?v=20261004-munpub"></script>
 </body>
 </html>
