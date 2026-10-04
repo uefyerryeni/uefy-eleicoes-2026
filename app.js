@@ -389,7 +389,8 @@ function makePostText(){
       if(outcome.candidates.length>3)lines.push('e mais '+(outcome.candidates.length-3)+'.');
     }else{
       lines.push('',(final?'RESULTADO FINAL':'PARCIAL')+' · '+fmtPct(d.progress));
-      d.candidates.slice(0,2).forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)));
+      const compactLimit=selectedOffice==='sen'?3:2;
+      d.candidates.slice(0,compactLimit).forEach(x=>lines.push(candidatePublicationLabel(x)+' — '+fmtPct(x.pct)));
     }
     lines.push('',source);
     return lines.join('\n');
