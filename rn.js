@@ -49,8 +49,12 @@ function markSelection(){
   $('#munList').querySelectorAll('.rn-item').forEach(el=>el.classList.toggle('active',el.dataset.name===name));
 }
 function selectMunicipality(feature){
+  const previousName=selectedFeature?.properties?.nome||'';
+  const changingMunicipality=norm(previousName)!==norm(feature?.properties?.nome);
   mapPublicationMode=false;
-  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
+  selectedFeature=feature;
+  if(changingMunicipality)current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};
+  $('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
   const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
   if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
 }
@@ -362,6 +366,7 @@ async function loadRemote(){
   try{
     const code=await municipalityCode(),r=await fetch(resultUrl(code),{cache:'no-store'});if(!r.ok)throw new Error('Resultado '+r.status);
     current=parseEA20(await r.json());
+    current.municipality=selectedFeature?.properties?.nome||'';
     if(mode==='official')current=await reconcileRnResult(current);
     if(mode==='sim'){
       $('#rnStatus').textContent='Dados do Simulado TSE para este município. Não representam a apuração oficial.';
@@ -373,11 +378,26 @@ async function loadRemote(){
     renderCurrent();
   }catch(e){
     const notPublished=mode==='official'&&String(e?.message||e).includes('404');
-    if(previous?.candidates?.length)current=previous;
-    $('#rnStatus').textContent=previous?.candidates?.length?'Nova consulta indisponível. Mantendo o último resultado válido ('+(previous.generatedAt||'horário anterior')+').':(notPublished?'O arquivo oficial deste município ainda não foi publicado pelo TSE.':'Não foi possível carregar este município agora: '+e.message);
+    const sameMunicipality=norm(previous?.municipality)===norm(selectedFeature?.properties?.nome);
+    const canKeepPrevious=sameMunicipality&&previous?.candidates?.length;
+    if(canKeepPrevious)current=previous;
+    else current={progress:0,candidates:[],generatedAt:null,municipality:selectedFeature?.properties?.nome||'',integrity:null};
+    $('#rnStatus').textContent=canKeepPrevious?'Nova consulta indisponível. Mantendo o último resultado válido deste mesmo município ('+(previous.generatedAt||'horário anterior')+').':(notPublished?'O arquivo oficial deste município ainda não foi publicado pelo TSE.':'Não foi possível carregar este município agora: '+e.message);
     renderCurrent();
   }
   finally{rnLoading=false;$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar';$('#publicacao')?.classList.remove('loading-municipality')}
+}
+function rnPublicationIsSafe(){
+  if(mapPublicationMode)return mode==='official'&&!!leaderMapData?.publication_ready;
+  const selected=selectedFeature?.properties?.nome||'';
+  const sameMunicipality=norm(current?.municipality)===norm(selected);
+  if(!sameMunicipality||!(current?.candidates||[]).length)return false;
+  if(mode==='official'&&(current?.integrity?.error||Number(current?.integrity?.unmatched||0)>0))return false;
+  return true;
+}
+function updateRnPublicationSafety(){
+  const safe=rnPublicationIsSafe();
+  ['#rnCopyText','#rnCopyImage','#rnOpenX','#rnDownload','#rnShareBundle'].forEach(sel=>{const el=$(sel);if(el)el.disabled=!safe});
 }
 function renderCurrent(){
   const title=$('#rnResultTitle');
@@ -394,7 +414,7 @@ function renderCurrent(){
     $('#rnProgress').textContent=fmtPct(current.progress);
     $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%;background:'+candidateColor(c.name,c.number)+'"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
   }
-  const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';drawCanvas();
+  const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';drawCanvas();updateRnPublicationSafety();
 }
 function makeText(){
   if(mapPublicationMode)return mapPostText();
@@ -530,6 +550,7 @@ async function openRnXIntent(text,preopened=null){
   return useIntent;
 }
 async function shareRNImageAndText(openX=false,preopened=null){
+  if(!rnPublicationIsSafe()){if(preopened)preopened.close();flashRN(openX?$('#rnOpenX'):$('#rnShareBundle'),'Verificação necessária');return}
   const text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
   let blob;
   try{blob=await rnCanvasBlob()}catch{if(preopened)preopened.close();flashRN(openX?$('#rnOpenX'):$('#rnShareBundle'),'Falha ao gerar imagem');return}
@@ -583,6 +604,7 @@ $('#rnMapPublish')?.addEventListener('click',()=>{
   $('#rnResultTitle').textContent='Mapa de liderança municipal';
   $('#rnProgress').textContent=leaderMapData.final_result?'Final':'Parcial';
   $('#rnStatus').textContent=leaderMapData.final_result?'Mapa final com base municipal completa.':'Mapa parcial com base municipal completa no snapshot; as lideranças podem mudar até 100% da totalização.';
+  updateRnPublicationSafety();
   document.querySelector('#publicacao')?.scrollIntoView({behavior:'smooth',block:'start'});
 });
 $('#munSearch').oninput=e=>renderList(e.target.value);
@@ -602,9 +624,9 @@ document.querySelectorAll('.text-mode-switch [data-text-mode]').forEach(b=>b.onc
 syncRnTextModeButtons();
 
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+' caracteres';
-$('#rnCopyText').onclick=async()=>{try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
-$('#rnCopyImage').onclick=async()=>{try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
-$('#rnDownload').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
+$('#rnCopyText').onclick=async()=>{if(!rnPublicationIsSafe())return flashRN($('#rnCopyText'),'Verificação necessária');try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
+$('#rnCopyImage').onclick=async()=>{if(!rnPublicationIsSafe())return flashRN($('#rnCopyImage'),'Verificação necessária');try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
+$('#rnDownload').onclick=()=>{if(!rnPublicationIsSafe())return flashRN($('#rnDownload'),'Verificação necessária');const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
 $('#rnOpenX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareRNImageAndText(true,w)};
 $('#rnShareBundle').onclick=()=>shareRNImageAndText(false);
 const theme=$('#themeToggle');
