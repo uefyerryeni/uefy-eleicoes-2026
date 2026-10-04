@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Eleições 2026</title>
-  <link rel="stylesheet" href="style.css?v=20261004-evo">
+  <link rel="stylesheet" href="style.css?v=20261004-stable">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -155,36 +155,11 @@
 </section>
 
 
-<section class="wrap evolution-section" id="evolucao">
-  <div class="section-head"><h2>Evolução da apuração</h2><span>Histórico oficial TSE · snapshots UEFY</span></div>
-  <div class="card evolution-card">
-    <div class="evolution-controls">
-      <div class="evolution-tabs" role="group" aria-label="Cargo da evolução">
-        <button type="button" class="active" data-evo="gov">Governador RN</button>
-        <button type="button" data-evo="sen">Senado RN</button>
-        <button type="button" data-evo="pres">Presidência</button>
-      </div>
-      <div class="evolution-tabs" role="group" aria-label="Eixo do gráfico">
-        <button type="button" class="active" data-evo-axis="time">Horário</button>
-        <button type="button" data-evo-axis="progress">% totalizado</button>
-      </div>
-    </div>
-    <p class="evolution-note" id="evoStatus">Carregando histórico oficial…</p>
-    <div class="evolution-canvas"><canvas id="evoCanvas" width="1080" height="650"></canvas></div>
-    <textarea id="evoText" aria-label="Texto para publicação" readonly></textarea>
-    <div class="actions">
-      <button class="btn" id="evoCopyText">Copiar texto</button>
-      <button class="btn" id="evoCopyImage">Copiar imagem</button>
-      <button class="btn primary" id="evoOpenX">Publicar no X</button>
-      <button class="btn" id="evoDownload">Baixar imagem</button>
-    </div>
-  </div>
-</section>
-\n<footer class="foot" id="sobre"><div class="wrap footline"><strong>Central das Eleições UEFY</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
+<footer class="foot" id="sobre"><div class="wrap footline"><strong>Central das Eleições UEFY</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
 </main>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao" class="active">Geral</a><a href="rn.html">Governador RN</a><a href="radar.html">Legislativo</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop">↑</button>
-<script src="app.js?v=20261004-evo"></script>
+<script src="app.js?v=20261004-stable"></script>
 </body>
 </html>
