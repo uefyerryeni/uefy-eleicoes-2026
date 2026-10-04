@@ -50,7 +50,8 @@ function markSelection(){
 }
 function selectMunicipality(feature){
   mapPublicationMode=false;
-  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();\n  const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
+  selectedFeature=feature;$('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
+  const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
   if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
 }
 
