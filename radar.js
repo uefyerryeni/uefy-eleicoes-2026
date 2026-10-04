@@ -264,16 +264,27 @@ function drawMunicipalityCanvas(ctx){
   if(ft)drawGeometry(ctx,ft,{type:'FeatureCollection',features:[ft]},600,135,390,360,'#f5c400','#17191c',2.5);
   let y=420;municipalityResult().slice(0,6).forEach((x,i)=>{ctx.fillStyle='#25292e';fitText(ctx,(i+1)+'º · '+candidateLabel(x),70,y,650,26,18,'700');ctx.fillStyle='#e3e7ea';roundRect(ctx,70,y+18,650,18,9);ctx.fill();ctx.fillStyle=candidateColor(x.number,x.name);roundRect(ctx,70,y+18,650*Math.min(100,x.pct)/100,18,9);ctx.fill();ctx.fillStyle='#17191c';ctx.font='800 30px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(pct(x.pct),980,y+5);ctx.textAlign='left';y+=78});
 }
+function radarPublicationIsSafe(){
+  if(radar?.status!=='ok')return false;
+  if(publicationView==='municipality')return municipalityResult().length>0;
+  const m=officeMapData();
+  return Number(m?.municipalities_read||0)>0&&mapSummary().length>0;
+}
+function updateRadarPublicationSafety(){
+  const safe=radarPublicationIsSafe();
+  ['#copyRadarText','#copyRadarImage','#openRadarX','#downloadRadar','#shareRadarBundle'].forEach(sel=>{const el=$(sel);if(el)el.disabled=!safe});
+}
 function updatePublication(){
   const text=currentPublicationText();$('#radarPostText').value=text;$('#radarChars').textContent=text.length+' caracteres';
   $('#publicationContextTitle').textContent=publicationView==='map'?'Mapa legislativo do RN':selectedMunicipality+' · '+officeLabel();
   $('#publicationContextText').textContent=publicationView==='map'?'Card com a liderança municipal do cargo selecionado.':'Card com o resultado local do município selecionado.';
-  drawCanvas();
+  drawCanvas();updateRadarPublicationSafety();
 }
 
 async function canvasBlob(){return await new Promise((res,rej)=>$('#radarCanvas').toBlob(b=>b?res(b):rej(new Error('blob')),'image/png'))}
 async function copyImage(){if(!window.isSecureContext||!navigator.clipboard||!window.ClipboardItem)throw new Error('clipboard');const b=await canvasBlob();await navigator.clipboard.write([new ClipboardItem({'image/png':b})])}
 async function shareRadar(){
+  if(!radarPublicationIsSafe())throw new Error('unsafe publication');
   const png=await canvasBlob(),file=new File([png],'uefy-radar-legislativo-'+activeOffice()+'.png',{type:'image/png'});
   if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({title:'Central das Eleições UEFY · Radar Legislativo',text:$('#radarPostText').value,files:[file]});return true}
   await copyImage();return false;
@@ -298,10 +309,10 @@ $('#radarMunicipalPublish').onclick=()=>{publicationView='municipality';updatePu
 $('#candidateFilter').onchange=renderFindings;$('#typeFilter').onchange=renderFindings;
 $$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{publicationTextMode=b.dataset.textMode;$$('.text-mode-switch [data-text-mode]').forEach(x=>x.classList.toggle('active',x===b));updatePublication()});
 $('#radarPostText').oninput=e=>$('#radarChars').textContent=e.target.value.length+' caracteres';
-$('#copyRadarText').onclick=async()=>{try{await navigator.clipboard.writeText($('#radarPostText').value);flash($('#copyRadarText'),'Texto copiado!')}catch{flash($('#copyRadarText'),'Cópia bloqueada')}};
-$('#copyRadarImage').onclick=async()=>{try{await copyImage();flash($('#copyRadarImage'),'Imagem copiada!')}catch{flash($('#copyRadarImage'),'Cópia bloqueada')}};
-$('#downloadRadar').onclick=()=>{const a=document.createElement('a');a.download='uefy-radar-'+activeOffice()+'-'+(publicationView==='map'?'rn':norm(selectedMunicipality))+'.png';a.href=$('#radarCanvas').toDataURL('image/png');a.click()};
-$('#openRadarX').onclick=async()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}const prefilled=await openX($('#radarPostText').value,w);flash($('#openRadarX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto'):'Texto copiado · cole no X')};
+$('#copyRadarText').onclick=async()=>{if(!radarPublicationIsSafe())return flash($('#copyRadarText'),'Verificação necessária');try{await navigator.clipboard.writeText($('#radarPostText').value);flash($('#copyRadarText'),'Texto copiado!')}catch{flash($('#copyRadarText'),'Cópia bloqueada')}};
+$('#copyRadarImage').onclick=async()=>{if(!radarPublicationIsSafe())return flash($('#copyRadarImage'),'Verificação necessária');try{await copyImage();flash($('#copyRadarImage'),'Imagem copiada!')}catch{flash($('#copyRadarImage'),'Cópia bloqueada')}};
+$('#downloadRadar').onclick=()=>{if(!radarPublicationIsSafe())return flash($('#downloadRadar'),'Verificação necessária');const a=document.createElement('a');a.download='uefy-radar-'+activeOffice()+'-'+(publicationView==='map'?'rn':norm(selectedMunicipality))+'.png';a.href=$('#radarCanvas').toDataURL('image/png');a.click()};
+$('#openRadarX').onclick=async()=>{if(!radarPublicationIsSafe())return flash($('#openRadarX'),'Verificação necessária');const desktop=window.matchMedia?.('(pointer:fine)').matches&&innerWidth>820,w=desktop?window.open('about:blank','_blank'):null;let copied=false;if(desktop)try{await copyImage();copied=true}catch{}const prefilled=await openX($('#radarPostText').value,w);flash($('#openRadarX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto'):'Texto copiado · cole no X')};
 $('#shareRadarBundle').onclick=async()=>{try{const native=await shareRadar();if(!native)flash($('#shareRadarBundle'),'Imagem copiada · texto acima')}catch(e){if(e?.name!=='AbortError')flash($('#shareRadarBundle'),'Use Copiar texto / Copiar imagem')}};
 
 const theme=$('#themeToggle');if(localStorage.getItem('uefy-eleicoes-theme')==='dark')document.body.classList.add('dark');function syncTheme(){const d=document.body.classList.contains('dark');theme.textContent=d?'☀':'◐';theme.title=d?'Usar tema claro':'Usar tema escuro'}syncTheme();theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme();drawCanvas()};
