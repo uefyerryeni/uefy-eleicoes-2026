@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "source": "Tribunal Superior Eleitoral",
+  "started_at": "2026-10-04T18:34:42-03:00",
+  "races": {
+    "gov": [
+      {
+        "collected_at": "2026-10-04T18:34:42-03:00",
+        "source_generated_at": "04/10/2026 · 18:33:07",
+        "progress": 33.05,
+        "candidates": [
+          {
+            "number": "13",
+            "name": "CADU DE LULA",
+            "party": "PT",
+            "votes": 226474,
+            "pct": 37.37
+          },
+          {
+            "number": "44",
+            "name": "ALLYSON",
+            "party": "UNIÃO",
+            "votes": 208732,
+            "pct": 34.45
+          },
+          {
+            "number": "22",
+            "name": "ÁLVARO DIAS",
+            "party": "PL",
+            "votes": 169639,
+            "pct": 27.99
+          }
+        ]
+      }
+    ],
+    "sen": [
+      {
+        "collected_at": "2026-10-04T18:34:42-03:00",
+        "source_generated_at": "04/10/2026 · 18:33:08",
+        "progress": 33.05,
+        "candidates": [
+          {
+            "number": "200",
+            "name": "STYVENSON VALENTIM",
+            "party": "PODE",
+            "votes": 326370,
+            "pct": 29.41
+          },
+          {
+            "number": "555",
+            "name": "ZENAIDE MAIA",
+            "party": "PSD",
+            "votes": 200916,
+            "pct": 18.11
+          },
+          {
+            "number": "131",
+            "name": "SAMANDA DE LULA",
+            "party": "PT",
+            "votes": 198058,
+            "pct": 17.85
+          }
+        ]
+      }
+    ],
+    "pres": [
+      {
+        "collected_at": "2026-10-04T18:34:42-03:00",
+        "source_generated_at": "04/10/2026 · 18:32:24",
+        "progress": 31.9,
+        "candidates": [
+          {
+            "number": "22",
+            "name": "FLAVIO BOLSONARO",
+            "party": "PL",
+            "votes": 18644760,
+            "pct": 50.74
+          },
+          {
+            "number": "13",
+            "name": "LULA",
+            "party": "PT",
+            "votes": 15117899,
+            "pct": 41.14
+          },
+          {
+            "number": "70",
+            "name": "ESCRITOR AUGUSTO CURY",
+            "party": "AVANTE",
+            "votes": 1081531,
+            "pct": 2.94
+          }
+        ]
+      }
+    ]
+  },
+  "updated_at": "2026-10-04T18:34:42-03:00"
+}
