@@ -4,6 +4,7 @@ const OFFICE={gov:{title:'Governador',cargo:'0003'}};
 let fc=null,selectedFeature=null,office='gov',mode='official',current={progress:0,candidates:[],generatedAt:null};
 const AUTO_REFRESH_MS=60000;let rnAutoTimer=null,rnLoading=false;
 let leaderMapData={status:'waiting',leaders:{},summary:[],publication_ready:false}, mapPublicationMode=false;
+let leaderFilter='';
 let publicationTextMode='full';
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
 
@@ -100,6 +101,18 @@ function leaderForFeature(feature){
   const found=entries.find(([k])=>municipalityKey(k)===name);
   return found?found[1]:null;
 }
+function leaderFilterValue(candidate,number){
+  const n=String(number||'').replace(/\D/g,'');
+  return n?'n:'+n:'c:'+norm(candidate);
+}
+function leaderMatchesFilter(lead){
+  if(!leaderFilter)return true;
+  return lead?.status==='ok'&&leaderFilterValue(lead.candidate,lead.candidate_number)===leaderFilter;
+}
+function selectedLeaderSummary(){
+  if(!leaderFilter)return null;
+  return (leaderMapData.summary||[]).find(x=>leaderFilterValue(x.name,x.number)===leaderFilter)||null;
+}
 async function loadLeaderMap(){
   if(mode==='sim'){
     leaderMapData={
@@ -133,11 +146,38 @@ function renderElectionOutcome(){
 }
 function renderLeaderMap(){
   const svg=$('#rnLeaderMap');if(!svg||!fc)return;
+  const summary=(leaderMapData.summary||[]);
+  const filter=$('#rnLeaderFilter');
+  if(filter){
+    const options=['<option value="">Todos os candidatos</option>'].concat(summary.map(x=>'<option value="'+esc(leaderFilterValue(x.name,x.number))+'">'+esc(x.name)+' — '+x.municipalities+' município(s)</option>'));
+    filter.innerHTML=options.join('');
+    const values=[...filter.options].map(o=>o.value);
+    if(leaderFilter&&!values.includes(leaderFilter))leaderFilter='';
+    filter.value=leaderFilter;
+    if(!filter.dataset.bound){
+      filter.addEventListener('change',()=>{
+        leaderFilter=filter.value;
+        mapPublicationMode=false;
+        renderLeaderMap();
+      });
+      filter.dataset.bound='1';
+    }
+  }
+  const selectedSummary=selectedLeaderSummary();
+  const filterStatus=$('#rnLeaderFilterStatus');
+  if(filterStatus){
+    filterStatus.textContent=selectedSummary
+      ? selectedSummary.name+': '+selectedSummary.municipalities+' município(s) destacados no mapa.'
+      : 'Exibindo todos os municípios com liderança registrada.';
+  }
+
   const proj=projector(fc,760,560,12);
   svg.innerHTML=fc.features.map((f,i)=>{
-    const lead=leaderForFeature(f),ok=lead?.status==='ok',color=ok?candidateColor(lead.candidate,lead.candidate_number):'#d9dee2';
+    const lead=leaderForFeature(f),ok=lead?.status==='ok',matches=ok&&leaderMatchesFilter(lead);
+    const color=!ok?'#d9dee2':(leaderFilter&&!matches?'#e8e4da':candidateColor(lead.candidate,lead.candidate_number));
+    const filtered=leaderFilter&&!matches?' filtered-out':'';
     const tip=ok?f.properties.nome+' — '+lead.candidate+' · '+fmtPct(lead.pct):f.properties.nome+' — aguardando votos';
-    return '<path class="rn-leader-mun" data-i="'+i+'" d="'+geometryPath(f.geometry,proj)+'" fill="'+color+'"><title>'+esc(tip)+'</title></path>';
+    return '<path class="rn-leader-mun'+filtered+'" data-i="'+i+'" d="'+geometryPath(f.geometry,proj)+'" fill="'+color+'"><title>'+esc(tip)+'</title></path>';
   }).join('');
   svg.querySelectorAll('.rn-leader-mun').forEach(el=>el.addEventListener('click',()=>{
     const f=fc.features[Number(el.dataset.i)],lead=leaderForFeature(f);
@@ -146,25 +186,24 @@ function renderLeaderMap(){
     document.querySelector('.rn-side')?.scrollIntoView({behavior:'smooth',block:'start'});
   }));
   renderElectionOutcome();
-  const summary=(leaderMapData.summary||[]);
   const emptyMapMessage=mode==='sim'?'Mapa estadual indisponível no Simulado TSE. Use a consulta municipal abaixo.':'Aguardando a apuração oficial.';
-  $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">'+emptyMapMessage+'</div>';
-  $('#rnLeaderLegend').innerHTML=summary.length?summary.map(x=>'<span><i style="background:'+candidateColor(x.name,x.number)+'"></i>'+esc(x.name)+'</span>').join(''):'<span><i style="background:#d9dee2"></i>Aguardando resultado</span>';
+  $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row'+(leaderFilterValue(x.name,x.number)===leaderFilter?' active':'')+'"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">'+emptyMapMessage+'</div>';
+  $('#rnLeaderLegend').innerHTML=summary.length?summary.map(x=>'<span'+(leaderFilterValue(x.name,x.number)===leaderFilter?' class="active"':'')+'><i style="background:'+candidateColor(x.name,x.number)+'"></i>'+esc(x.name)+'</span>').join(''):'<span><i style="background:#d9dee2"></i>Aguardando resultado</span>';
   const read=Number(leaderMapData.municipalities_read||0),expected=Number(leaderMapData.municipalities_expected||167);
   $('#rnMapRead').textContent=read+'/'+expected;
   $('#rnMapBase').textContent=leaderMapData.source_generated_at||leaderMapData.message||'Aguardando TSE';
   const natal=leaderMapData.natal;
   if(natal?.status==='ok'){
-    $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+esc(natal.candidate)+'</strong><span>'+Number(natal.votes||0).toLocaleString('pt-BR')+' votos · '+fmtPct(natal.pct)+' · '+fmtPct(natal.progress)+' das seções</span>';
+    $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+esc(natal.candidate)+'</strong><span>'+fmtPct(natal.pct)+' · liderança no snapshot municipal</span>';
   }else{
-    const natalTitle=mode==='sim'?'Mapa estadual indisponível no Simulado':'Aguardando apuração oficial';
     const natalText=mode==='sim'?'Consulte Natal na área municipal abaixo.':'O destaque da capital aparecerá quando houver votos.';
-    $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>'+natalTitle+'</strong><span>'+natalText+'</span>';
+    $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>Aguardando apuração oficial</strong><span>'+natalText+'</span>';
   }
   const btn=$('#rnMapPublish'),note=$('#rnMapPublishNote');
   if(btn)btn.disabled=!leaderMapData.publication_ready;
   if(note)note.textContent=leaderMapData.publication_ready?(leaderMapData.final_result?'Base completa e totalização final.':'Base municipal completa. O card será identificado como resultado parcial.'):(leaderMapData.message||'A publicação será liberada quando a base municipal estiver completa e conferida.');
 }
+
 function sourceMeta(){
   if(mode==='sim')return {title:'Simulado TSE',badge:'SIMULADO TSE',municipal:'Simulado TSE',help:'A consulta municipal usa o ambiente de teste do TSE. O mapa estadual fica desativado para não misturar fontes.'};
   return {title:'Oficial TSE',badge:'OFICIAL TSE',municipal:'Oficial TSE',help:'Mapa, município e publicação usam os resultados oficiais do TSE.'};
@@ -193,8 +232,18 @@ function partyByNumber(number){
 function labeledCandidate(name,party=''){return name+(party?' ('+party+')':'')}
 function publicationCandidate(candidate){return labeledCandidate(candidate?.name||'Candidatura',candidate?.party||'')}
 function mapPostText(){
-  const final=leaderMapData.final_result,outcome=leaderMapData?.outcome||{};
+  const final=leaderMapData.final_result,outcome=leaderMapData?.outcome||{},filtered=selectedLeaderSummary();
   const status=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':final?'RESULTADO FINAL':'MAPA PARCIAL';
+
+  if(filtered){
+    const candidate=labeledCandidate(filtered.name,partyByNumber(filtered.number));
+    const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status+' — FILTRO POR CANDIDATURA','',candidate+' lidera em '+filtered.municipalities+' município(s) neste recorte.'];
+    if(!final)lines.push('','O mapa representa o snapshot atual da apuração e pode mudar conforme novas seções forem totalizadas.');
+    lines.push('Base municipal: '+Number(leaderMapData.municipalities_read||0)+'/'+Number(leaderMapData.municipalities_expected||167)+' municípios lidos.');
+    if(leaderMapData.source_generated_at)lines.push('','Atualização: '+leaderMapData.source_generated_at);
+    lines.push('','Fonte: Tribunal Superior Eleitoral');
+    return lines.join('\n');
+  }
 
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status];
@@ -234,15 +283,16 @@ function drawLeaderMapCanvas(){
   const canvasStatus=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
   ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText(canvasStatus,70,190);
   ctx.font='800 56px Inter,Segoe UI,Arial';ctx.fillText('Governador do RN',70,260);
-  ctx.fillStyle='#59626b';ctx.font='600 25px Inter,Segoe UI,Arial';ctx.fillText('Quem lidera em cada município',70,305);
+  const filteredSummary=selectedLeaderSummary();
+  ctx.fillStyle='#59626b';ctx.font='600 25px Inter,Segoe UI,Arial';ctx.fillText(filteredSummary?'Municípios onde '+filteredSummary.name+' lidera':'Quem lidera em cada município',70,305);
   const proj=projector(fc,650,520,8);ctx.save();ctx.translate(40,350);
   fc.features.forEach(f=>{
-    const lead=leaderForFeature(f),fill=lead?.status==='ok'?candidateColor(lead.candidate,lead.candidate_number):'#d9dee2';
+    const lead=leaderForFeature(f),matches=lead?.status==='ok'&&leaderMatchesFilter(lead),fill=lead?.status!=='ok'?'#d9dee2':(leaderFilter&&!matches?'#e8e4da':candidateColor(lead.candidate,lead.candidate_number));
     const g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
     ctx.fillStyle=fill;ctx.strokeStyle='#fff';ctx.lineWidth=1.2;
     polys.forEach(poly=>{ctx.beginPath();poly.forEach(ring=>ring.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()});
   });ctx.restore();
-  let yy=405;const sum=(leaderMapData.summary||[]).slice(0,6);
+  let yy=405;const sum=(filteredSummary?[filteredSummary]:(leaderMapData.summary||[])).slice(0,6);
   sum.forEach(x=>{
     ctx.fillStyle=candidateColor(x.name,x.number);ctx.beginPath();ctx.arc(760,yy-8,9,0,Math.PI*2);ctx.fill();
     ctx.fillStyle='#17191c';ctx.font='700 22px Inter,Segoe UI,Arial';ctx.fillText((x.name||'').slice(0,20),785,yy);
