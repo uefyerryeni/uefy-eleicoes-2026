@@ -10,7 +10,7 @@ const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b'
 
 let radar={status:'loading',findings:[],offices:{},municipal_maps:{}};
 let candidateRegistry=[],rnMap=null,radarMode='official',publicationTextMode='full',radarLoading=false,radarAutoTimer=null;
-let selectedMunicipality='Natal',publicationView='map',senateMapRank=1;
+let selectedMunicipality='Natal',publicationView='map',senateMapRank=1,senateCandidateFilter='';
 
 const pct=v=>Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:2})+'%';
 const int=v=>Number(v||0).toLocaleString('pt-BR');
@@ -58,7 +58,41 @@ function municipalityLeader(name=selectedMunicipality){
   return municipalityRankedCandidate(name,1);
 }
 function effectiveMapRank(){return activeOffice()==='sen'?senateMapRank:1}
-function mapCandidate(name){return municipalityRankedCandidate(name,effectiveMapRank())}
+function senateTopCandidates(){
+  const official=radar?.offices?.sen?.statewide_candidates;
+  if(Array.isArray(official)&&official.length)return official.slice(0,3);
+  const totals=new Map();
+  const results=radar?.municipal_maps?.sen?.results||{};
+  Object.values(results).forEach(rows=>(rows||[]).forEach(row=>{
+    const key=String(row.number||row.name||'');
+    if(!key)return;
+    const old=totals.get(key)||{number:row.number,name:row.name,party:row.party||candidateMeta(row.number,row.name).party,votes:0,pct:0};
+    old.votes+=Number(row.votes||0);totals.set(key,old);
+  }));
+  return [...totals.values()].sort((a,b)=>b.votes-a.votes||String(a.name).localeCompare(String(b.name),'pt-BR')).slice(0,3);
+}
+function senateCandidateKey(row){return String(row?.number||row?.name||'')}
+function senateCandidateIsTop3(row){
+  if(activeOffice()!=='sen')return true;
+  const key=senateCandidateKey(row);
+  return senateTopCandidates().some(x=>senateCandidateKey(x)===key);
+}
+function rawMapCandidate(name){return municipalityRankedCandidate(name,effectiveMapRank())}
+function mapCandidate(name){
+  const row=rawMapCandidate(name);
+  if(activeOffice()!=='sen')return row;
+  if(!row||!senateCandidateIsTop3(row))return null;
+  if(senateCandidateFilter&&senateCandidateKey(row)!==senateCandidateFilter)return null;
+  return row;
+}
+function senateMajorCityHighlights(){
+  if(activeOffice()!=='sen'||!senateCandidateFilter)return [];
+  const major=['Natal','Mossoró','Parnamirim','São Gonçalo do Amarante','Macaíba','Ceará-Mirim','Extremoz','Caicó','Assú','São José de Mipibu'];
+  return major.filter(name=>{
+    const row=rawMapCandidate(name);
+    return row&&senateCandidateKey(row)===senateCandidateFilter;
+  });
+}
 function mapSummary(){
   const counts=new Map();
   for(const name of municipalityNames()){
@@ -114,10 +148,29 @@ function renderAll(){
   $('#radarMunicipalOffice').textContent=officeLabel();
   const senate=activeOffice()==='sen';
   $('#senateRankSwitch').hidden=!senate;
-  $$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
-  $('#radarMapTitle').textContent=senate
-    ?((senateMapRank===1?'Quem teve a maior':'Quem teve a 2ª maior')+' votação nominal para Senador em cada município')
-    :'Quem teve a maior votação nominal para '+officeLabel()+' em cada município';
+  $('#senateCandidateFilterWrap').hidden=!senate;
+  $('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
+  if(senate){
+    const select=$('#senateCandidateFilter'),top3=senateTopCandidates();
+    if(select){
+      const validKeys=top3.map(senateCandidateKey);
+      if(senateCandidateFilter&&!validKeys.includes(senateCandidateFilter))senateCandidateFilter='';
+      select.innerHTML='<option value="">Todos os 3 principais</option>'+top3.map((x,i)=>'<option value="'+esc(senateCandidateKey(x))+'">'+(i+1)+'º no RN · '+esc(candidateLabel(x))+'</option>').join('');
+      select.value=senateCandidateFilter;
+    }
+    const selected=top3.find(x=>senateCandidateKey(x)===senateCandidateFilter);
+    const rankText=senateMapRank===1?'1º':senateMapRank===2?'2º':'3º';
+    $('#radarMapTitle').textContent=selected
+      ?'Onde '+selected.name+' aparece em '+rankText+' nos municípios do RN'
+      :'Os 3 mais votados no RN · '+rankText+' colocado em cada município';
+    const status=$('#senateCandidateFilterStatus');
+    if(status)status.textContent=selected
+      ?selected.name+' · '+int(selected.votes)+' votos no estado · filtro territorial por '+rankText+' lugar.'
+      :'O filtro considera os três candidatos mais votados no estado no snapshot oficial.';
+  }else{
+    senateCandidateFilter='';
+    $('#radarMapTitle').textContent='Quem teve a maior votação nominal para '+officeLabel()+' em cada município';
+  }
   $('#radarMapExplanation').textContent=senate
     ?'Em 2026, duas vagas ao Senado estão em disputa no estado. Este mapa mostra a posição da votação nominal dentro de cada município; a eleição é definida pela votação estadual.'
     :'O mapa mostra quem teve a maior votação nominal neste cargo em cada município. Para deputados, isso não indica candidatura eleita, pois a distribuição das vagas segue o sistema proporcional.';
@@ -152,14 +205,17 @@ function renderMap(){
   const proj=projector(rnMap,650,520,8),m=officeMapData(),rank=effectiveMapRank(),summary=mapSummary();
   svg.innerHTML=rnMap.features.map(f=>{
     const name=f.properties?.nome||'',lead=mapCandidate(name),fill=lead?candidateColor(lead.number,lead.name):'#d9dee2',active=name===selectedMunicipality;
-    const rankLabel=rank===1?'1º':'2º';
+    const rankLabel=rank===1?'1º':rank===2?'2º':'3º';
     return '<path class="radar-map-feature'+(active?' selected':'')+'" data-mun="'+esc(name)+'" d="'+geometryPath(f.geometry,proj)+'" fill="'+fill+'"><title>'+esc(name+(lead?' · '+rankLabel+': '+lead.name+' · '+pct(lead.pct):' · aguardando votos'))+'</title></path>';
   }).join('');
   $$('.radar-map-feature').forEach(el=>el.addEventListener('click',()=>selectMunicipality(el.dataset.mun,true)));
 
-  $('#radarLeaderSummary').innerHTML=summary.length?summary.slice(0,10).map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.number,x.name)+'"></i><span><strong>'+esc(candidateLabel(x))+'</strong><small>'+x.municipalities+' município(s) em '+rank+'º</small></span></div>').join(''):'<div class="rn-map-empty">Aguardando votos oficiais.</div>';
-  const lead=mapCandidate();
-  $('#radarSelectedHighlight').innerHTML='<small>Município selecionado</small><strong>'+esc(selectedMunicipality)+'</strong><span>'+(lead?esc(candidateLabel(lead))+' aparece em '+rank+'º com '+pct(lead.pct):'Aguardando votos para este cargo.')+'</span>';
+  $('#radarLeaderSummary').innerHTML=summary.length?summary.slice(0,10).map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.number,x.name)+'"></i><span><strong>'+esc(candidateLabel(x))+'</strong><small>'+x.municipalities+' município(s) em '+rank+'º</small></span></div>').join(''):'<div class="rn-map-empty">'+(activeOffice()==='sen'?'Nenhum dos 3 principais aparece nesta posição com o filtro atual.':'Aguardando votos oficiais.')+'</div>';
+  const lead=mapCandidate(),rawLead=rawMapCandidate();
+  const emptyText=activeOffice()==='sen'&&rawLead
+    ?'Nesta posição, aparece '+esc(candidateLabel(rawLead))+', fora do filtro atual.'
+    :'Aguardando votos para este cargo.';
+  $('#radarSelectedHighlight').innerHTML='<small>Município selecionado</small><strong>'+esc(selectedMunicipality)+'</strong><span>'+(lead?esc(candidateLabel(lead))+' aparece em '+rank+'º com '+pct(lead.pct):emptyText)+'</span>';
   $('#radarMapCoverage').textContent=Number(m.municipalities_read||0)+'/167 municípios lidos';
   const prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0;
   $('#radarMapProgress').textContent=prog?pct(prog)+' das seções totalizadas':'Aguardando apuração oficial';
@@ -204,8 +260,10 @@ function renderFindings(){
 
 function mapPublicationText(){
   const m=officeMapData(),summary=mapSummary(),prog=radar?.offices?.[activeOffice()]?.progress??radar.progress??0,rank=effectiveMapRank();
+  const top3=activeOffice()==='sen'?senateTopCandidates():[];
+  const selectedSenate=activeOffice()==='sen'?top3.find(x=>senateCandidateKey(x)===senateCandidateFilter):null;
   const title=activeOffice()==='sen'
-    ?'MAPA MUNICIPAL · '+rank+'º COLOCADO'
+    ?'MAPA MUNICIPAL · '+rank+'º COLOCADO'+(selectedSenate?' · '+selectedSenate.name.toUpperCase():' · 3 PRINCIPAIS DO RN')
     :'MAPA DE MAIOR VOTAÇÃO NOMINAL POR MUNICÍPIO';
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title];
@@ -215,6 +273,10 @@ function mapPublicationText(){
   }
   const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title,''];
   summary.slice(0,8).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'));
+  if(selectedSenate){
+    const highlights=senateMajorCityHighlights();
+    if(highlights.length)lines.push('','Destaques entre as maiores cidades: '+highlights.slice(0,5).join(', ')+'.');
+  }
   const natal=mapCandidate('Natal')||mapCandidate('NATAL');if(natal)lines.push('','Natal: '+candidateLabel(natal)+' aparece em '+rank+'º com '+pct(natal.pct)+'.');
   lines.push('','Base municipal: '+Number(m.municipalities_read||0)+'/167 municípios lidos.');
   if(activeOffice()==='sen')lines.push('Leitura: em 2026, duas vagas ao Senado estão em disputa no RN; os dois candidatos mais votados no estado são eleitos. Este mapa mostra apenas a posição dentro de cada município.');
@@ -258,7 +320,8 @@ function drawCanvas(){
 function drawMapCanvas(ctx){
   const m=officeMapData(),rank=effectiveMapRank(),summary=mapSummary();
   ctx.fillStyle='#59626b';ctx.font='600 24px Inter,Segoe UI,Arial';
-  ctx.fillText(activeOffice()==='sen'?('Mapa municipal · '+rank+'º colocado'):'Maior votação nominal por município',70,300);
+  const selectedSenate=activeOffice()==='sen'?senateTopCandidates().find(x=>senateCandidateKey(x)===senateCandidateFilter):null;
+  ctx.fillText(activeOffice()==='sen'?(selectedSenate?(selectedSenate.name+' · '+rank+'º nos municípios'):('3 principais do RN · '+rank+'º nos municípios')):'Maior votação nominal por município',70,300);
   if(rnMap){const proj=projector(rnMap,630,500,8);ctx.save();ctx.translate(40,345);rnMap.features.forEach(f=>{const name=f.properties?.nome||'',lead=mapCandidate(name),fill=lead?candidateColor(lead.number,lead.name):'#d9dee2',g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];ctx.fillStyle=fill;ctx.strokeStyle='#fff';ctx.lineWidth=1.1;polys.forEach(poly=>{ctx.beginPath();poly.forEach(r=>r.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()})});ctx.restore()}
   let y=385;summary.slice(0,7).forEach(x=>{ctx.fillStyle=candidateColor(x.number,x.name);ctx.beginPath();ctx.arc(760,y-7,9,0,Math.PI*2);ctx.fill();fitText(ctx,candidateLabel(x),785,y,220,20,14,'700');ctx.fillStyle='#59626b';ctx.font='600 16px Inter,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',785,y+24);y+=66});
 }
@@ -295,12 +358,17 @@ async function shareRadar(){
 }
 async function openX(text,w=null){const encoded=encodeURIComponent(text),useIntent=encoded.length<=6000,u=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';if(!useIntent)try{await navigator.clipboard.writeText(text)}catch{}if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer');return useIntent}
 
-$('#officeFilter').onchange=()=>{publicationView='map';senateMapRank=1;renderAll()};
-$$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
+$('#officeFilter').onchange=()=>{publicationView='map';senateMapRank=1;senateCandidateFilter='';renderAll()};
+$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
   senateMapRank=Number(b.dataset.senateRank)||1;
-  $$('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
+  $('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
   publicationView='map';renderMap();updatePublication();renderAll();
 });
+$('#senateCandidateFilter').onchange=e=>{
+  senateCandidateFilter=e.target.value||'';
+  publicationView='map';
+  renderAll();
+};
 $('#refreshRadar').onclick=()=>loadRadar();
 document.querySelector('#refreshAll')?.addEventListener('click',async e=>{
   const b=e.currentTarget;b.classList.add('loading');b.disabled=true;
