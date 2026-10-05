@@ -8,7 +8,7 @@ const OFFICE_CARGO={sen:5,depf:6,depe:7};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
 const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b','#c2185b','#6d4c41','#455a64','#5c6bc0','#ad1457','#558b2f','#00838f','#6a1b9a','#f57c00','#3949ab'];
 const SENATE_COLORS_BY_NUMBER={
-  '123':'#ef6c00', // Rafael Motta · laranja
+  '123':'#f28c00', // Rafael Motta · laranja âmbar
   '131':'#d62828', // Samanda de Lula · vermelho
   '161':'#7b2cbf', // Luciana Mandu · roxo
   '166':'#c2185b', // Rosália Fernandes · magenta
