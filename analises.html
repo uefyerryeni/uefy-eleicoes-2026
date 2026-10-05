@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f5c400">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Análises RN</title>
-  <link rel="stylesheet" href="style.css?v=20261005-analises">
-  <link rel="stylesheet" href="analises.css?v=20261005-01">
+  <link rel="stylesheet" href="style.css?v=20261005-refino">
+  <link rel="stylesheet" href="analises.css?v=20261005-refino2">
+  <script>
+  (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
+  </script>
 </head>
 <body>
 <header class="topbar">
@@ -21,9 +26,17 @@
       <a href="rn.html">Governador RN</a>
       <a href="radar.html">Legislativo RN</a>
       <a class="active" href="analises.html">Análises RN</a>
-      <details class="mobile-menu"><summary aria-label="Abrir menu">Menu</summary><div class="mobile-menu-panel">
-        <a href="index.html">Apuração geral</a><a href="rn.html">Governador RN</a><a href="radar.html">Legislativo RN</a><a href="analises.html">Análises RN</a>
-      </div></details>
+      <details class="mobile-menu">
+        <summary aria-label="Abrir menu">Menu</summary>
+        <div class="mobile-menu-panel">
+          <a href="index.html">Apuração geral</a>
+          <a href="rn.html">Governador RN</a>
+          <a href="radar.html">Legislativo RN</a>
+          <a href="analises.html">Análises RN</a>
+          <a href="#presidente-governador">Presidente × Governador</a>
+          <a href="#participacao">Participação eleitoral</a>
+        </div>
+      </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
       <span class="live"><i></i><span>TSE oficial</span></span>
     </nav>
@@ -31,52 +44,173 @@
 </header>
 
 <main class="wrap analysis-shell">
-  <section class="analysis-hero">
-    <div><span class="rn-badge">RN · 167 municípios</span><h1>O que os votos revelam sobre o território.</h1>
-      <p>Dois recortes por enquanto: Presidente × Governador e participação eleitoral, com abstenção, brancos e nulos.</p></div>
-    <div class="analysis-source"><span>Base oficial</span><strong id="sourceStamp">Carregando…</strong><small id="coverage">Tribunal Superior Eleitoral</small></div>
+  <section class="rn-hero analysis-hero">
+    <div>
+      <span class="rn-badge">RN · 167 municípios</span>
+      <h1>Leituras do voto no Rio Grande do Norte.</h1>
+      <p>Uma área editorial da Central para transformar resultados oficiais em mapas, comparações territoriais e publicações prontas para compartilhar.</p>
+    </div>
+    <div class="notice analysis-source-note">
+      <b>Base:</b> resultados oficiais do Tribunal Superior Eleitoral. <span id="coverage">Carregando os 167 municípios…</span><br>
+      <b>Última leitura:</b> <span id="sourceStamp">—</span>
+    </div>
   </section>
 
-  <section class="analysis-warning">
-    <strong>Leitura correta do cruzamento</strong>
-    <p>Os dados são agregados por município. Uma combinação territorial não significa que as mesmas pessoas tenham votado nos dois candidatos.</p>
+  <section class="card analysis-index">
+    <div>
+      <span class="analysis-kicker">Análises disponíveis</span>
+      <strong>Escolha o recorte e publique o achado.</strong>
+    </div>
+    <nav>
+      <a href="#presidente-governador"><b>03</b><span>Presidente × Governador</span></a>
+      <a href="#participacao"><b>07</b><span>Participação, abstenção, brancos e nulos</span></a>
+    </nav>
   </section>
 
   <section class="analysis-section" id="presidente-governador">
-    <div class="section-head analysis-heading"><div><span class="analysis-number">03</span><h2>Presidente × Governador</h2></div><span>Cruzamento dos 167 municípios</span></div>
+    <div class="section-head analysis-section-head">
+      <div><span class="analysis-number">03</span><div><h2>Presidente × Governador</h2><p>Como as lideranças dos dois cargos se combinaram no território potiguar.</p></div></div>
+      <span class="rn-source-chip">OFICIAL TSE</span>
+    </div>
+
     <div class="analysis-kpis" id="crossKpis"></div>
-    <div class="analysis-grid-two">
-      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>Combinações mais frequentes</h3><p>Quem ficou em 1º para Presidente e Governador em cada município.</p></div></div><div id="pairList" class="pair-list"></div></article>
-      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>Consulta por município</h3><p>Veja lado a lado os dois resultados municipais.</p></div></div>
-        <input id="crossSearch" class="analysis-search" type="search" placeholder="Buscar município">
-        <div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>Município</th><th>Presidente</th><th>Governador</th></tr></thead><tbody id="crossTable"></tbody></table></div>
-      </article>
+
+    <div class="analysis-workbench">
+      <div class="analysis-main">
+        <section class="card analysis-map-card">
+          <div class="rn-total-map-head">
+            <div>
+              <div class="rn-map-titleline"><span class="rn-badge">Mapa territorial</span><span class="map-source">167 municípios</span></div>
+              <h2>Combinações de liderança</h2>
+              <p>Cada município recebe a cor da combinação entre quem ficou em 1º para Presidente e quem ficou em 1º para Governador.</p>
+            </div>
+            <label class="analysis-map-filter">
+              <span>Mostrar no mapa</span>
+              <select id="pairFilter"><option value="">Todas as combinações</option></select>
+            </label>
+          </div>
+          <div class="analysis-map-shell">
+            <svg id="crossMap" class="analysis-map" viewBox="0 0 760 560" aria-label="Mapa das combinações Presidente e Governador por município"></svg>
+            <div class="analysis-map-legend" id="crossLegend"></div>
+          </div>
+          <div class="analysis-map-caption" id="crossMapCaption">Carregando o cruzamento territorial…</div>
+        </section>
+
+        <section class="card analysis-detail-card">
+          <div class="analysis-card-head">
+            <div><h3>Combinações encontradas</h3><p>Selecione uma combinação para destacá-la no mapa e preparar uma publicação específica.</p></div>
+          </div>
+          <div id="pairList" class="pair-list"></div>
+        </section>
+
+        <section class="card analysis-detail-card">
+          <div class="analysis-card-head">
+            <div><h3>Consulta por município</h3><p>Confira os dois resultados lado a lado.</p></div>
+          </div>
+          <input id="crossSearch" class="analysis-search" type="search" placeholder="Buscar município">
+          <div class="analysis-table-wrap">
+            <table class="analysis-table"><thead><tr><th>Município</th><th>Presidente</th><th>Governador</th></tr></thead><tbody id="crossTable"></tbody></table>
+          </div>
+        </section>
+      </div>
+
+      <aside class="card analysis-publisher" id="publicacao-cruzamento">
+        <div class="publisher-head"><span>Publicação</span><strong>Presidente × Governador</strong><small id="crossPubMode">Mapa completo do RN</small></div>
+        <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+        <div class="canvas-box"><canvas id="crossCanvas" width="1080" height="1080"></canvas></div>
+        <div class="block-title text-title"><span>Texto</span><span id="crossChars">0 caracteres</span></div>
+        <textarea id="crossPostText"></textarea>
+        <div class="rn-actions analysis-actions">
+          <button class="btn" id="crossCopyText">Copiar texto</button>
+          <button class="btn" id="crossCopyImage">Copiar imagem</button>
+          <button class="btn primary" id="crossOpenX">Publicar no X</button>
+          <button class="btn" id="crossDownload">Baixar imagem</button>
+          <button class="btn primary full" id="crossShare">Compartilhar imagem + texto</button>
+        </div>
+        <p class="share-note">A publicação descreve padrões municipais agregados. Ela não afirma que os mesmos eleitores votaram nas duas candidaturas.</p>
+      </aside>
     </div>
   </section>
 
   <section class="analysis-section" id="participacao">
-    <div class="section-head analysis-heading"><div><span class="analysis-number">07</span><h2>Comparecimento, abstenção, brancos e nulos</h2></div><span>2026 · histórico de 2022 quando disponível</span></div>
-    <div class="analysis-kpis" id="participationKpis"></div>
-    <div class="analysis-grid-two">
-      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>RN: 2022 × 2026</h3><p>Comparação estadual do 1º turno.</p></div></div><div id="historyCompare"></div></article>
-      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>Extremos municipais</h3><p>Municípios que mais se destacam em participação e votos não válidos.</p></div></div>
-        <label class="analysis-select"><span>Indicador</span><select id="rankingSelect">
-          <option value="highest_abstention">Maior abstenção</option><option value="lowest_abstention">Menor abstenção</option>
-          <option value="highest_blank_president">Mais brancos · Presidente</option><option value="highest_null_president">Mais nulos · Presidente</option>
-          <option value="highest_blank_governor">Mais brancos · Governador</option><option value="highest_null_governor">Mais nulos · Governador</option>
-        </select></label>
-        <div id="rankingList" class="ranking-list"></div>
-      </article>
+    <div class="section-head analysis-section-head">
+      <div><span class="analysis-number">07</span><div><h2>Participação eleitoral</h2><p>Comparecimento, abstenção, votos brancos e nulos pelo território.</p></div></div>
+      <span class="rn-source-chip">OFICIAL TSE</span>
+    </div>
+
+    <div class="analysis-kpis participation-kpis" id="participationKpis"></div>
+
+    <div class="analysis-workbench">
+      <div class="analysis-main">
+        <section class="card analysis-map-card">
+          <div class="rn-total-map-head">
+            <div>
+              <div class="rn-map-titleline"><span class="rn-badge">Mapa municipal</span><span class="map-source">Escala percentual</span></div>
+              <h2 id="participationMapTitle">Abstenção por município</h2>
+              <p id="participationMapDescription">Quanto mais intensa a cor, maior o percentual do indicador selecionado.</p>
+            </div>
+            <label class="analysis-map-filter">
+              <span>Indicador</span>
+              <select id="metricSelect">
+                <option value="abstention_pct">Abstenção</option>
+                <option value="turnout_pct">Comparecimento</option>
+                <option value="president.blank_pct">Brancos · Presidente</option>
+                <option value="president.null_pct">Nulos · Presidente</option>
+                <option value="governor.blank_pct">Brancos · Governador</option>
+                <option value="governor.null_pct">Nulos · Governador</option>
+              </select>
+            </label>
+          </div>
+          <div class="analysis-map-shell">
+            <svg id="participationMap" class="analysis-map" viewBox="0 0 760 560" aria-label="Mapa de participação eleitoral por município"></svg>
+            <div class="analysis-scale" id="participationScale"></div>
+          </div>
+          <div class="analysis-map-caption" id="participationCaption">Carregando participação eleitoral…</div>
+        </section>
+
+        <section class="card analysis-detail-card">
+          <div class="analysis-card-head split">
+            <div><h3 id="rankingTitle">Municípios com maior abstenção</h3><p>Ranking calculado a partir dos resultados oficiais.</p></div>
+            <label class="analysis-small-select"><span>Ordenação</span><select id="rankingDirection"><option value="desc">Maiores</option><option value="asc">Menores</option></select></label>
+          </div>
+          <div id="rankingList" class="ranking-list"></div>
+        </section>
+
+        <section class="card analysis-detail-card history-card">
+          <div class="analysis-card-head"><div><h3>Comparação com 2022</h3><p>O histórico só entra quando a base oficial puder ser importada com segurança.</p></div></div>
+          <div id="historyCompare"></div>
+        </section>
+      </div>
+
+      <aside class="card analysis-publisher" id="publicacao-participacao">
+        <div class="publisher-head"><span>Publicação</span><strong id="participationPubTitle">Abstenção no RN</strong><small>Mapa municipal + destaques</small></div>
+        <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+        <div class="canvas-box"><canvas id="participationCanvas" width="1080" height="1080"></canvas></div>
+        <div class="block-title text-title"><span>Texto</span><span id="participationChars">0 caracteres</span></div>
+        <textarea id="participationPostText"></textarea>
+        <div class="rn-actions analysis-actions">
+          <button class="btn" id="participationCopyText">Copiar texto</button>
+          <button class="btn" id="participationCopyImage">Copiar imagem</button>
+          <button class="btn primary" id="participationOpenX">Publicar no X</button>
+          <button class="btn" id="participationDownload">Baixar imagem</button>
+          <button class="btn primary full" id="participationShare">Compartilhar imagem + texto</button>
+        </div>
+        <p class="share-note">Brancos e nulos são específicos do cargo selecionado. Comparecimento e abstenção se referem ao eleitorado contabilizado no recorte.</p>
+      </aside>
     </div>
   </section>
 
-  <section class="analysis-method card">
-    <h2>Metodologia</h2>
-    <p id="methodCross"></p><p id="methodParticipation"></p><p><strong>Fonte:</strong> <span id="methodSource"></span></p>
+  <section class="card analysis-method">
+    <div class="analysis-card-head"><div><span class="analysis-kicker">Transparência</span><h2>Como ler estes dados</h2></div></div>
+    <p id="methodCross"></p>
+    <p id="methodParticipation"></p>
+    <p><strong>Fonte:</strong> <span id="methodSource"></span></p>
   </section>
 </main>
-<footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Análises RN</strong><span>Dados agregados; interpretação jornalística com cautela metodológica.</span></div></footer>
+
+<footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Análises RN</strong><span>Mapas, dados e publicações a partir dos resultados oficiais.</span></div></footer>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador</a><a href="radar.html">Legislativo</a><a href="analises.html" class="active">Análises</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="analises.js?v=20261005-01"></script>
-</body></html>
+<script src="analises.js?v=20261005-refino2"></script>
+</body>
+</html>
