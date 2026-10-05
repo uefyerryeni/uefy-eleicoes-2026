@@ -199,7 +199,7 @@ function renderAll(){
     senateCandidateFilter='';
     $('#radarMapTitle').textContent='Quem teve a maior votação nominal para '+officeLabel()+' em cada município';
     $('#radarMapExplanation').textContent='O mapa mostra quem teve a maior votação nominal neste cargo em cada município. Para deputados, isso não indica candidatura eleita, pois a distribuição das vagas segue o sistema proporcional.';
-    $('#radarSummaryTitle').textContent='Municípios liderados';
+    $('#radarSummaryTitle').textContent='Maior votação nominal';
   }
   $('#radarElectoralNote').textContent=senate
     ?'Senado: “venceu o município” significa ter ficado em 1º lugar na votação local. Os dois senadores eleitos são definidos pela votação total no estado.'
@@ -237,7 +237,7 @@ function renderMap(){
   }).join('');
   $$('.radar-map-feature').forEach(el=>el.addEventListener('click',()=>selectMunicipality(el.dataset.mun,true)));
 
-  $('#radarLeaderSummary').innerHTML=summary.length?summary.slice(0,10).map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.number,x.name)+'"></i><span><strong>'+esc(candidateLabel(x))+'</strong><small>'+x.municipalities+' município(s) vencido(s)</small></span></div>').join(''):'<div class="rn-map-empty">Nenhum município encontrado para o filtro atual.</div>';
+  $('#radarLeaderSummary').innerHTML=summary.length?summary.slice(0,10).map(x=>'<div class="rn-leader-row"><i style="background:'+candidateColor(x.number,x.name)+'"></i><span><strong>'+esc(candidateLabel(x))+'</strong><small>'+x.municipalities+' município(s) '+(activeOffice()==='sen'?'vencido(s)':'com maior votação nominal')+'</small></span></div>').join(''):'<div class="rn-map-empty">Nenhum município encontrado para o filtro atual.</div>';
 
   const cities=$('#radarWinnerCities');
   if(cities){
@@ -308,7 +308,7 @@ function mapPublicationText(){
     :'MAPA DE MAIOR VOTAÇÃO NOMINAL POR MUNICÍPIO';
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | '+officeLabel().toUpperCase()+' · RN',title];
-    summary.slice(0,5).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'));
+    summary.slice(0,5).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s)'+(activeOffice()==='sen'?' vencido(s)':' com maior votação nominal')));
     if(selectedSenate){
       const highlights=senateMajorCityHighlights();
       if(highlights.length)lines.push('Destaques: '+highlights.slice(0,5).join(', ')+'.');
@@ -324,7 +324,7 @@ function mapPublicationText(){
     const wins=senateWinningMunicipalities();
     if(wins.length)lines.push('Cidades: '+wins.slice(0,20).join(', ')+(wins.length>20?' e outras.':'.'));
   }else{
-    summary.slice(0,8).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s) vencido(s)'));
+    summary.slice(0,8).forEach(x=>lines.push(candidateLabel(x)+' — '+x.municipalities+' município(s) '+(activeOffice()==='sen'?'vencido(s)':'com maior votação nominal')));
   }
   const natal=rawMapCandidate('Natal')||rawMapCandidate('NATAL');if(natal)lines.push('','Natal: '+candidateLabel(natal)+' ficou em 1º lugar com '+pct(natal.pct)+'.');
   lines.push('','Base municipal: '+Number(m.municipalities_read||0)+'/167 municípios lidos.');
