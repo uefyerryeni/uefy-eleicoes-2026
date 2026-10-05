@@ -1,92 +1,92 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-04T22:34:55-03:00",
-  "source_generated_at": "04/10/2026 · 22:07:31",
+  "generated_at": "2026-10-04T22:53:09-03:00",
+  "source_generated_at": "04/10/2026 · 22:51:11",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
-  "progress": 99.99,
+  "progress": 100.0,
   "scope": "Rio Grande do Norte",
   "offices": {
     "sen": {
       "label": "Senador",
-      "progress": 99.99,
+      "progress": 100.0,
       "candidates_with_votes": 13,
       "statewide_candidates": [
         {
           "number": "200",
           "name": "STYVENSON VALENTIM",
           "party": "PODE",
-          "votes": 1054851,
+          "votes": 1055000,
           "pct": 29.25
         },
         {
           "number": "131",
           "name": "SAMANDA DE LULA",
           "party": "PT",
-          "votes": 635854,
+          "votes": 635924,
           "pct": 17.63
         },
         {
           "number": "555",
           "name": "ZENAIDE MAIA",
           "party": "PSD",
-          "votes": 630071,
+          "votes": 630159,
           "pct": 17.47
         },
         {
           "number": "222",
           "name": "CORONEL HÉLIO",
           "party": "PL",
-          "votes": 620278,
+          "votes": 620354,
           "pct": 17.2
         },
         {
           "number": "123",
           "name": "RAFAEL MOTTA",
           "party": "PDT",
-          "votes": 510616,
+          "votes": 510674,
           "pct": 14.16
         },
         {
           "number": "444",
           "name": "TÉRCIO TINÔCO",
           "party": "UNIÃO",
-          "votes": 102806,
+          "votes": 102834,
           "pct": 2.85
         },
         {
           "number": "500",
           "name": "SANDRO PIMENTEL",
           "party": "PSOL",
-          "votes": 22233,
+          "votes": 22237,
           "pct": 0.62
         },
         {
           "number": "501",
           "name": "SONIA GODEIRO",
           "party": "PSOL",
-          "votes": 14334,
+          "votes": 14338,
           "pct": 0.4
         },
         {
           "number": "800",
           "name": "PROFESSOR GUILHERME",
           "party": "UP",
-          "votes": 5510,
+          "votes": 5511,
           "pct": 0.15
         },
         {
           "number": "166",
           "name": "ROSÁLIA FERNANDES",
           "party": "PSTU",
-          "votes": 3794,
+          "votes": 3795,
           "pct": 0.11
         },
         {
           "number": "161",
           "name": "LUCIANA MANDU",
           "party": "PSTU",
-          "votes": 2485,
+          "votes": 2486,
           "pct": 0.07
         },
         {
@@ -112,49 +112,49 @@
     },
     "depf": {
       "label": "Deputado federal",
-      "progress": 99.99,
+      "progress": 100.0,
       "candidates_with_votes": 99,
       "statewide_candidates": [
         {
           "number": "1311",
           "name": "NATÁLIA BONAVIDES",
           "party": "PT",
-          "votes": 215483,
+          "votes": 215509,
           "pct": 10.95
         },
         {
           "number": "2233",
           "name": "NINA",
           "party": "PL",
-          "votes": 185231,
+          "votes": 185248,
           "pct": 9.41
         },
         {
           "number": "4444",
           "name": "BENES LEOCÁDIO",
           "party": "UNIÃO",
-          "votes": 171328,
+          "votes": 171396,
           "pct": 8.71
         },
         {
           "number": "2222",
           "name": "SARGENTO GONÇALVES",
           "party": "PL",
-          "votes": 154055,
+          "votes": 154073,
           "pct": 7.83
         },
         {
           "number": "2210",
           "name": "GENERAL GIRÃO",
           "party": "PL",
-          "votes": 133234,
+          "votes": 133258,
           "pct": 6.77
         },
         {
           "number": "4300",
           "name": "DR. BERNARDO",
           "party": "PV",
-          "votes": 130828,
+          "votes": 130835,
           "pct": 6.65
         },
         {
@@ -168,7 +168,7 @@
           "number": "1155",
           "name": "ROBINSON FARIA",
           "party": "PP",
-          "votes": 123005,
+          "votes": 123008,
           "pct": 6.25
         },
         {
@@ -182,28 +182,28 @@
           "number": "4343",
           "name": "THABATTA PIMENTA",
           "party": "PV",
-          "votes": 92735,
+          "votes": 92743,
           "pct": 4.71
         },
         {
           "number": "2200",
           "name": "JUNINHO SAIA RODADA",
           "party": "PL",
-          "votes": 84127,
+          "votes": 84156,
           "pct": 4.28
         },
         {
           "number": "1333",
           "name": "MINEIRO",
           "party": "PT",
-          "votes": 75087,
+          "votes": 75091,
           "pct": 3.82
         },
         {
           "number": "2211",
           "name": "CARLA DICKSON",
           "party": "PL",
-          "votes": 67629,
+          "votes": 67632,
           "pct": 3.44
         },
         {
@@ -217,28 +217,28 @@
           "number": "4455",
           "name": "FAUSTINO",
           "party": "UNIÃO",
-          "votes": 40913,
+          "votes": 40922,
           "pct": 2.08
         },
         {
           "number": "1313",
           "name": "BRISA",
           "party": "PT",
-          "votes": 27652,
+          "votes": 27676,
           "pct": 1.41
         },
         {
           "number": "2255",
           "name": "PEDRO FILHO",
           "party": "PL",
-          "votes": 19499,
+          "votes": 19500,
           "pct": 0.99
         },
         {
           "number": "2244",
           "name": "CORONEL BRILHANTE",
           "party": "PL",
-          "votes": 12116,
+          "votes": 12117,
           "pct": 0.62
         },
         {
@@ -287,7 +287,7 @@
           "number": "4555",
           "name": "NEGA DE NENEM BORGES",
           "party": "PSDB",
-          "votes": 4274,
+          "votes": 4275,
           "pct": 0.22
         },
         {
@@ -315,7 +315,7 @@
           "number": "1233",
           "name": "DR. ESTÁCIO",
           "party": "PDT",
-          "votes": 2199,
+          "votes": 2200,
           "pct": 0.11
         },
         {
@@ -350,14 +350,14 @@
           "number": "1234",
           "name": "SUSAPE AUGUSTO",
           "party": "PDT",
-          "votes": 1949,
+          "votes": 1951,
           "pct": 0.1
         },
         {
           "number": "4512",
           "name": "FLAVIO LUIZ",
           "party": "PSDB",
-          "votes": 1838,
+          "votes": 1839,
           "pct": 0.09
         },
         {
@@ -448,7 +448,7 @@
           "number": "2570",
           "name": "GARIBALDE LEITE",
           "party": "PRD",
-          "votes": 712,
+          "votes": 713,
           "pct": 0.04
         },
         {
@@ -817,14 +817,14 @@
     },
     "depe": {
       "label": "Deputado estadual",
-      "progress": 99.99,
+      "progress": 100.0,
       "candidates_with_votes": 148,
       "statewide_candidates": [
         {
           "number": "22222",
           "name": "CORONEL AZEVEDO",
           "party": "PL",
-          "votes": 105379,
+          "votes": 105403,
           "pct": 5.43
         },
         {
@@ -838,28 +838,28 @@
           "number": "44555",
           "name": "ROBSON CARVALHO",
           "party": "UNIÃO",
-          "votes": 69537,
+          "votes": 69542,
           "pct": 3.58
         },
         {
           "number": "11555",
           "name": "JULIO CESAR",
           "party": "PP",
-          "votes": 66748,
+          "votes": 66750,
           "pct": 3.44
         },
         {
           "number": "11999",
           "name": "KLEBER RODRIGUES",
           "party": "PP",
-          "votes": 66166,
+          "votes": 66172,
           "pct": 3.41
         },
         {
           "number": "13222",
           "name": "FRANCISCO DO PT",
           "party": "PT",
-          "votes": 62655,
+          "votes": 62660,
           "pct": 3.23
         },
         {
@@ -873,21 +873,21 @@
           "number": "44444",
           "name": "CINTHIA DE ALLYSON",
           "party": "UNIÃO",
-          "votes": 61584,
+          "votes": 61586,
           "pct": 3.17
         },
         {
           "number": "13123",
           "name": "ISOLDA DANTAS",
           "party": "PT",
-          "votes": 60226,
+          "votes": 60239,
           "pct": 3.1
         },
         {
           "number": "13613",
           "name": "DIVANEIDE BASÍLIO",
           "party": "PT",
-          "votes": 59664,
+          "votes": 59680,
           "pct": 3.07
         },
         {
@@ -901,14 +901,14 @@
           "number": "22100",
           "name": "DR. KERGINALDO",
           "party": "PL",
-          "votes": 54134,
+          "votes": 54165,
           "pct": 2.79
         },
         {
           "number": "45123",
           "name": "DR GUSTAVO SOARES",
           "party": "PSDB",
-          "votes": 53653,
+          "votes": 53701,
           "pct": 2.76
         },
         {
@@ -922,28 +922,28 @@
           "number": "13111",
           "name": "DANIEL VALENÇA",
           "party": "PT",
-          "votes": 52092,
+          "votes": 52099,
           "pct": 2.68
         },
         {
           "number": "22333",
           "name": "TOMBA FARIAS",
           "party": "PL",
-          "votes": 50307,
+          "votes": 50350,
           "pct": 2.59
         },
         {
           "number": "45555",
           "name": "CRISTIANE DANTAS",
           "party": "PSDB",
-          "votes": 49586,
+          "votes": 49589,
           "pct": 2.55
         },
         {
           "number": "22888",
           "name": "GUSTAVO CARVALHO",
           "party": "PL",
-          "votes": 49528,
+          "votes": 49531,
           "pct": 2.55
         },
         {
@@ -951,20 +951,20 @@
           "name": "BIBIANO",
           "party": "MDB",
           "votes": 49038,
-          "pct": 2.53
+          "pct": 2.52
         },
         {
           "number": "43666",
           "name": "EUDIANE MACEDO",
           "party": "PV",
-          "votes": 48487,
+          "votes": 48489,
           "pct": 2.5
         },
         {
           "number": "43333",
           "name": "IVANILSON OLIVEIRA",
           "party": "PV",
-          "votes": 47830,
+          "votes": 47831,
           "pct": 2.46
         },
         {
@@ -978,7 +978,7 @@
           "number": "45111",
           "name": "ERIKO JÁCOME",
           "party": "PSDB",
-          "votes": 45875,
+          "votes": 45883,
           "pct": 2.36
         },
         {
@@ -992,14 +992,14 @@
           "number": "15678",
           "name": "WALTER ALVES",
           "party": "MDB",
-          "votes": 44216,
+          "votes": 44217,
           "pct": 2.28
         },
         {
           "number": "22555",
           "name": "LUÍZ EDUARDO",
           "party": "PL",
-          "votes": 39916,
+          "votes": 39918,
           "pct": 2.06
         },
         {
@@ -1013,7 +1013,7 @@
           "number": "22777",
           "name": "CAMILA ARAÚJO",
           "party": "PL",
-          "votes": 31435,
+          "votes": 31438,
           "pct": 1.62
         },
         {
@@ -1041,49 +1041,49 @@
           "number": "22444",
           "name": "GABRIEL CÉSAR",
           "party": "PL",
-          "votes": 20713,
+          "votes": 20714,
           "pct": 1.07
         },
         {
           "number": "45000",
           "name": "TAVEIRA JÚNIOR",
           "party": "PSDB",
-          "votes": 16847,
+          "votes": 16848,
           "pct": 0.87
         },
         {
           "number": "22762",
           "name": "ANNE LAGARTIXA",
           "party": "PL",
-          "votes": 15046,
+          "votes": 15047,
           "pct": 0.77
         },
         {
           "number": "15222",
           "name": "IVAN JUNIOR",
           "party": "MDB",
-          "votes": 14701,
+          "votes": 14702,
           "pct": 0.76
         },
         {
           "number": "22022",
           "name": "JOSEMAR VARELA",
           "party": "PL",
-          "votes": 14675,
+          "votes": 14678,
           "pct": 0.76
         },
         {
           "number": "50100",
           "name": "LOURENÇO",
           "party": "PSOL",
-          "votes": 14270,
+          "votes": 14272,
           "pct": 0.73
         },
         {
           "number": "22456",
           "name": "BISPO PAULO LUIZ",
           "party": "PL",
-          "votes": 12565,
+          "votes": 12567,
           "pct": 0.65
         },
         {
@@ -1104,7 +1104,7 @@
           "number": "45700",
           "name": "LÉO SOUZA",
           "party": "PSDB",
-          "votes": 6571,
+          "votes": 6572,
           "pct": 0.34
         },
         {
@@ -1146,14 +1146,14 @@
           "number": "13113",
           "name": "JULIANA GARCIA",
           "party": "PT",
-          "votes": 3710,
+          "votes": 3712,
           "pct": 0.19
         },
         {
           "number": "13777",
           "name": "ALINE JULIETE",
           "party": "PT",
-          "votes": 3531,
+          "votes": 3533,
           "pct": 0.18
         },
         {
@@ -1238,7 +1238,7 @@
           "name": "ANGELA PAIVA",
           "party": "MDB",
           "votes": 1845,
-          "pct": 0.1
+          "pct": 0.09
         },
         {
           "number": "18888",
@@ -1307,7 +1307,7 @@
           "number": "13333",
           "name": "GERLAILSON ABRANTES (NENEM)",
           "party": "PT",
-          "votes": 1182,
+          "votes": 1183,
           "pct": 0.06
         },
         {
@@ -1363,14 +1363,14 @@
           "number": "22722",
           "name": "DANIELE PRADO",
           "party": "PL",
-          "votes": 884,
+          "votes": 885,
           "pct": 0.05
         },
         {
           "number": "44333",
           "name": "NENEL LUCAS",
           "party": "UNIÃO",
-          "votes": 846,
+          "votes": 847,
           "pct": 0.04
         },
         {
@@ -1398,7 +1398,7 @@
           "number": "45456",
           "name": "REITORA LUDIMILLA",
           "party": "PSDB",
-          "votes": 769,
+          "votes": 770,
           "pct": 0.04
         },
         {
@@ -1832,7 +1832,7 @@
           "number": "18123",
           "name": "GUILHERME QUEIROZ",
           "party": "REDE",
-          "votes": 45,
+          "votes": 46,
           "pct": 0.01
         },
         {
@@ -36197,7 +36197,7 @@
       "headline": "Natal responde por 54,6% dos votos de ALINE JULIETE contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "54,6%",
-      "calculation": "1.929 votos em Natal ÷ 3.531 votos no RN = 54,6%.",
+      "calculation": "1.929 votos em Natal ÷ 3.533 votos no RN = 54,6%.",
       "post_text": "Natal concentra 54,6% dos votos de ALINE JULIETE contabilizados no RN; o restante do estado responde por 45,4%.",
       "breakdown": [
         {
@@ -36206,11 +36206,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "1.602"
+          "value": "1.604"
         },
         {
           "label": "Total no RN",
-          "value": "3.531"
+          "value": "3.533"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -36264,7 +36264,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "3.531"
+          "value": "3.533"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -36278,7 +36278,7 @@
       "headline": "Os três municípios com mais votos para ALINE JULIETE somam 72,0% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.929 votos (54,6% do total estadual).",
       "display_value": "72,0%",
-      "calculation": "2.544 votos nos três municípios com maior votação ÷ 3.531 votos no RN = 72,0%.",
+      "calculation": "2.544 votos nos três municípios com maior votação ÷ 3.533 votos no RN = 72,0%.",
       "post_text": "Os três municípios com mais votos para ALINE JULIETE somam 72,0% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -36287,7 +36287,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "3.531"
+          "value": "3.533"
         },
         {
           "label": "Maior votação municipal",
@@ -36737,7 +36737,7 @@
       "headline": "Natal responde por 54,2% dos votos de ANNE LAGARTIXA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "54,2%",
-      "calculation": "8.152 votos em Natal ÷ 15.046 votos no RN = 54,2%.",
+      "calculation": "8.152 votos em Natal ÷ 15.047 votos no RN = 54,2%.",
       "post_text": "Natal concentra 54,2% dos votos de ANNE LAGARTIXA contabilizados no RN; o restante do estado responde por 45,8%.",
       "breakdown": [
         {
@@ -36746,11 +36746,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "6.894"
+          "value": "6.895"
         },
         {
           "label": "Total no RN",
-          "value": "15.046"
+          "value": "15.047"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -36804,7 +36804,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "15.046"
+          "value": "15.047"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -36818,7 +36818,7 @@
       "headline": "Os três municípios com mais votos para ANNE LAGARTIXA somam 65,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 8.152 votos (54,2% do total estadual).",
       "display_value": "65,5%",
-      "calculation": "9.849 votos nos três municípios com maior votação ÷ 15.046 votos no RN = 65,5%.",
+      "calculation": "9.849 votos nos três municípios com maior votação ÷ 15.047 votos no RN = 65,5%.",
       "post_text": "Os três municípios com mais votos para ANNE LAGARTIXA somam 65,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -36827,7 +36827,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "15.046"
+          "value": "15.047"
         },
         {
           "label": "Maior votação municipal",
@@ -37385,7 +37385,7 @@
       "headline": "Natal responde por 41,0% dos votos de BISPO PAULO LUIZ contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "41,0%",
-      "calculation": "5.154 votos em Natal ÷ 12.565 votos no RN = 41,0%.",
+      "calculation": "5.154 votos em Natal ÷ 12.567 votos no RN = 41,0%.",
       "post_text": "Natal concentra 41,0% dos votos de BISPO PAULO LUIZ contabilizados no RN; o restante do estado responde por 59,0%.",
       "breakdown": [
         {
@@ -37394,11 +37394,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "7.411"
+          "value": "7.413"
         },
         {
           "label": "Total no RN",
-          "value": "12.565"
+          "value": "12.567"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -37452,7 +37452,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "12.565"
+          "value": "12.567"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -37466,7 +37466,7 @@
       "headline": "Os três municípios com mais votos para BISPO PAULO LUIZ somam 57,8% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 5.154 votos (41,0% do total estadual).",
       "display_value": "57,8%",
-      "calculation": "7.266 votos nos três municípios com maior votação ÷ 12.565 votos no RN = 57,8%.",
+      "calculation": "7.266 votos nos três municípios com maior votação ÷ 12.567 votos no RN = 57,8%.",
       "post_text": "Os três municípios com mais votos para BISPO PAULO LUIZ somam 57,8% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -37475,7 +37475,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "12.565"
+          "value": "12.567"
         },
         {
           "label": "Maior votação municipal",
@@ -37601,7 +37601,7 @@
       "headline": "Natal responde por 57,2% dos votos de CAMILA ARAÚJO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "57,2%",
-      "calculation": "17.969 votos em Natal ÷ 31.435 votos no RN = 57,2%.",
+      "calculation": "17.969 votos em Natal ÷ 31.438 votos no RN = 57,2%.",
       "post_text": "Natal concentra 57,2% dos votos de CAMILA ARAÚJO contabilizados no RN; o restante do estado responde por 42,8%.",
       "breakdown": [
         {
@@ -37610,11 +37610,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "13.466"
+          "value": "13.469"
         },
         {
           "label": "Total no RN",
-          "value": "31.435"
+          "value": "31.438"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -37668,7 +37668,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "31.435"
+          "value": "31.438"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -37682,7 +37682,7 @@
       "headline": "Os três municípios com mais votos para CAMILA ARAÚJO somam 70,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 17.969 votos (57,2% do total estadual).",
       "display_value": "70,5%",
-      "calculation": "22.155 votos nos três municípios com maior votação ÷ 31.435 votos no RN = 70,5%.",
+      "calculation": "22.155 votos nos três municípios com maior votação ÷ 31.438 votos no RN = 70,5%.",
       "post_text": "Os três municípios com mais votos para CAMILA ARAÚJO somam 70,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -37691,7 +37691,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "31.435"
+          "value": "31.438"
         },
         {
           "label": "Maior votação municipal",
@@ -38141,7 +38141,7 @@
       "headline": "Natal responde por 7,9% dos votos de CINTHIA DE ALLYSON contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "7,9%",
-      "calculation": "4.863 votos em Natal ÷ 61.584 votos no RN = 7,9%.",
+      "calculation": "4.863 votos em Natal ÷ 61.586 votos no RN = 7,9%.",
       "post_text": "Natal concentra 7,9% dos votos de CINTHIA DE ALLYSON contabilizados no RN; o restante do estado responde por 92,1%.",
       "breakdown": [
         {
@@ -38150,11 +38150,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "56.721"
+          "value": "56.723"
         },
         {
           "label": "Total no RN",
-          "value": "61.584"
+          "value": "61.586"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -38208,7 +38208,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "61.584"
+          "value": "61.586"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -38222,7 +38222,7 @@
       "headline": "Os três municípios com mais votos para CINTHIA DE ALLYSON somam 65,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é MOSSORÓ, com 32.437 votos (52,7% do total estadual).",
       "display_value": "65,1%",
-      "calculation": "40.089 votos nos três municípios com maior votação ÷ 61.584 votos no RN = 65,1%.",
+      "calculation": "40.089 votos nos três municípios com maior votação ÷ 61.586 votos no RN = 65,1%.",
       "post_text": "Os três municípios com mais votos para CINTHIA DE ALLYSON somam 65,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -38231,7 +38231,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "61.584"
+          "value": "61.586"
         },
         {
           "label": "Maior votação municipal",
@@ -38465,7 +38465,7 @@
       "headline": "Natal responde por 37,4% dos votos de CORONEL AZEVEDO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "37,4%",
-      "calculation": "39.416 votos em Natal ÷ 105.379 votos no RN = 37,4%.",
+      "calculation": "39.416 votos em Natal ÷ 105.403 votos no RN = 37,4%.",
       "post_text": "Natal concentra 37,4% dos votos de CORONEL AZEVEDO contabilizados no RN; o restante do estado responde por 62,6%.",
       "breakdown": [
         {
@@ -38474,11 +38474,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "65.963"
+          "value": "65.987"
         },
         {
           "label": "Total no RN",
-          "value": "105.379"
+          "value": "105.403"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -38532,7 +38532,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "105.379"
+          "value": "105.403"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -38546,7 +38546,7 @@
       "headline": "Os três municípios com mais votos para CORONEL AZEVEDO somam 51,3% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 39.416 votos (37,4% do total estadual).",
       "display_value": "51,3%",
-      "calculation": "54.021 votos nos três municípios com maior votação ÷ 105.379 votos no RN = 51,3%.",
+      "calculation": "54.021 votos nos três municípios com maior votação ÷ 105.403 votos no RN = 51,3%.",
       "post_text": "Os três municípios com mais votos para CORONEL AZEVEDO somam 51,3% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -38555,7 +38555,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "105.379"
+          "value": "105.403"
         },
         {
           "label": "Maior votação municipal",
@@ -38573,7 +38573,7 @@
       "headline": "Natal responde por 11,9% dos votos de CRISTIANE DANTAS contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "11,9%",
-      "calculation": "5.884 votos em Natal ÷ 49.586 votos no RN = 11,9%.",
+      "calculation": "5.884 votos em Natal ÷ 49.589 votos no RN = 11,9%.",
       "post_text": "Natal concentra 11,9% dos votos de CRISTIANE DANTAS contabilizados no RN; o restante do estado responde por 88,1%.",
       "breakdown": [
         {
@@ -38582,11 +38582,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "43.702"
+          "value": "43.705"
         },
         {
           "label": "Total no RN",
-          "value": "49.586"
+          "value": "49.589"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -38640,7 +38640,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "49.586"
+          "value": "49.589"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -38654,7 +38654,7 @@
       "headline": "Os três municípios com mais votos para CRISTIANE DANTAS somam 43,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é SÃO JOSÉ DE MIPIBU, com 13.271 votos (26,8% do total estadual).",
       "display_value": "43,9%",
-      "calculation": "21.749 votos nos três municípios com maior votação ÷ 49.586 votos no RN = 43,9%.",
+      "calculation": "21.749 votos nos três municípios com maior votação ÷ 49.589 votos no RN = 43,9%.",
       "post_text": "Os três municípios com mais votos para CRISTIANE DANTAS somam 43,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -38663,7 +38663,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "49.586"
+          "value": "49.589"
         },
         {
           "label": "Maior votação municipal",
@@ -38897,7 +38897,7 @@
       "headline": "Natal responde por 56,0% dos votos de DANIEL VALENÇA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "56,0%",
-      "calculation": "29.174 votos em Natal ÷ 52.092 votos no RN = 56,0%.",
+      "calculation": "29.174 votos em Natal ÷ 52.099 votos no RN = 56,0%.",
       "post_text": "Natal concentra 56,0% dos votos de DANIEL VALENÇA contabilizados no RN; o restante do estado responde por 44,0%.",
       "breakdown": [
         {
@@ -38906,11 +38906,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "22.918"
+          "value": "22.925"
         },
         {
           "label": "Total no RN",
-          "value": "52.092"
+          "value": "52.099"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -38964,7 +38964,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "52.092"
+          "value": "52.099"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -38978,7 +38978,7 @@
       "headline": "Os três municípios com mais votos para DANIEL VALENÇA somam 69,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 29.174 votos (56,0% do total estadual).",
       "display_value": "69,7%",
-      "calculation": "36.295 votos nos três municípios com maior votação ÷ 52.092 votos no RN = 69,7%.",
+      "calculation": "36.295 votos nos três municípios com maior votação ÷ 52.099 votos no RN = 69,7%.",
       "post_text": "Os três municípios com mais votos para DANIEL VALENÇA somam 69,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -38987,7 +38987,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "52.092"
+          "value": "52.099"
         },
         {
           "label": "Maior votação municipal",
@@ -39002,11 +39002,11 @@
       "type": "capital_share",
       "office": "depe",
       "candidate": "DANIELE PRADO",
-      "headline": "Natal responde por 35,0% dos votos de DANIELE PRADO contabilizados no RN.",
+      "headline": "Natal responde por 34,9% dos votos de DANIELE PRADO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
-      "display_value": "35,0%",
-      "calculation": "309 votos em Natal ÷ 884 votos no RN = 35,0%.",
-      "post_text": "Natal concentra 35,0% dos votos de DANIELE PRADO contabilizados no RN; o restante do estado responde por 65,0%.",
+      "display_value": "34,9%",
+      "calculation": "309 votos em Natal ÷ 885 votos no RN = 34,9%.",
+      "post_text": "Natal concentra 34,9% dos votos de DANIELE PRADO contabilizados no RN; o restante do estado responde por 65,1%.",
       "breakdown": [
         {
           "label": "Natal",
@@ -39014,11 +39014,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "575"
+          "value": "576"
         },
         {
           "label": "Total no RN",
-          "value": "884"
+          "value": "885"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -39072,7 +39072,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "884"
+          "value": "885"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -39083,11 +39083,11 @@
       "type": "top_municipalities",
       "office": "depe",
       "candidate": "DANIELE PRADO",
-      "headline": "Os três municípios com mais votos para DANIELE PRADO somam 73,9% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para DANIELE PRADO somam 73,8% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é PARNAMIRIM, com 312 votos (35,3% do total estadual).",
-      "display_value": "73,9%",
-      "calculation": "653 votos nos três municípios com maior votação ÷ 884 votos no RN = 73,9%.",
-      "post_text": "Os três municípios com mais votos para DANIELE PRADO somam 73,9% da votação estadual registrada da candidatura.",
+      "display_value": "73,8%",
+      "calculation": "653 votos nos três municípios com maior votação ÷ 885 votos no RN = 73,8%.",
+      "post_text": "Os três municípios com mais votos para DANIELE PRADO somam 73,8% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -39095,7 +39095,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "884"
+          "value": "885"
         },
         {
           "label": "Maior votação municipal",
@@ -39545,7 +39545,7 @@
       "headline": "Natal responde por 41,1% dos votos de DIVANEIDE BASÍLIO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "41,1%",
-      "calculation": "24.535 votos em Natal ÷ 59.664 votos no RN = 41,1%.",
+      "calculation": "24.535 votos em Natal ÷ 59.680 votos no RN = 41,1%.",
       "post_text": "Natal concentra 41,1% dos votos de DIVANEIDE BASÍLIO contabilizados no RN; o restante do estado responde por 58,9%.",
       "breakdown": [
         {
@@ -39554,11 +39554,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "35.129"
+          "value": "35.145"
         },
         {
           "label": "Total no RN",
-          "value": "59.664"
+          "value": "59.680"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -39612,7 +39612,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "59.664"
+          "value": "59.680"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -39626,7 +39626,7 @@
       "headline": "Os três municípios com mais votos para DIVANEIDE BASÍLIO somam 55,6% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 24.535 votos (41,1% do total estadual).",
       "display_value": "55,6%",
-      "calculation": "33.197 votos nos três municípios com maior votação ÷ 59.664 votos no RN = 55,6%.",
+      "calculation": "33.197 votos nos três municípios com maior votação ÷ 59.680 votos no RN = 55,6%.",
       "post_text": "Os três municípios com mais votos para DIVANEIDE BASÍLIO somam 55,6% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -39635,7 +39635,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "59.664"
+          "value": "59.680"
         },
         {
           "label": "Maior votação municipal",
@@ -39761,7 +39761,7 @@
       "headline": "Natal responde por 4,7% dos votos de DR GUSTAVO SOARES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "4,7%",
-      "calculation": "2.543 votos em Natal ÷ 53.653 votos no RN = 4,7%.",
+      "calculation": "2.543 votos em Natal ÷ 53.701 votos no RN = 4,7%.",
       "post_text": "Natal concentra 4,7% dos votos de DR GUSTAVO SOARES contabilizados no RN; o restante do estado responde por 95,3%.",
       "breakdown": [
         {
@@ -39770,11 +39770,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "51.110"
+          "value": "51.158"
         },
         {
           "label": "Total no RN",
-          "value": "53.653"
+          "value": "53.701"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -39828,7 +39828,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "53.653"
+          "value": "53.701"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -39842,7 +39842,7 @@
       "headline": "Os três municípios com mais votos para DR GUSTAVO SOARES somam 47,0% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é ASSÚ, com 19.319 votos (36,0% do total estadual).",
       "display_value": "47,0%",
-      "calculation": "25.241 votos nos três municípios com maior votação ÷ 53.653 votos no RN = 47,0%.",
+      "calculation": "25.241 votos nos três municípios com maior votação ÷ 53.701 votos no RN = 47,0%.",
       "post_text": "Os três municípios com mais votos para DR GUSTAVO SOARES somam 47,0% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -39851,7 +39851,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "53.653"
+          "value": "53.701"
         },
         {
           "label": "Maior votação municipal",
@@ -39977,7 +39977,7 @@
       "headline": "Natal responde por 6,3% dos votos de DR. KERGINALDO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "6,3%",
-      "calculation": "3.393 votos em Natal ÷ 54.134 votos no RN = 6,3%.",
+      "calculation": "3.393 votos em Natal ÷ 54.165 votos no RN = 6,3%.",
       "post_text": "Natal concentra 6,3% dos votos de DR. KERGINALDO contabilizados no RN; o restante do estado responde por 93,7%.",
       "breakdown": [
         {
@@ -39986,11 +39986,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "50.741"
+          "value": "50.772"
         },
         {
           "label": "Total no RN",
-          "value": "54.134"
+          "value": "54.165"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -40044,7 +40044,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "54.134"
+          "value": "54.165"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -40058,7 +40058,7 @@
       "headline": "Os três municípios com mais votos para DR. KERGINALDO somam 22,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é CARAÚBAS, com 4.693 votos (8,7% do total estadual).",
       "display_value": "22,2%",
-      "calculation": "12.037 votos nos três municípios com maior votação ÷ 54.134 votos no RN = 22,2%.",
+      "calculation": "12.037 votos nos três municípios com maior votação ÷ 54.165 votos no RN = 22,2%.",
       "post_text": "Os três municípios com mais votos para DR. KERGINALDO somam 22,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -40067,7 +40067,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "54.134"
+          "value": "54.165"
         },
         {
           "label": "Maior votação municipal",
@@ -40841,7 +40841,7 @@
       "headline": "Natal responde por 43,4% dos votos de ERIKO JÁCOME contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "43,4%",
-      "calculation": "19.921 votos em Natal ÷ 45.875 votos no RN = 43,4%.",
+      "calculation": "19.921 votos em Natal ÷ 45.883 votos no RN = 43,4%.",
       "post_text": "Natal concentra 43,4% dos votos de ERIKO JÁCOME contabilizados no RN; o restante do estado responde por 56,6%.",
       "breakdown": [
         {
@@ -40850,11 +40850,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "25.954"
+          "value": "25.962"
         },
         {
           "label": "Total no RN",
-          "value": "45.875"
+          "value": "45.883"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -40908,7 +40908,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "45.875"
+          "value": "45.883"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -40922,7 +40922,7 @@
       "headline": "Os três municípios com mais votos para ERIKO JÁCOME somam 54,0% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19.921 votos (43,4% do total estadual).",
       "display_value": "54,0%",
-      "calculation": "24.790 votos nos três municípios com maior votação ÷ 45.875 votos no RN = 54,0%.",
+      "calculation": "24.790 votos nos três municípios com maior votação ÷ 45.883 votos no RN = 54,0%.",
       "post_text": "Os três municípios com mais votos para ERIKO JÁCOME somam 54,0% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -40931,7 +40931,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "45.875"
+          "value": "45.883"
         },
         {
           "label": "Maior votação municipal",
@@ -40949,7 +40949,7 @@
       "headline": "Natal responde por 28,8% dos votos de EUDIANE MACEDO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "28,8%",
-      "calculation": "13.984 votos em Natal ÷ 48.487 votos no RN = 28,8%.",
+      "calculation": "13.984 votos em Natal ÷ 48.489 votos no RN = 28,8%.",
       "post_text": "Natal concentra 28,8% dos votos de EUDIANE MACEDO contabilizados no RN; o restante do estado responde por 71,2%.",
       "breakdown": [
         {
@@ -40958,11 +40958,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "34.503"
+          "value": "34.505"
         },
         {
           "label": "Total no RN",
-          "value": "48.487"
+          "value": "48.489"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -41016,7 +41016,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "48.487"
+          "value": "48.489"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -41030,7 +41030,7 @@
       "headline": "Os três municípios com mais votos para EUDIANE MACEDO somam 35,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 13.984 votos (28,8% do total estadual).",
       "display_value": "35,4%",
-      "calculation": "17.144 votos nos três municípios com maior votação ÷ 48.487 votos no RN = 35,4%.",
+      "calculation": "17.144 votos nos três municípios com maior votação ÷ 48.489 votos no RN = 35,4%.",
       "post_text": "Os três municípios com mais votos para EUDIANE MACEDO somam 35,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -41039,7 +41039,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "48.487"
+          "value": "48.489"
         },
         {
           "label": "Maior votação municipal",
@@ -41381,7 +41381,7 @@
       "headline": "Natal responde por 14,7% dos votos de FRANCISCO DO PT contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "14,7%",
-      "calculation": "9.213 votos em Natal ÷ 62.655 votos no RN = 14,7%.",
+      "calculation": "9.213 votos em Natal ÷ 62.660 votos no RN = 14,7%.",
       "post_text": "Natal concentra 14,7% dos votos de FRANCISCO DO PT contabilizados no RN; o restante do estado responde por 85,3%.",
       "breakdown": [
         {
@@ -41390,11 +41390,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "53.442"
+          "value": "53.447"
         },
         {
           "label": "Total no RN",
-          "value": "62.655"
+          "value": "62.660"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -41448,7 +41448,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "62.655"
+          "value": "62.660"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -41462,7 +41462,7 @@
       "headline": "Os três municípios com mais votos para FRANCISCO DO PT somam 32,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 9.213 votos (14,7% do total estadual).",
       "display_value": "32,2%",
-      "calculation": "20.186 votos nos três municípios com maior votação ÷ 62.655 votos no RN = 32,2%.",
+      "calculation": "20.186 votos nos três municípios com maior votação ÷ 62.660 votos no RN = 32,2%.",
       "post_text": "Os três municípios com mais votos para FRANCISCO DO PT somam 32,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -41471,7 +41471,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "62.655"
+          "value": "62.660"
         },
         {
           "label": "Maior votação municipal",
@@ -41705,7 +41705,7 @@
       "headline": "Natal responde por 14,9% dos votos de GABRIEL CÉSAR contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "14,9%",
-      "calculation": "3.094 votos em Natal ÷ 20.713 votos no RN = 14,9%.",
+      "calculation": "3.094 votos em Natal ÷ 20.714 votos no RN = 14,9%.",
       "post_text": "Natal concentra 14,9% dos votos de GABRIEL CÉSAR contabilizados no RN; o restante do estado responde por 85,1%.",
       "breakdown": [
         {
@@ -41714,11 +41714,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "17.619"
+          "value": "17.620"
         },
         {
           "label": "Total no RN",
-          "value": "20.713"
+          "value": "20.714"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -41772,7 +41772,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "20.713"
+          "value": "20.714"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -41786,7 +41786,7 @@
       "headline": "Os três municípios com mais votos para GABRIEL CÉSAR somam 86,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é PARNAMIRIM, com 14.467 votos (69,8% do total estadual).",
       "display_value": "86,4%",
-      "calculation": "17.890 votos nos três municípios com maior votação ÷ 20.713 votos no RN = 86,4%.",
+      "calculation": "17.890 votos nos três municípios com maior votação ÷ 20.714 votos no RN = 86,4%.",
       "post_text": "Os três municípios com mais votos para GABRIEL CÉSAR somam 86,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -41795,7 +41795,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "20.713"
+          "value": "20.714"
         },
         {
           "label": "Maior votação municipal",
@@ -42245,7 +42245,7 @@
       "headline": "Natal responde por 30,1% dos votos de GERLAILSON ABRANTES (NENEM) contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "30,1%",
-      "calculation": "356 votos em Natal ÷ 1.182 votos no RN = 30,1%.",
+      "calculation": "356 votos em Natal ÷ 1.183 votos no RN = 30,1%.",
       "post_text": "Natal concentra 30,1% dos votos de GERLAILSON ABRANTES (NENEM) contabilizados no RN; o restante do estado responde por 69,9%.",
       "breakdown": [
         {
@@ -42254,11 +42254,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "826"
+          "value": "827"
         },
         {
           "label": "Total no RN",
-          "value": "1.182"
+          "value": "1.183"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -42312,7 +42312,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "1.182"
+          "value": "1.183"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -42326,7 +42326,7 @@
       "headline": "Os três municípios com mais votos para GERLAILSON ABRANTES (NENEM) somam 42,3% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 356 votos (30,1% do total estadual).",
       "display_value": "42,3%",
-      "calculation": "500 votos nos três municípios com maior votação ÷ 1.182 votos no RN = 42,3%.",
+      "calculation": "500 votos nos três municípios com maior votação ÷ 1.183 votos no RN = 42,3%.",
       "post_text": "Os três municípios com mais votos para GERLAILSON ABRANTES (NENEM) somam 42,3% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -42335,7 +42335,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "1.182"
+          "value": "1.183"
         },
         {
           "label": "Maior votação municipal",
@@ -42782,11 +42782,11 @@
       "type": "capital_share",
       "office": "depe",
       "candidate": "GUILHERME QUEIROZ",
-      "headline": "Natal responde por 42,2% dos votos de GUILHERME QUEIROZ contabilizados no RN.",
+      "headline": "Natal responde por 41,3% dos votos de GUILHERME QUEIROZ contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
-      "display_value": "42,2%",
-      "calculation": "19 votos em Natal ÷ 45 votos no RN = 42,2%.",
-      "post_text": "Natal concentra 42,2% dos votos de GUILHERME QUEIROZ contabilizados no RN; o restante do estado responde por 57,8%.",
+      "display_value": "41,3%",
+      "calculation": "19 votos em Natal ÷ 46 votos no RN = 41,3%.",
+      "post_text": "Natal concentra 41,3% dos votos de GUILHERME QUEIROZ contabilizados no RN; o restante do estado responde por 58,7%.",
       "breakdown": [
         {
           "label": "Natal",
@@ -42794,11 +42794,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "26"
+          "value": "27"
         },
         {
           "label": "Total no RN",
-          "value": "45"
+          "value": "46"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -42852,7 +42852,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "45"
+          "value": "46"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -42863,11 +42863,11 @@
       "type": "top_municipalities",
       "office": "depe",
       "candidate": "GUILHERME QUEIROZ",
-      "headline": "Os três municípios com mais votos para GUILHERME QUEIROZ somam 68,9% da votação estadual da candidatura.",
-      "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19 votos (42,2% do total estadual).",
-      "display_value": "68,9%",
-      "calculation": "31 votos nos três municípios com maior votação ÷ 45 votos no RN = 68,9%.",
-      "post_text": "Os três municípios com mais votos para GUILHERME QUEIROZ somam 68,9% da votação estadual registrada da candidatura.",
+      "headline": "Os três municípios com mais votos para GUILHERME QUEIROZ somam 67,4% da votação estadual da candidatura.",
+      "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19 votos (41,3% do total estadual).",
+      "display_value": "67,4%",
+      "calculation": "31 votos nos três municípios com maior votação ÷ 46 votos no RN = 67,4%.",
+      "post_text": "Os três municípios com mais votos para GUILHERME QUEIROZ somam 67,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -42875,14 +42875,14 @@
         },
         {
           "label": "Total no RN",
-          "value": "45"
+          "value": "46"
         },
         {
           "label": "Maior votação municipal",
           "value": "NATAL"
         }
       ],
-      "explanation": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19 votos (42,2% do total estadual).",
+      "explanation": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19 votos (41,3% do total estadual).",
       "card_note": "NATAL: 19; CARNAÚBA DOS DANTAS: 6; PARNAMIRIM: 6"
     },
     {
@@ -42893,7 +42893,7 @@
       "headline": "Natal responde por 10,5% dos votos de GUSTAVO CARVALHO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "10,5%",
-      "calculation": "5.186 votos em Natal ÷ 49.528 votos no RN = 10,5%.",
+      "calculation": "5.186 votos em Natal ÷ 49.531 votos no RN = 10,5%.",
       "post_text": "Natal concentra 10,5% dos votos de GUSTAVO CARVALHO contabilizados no RN; o restante do estado responde por 89,5%.",
       "breakdown": [
         {
@@ -42902,11 +42902,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "44.342"
+          "value": "44.345"
         },
         {
           "label": "Total no RN",
-          "value": "49.528"
+          "value": "49.531"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -42960,7 +42960,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "49.528"
+          "value": "49.531"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -42974,7 +42974,7 @@
       "headline": "Os três municípios com mais votos para GUSTAVO CARVALHO somam 18,6% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 5.186 votos (10,5% do total estadual).",
       "display_value": "18,6%",
-      "calculation": "9.228 votos nos três municípios com maior votação ÷ 49.528 votos no RN = 18,6%.",
+      "calculation": "9.228 votos nos três municípios com maior votação ÷ 49.531 votos no RN = 18,6%.",
       "post_text": "Os três municípios com mais votos para GUSTAVO CARVALHO somam 18,6% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -42983,7 +42983,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "49.528"
+          "value": "49.531"
         },
         {
           "label": "Maior votação municipal",
@@ -43325,7 +43325,7 @@
       "headline": "Natal responde por 19,5% dos votos de ISOLDA DANTAS contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "19,5%",
-      "calculation": "11.754 votos em Natal ÷ 60.226 votos no RN = 19,5%.",
+      "calculation": "11.754 votos em Natal ÷ 60.239 votos no RN = 19,5%.",
       "post_text": "Natal concentra 19,5% dos votos de ISOLDA DANTAS contabilizados no RN; o restante do estado responde por 80,5%.",
       "breakdown": [
         {
@@ -43334,11 +43334,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "48.472"
+          "value": "48.485"
         },
         {
           "label": "Total no RN",
-          "value": "60.226"
+          "value": "60.239"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -43392,7 +43392,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "60.226"
+          "value": "60.239"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -43406,7 +43406,7 @@
       "headline": "Os três municípios com mais votos para ISOLDA DANTAS somam 49,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é MOSSORÓ, com 15.168 votos (25,2% do total estadual).",
       "display_value": "49,7%",
-      "calculation": "29.943 votos nos três municípios com maior votação ÷ 60.226 votos no RN = 49,7%.",
+      "calculation": "29.943 votos nos três municípios com maior votação ÷ 60.239 votos no RN = 49,7%.",
       "post_text": "Os três municípios com mais votos para ISOLDA DANTAS somam 49,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -43415,7 +43415,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "60.226"
+          "value": "60.239"
         },
         {
           "label": "Maior votação municipal",
@@ -43433,7 +43433,7 @@
       "headline": "Natal responde por 7,3% dos votos de IVAN JUNIOR contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "7,3%",
-      "calculation": "1.069 votos em Natal ÷ 14.701 votos no RN = 7,3%.",
+      "calculation": "1.069 votos em Natal ÷ 14.702 votos no RN = 7,3%.",
       "post_text": "Natal concentra 7,3% dos votos de IVAN JUNIOR contabilizados no RN; o restante do estado responde por 92,7%.",
       "breakdown": [
         {
@@ -43442,11 +43442,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "13.632"
+          "value": "13.633"
         },
         {
           "label": "Total no RN",
-          "value": "14.701"
+          "value": "14.702"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -43500,7 +43500,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "14.701"
+          "value": "14.702"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -43514,7 +43514,7 @@
       "headline": "Os três municípios com mais votos para IVAN JUNIOR somam 60,6% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é ASSÚ, com 7.012 votos (47,7% do total estadual).",
       "display_value": "60,6%",
-      "calculation": "8.911 votos nos três municípios com maior votação ÷ 14.701 votos no RN = 60,6%.",
+      "calculation": "8.911 votos nos três municípios com maior votação ÷ 14.702 votos no RN = 60,6%.",
       "post_text": "Os três municípios com mais votos para IVAN JUNIOR somam 60,6% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -43523,7 +43523,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "14.701"
+          "value": "14.702"
         },
         {
           "label": "Maior votação municipal",
@@ -43649,7 +43649,7 @@
       "headline": "Natal responde por 3,1% dos votos de IVANILSON OLIVEIRA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "3,1%",
-      "calculation": "1.502 votos em Natal ÷ 47.830 votos no RN = 3,1%.",
+      "calculation": "1.502 votos em Natal ÷ 47.831 votos no RN = 3,1%.",
       "post_text": "Natal concentra 3,1% dos votos de IVANILSON OLIVEIRA contabilizados no RN; o restante do estado responde por 96,9%.",
       "breakdown": [
         {
@@ -43658,11 +43658,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "46.328"
+          "value": "46.329"
         },
         {
           "label": "Total no RN",
-          "value": "47.830"
+          "value": "47.831"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -43716,7 +43716,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "47.830"
+          "value": "47.831"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -43730,7 +43730,7 @@
       "headline": "Os três municípios com mais votos para IVANILSON OLIVEIRA somam 45,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é BARAÚNA, com 10.613 votos (22,2% do total estadual).",
       "display_value": "45,4%",
-      "calculation": "21.706 votos nos três municípios com maior votação ÷ 47.830 votos no RN = 45,4%.",
+      "calculation": "21.706 votos nos três municípios com maior votação ÷ 47.831 votos no RN = 45,4%.",
       "post_text": "Os três municípios com mais votos para IVANILSON OLIVEIRA somam 45,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -43739,7 +43739,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "47.830"
+          "value": "47.831"
         },
         {
           "label": "Maior votação municipal",
@@ -44405,7 +44405,7 @@
       "headline": "Natal responde por 44,6% dos votos de JOSEMAR VARELA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "44,6%",
-      "calculation": "6.547 votos em Natal ÷ 14.675 votos no RN = 44,6%.",
+      "calculation": "6.547 votos em Natal ÷ 14.678 votos no RN = 44,6%.",
       "post_text": "Natal concentra 44,6% dos votos de JOSEMAR VARELA contabilizados no RN; o restante do estado responde por 55,4%.",
       "breakdown": [
         {
@@ -44414,11 +44414,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "8.128"
+          "value": "8.131"
         },
         {
           "label": "Total no RN",
-          "value": "14.675"
+          "value": "14.678"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -44472,7 +44472,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "14.675"
+          "value": "14.678"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -44486,7 +44486,7 @@
       "headline": "Os três municípios com mais votos para JOSEMAR VARELA somam 62,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 6.547 votos (44,6% do total estadual).",
       "display_value": "62,5%",
-      "calculation": "9.167 votos nos três municípios com maior votação ÷ 14.675 votos no RN = 62,5%.",
+      "calculation": "9.167 votos nos três municípios com maior votação ÷ 14.678 votos no RN = 62,5%.",
       "post_text": "Os três municípios com mais votos para JOSEMAR VARELA somam 62,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -44495,7 +44495,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "14.675"
+          "value": "14.678"
         },
         {
           "label": "Maior votação municipal",
@@ -44513,7 +44513,7 @@
       "headline": "Natal responde por 50,0% dos votos de JULIANA GARCIA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "50,0%",
-      "calculation": "1.855 votos em Natal ÷ 3.710 votos no RN = 50,0%.",
+      "calculation": "1.855 votos em Natal ÷ 3.712 votos no RN = 50,0%.",
       "post_text": "Natal concentra 50,0% dos votos de JULIANA GARCIA contabilizados no RN; o restante do estado responde por 50,0%.",
       "breakdown": [
         {
@@ -44522,11 +44522,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "1.855"
+          "value": "1.857"
         },
         {
           "label": "Total no RN",
-          "value": "3.710"
+          "value": "3.712"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -44580,7 +44580,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "3.710"
+          "value": "3.712"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -44594,7 +44594,7 @@
       "headline": "Os três municípios com mais votos para JULIANA GARCIA somam 67,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.855 votos (50,0% do total estadual).",
       "display_value": "67,1%",
-      "calculation": "2.491 votos nos três municípios com maior votação ÷ 3.710 votos no RN = 67,1%.",
+      "calculation": "2.491 votos nos três municípios com maior votação ÷ 3.712 votos no RN = 67,1%.",
       "post_text": "Os três municípios com mais votos para JULIANA GARCIA somam 67,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -44603,7 +44603,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "3.710"
+          "value": "3.712"
         },
         {
           "label": "Maior votação municipal",
@@ -44621,7 +44621,7 @@
       "headline": "Natal responde por 7,3% dos votos de JULIO CESAR contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "7,3%",
-      "calculation": "4.842 votos em Natal ÷ 66.748 votos no RN = 7,3%.",
+      "calculation": "4.842 votos em Natal ÷ 66.750 votos no RN = 7,3%.",
       "post_text": "Natal concentra 7,3% dos votos de JULIO CESAR contabilizados no RN; o restante do estado responde por 92,7%.",
       "breakdown": [
         {
@@ -44630,11 +44630,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "61.906"
+          "value": "61.908"
         },
         {
           "label": "Total no RN",
-          "value": "66.748"
+          "value": "66.750"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -44688,7 +44688,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "66.748"
+          "value": "66.750"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -44702,7 +44702,7 @@
       "headline": "Os três municípios com mais votos para JULIO CESAR somam 47,3% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é CEARÁ-MIRIM, com 23.548 votos (35,3% do total estadual).",
       "display_value": "47,3%",
-      "calculation": "31.577 votos nos três municípios com maior votação ÷ 66.748 votos no RN = 47,3%.",
+      "calculation": "31.577 votos nos três municípios com maior votação ÷ 66.750 votos no RN = 47,3%.",
       "post_text": "Os três municípios com mais votos para JULIO CESAR somam 47,3% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -44711,7 +44711,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "66.748"
+          "value": "66.750"
         },
         {
           "label": "Maior votação municipal",
@@ -45377,7 +45377,7 @@
       "headline": "Natal responde por 3,7% dos votos de KLEBER RODRIGUES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "3,7%",
-      "calculation": "2.441 votos em Natal ÷ 66.166 votos no RN = 3,7%.",
+      "calculation": "2.441 votos em Natal ÷ 66.172 votos no RN = 3,7%.",
       "post_text": "Natal concentra 3,7% dos votos de KLEBER RODRIGUES contabilizados no RN; o restante do estado responde por 96,3%.",
       "breakdown": [
         {
@@ -45386,11 +45386,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "63.725"
+          "value": "63.731"
         },
         {
           "label": "Total no RN",
-          "value": "66.166"
+          "value": "66.172"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -45444,7 +45444,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "66.166"
+          "value": "66.172"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -45458,7 +45458,7 @@
       "headline": "Os três municípios com mais votos para KLEBER RODRIGUES somam 29,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é MACAÍBA, com 8.810 votos (13,3% do total estadual).",
       "display_value": "29,1%",
-      "calculation": "19.242 votos nos três municípios com maior votação ÷ 66.166 votos no RN = 29,1%.",
+      "calculation": "19.242 votos nos três municípios com maior votação ÷ 66.172 votos no RN = 29,1%.",
       "post_text": "Os três municípios com mais votos para KLEBER RODRIGUES somam 29,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -45467,7 +45467,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "66.166"
+          "value": "66.172"
         },
         {
           "label": "Maior votação municipal",
@@ -45701,7 +45701,7 @@
       "headline": "Natal responde por 48,7% dos votos de LOURENÇO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "48,7%",
-      "calculation": "6.956 votos em Natal ÷ 14.270 votos no RN = 48,7%.",
+      "calculation": "6.956 votos em Natal ÷ 14.272 votos no RN = 48,7%.",
       "post_text": "Natal concentra 48,7% dos votos de LOURENÇO contabilizados no RN; o restante do estado responde por 51,3%.",
       "breakdown": [
         {
@@ -45710,11 +45710,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "7.314"
+          "value": "7.316"
         },
         {
           "label": "Total no RN",
-          "value": "14.270"
+          "value": "14.272"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -45768,7 +45768,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "14.270"
+          "value": "14.272"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -45782,7 +45782,7 @@
       "headline": "Os três municípios com mais votos para LOURENÇO somam 68,6% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 6.956 votos (48,7% do total estadual).",
       "display_value": "68,6%",
-      "calculation": "9.784 votos nos três municípios com maior votação ÷ 14.270 votos no RN = 68,6%.",
+      "calculation": "9.784 votos nos três municípios com maior votação ÷ 14.272 votos no RN = 68,6%.",
       "post_text": "Os três municípios com mais votos para LOURENÇO somam 68,6% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -45791,7 +45791,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "14.270"
+          "value": "14.272"
         },
         {
           "label": "Maior votação municipal",
@@ -45917,7 +45917,7 @@
       "headline": "Natal responde por 30,8% dos votos de LUÍZ EDUARDO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "30,8%",
-      "calculation": "12.287 votos em Natal ÷ 39.916 votos no RN = 30,8%.",
+      "calculation": "12.287 votos em Natal ÷ 39.918 votos no RN = 30,8%.",
       "post_text": "Natal concentra 30,8% dos votos de LUÍZ EDUARDO contabilizados no RN; o restante do estado responde por 69,2%.",
       "breakdown": [
         {
@@ -45926,11 +45926,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "27.629"
+          "value": "27.631"
         },
         {
           "label": "Total no RN",
-          "value": "39.916"
+          "value": "39.918"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -45984,7 +45984,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "39.916"
+          "value": "39.918"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -45998,7 +45998,7 @@
       "headline": "Os três municípios com mais votos para LUÍZ EDUARDO somam 47,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 12.287 votos (30,8% do total estadual).",
       "display_value": "47,9%",
-      "calculation": "19.125 votos nos três municípios com maior votação ÷ 39.916 votos no RN = 47,9%.",
+      "calculation": "19.125 votos nos três municípios com maior votação ÷ 39.918 votos no RN = 47,9%.",
       "post_text": "Os três municípios com mais votos para LUÍZ EDUARDO somam 47,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -46007,7 +46007,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "39.916"
+          "value": "39.918"
         },
         {
           "label": "Maior votação municipal",
@@ -46025,7 +46025,7 @@
       "headline": "Natal responde por 67,0% dos votos de LÉO SOUZA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "67,0%",
-      "calculation": "4.400 votos em Natal ÷ 6.571 votos no RN = 67,0%.",
+      "calculation": "4.400 votos em Natal ÷ 6.572 votos no RN = 67,0%.",
       "post_text": "Natal concentra 67,0% dos votos de LÉO SOUZA contabilizados no RN; o restante do estado responde por 33,0%.",
       "breakdown": [
         {
@@ -46034,11 +46034,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "2.171"
+          "value": "2.172"
         },
         {
           "label": "Total no RN",
-          "value": "6.571"
+          "value": "6.572"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -46092,7 +46092,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "6.571"
+          "value": "6.572"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -46103,11 +46103,11 @@
       "type": "top_municipalities",
       "office": "depe",
       "candidate": "LÉO SOUZA",
-      "headline": "Os três municípios com mais votos para LÉO SOUZA somam 77,9% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para LÉO SOUZA somam 77,8% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 4.400 votos (67,0% do total estadual).",
-      "display_value": "77,9%",
-      "calculation": "5.116 votos nos três municípios com maior votação ÷ 6.571 votos no RN = 77,9%.",
-      "post_text": "Os três municípios com mais votos para LÉO SOUZA somam 77,9% da votação estadual registrada da candidatura.",
+      "display_value": "77,8%",
+      "calculation": "5.116 votos nos três municípios com maior votação ÷ 6.572 votos no RN = 77,8%.",
+      "post_text": "Os três municípios com mais votos para LÉO SOUZA somam 77,8% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -46115,7 +46115,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "6.571"
+          "value": "6.572"
         },
         {
           "label": "Maior votação municipal",
@@ -47537,7 +47537,7 @@
       "headline": "Natal responde por 18,4% dos votos de NENEL LUCAS contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "18,4%",
-      "calculation": "156 votos em Natal ÷ 846 votos no RN = 18,4%.",
+      "calculation": "156 votos em Natal ÷ 847 votos no RN = 18,4%.",
       "post_text": "Natal concentra 18,4% dos votos de NENEL LUCAS contabilizados no RN; o restante do estado responde por 81,6%.",
       "breakdown": [
         {
@@ -47546,11 +47546,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "690"
+          "value": "691"
         },
         {
           "label": "Total no RN",
-          "value": "846"
+          "value": "847"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -47604,7 +47604,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "846"
+          "value": "847"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -47615,11 +47615,11 @@
       "type": "top_municipalities",
       "office": "depe",
       "candidate": "NENEL LUCAS",
-      "headline": "Os três municípios com mais votos para NENEL LUCAS somam 55,1% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para NENEL LUCAS somam 55,0% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é PARNAMIRIM, com 281 votos (33,2% do total estadual).",
-      "display_value": "55,1%",
-      "calculation": "466 votos nos três municípios com maior votação ÷ 846 votos no RN = 55,1%.",
-      "post_text": "Os três municípios com mais votos para NENEL LUCAS somam 55,1% da votação estadual registrada da candidatura.",
+      "display_value": "55,0%",
+      "calculation": "466 votos nos três municípios com maior votação ÷ 847 votos no RN = 55,0%.",
+      "post_text": "Os três municípios com mais votos para NENEL LUCAS somam 55,0% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -47627,7 +47627,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "846"
+          "value": "847"
         },
         {
           "label": "Maior votação municipal",
@@ -49265,7 +49265,7 @@
       "headline": "Natal responde por 7,4% dos votos de REITORA LUDIMILLA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "7,4%",
-      "calculation": "57 votos em Natal ÷ 769 votos no RN = 7,4%.",
+      "calculation": "57 votos em Natal ÷ 770 votos no RN = 7,4%.",
       "post_text": "Natal concentra 7,4% dos votos de REITORA LUDIMILLA contabilizados no RN; o restante do estado responde por 92,6%.",
       "breakdown": [
         {
@@ -49274,11 +49274,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "712"
+          "value": "713"
         },
         {
           "label": "Total no RN",
-          "value": "769"
+          "value": "770"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -49332,7 +49332,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "769"
+          "value": "770"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -49343,11 +49343,11 @@
       "type": "top_municipalities",
       "office": "depe",
       "candidate": "REITORA LUDIMILLA",
-      "headline": "Os três municípios com mais votos para REITORA LUDIMILLA somam 72,8% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para REITORA LUDIMILLA somam 72,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é MOSSORÓ, com 481 votos (62,5% do total estadual).",
-      "display_value": "72,8%",
-      "calculation": "560 votos nos três municípios com maior votação ÷ 769 votos no RN = 72,8%.",
-      "post_text": "Os três municípios com mais votos para REITORA LUDIMILLA somam 72,8% da votação estadual registrada da candidatura.",
+      "display_value": "72,7%",
+      "calculation": "560 votos nos três municípios com maior votação ÷ 770 votos no RN = 72,7%.",
+      "post_text": "Os três municípios com mais votos para REITORA LUDIMILLA somam 72,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -49355,7 +49355,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "769"
+          "value": "770"
         },
         {
           "label": "Maior votação municipal",
@@ -49697,7 +49697,7 @@
       "headline": "Natal responde por 47,5% dos votos de ROBSON CARVALHO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "47,5%",
-      "calculation": "33.054 votos em Natal ÷ 69.537 votos no RN = 47,5%.",
+      "calculation": "33.054 votos em Natal ÷ 69.542 votos no RN = 47,5%.",
       "post_text": "Natal concentra 47,5% dos votos de ROBSON CARVALHO contabilizados no RN; o restante do estado responde por 52,5%.",
       "breakdown": [
         {
@@ -49706,11 +49706,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "36.483"
+          "value": "36.488"
         },
         {
           "label": "Total no RN",
-          "value": "69.537"
+          "value": "69.542"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -49764,7 +49764,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "69.537"
+          "value": "69.542"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -49778,7 +49778,7 @@
       "headline": "Os três municípios com mais votos para ROBSON CARVALHO somam 61,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 33.054 votos (47,5% do total estadual).",
       "display_value": "61,2%",
-      "calculation": "42.527 votos nos três municípios com maior votação ÷ 69.537 votos no RN = 61,2%.",
+      "calculation": "42.527 votos nos três municípios com maior votação ÷ 69.542 votos no RN = 61,2%.",
       "post_text": "Os três municípios com mais votos para ROBSON CARVALHO somam 61,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -49787,7 +49787,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "69.537"
+          "value": "69.542"
         },
         {
           "label": "Maior votação municipal",
@@ -50561,7 +50561,7 @@
       "headline": "Natal responde por 18,0% dos votos de TAVEIRA JÚNIOR contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "18,0%",
-      "calculation": "3.031 votos em Natal ÷ 16.847 votos no RN = 18,0%.",
+      "calculation": "3.031 votos em Natal ÷ 16.848 votos no RN = 18,0%.",
       "post_text": "Natal concentra 18,0% dos votos de TAVEIRA JÚNIOR contabilizados no RN; o restante do estado responde por 82,0%.",
       "breakdown": [
         {
@@ -50570,11 +50570,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "13.816"
+          "value": "13.817"
         },
         {
           "label": "Total no RN",
-          "value": "16.847"
+          "value": "16.848"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -50628,7 +50628,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "16.847"
+          "value": "16.848"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -50642,7 +50642,7 @@
       "headline": "Os três municípios com mais votos para TAVEIRA JÚNIOR somam 38,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 3.031 votos (18,0% do total estadual).",
       "display_value": "38,9%",
-      "calculation": "6.555 votos nos três municípios com maior votação ÷ 16.847 votos no RN = 38,9%.",
+      "calculation": "6.555 votos nos três municípios com maior votação ÷ 16.848 votos no RN = 38,9%.",
       "post_text": "Os três municípios com mais votos para TAVEIRA JÚNIOR somam 38,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -50651,7 +50651,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "16.847"
+          "value": "16.848"
         },
         {
           "label": "Maior votação municipal",
@@ -50885,7 +50885,7 @@
       "headline": "Natal responde por 5,6% dos votos de TOMBA FARIAS contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "5,6%",
-      "calculation": "2.807 votos em Natal ÷ 50.307 votos no RN = 5,6%.",
+      "calculation": "2.807 votos em Natal ÷ 50.350 votos no RN = 5,6%.",
       "post_text": "Natal concentra 5,6% dos votos de TOMBA FARIAS contabilizados no RN; o restante do estado responde por 94,4%.",
       "breakdown": [
         {
@@ -50894,11 +50894,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "47.500"
+          "value": "47.543"
         },
         {
           "label": "Total no RN",
-          "value": "50.307"
+          "value": "50.350"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -50952,7 +50952,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "50.307"
+          "value": "50.350"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -50966,7 +50966,7 @@
       "headline": "Os três municípios com mais votos para TOMBA FARIAS somam 29,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é SANTA CRUZ, com 8.604 votos (17,1% do total estadual).",
       "display_value": "29,5%",
-      "calculation": "14.857 votos nos três municípios com maior votação ÷ 50.307 votos no RN = 29,5%.",
+      "calculation": "14.857 votos nos três municípios com maior votação ÷ 50.350 votos no RN = 29,5%.",
       "post_text": "Os três municípios com mais votos para TOMBA FARIAS somam 29,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -50975,7 +50975,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "50.307"
+          "value": "50.350"
         },
         {
           "label": "Maior votação municipal",
@@ -51317,7 +51317,7 @@
       "headline": "Natal responde por 13,3% dos votos de WALTER ALVES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "13,3%",
-      "calculation": "5.879 votos em Natal ÷ 44.216 votos no RN = 13,3%.",
+      "calculation": "5.879 votos em Natal ÷ 44.217 votos no RN = 13,3%.",
       "post_text": "Natal concentra 13,3% dos votos de WALTER ALVES contabilizados no RN; o restante do estado responde por 86,7%.",
       "breakdown": [
         {
@@ -51326,11 +51326,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "38.337"
+          "value": "38.338"
         },
         {
           "label": "Total no RN",
-          "value": "44.216"
+          "value": "44.217"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -51384,7 +51384,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "44.216"
+          "value": "44.217"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -51398,7 +51398,7 @@
       "headline": "Os três municípios com mais votos para WALTER ALVES somam 28,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 5.879 votos (13,3% do total estadual).",
       "display_value": "28,9%",
-      "calculation": "12.787 votos nos três municípios com maior votação ÷ 44.216 votos no RN = 28,9%.",
+      "calculation": "12.787 votos nos três municípios com maior votação ÷ 44.217 votos no RN = 28,9%.",
       "post_text": "Os três municípios com mais votos para WALTER ALVES somam 28,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -51407,7 +51407,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "44.216"
+          "value": "44.217"
         },
         {
           "label": "Maior votação municipal",
@@ -53045,7 +53045,7 @@
       "headline": "Natal responde por 3,5% dos votos de BENES LEOCÁDIO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "3,5%",
-      "calculation": "6.004 votos em Natal ÷ 171.328 votos no RN = 3,5%.",
+      "calculation": "6.004 votos em Natal ÷ 171.396 votos no RN = 3,5%.",
       "post_text": "Natal concentra 3,5% dos votos de BENES LEOCÁDIO contabilizados no RN; o restante do estado responde por 96,5%.",
       "breakdown": [
         {
@@ -53054,11 +53054,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "165.324"
+          "value": "165.392"
         },
         {
           "label": "Total no RN",
-          "value": "171.328"
+          "value": "171.396"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -53112,7 +53112,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "171.328"
+          "value": "171.396"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -53126,7 +53126,7 @@
       "headline": "Os três municípios com mais votos para BENES LEOCÁDIO somam 9,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é JOÃO CÂMARA, com 6.021 votos (3,5% do total estadual).",
       "display_value": "9,9%",
-      "calculation": "17.018 votos nos três municípios com maior votação ÷ 171.328 votos no RN = 9,9%.",
+      "calculation": "17.018 votos nos três municípios com maior votação ÷ 171.396 votos no RN = 9,9%.",
       "post_text": "Os três municípios com mais votos para BENES LEOCÁDIO somam 9,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -53135,7 +53135,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "171.328"
+          "value": "171.396"
         },
         {
           "label": "Maior votação municipal",
@@ -53261,7 +53261,7 @@
       "headline": "Natal responde por 39,9% dos votos de BRISA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "39,9%",
-      "calculation": "11.032 votos em Natal ÷ 27.652 votos no RN = 39,9%.",
+      "calculation": "11.032 votos em Natal ÷ 27.676 votos no RN = 39,9%.",
       "post_text": "Natal concentra 39,9% dos votos de BRISA contabilizados no RN; o restante do estado responde por 60,1%.",
       "breakdown": [
         {
@@ -53270,11 +53270,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "16.620"
+          "value": "16.644"
         },
         {
           "label": "Total no RN",
-          "value": "27.652"
+          "value": "27.676"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -53328,7 +53328,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "27.652"
+          "value": "27.676"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -53339,11 +53339,11 @@
       "type": "top_municipalities",
       "office": "depf",
       "candidate": "BRISA",
-      "headline": "Os três municípios com mais votos para BRISA somam 61,7% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para BRISA somam 61,6% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 11.032 votos (39,9% do total estadual).",
-      "display_value": "61,7%",
-      "calculation": "17.060 votos nos três municípios com maior votação ÷ 27.652 votos no RN = 61,7%.",
-      "post_text": "Os três municípios com mais votos para BRISA somam 61,7% da votação estadual registrada da candidatura.",
+      "display_value": "61,6%",
+      "calculation": "17.060 votos nos três municípios com maior votação ÷ 27.676 votos no RN = 61,6%.",
+      "post_text": "Os três municípios com mais votos para BRISA somam 61,6% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -53351,7 +53351,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "27.652"
+          "value": "27.676"
         },
         {
           "label": "Maior votação municipal",
@@ -53585,7 +53585,7 @@
       "headline": "Natal responde por 29,4% dos votos de CARLA DICKSON contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "29,4%",
-      "calculation": "19.854 votos em Natal ÷ 67.629 votos no RN = 29,4%.",
+      "calculation": "19.854 votos em Natal ÷ 67.632 votos no RN = 29,4%.",
       "post_text": "Natal concentra 29,4% dos votos de CARLA DICKSON contabilizados no RN; o restante do estado responde por 70,6%.",
       "breakdown": [
         {
@@ -53594,11 +53594,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "47.775"
+          "value": "47.778"
         },
         {
           "label": "Total no RN",
-          "value": "67.629"
+          "value": "67.632"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -53652,7 +53652,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "67.629"
+          "value": "67.632"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -53666,7 +53666,7 @@
       "headline": "Os três municípios com mais votos para CARLA DICKSON somam 42,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19.854 votos (29,4% do total estadual).",
       "display_value": "42,4%",
-      "calculation": "28.686 votos nos três municípios com maior votação ÷ 67.629 votos no RN = 42,4%.",
+      "calculation": "28.686 votos nos três municípios com maior votação ÷ 67.632 votos no RN = 42,4%.",
       "post_text": "Os três municípios com mais votos para CARLA DICKSON somam 42,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -53675,7 +53675,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "67.629"
+          "value": "67.632"
         },
         {
           "label": "Maior votação municipal",
@@ -53909,7 +53909,7 @@
       "headline": "Natal responde por 12,0% dos votos de CORONEL BRILHANTE contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "12,0%",
-      "calculation": "1.452 votos em Natal ÷ 12.116 votos no RN = 12,0%.",
+      "calculation": "1.452 votos em Natal ÷ 12.117 votos no RN = 12,0%.",
       "post_text": "Natal concentra 12,0% dos votos de CORONEL BRILHANTE contabilizados no RN; o restante do estado responde por 88,0%.",
       "breakdown": [
         {
@@ -53918,11 +53918,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "10.664"
+          "value": "10.665"
         },
         {
           "label": "Total no RN",
-          "value": "12.116"
+          "value": "12.117"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -53976,7 +53976,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "12.116"
+          "value": "12.117"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -53990,7 +53990,7 @@
       "headline": "Os três municípios com mais votos para CORONEL BRILHANTE somam 28,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.452 votos (12,0% do total estadual).",
       "display_value": "28,2%",
-      "calculation": "3.420 votos nos três municípios com maior votação ÷ 12.116 votos no RN = 28,2%.",
+      "calculation": "3.420 votos nos três municípios com maior votação ÷ 12.117 votos no RN = 28,2%.",
       "post_text": "Os três municípios com mais votos para CORONEL BRILHANTE somam 28,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -53999,7 +53999,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "12.116"
+          "value": "12.117"
         },
         {
           "label": "Maior votação municipal",
@@ -54665,7 +54665,7 @@
       "headline": "Natal responde por 8,2% dos votos de DR. BERNARDO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "8,2%",
-      "calculation": "10.666 votos em Natal ÷ 130.828 votos no RN = 8,2%.",
+      "calculation": "10.666 votos em Natal ÷ 130.835 votos no RN = 8,2%.",
       "post_text": "Natal concentra 8,2% dos votos de DR. BERNARDO contabilizados no RN; o restante do estado responde por 91,8%.",
       "breakdown": [
         {
@@ -54674,11 +54674,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "120.162"
+          "value": "120.169"
         },
         {
           "label": "Total no RN",
-          "value": "130.828"
+          "value": "130.835"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -54732,7 +54732,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "130.828"
+          "value": "130.835"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -54746,7 +54746,7 @@
       "headline": "Os três municípios com mais votos para DR. BERNARDO somam 17,0% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 10.666 votos (8,2% do total estadual).",
       "display_value": "17,0%",
-      "calculation": "22.277 votos nos três municípios com maior votação ÷ 130.828 votos no RN = 17,0%.",
+      "calculation": "22.277 votos nos três municípios com maior votação ÷ 130.835 votos no RN = 17,0%.",
       "post_text": "Os três municípios com mais votos para DR. BERNARDO somam 17,0% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -54755,7 +54755,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "130.828"
+          "value": "130.835"
         },
         {
           "label": "Maior votação municipal",
@@ -54773,7 +54773,7 @@
       "headline": "Natal responde por 9,1% dos votos de DR. ESTÁCIO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "9,1%",
-      "calculation": "200 votos em Natal ÷ 2.199 votos no RN = 9,1%.",
+      "calculation": "200 votos em Natal ÷ 2.200 votos no RN = 9,1%.",
       "post_text": "Natal concentra 9,1% dos votos de DR. ESTÁCIO contabilizados no RN; o restante do estado responde por 90,9%.",
       "breakdown": [
         {
@@ -54782,11 +54782,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "1.999"
+          "value": "2.000"
         },
         {
           "label": "Total no RN",
-          "value": "2.199"
+          "value": "2.200"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -54840,7 +54840,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "2.199"
+          "value": "2.200"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -54854,7 +54854,7 @@
       "headline": "Os três municípios com mais votos para DR. ESTÁCIO somam 50,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é SANTO ANTÔNIO, com 844 votos (38,4% do total estadual).",
       "display_value": "50,9%",
-      "calculation": "1.120 votos nos três municípios com maior votação ÷ 2.199 votos no RN = 50,9%.",
+      "calculation": "1.120 votos nos três municípios com maior votação ÷ 2.200 votos no RN = 50,9%.",
       "post_text": "Os três municípios com mais votos para DR. ESTÁCIO somam 50,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -54863,7 +54863,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "2.199"
+          "value": "2.200"
         },
         {
           "label": "Maior votação municipal",
@@ -55529,7 +55529,7 @@
       "headline": "Natal responde por 48,3% dos votos de FAUSTINO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "48,3%",
-      "calculation": "19.765 votos em Natal ÷ 40.913 votos no RN = 48,3%.",
+      "calculation": "19.765 votos em Natal ÷ 40.922 votos no RN = 48,3%.",
       "post_text": "Natal concentra 48,3% dos votos de FAUSTINO contabilizados no RN; o restante do estado responde por 51,7%.",
       "breakdown": [
         {
@@ -55538,11 +55538,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "21.148"
+          "value": "21.157"
         },
         {
           "label": "Total no RN",
-          "value": "40.913"
+          "value": "40.922"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -55596,7 +55596,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "40.913"
+          "value": "40.922"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -55610,7 +55610,7 @@
       "headline": "Os três municípios com mais votos para FAUSTINO somam 63,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 19.765 votos (48,3% do total estadual).",
       "display_value": "63,4%",
-      "calculation": "25.952 votos nos três municípios com maior votação ÷ 40.913 votos no RN = 63,4%.",
+      "calculation": "25.952 votos nos três municípios com maior votação ÷ 40.922 votos no RN = 63,4%.",
       "post_text": "Os três municípios com mais votos para FAUSTINO somam 63,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -55619,7 +55619,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "40.913"
+          "value": "40.922"
         },
         {
           "label": "Maior votação municipal",
@@ -55745,7 +55745,7 @@
       "headline": "Natal responde por 22,5% dos votos de FLAVIO LUIZ contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "22,5%",
-      "calculation": "413 votos em Natal ÷ 1.838 votos no RN = 22,5%.",
+      "calculation": "413 votos em Natal ÷ 1.839 votos no RN = 22,5%.",
       "post_text": "Natal concentra 22,5% dos votos de FLAVIO LUIZ contabilizados no RN; o restante do estado responde por 77,5%.",
       "breakdown": [
         {
@@ -55754,11 +55754,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "1.425"
+          "value": "1.426"
         },
         {
           "label": "Total no RN",
-          "value": "1.838"
+          "value": "1.839"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -55812,7 +55812,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "1.838"
+          "value": "1.839"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -55826,7 +55826,7 @@
       "headline": "Os três municípios com mais votos para FLAVIO LUIZ somam 46,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 413 votos (22,5% do total estadual).",
       "display_value": "46,2%",
-      "calculation": "849 votos nos três municípios com maior votação ÷ 1.838 votos no RN = 46,2%.",
+      "calculation": "849 votos nos três municípios com maior votação ÷ 1.839 votos no RN = 46,2%.",
       "post_text": "Os três municípios com mais votos para FLAVIO LUIZ somam 46,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -55835,7 +55835,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "1.838"
+          "value": "1.839"
         },
         {
           "label": "Maior votação municipal",
@@ -56390,11 +56390,11 @@
       "type": "capital_share",
       "office": "depf",
       "candidate": "GARIBALDE LEITE",
-      "headline": "Natal responde por 16,2% dos votos de GARIBALDE LEITE contabilizados no RN.",
+      "headline": "Natal responde por 16,1% dos votos de GARIBALDE LEITE contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
-      "display_value": "16,2%",
-      "calculation": "115 votos em Natal ÷ 712 votos no RN = 16,2%.",
-      "post_text": "Natal concentra 16,2% dos votos de GARIBALDE LEITE contabilizados no RN; o restante do estado responde por 83,8%.",
+      "display_value": "16,1%",
+      "calculation": "115 votos em Natal ÷ 713 votos no RN = 16,1%.",
+      "post_text": "Natal concentra 16,1% dos votos de GARIBALDE LEITE contabilizados no RN; o restante do estado responde por 83,9%.",
       "breakdown": [
         {
           "label": "Natal",
@@ -56402,11 +56402,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "597"
+          "value": "598"
         },
         {
           "label": "Total no RN",
-          "value": "712"
+          "value": "713"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -56460,7 +56460,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "712"
+          "value": "713"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -56472,9 +56472,9 @@
       "office": "depf",
       "candidate": "GARIBALDE LEITE",
       "headline": "Os três municípios com mais votos para GARIBALDE LEITE somam 39,0% da votação estadual da candidatura.",
-      "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 115 votos (16,2% do total estadual).",
+      "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 115 votos (16,1% do total estadual).",
       "display_value": "39,0%",
-      "calculation": "278 votos nos três municípios com maior votação ÷ 712 votos no RN = 39,0%.",
+      "calculation": "278 votos nos três municípios com maior votação ÷ 713 votos no RN = 39,0%.",
       "post_text": "Os três municípios com mais votos para GARIBALDE LEITE somam 39,0% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -56483,14 +56483,14 @@
         },
         {
           "label": "Total no RN",
-          "value": "712"
+          "value": "713"
         },
         {
           "label": "Maior votação municipal",
           "value": "NATAL"
         }
       ],
-      "explanation": "O município com maior número de votos nominais para esta candidatura é NATAL, com 115 votos (16,2% do total estadual).",
+      "explanation": "O município com maior número de votos nominais para esta candidatura é NATAL, com 115 votos (16,1% do total estadual).",
       "card_note": "NATAL: 115; CANGUARETAMA: 97; ESPÍRITO SANTO: 66"
     },
     {
@@ -56501,7 +56501,7 @@
       "headline": "Natal responde por 35,2% dos votos de GENERAL GIRÃO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "35,2%",
-      "calculation": "46.876 votos em Natal ÷ 133.234 votos no RN = 35,2%.",
+      "calculation": "46.876 votos em Natal ÷ 133.258 votos no RN = 35,2%.",
       "post_text": "Natal concentra 35,2% dos votos de GENERAL GIRÃO contabilizados no RN; o restante do estado responde por 64,8%.",
       "breakdown": [
         {
@@ -56510,11 +56510,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "86.358"
+          "value": "86.382"
         },
         {
           "label": "Total no RN",
-          "value": "133.234"
+          "value": "133.258"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -56568,7 +56568,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "133.234"
+          "value": "133.258"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -56582,7 +56582,7 @@
       "headline": "Os três municípios com mais votos para GENERAL GIRÃO somam 48,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 46.876 votos (35,2% do total estadual).",
       "display_value": "48,5%",
-      "calculation": "64.634 votos nos três municípios com maior votação ÷ 133.234 votos no RN = 48,5%.",
+      "calculation": "64.634 votos nos três municípios com maior votação ÷ 133.258 votos no RN = 48,5%.",
       "post_text": "Os três municípios com mais votos para GENERAL GIRÃO somam 48,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -56591,7 +56591,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "133.234"
+          "value": "133.258"
         },
         {
           "label": "Maior votação municipal",
@@ -57365,7 +57365,7 @@
       "headline": "Natal responde por 7,4% dos votos de JUNINHO SAIA RODADA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "7,4%",
-      "calculation": "6.210 votos em Natal ÷ 84.127 votos no RN = 7,4%.",
+      "calculation": "6.210 votos em Natal ÷ 84.156 votos no RN = 7,4%.",
       "post_text": "Natal concentra 7,4% dos votos de JUNINHO SAIA RODADA contabilizados no RN; o restante do estado responde por 92,6%.",
       "breakdown": [
         {
@@ -57374,11 +57374,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "77.917"
+          "value": "77.946"
         },
         {
           "label": "Total no RN",
-          "value": "84.127"
+          "value": "84.156"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -57432,7 +57432,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "84.127"
+          "value": "84.156"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -57446,7 +57446,7 @@
       "headline": "Os três municípios com mais votos para JUNINHO SAIA RODADA somam 22,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é CARAÚBAS, com 9.169 votos (10,9% do total estadual).",
       "display_value": "22,1%",
-      "calculation": "18.622 votos nos três municípios com maior votação ÷ 84.127 votos no RN = 22,1%.",
+      "calculation": "18.622 votos nos três municípios com maior votação ÷ 84.156 votos no RN = 22,1%.",
       "post_text": "Os três municípios com mais votos para JUNINHO SAIA RODADA somam 22,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -57455,7 +57455,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "84.127"
+          "value": "84.156"
         },
         {
           "label": "Maior votação municipal",
@@ -58121,7 +58121,7 @@
       "headline": "Natal responde por 17,7% dos votos de MINEIRO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "17,7%",
-      "calculation": "13.284 votos em Natal ÷ 75.087 votos no RN = 17,7%.",
+      "calculation": "13.284 votos em Natal ÷ 75.091 votos no RN = 17,7%.",
       "post_text": "Natal concentra 17,7% dos votos de MINEIRO contabilizados no RN; o restante do estado responde por 82,3%.",
       "breakdown": [
         {
@@ -58130,11 +58130,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "61.803"
+          "value": "61.807"
         },
         {
           "label": "Total no RN",
-          "value": "75.087"
+          "value": "75.091"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -58188,7 +58188,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "75.087"
+          "value": "75.091"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -58199,11 +58199,11 @@
       "type": "top_municipalities",
       "office": "depf",
       "candidate": "MINEIRO",
-      "headline": "Os três municípios com mais votos para MINEIRO somam 26,7% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para MINEIRO somam 26,6% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 13.284 votos (17,7% do total estadual).",
-      "display_value": "26,7%",
-      "calculation": "20.011 votos nos três municípios com maior votação ÷ 75.087 votos no RN = 26,7%.",
-      "post_text": "Os três municípios com mais votos para MINEIRO somam 26,7% da votação estadual registrada da candidatura.",
+      "display_value": "26,6%",
+      "calculation": "20.011 votos nos três municípios com maior votação ÷ 75.091 votos no RN = 26,6%.",
+      "post_text": "Os três municípios com mais votos para MINEIRO somam 26,6% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -58211,7 +58211,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "75.087"
+          "value": "75.091"
         },
         {
           "label": "Maior votação municipal",
@@ -58661,7 +58661,7 @@
       "headline": "Natal responde por 37,8% dos votos de NATÁLIA BONAVIDES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "37,8%",
-      "calculation": "81.492 votos em Natal ÷ 215.483 votos no RN = 37,8%.",
+      "calculation": "81.492 votos em Natal ÷ 215.509 votos no RN = 37,8%.",
       "post_text": "Natal concentra 37,8% dos votos de NATÁLIA BONAVIDES contabilizados no RN; o restante do estado responde por 62,2%.",
       "breakdown": [
         {
@@ -58670,11 +58670,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "133.991"
+          "value": "134.017"
         },
         {
           "label": "Total no RN",
-          "value": "215.483"
+          "value": "215.509"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -58728,7 +58728,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "215.483"
+          "value": "215.509"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -58742,7 +58742,7 @@
       "headline": "Os três municípios com mais votos para NATÁLIA BONAVIDES somam 50,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 81.492 votos (37,8% do total estadual).",
       "display_value": "50,4%",
-      "calculation": "108.539 votos nos três municípios com maior votação ÷ 215.483 votos no RN = 50,4%.",
+      "calculation": "108.539 votos nos três municípios com maior votação ÷ 215.509 votos no RN = 50,4%.",
       "post_text": "Os três municípios com mais votos para NATÁLIA BONAVIDES somam 50,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -58751,7 +58751,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "215.483"
+          "value": "215.509"
         },
         {
           "label": "Maior votação municipal",
@@ -58877,7 +58877,7 @@
       "headline": "Natal responde por 8,2% dos votos de NEGA DE NENEM BORGES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "8,2%",
-      "calculation": "352 votos em Natal ÷ 4.274 votos no RN = 8,2%.",
+      "calculation": "352 votos em Natal ÷ 4.275 votos no RN = 8,2%.",
       "post_text": "Natal concentra 8,2% dos votos de NEGA DE NENEM BORGES contabilizados no RN; o restante do estado responde por 91,8%.",
       "breakdown": [
         {
@@ -58886,11 +58886,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "3.922"
+          "value": "3.923"
         },
         {
           "label": "Total no RN",
-          "value": "4.274"
+          "value": "4.275"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -58944,7 +58944,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "4.274"
+          "value": "4.275"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -58958,7 +58958,7 @@
       "headline": "Os três municípios com mais votos para NEGA DE NENEM BORGES somam 63,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é SÃO JOSÉ DO CAMPESTRE, com 2.077 votos (48,6% do total estadual).",
       "display_value": "63,7%",
-      "calculation": "2.724 votos nos três municípios com maior votação ÷ 4.274 votos no RN = 63,7%.",
+      "calculation": "2.724 votos nos três municípios com maior votação ÷ 4.275 votos no RN = 63,7%.",
       "post_text": "Os três municípios com mais votos para NEGA DE NENEM BORGES somam 63,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -58967,7 +58967,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "4.274"
+          "value": "4.275"
         },
         {
           "label": "Maior votação municipal",
@@ -58985,7 +58985,7 @@
       "headline": "Natal responde por 30,3% dos votos de NINA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "30,3%",
-      "calculation": "56.158 votos em Natal ÷ 185.231 votos no RN = 30,3%.",
+      "calculation": "56.158 votos em Natal ÷ 185.248 votos no RN = 30,3%.",
       "post_text": "Natal concentra 30,3% dos votos de NINA contabilizados no RN; o restante do estado responde por 69,7%.",
       "breakdown": [
         {
@@ -58994,11 +58994,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "129.073"
+          "value": "129.090"
         },
         {
           "label": "Total no RN",
-          "value": "185.231"
+          "value": "185.248"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -59052,7 +59052,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "185.231"
+          "value": "185.248"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -59066,7 +59066,7 @@
       "headline": "Os três municípios com mais votos para NINA somam 39,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 56.158 votos (30,3% do total estadual).",
       "display_value": "39,2%",
-      "calculation": "72.651 votos nos três municípios com maior votação ÷ 185.231 votos no RN = 39,2%.",
+      "calculation": "72.651 votos nos três municípios com maior votação ÷ 185.248 votos no RN = 39,2%.",
       "post_text": "Os três municípios com mais votos para NINA somam 39,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -59075,7 +59075,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "185.231"
+          "value": "185.248"
         },
         {
           "label": "Maior votação municipal",
@@ -59957,7 +59957,7 @@
       "headline": "Natal responde por 18,5% dos votos de PEDRO FILHO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "18,5%",
-      "calculation": "3.616 votos em Natal ÷ 19.499 votos no RN = 18,5%.",
+      "calculation": "3.616 votos em Natal ÷ 19.500 votos no RN = 18,5%.",
       "post_text": "Natal concentra 18,5% dos votos de PEDRO FILHO contabilizados no RN; o restante do estado responde por 81,5%.",
       "breakdown": [
         {
@@ -59966,11 +59966,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "15.883"
+          "value": "15.884"
         },
         {
           "label": "Total no RN",
-          "value": "19.499"
+          "value": "19.500"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -60024,7 +60024,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "19.499"
+          "value": "19.500"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -60038,7 +60038,7 @@
       "headline": "Os três municípios com mais votos para PEDRO FILHO somam 52,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é ASSÚ, com 5.519 votos (28,3% do total estadual).",
       "display_value": "52,4%",
-      "calculation": "10.227 votos nos três municípios com maior votação ÷ 19.499 votos no RN = 52,4%.",
+      "calculation": "10.227 votos nos três municípios com maior votação ÷ 19.500 votos no RN = 52,4%.",
       "post_text": "Os três municípios com mais votos para PEDRO FILHO somam 52,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -60047,7 +60047,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "19.499"
+          "value": "19.500"
         },
         {
           "label": "Maior votação municipal",
@@ -60929,7 +60929,7 @@
       "headline": "Natal responde por 2,9% dos votos de ROBINSON FARIA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "2,9%",
-      "calculation": "3.537 votos em Natal ÷ 123.005 votos no RN = 2,9%.",
+      "calculation": "3.537 votos em Natal ÷ 123.008 votos no RN = 2,9%.",
       "post_text": "Natal concentra 2,9% dos votos de ROBINSON FARIA contabilizados no RN; o restante do estado responde por 97,1%.",
       "breakdown": [
         {
@@ -60938,11 +60938,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "119.468"
+          "value": "119.471"
         },
         {
           "label": "Total no RN",
-          "value": "123.005"
+          "value": "123.008"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -60996,7 +60996,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "123.005"
+          "value": "123.008"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -61010,7 +61010,7 @@
       "headline": "Os três municípios com mais votos para ROBINSON FARIA somam 17,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é CEARÁ-MIRIM, com 11.491 votos (9,3% do total estadual).",
       "display_value": "17,5%",
-      "calculation": "21.479 votos nos três municípios com maior votação ÷ 123.005 votos no RN = 17,5%.",
+      "calculation": "21.479 votos nos três municípios com maior votação ÷ 123.008 votos no RN = 17,5%.",
       "post_text": "Os três municípios com mais votos para ROBINSON FARIA somam 17,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -61019,7 +61019,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "123.005"
+          "value": "123.008"
         },
         {
           "label": "Maior votação municipal",
@@ -61145,7 +61145,7 @@
       "headline": "Natal responde por 28,6% dos votos de SARGENTO GONÇALVES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "28,6%",
-      "calculation": "44.070 votos em Natal ÷ 154.055 votos no RN = 28,6%.",
+      "calculation": "44.070 votos em Natal ÷ 154.073 votos no RN = 28,6%.",
       "post_text": "Natal concentra 28,6% dos votos de SARGENTO GONÇALVES contabilizados no RN; o restante do estado responde por 71,4%.",
       "breakdown": [
         {
@@ -61154,11 +61154,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "109.985"
+          "value": "110.003"
         },
         {
           "label": "Total no RN",
-          "value": "154.055"
+          "value": "154.073"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -61212,7 +61212,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "154.055"
+          "value": "154.073"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -61226,7 +61226,7 @@
       "headline": "Os três municípios com mais votos para SARGENTO GONÇALVES somam 44,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 44.070 votos (28,6% do total estadual).",
       "display_value": "44,2%",
-      "calculation": "68.093 votos nos três municípios com maior votação ÷ 154.055 votos no RN = 44,2%.",
+      "calculation": "68.093 votos nos três municípios com maior votação ÷ 154.073 votos no RN = 44,2%.",
       "post_text": "Os três municípios com mais votos para SARGENTO GONÇALVES somam 44,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -61235,7 +61235,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "154.055"
+          "value": "154.073"
         },
         {
           "label": "Maior votação municipal",
@@ -61361,7 +61361,7 @@
       "headline": "Natal responde por 34,6% dos votos de SUSAPE AUGUSTO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "34,6%",
-      "calculation": "675 votos em Natal ÷ 1.949 votos no RN = 34,6%.",
+      "calculation": "675 votos em Natal ÷ 1.951 votos no RN = 34,6%.",
       "post_text": "Natal concentra 34,6% dos votos de SUSAPE AUGUSTO contabilizados no RN; o restante do estado responde por 65,4%.",
       "breakdown": [
         {
@@ -61370,11 +61370,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "1.274"
+          "value": "1.276"
         },
         {
           "label": "Total no RN",
-          "value": "1.949"
+          "value": "1.951"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -61428,7 +61428,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "1.949"
+          "value": "1.951"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -61442,7 +61442,7 @@
       "headline": "Os três municípios com mais votos para SUSAPE AUGUSTO somam 44,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 675 votos (34,6% do total estadual).",
       "display_value": "44,7%",
-      "calculation": "872 votos nos três municípios com maior votação ÷ 1.949 votos no RN = 44,7%.",
+      "calculation": "872 votos nos três municípios com maior votação ÷ 1.951 votos no RN = 44,7%.",
       "post_text": "Os três municípios com mais votos para SUSAPE AUGUSTO somam 44,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -61451,7 +61451,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "1.949"
+          "value": "1.951"
         },
         {
           "label": "Maior votação municipal",
@@ -61577,7 +61577,7 @@
       "headline": "Natal responde por 27,4% dos votos de THABATTA PIMENTA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "27,4%",
-      "calculation": "25.408 votos em Natal ÷ 92.735 votos no RN = 27,4%.",
+      "calculation": "25.408 votos em Natal ÷ 92.743 votos no RN = 27,4%.",
       "post_text": "Natal concentra 27,4% dos votos de THABATTA PIMENTA contabilizados no RN; o restante do estado responde por 72,6%.",
       "breakdown": [
         {
@@ -61586,11 +61586,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "67.327"
+          "value": "67.335"
         },
         {
           "label": "Total no RN",
-          "value": "92.735"
+          "value": "92.743"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -61644,7 +61644,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "92.735"
+          "value": "92.743"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -61658,7 +61658,7 @@
       "headline": "Os três municípios com mais votos para THABATTA PIMENTA somam 38,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 25.408 votos (27,4% do total estadual).",
       "display_value": "38,1%",
-      "calculation": "35.377 votos nos três municípios com maior votação ÷ 92.735 votos no RN = 38,1%.",
+      "calculation": "35.377 votos nos três municípios com maior votação ÷ 92.743 votos no RN = 38,1%.",
       "post_text": "Os três municípios com mais votos para THABATTA PIMENTA somam 38,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -61667,7 +61667,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "92.735"
+          "value": "92.743"
         },
         {
           "label": "Maior votação municipal",
@@ -62549,7 +62549,7 @@
       "headline": "Natal responde por 27,2% dos votos de CORONEL HÉLIO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "27,2%",
-      "calculation": "168.909 votos em Natal ÷ 620.278 votos no RN = 27,2%.",
+      "calculation": "168.909 votos em Natal ÷ 620.354 votos no RN = 27,2%.",
       "post_text": "Natal concentra 27,2% dos votos de CORONEL HÉLIO contabilizados no RN; o restante do estado responde por 72,8%.",
       "breakdown": [
         {
@@ -62558,11 +62558,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "451.369"
+          "value": "451.445"
         },
         {
           "label": "Total no RN",
-          "value": "620.278"
+          "value": "620.354"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -62616,7 +62616,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "620.278"
+          "value": "620.354"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -62630,7 +62630,7 @@
       "headline": "Os três municípios com mais votos para CORONEL HÉLIO somam 42,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 168.909 votos (27,2% do total estadual).",
       "display_value": "42,7%",
-      "calculation": "264.961 votos nos três municípios com maior votação ÷ 620.278 votos no RN = 42,7%.",
+      "calculation": "264.961 votos nos três municípios com maior votação ÷ 620.354 votos no RN = 42,7%.",
       "post_text": "Os três municípios com mais votos para CORONEL HÉLIO somam 42,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -62639,7 +62639,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "620.278"
+          "value": "620.354"
         },
         {
           "label": "Maior votação municipal",
@@ -62762,11 +62762,11 @@
       "type": "capital_share",
       "office": "sen",
       "candidate": "LUCIANA MANDU",
-      "headline": "Natal responde por 47,0% dos votos de LUCIANA MANDU contabilizados no RN.",
+      "headline": "Natal responde por 46,9% dos votos de LUCIANA MANDU contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
-      "display_value": "47,0%",
-      "calculation": "1.167 votos em Natal ÷ 2.485 votos no RN = 47,0%.",
-      "post_text": "Natal concentra 47,0% dos votos de LUCIANA MANDU contabilizados no RN; o restante do estado responde por 53,0%.",
+      "display_value": "46,9%",
+      "calculation": "1.167 votos em Natal ÷ 2.486 votos no RN = 46,9%.",
+      "post_text": "Natal concentra 46,9% dos votos de LUCIANA MANDU contabilizados no RN; o restante do estado responde por 53,1%.",
       "breakdown": [
         {
           "label": "Natal",
@@ -62774,11 +62774,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "1.318"
+          "value": "1.319"
         },
         {
           "label": "Total no RN",
-          "value": "2.485"
+          "value": "2.486"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -62832,7 +62832,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "2.485"
+          "value": "2.486"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -62844,9 +62844,9 @@
       "office": "sen",
       "candidate": "LUCIANA MANDU",
       "headline": "Os três municípios com mais votos para LUCIANA MANDU somam 60,9% da votação estadual da candidatura.",
-      "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.167 votos (47,0% do total estadual).",
+      "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.167 votos (46,9% do total estadual).",
       "display_value": "60,9%",
-      "calculation": "1.513 votos nos três municípios com maior votação ÷ 2.485 votos no RN = 60,9%.",
+      "calculation": "1.513 votos nos três municípios com maior votação ÷ 2.486 votos no RN = 60,9%.",
       "post_text": "Os três municípios com mais votos para LUCIANA MANDU somam 60,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -62855,14 +62855,14 @@
         },
         {
           "label": "Total no RN",
-          "value": "2.485"
+          "value": "2.486"
         },
         {
           "label": "Maior votação municipal",
           "value": "NATAL"
         }
       ],
-      "explanation": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.167 votos (47,0% do total estadual).",
+      "explanation": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.167 votos (46,9% do total estadual).",
       "card_note": "NATAL: 1.167; PARNAMIRIM: 202; MOSSORÓ: 144"
     },
     {
@@ -62873,7 +62873,7 @@
       "headline": "Natal responde por 45,2% dos votos de PROFESSOR GUILHERME contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "45,2%",
-      "calculation": "2.489 votos em Natal ÷ 5.510 votos no RN = 45,2%.",
+      "calculation": "2.489 votos em Natal ÷ 5.511 votos no RN = 45,2%.",
       "post_text": "Natal concentra 45,2% dos votos de PROFESSOR GUILHERME contabilizados no RN; o restante do estado responde por 54,8%.",
       "breakdown": [
         {
@@ -62882,11 +62882,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "3.021"
+          "value": "3.022"
         },
         {
           "label": "Total no RN",
-          "value": "5.510"
+          "value": "5.511"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -62940,7 +62940,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "5.510"
+          "value": "5.511"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -62954,7 +62954,7 @@
       "headline": "Os três municípios com mais votos para PROFESSOR GUILHERME somam 67,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 2.489 votos (45,2% do total estadual).",
       "display_value": "67,1%",
-      "calculation": "3.699 votos nos três municípios com maior votação ÷ 5.510 votos no RN = 67,1%.",
+      "calculation": "3.699 votos nos três municípios com maior votação ÷ 5.511 votos no RN = 67,1%.",
       "post_text": "Os três municípios com mais votos para PROFESSOR GUILHERME somam 67,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -62963,7 +62963,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "5.510"
+          "value": "5.511"
         },
         {
           "label": "Maior votação municipal",
@@ -62981,7 +62981,7 @@
       "headline": "Natal responde por 22,9% dos votos de RAFAEL MOTTA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "22,9%",
-      "calculation": "116.978 votos em Natal ÷ 510.616 votos no RN = 22,9%.",
+      "calculation": "116.978 votos em Natal ÷ 510.674 votos no RN = 22,9%.",
       "post_text": "Natal concentra 22,9% dos votos de RAFAEL MOTTA contabilizados no RN; o restante do estado responde por 77,1%.",
       "breakdown": [
         {
@@ -62990,11 +62990,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "393.638"
+          "value": "393.696"
         },
         {
           "label": "Total no RN",
-          "value": "510.616"
+          "value": "510.674"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63048,7 +63048,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "510.616"
+          "value": "510.674"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63062,7 +63062,7 @@
       "headline": "Os três municípios com mais votos para RAFAEL MOTTA somam 33,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 116.978 votos (22,9% do total estadual).",
       "display_value": "33,9%",
-      "calculation": "173.003 votos nos três municípios com maior votação ÷ 510.616 votos no RN = 33,9%.",
+      "calculation": "173.003 votos nos três municípios com maior votação ÷ 510.674 votos no RN = 33,9%.",
       "post_text": "Os três municípios com mais votos para RAFAEL MOTTA somam 33,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63071,7 +63071,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "510.616"
+          "value": "510.674"
         },
         {
           "label": "Maior votação municipal",
@@ -63089,7 +63089,7 @@
       "headline": "Natal responde por 31,4% dos votos de ROSÁLIA FERNANDES contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "31,4%",
-      "calculation": "1.192 votos em Natal ÷ 3.794 votos no RN = 31,4%.",
+      "calculation": "1.192 votos em Natal ÷ 3.795 votos no RN = 31,4%.",
       "post_text": "Natal concentra 31,4% dos votos de ROSÁLIA FERNANDES contabilizados no RN; o restante do estado responde por 68,6%.",
       "breakdown": [
         {
@@ -63098,11 +63098,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "2.602"
+          "value": "2.603"
         },
         {
           "label": "Total no RN",
-          "value": "3.794"
+          "value": "3.795"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63156,7 +63156,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "3.794"
+          "value": "3.795"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63167,11 +63167,11 @@
       "type": "top_municipalities",
       "office": "sen",
       "candidate": "ROSÁLIA FERNANDES",
-      "headline": "Os três municípios com mais votos para ROSÁLIA FERNANDES somam 68,8% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para ROSÁLIA FERNANDES somam 68,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 1.192 votos (31,4% do total estadual).",
-      "display_value": "68,8%",
-      "calculation": "2.609 votos nos três municípios com maior votação ÷ 3.794 votos no RN = 68,8%.",
-      "post_text": "Os três municípios com mais votos para ROSÁLIA FERNANDES somam 68,8% da votação estadual registrada da candidatura.",
+      "display_value": "68,7%",
+      "calculation": "2.609 votos nos três municípios com maior votação ÷ 3.795 votos no RN = 68,7%.",
+      "post_text": "Os três municípios com mais votos para ROSÁLIA FERNANDES somam 68,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
@@ -63179,7 +63179,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "3.794"
+          "value": "3.795"
         },
         {
           "label": "Maior votação municipal",
@@ -63197,7 +63197,7 @@
       "headline": "Natal responde por 21,8% dos votos de SAMANDA DE LULA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "21,8%",
-      "calculation": "138.855 votos em Natal ÷ 635.854 votos no RN = 21,8%.",
+      "calculation": "138.855 votos em Natal ÷ 635.924 votos no RN = 21,8%.",
       "post_text": "Natal concentra 21,8% dos votos de SAMANDA DE LULA contabilizados no RN; o restante do estado responde por 78,2%.",
       "breakdown": [
         {
@@ -63206,11 +63206,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "496.999"
+          "value": "497.069"
         },
         {
           "label": "Total no RN",
-          "value": "635.854"
+          "value": "635.924"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63264,7 +63264,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "635.854"
+          "value": "635.924"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63278,7 +63278,7 @@
       "headline": "Os três municípios com mais votos para SAMANDA DE LULA somam 33,4% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 138.855 votos (21,8% do total estadual).",
       "display_value": "33,4%",
-      "calculation": "212.489 votos nos três municípios com maior votação ÷ 635.854 votos no RN = 33,4%.",
+      "calculation": "212.489 votos nos três municípios com maior votação ÷ 635.924 votos no RN = 33,4%.",
       "post_text": "Os três municípios com mais votos para SAMANDA DE LULA somam 33,4% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63287,7 +63287,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "635.854"
+          "value": "635.924"
         },
         {
           "label": "Maior votação municipal",
@@ -63305,7 +63305,7 @@
       "headline": "Natal responde por 42,9% dos votos de SANDRO PIMENTEL contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "42,9%",
-      "calculation": "9.539 votos em Natal ÷ 22.233 votos no RN = 42,9%.",
+      "calculation": "9.539 votos em Natal ÷ 22.237 votos no RN = 42,9%.",
       "post_text": "Natal concentra 42,9% dos votos de SANDRO PIMENTEL contabilizados no RN; o restante do estado responde por 57,1%.",
       "breakdown": [
         {
@@ -63314,11 +63314,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "12.694"
+          "value": "12.698"
         },
         {
           "label": "Total no RN",
-          "value": "22.233"
+          "value": "22.237"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63372,7 +63372,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "22.233"
+          "value": "22.237"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63386,7 +63386,7 @@
       "headline": "Os três municípios com mais votos para SANDRO PIMENTEL somam 57,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 9.539 votos (42,9% do total estadual).",
       "display_value": "57,2%",
-      "calculation": "12.725 votos nos três municípios com maior votação ÷ 22.233 votos no RN = 57,2%.",
+      "calculation": "12.725 votos nos três municípios com maior votação ÷ 22.237 votos no RN = 57,2%.",
       "post_text": "Os três municípios com mais votos para SANDRO PIMENTEL somam 57,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63395,7 +63395,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "22.233"
+          "value": "22.237"
         },
         {
           "label": "Maior votação municipal",
@@ -63413,7 +63413,7 @@
       "headline": "Natal responde por 42,6% dos votos de SONIA GODEIRO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "42,6%",
-      "calculation": "6.105 votos em Natal ÷ 14.334 votos no RN = 42,6%.",
+      "calculation": "6.105 votos em Natal ÷ 14.338 votos no RN = 42,6%.",
       "post_text": "Natal concentra 42,6% dos votos de SONIA GODEIRO contabilizados no RN; o restante do estado responde por 57,4%.",
       "breakdown": [
         {
@@ -63422,11 +63422,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "8.229"
+          "value": "8.233"
         },
         {
           "label": "Total no RN",
-          "value": "14.334"
+          "value": "14.338"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63480,7 +63480,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "14.334"
+          "value": "14.338"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63494,7 +63494,7 @@
       "headline": "Os três municípios com mais votos para SONIA GODEIRO somam 58,7% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 6.105 votos (42,6% do total estadual).",
       "display_value": "58,7%",
-      "calculation": "8.415 votos nos três municípios com maior votação ÷ 14.334 votos no RN = 58,7%.",
+      "calculation": "8.415 votos nos três municípios com maior votação ÷ 14.338 votos no RN = 58,7%.",
       "post_text": "Os três municípios com mais votos para SONIA GODEIRO somam 58,7% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63503,7 +63503,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "14.334"
+          "value": "14.338"
         },
         {
           "label": "Maior votação municipal",
@@ -63521,7 +63521,7 @@
       "headline": "Natal responde por 20,9% dos votos de STYVENSON VALENTIM contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "20,9%",
-      "calculation": "220.338 votos em Natal ÷ 1.054.851 votos no RN = 20,9%.",
+      "calculation": "220.338 votos em Natal ÷ 1.055.000 votos no RN = 20,9%.",
       "post_text": "Natal concentra 20,9% dos votos de STYVENSON VALENTIM contabilizados no RN; o restante do estado responde por 79,1%.",
       "breakdown": [
         {
@@ -63530,11 +63530,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "834.513"
+          "value": "834.662"
         },
         {
           "label": "Total no RN",
-          "value": "1.054.851"
+          "value": "1.055.000"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63588,7 +63588,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "1.054.851"
+          "value": "1.055.000"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63602,7 +63602,7 @@
       "headline": "Os três municípios com mais votos para STYVENSON VALENTIM somam 34,5% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 220.338 votos (20,9% do total estadual).",
       "display_value": "34,5%",
-      "calculation": "363.640 votos nos três municípios com maior votação ÷ 1.054.851 votos no RN = 34,5%.",
+      "calculation": "363.640 votos nos três municípios com maior votação ÷ 1.055.000 votos no RN = 34,5%.",
       "post_text": "Os três municípios com mais votos para STYVENSON VALENTIM somam 34,5% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63611,7 +63611,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "1.054.851"
+          "value": "1.055.000"
         },
         {
           "label": "Maior votação municipal",
@@ -63629,7 +63629,7 @@
       "headline": "Natal responde por 26,1% dos votos de TÉRCIO TINÔCO contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "26,1%",
-      "calculation": "26.868 votos em Natal ÷ 102.806 votos no RN = 26,1%.",
+      "calculation": "26.868 votos em Natal ÷ 102.834 votos no RN = 26,1%.",
       "post_text": "Natal concentra 26,1% dos votos de TÉRCIO TINÔCO contabilizados no RN; o restante do estado responde por 73,9%.",
       "breakdown": [
         {
@@ -63638,11 +63638,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "75.938"
+          "value": "75.966"
         },
         {
           "label": "Total no RN",
-          "value": "102.806"
+          "value": "102.834"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63696,7 +63696,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "102.806"
+          "value": "102.834"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63710,7 +63710,7 @@
       "headline": "Os três municípios com mais votos para TÉRCIO TINÔCO somam 49,2% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 26.868 votos (26,1% do total estadual).",
       "display_value": "49,2%",
-      "calculation": "50.604 votos nos três municípios com maior votação ÷ 102.806 votos no RN = 49,2%.",
+      "calculation": "50.604 votos nos três municípios com maior votação ÷ 102.834 votos no RN = 49,2%.",
       "post_text": "Os três municípios com mais votos para TÉRCIO TINÔCO somam 49,2% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63719,7 +63719,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "102.806"
+          "value": "102.834"
         },
         {
           "label": "Maior votação municipal",
@@ -63737,7 +63737,7 @@
       "headline": "Natal responde por 10,9% dos votos de ZENAIDE MAIA contabilizados no RN.",
       "summary": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
       "display_value": "10,9%",
-      "calculation": "68.537 votos em Natal ÷ 630.071 votos no RN = 10,9%.",
+      "calculation": "68.537 votos em Natal ÷ 630.159 votos no RN = 10,9%.",
       "post_text": "Natal concentra 10,9% dos votos de ZENAIDE MAIA contabilizados no RN; o restante do estado responde por 89,1%.",
       "breakdown": [
         {
@@ -63746,11 +63746,11 @@
         },
         {
           "label": "Demais municípios",
-          "value": "561.534"
+          "value": "561.622"
         },
         {
           "label": "Total no RN",
-          "value": "630.071"
+          "value": "630.159"
         }
       ],
       "explanation": "A participação da capital é calculada dividindo os votos nominais registrados em Natal pelo total estadual da candidatura.",
@@ -63804,7 +63804,7 @@
         },
         {
           "label": "Votos no estado",
-          "value": "630.071"
+          "value": "630.159"
         }
       ],
       "explanation": "O Radar conta em quantos municípios há ao menos um voto nominal registrado para esta candidatura.",
@@ -63818,7 +63818,7 @@
       "headline": "Os três municípios com mais votos para ZENAIDE MAIA somam 21,9% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é NATAL, com 68.537 votos (10,9% do total estadual).",
       "display_value": "21,9%",
-      "calculation": "138.049 votos nos três municípios com maior votação ÷ 630.071 votos no RN = 21,9%.",
+      "calculation": "138.049 votos nos três municípios com maior votação ÷ 630.159 votos no RN = 21,9%.",
       "post_text": "Os três municípios com mais votos para ZENAIDE MAIA somam 21,9% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
@@ -63827,7 +63827,7 @@
         },
         {
           "label": "Total no RN",
-          "value": "630.071"
+          "value": "630.159"
         },
         {
           "label": "Maior votação municipal",
