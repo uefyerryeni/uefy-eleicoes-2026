@@ -59,7 +59,7 @@ function selectMunicipality(feature){
   if(changingMunicipality)current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};
   $('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
   const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
-  if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
+  if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
 }
 
 const GOVERNOR_COLORS_BY_NUMBER={
