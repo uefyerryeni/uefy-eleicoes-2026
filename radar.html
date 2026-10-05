@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Legislativo RN</title>
   <link rel="stylesheet" href="style.css?v=20261003-04">
-  <link rel="stylesheet" href="radar.css?v=20261005-senate-top3">
+  <link rel="stylesheet" href="radar.css?v=20261005-senate-winners">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -78,21 +78,16 @@
     <div class="rn-map-head">
       <div>
         <div class="rn-map-titleline"><span class="rn-badge">Mapa legislativo</span><span class="rn-source-chip" id="radarSourceBadge">OFICIAL TSE</span></div>
-        <h2 id="radarMapTitle">Quem teve a maior votação nominal para Senador em cada município</h2>
-        <p id="radarMapExplanation">O mapa mostra a posição local da votação nominal. Para Senado, duas vagas estão em disputa no estado; o resultado municipal não define quem será eleito.</p>
-        <div class="senate-rank-switch" id="senateRankSwitch" role="group" aria-label="Posição mostrada no mapa do Senado">
-          <button type="button" class="active" data-senate-rank="1">1º no município</button>
-          <button type="button" data-senate-rank="2">2º no município</button>
-          <button type="button" data-senate-rank="3">3º no município</button>
-        </div>
+        <h2 id="radarMapTitle">Quem venceu em cada município para o Senado</h2>
+        <p id="radarMapExplanation">Cada município recebe a cor da candidatura que ficou em 1º lugar naquele município. Use o filtro para mostrar apenas as cidades vencidas por uma candidatura.</p>
         <div class="senate-candidate-filter" id="senateCandidateFilterWrap">
           <label for="senateCandidateFilter">
-            <span>Candidato entre os 3 mais votados no RN</span>
+            <span>Mostrar no mapa</span>
             <select id="senateCandidateFilter">
-              <option value="">Todos os 3 principais</option>
+              <option value="">Todos os vencedores municipais</option>
             </select>
           </label>
-          <small id="senateCandidateFilterStatus">O filtro usa a votação estadual oficial do TSE.</small>
+          <small id="senateCandidateFilterStatus">Cada município recebe a cor de quem ficou em 1º lugar nele.</small>
         </div>
       </div>
       <button class="btn primary" id="radarMapPublish" type="button" disabled>Gerar publicação do mapa</button>
@@ -103,8 +98,9 @@
       </div>
       <aside class="rn-map-summary">
         <span class="map-source" id="radarSummaryOffice">Senador</span>
-        <h3>Municípios liderados</h3>
+        <h3 id="radarSummaryTitle">Municípios vencidos</h3>
         <div id="radarLeaderSummary" class="rn-leader-summary"></div>
+        <div id="radarWinnerCities" class="radar-winner-cities"></div>
         <div class="rn-natal-highlight" id="radarSelectedHighlight">
           <small>Município selecionado</small>
           <strong>Natal</strong>
@@ -193,6 +189,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador RN</a><a href="radar.html" class="active">Legislativo</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="radar.js?v=20261005-senate-fix3"></script>
+<script src="radar.js?v=20261005-senate-winners"></script>
 </body>
 </html>
