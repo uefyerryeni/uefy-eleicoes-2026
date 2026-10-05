@@ -201,11 +201,28 @@ for row in analysis_rows:
         fail("Análises RN têm município sem liderança de Presidente/Governador.")
         break
     part=row.get("participation") or {}
+    gov=part.get("governor") or {}
+    if any(part.get(k)!=gov.get(k) for k in ("electorate","turnout","turnout_pct","abstention","abstention_pct")):
+        fail(f"Escopo estadual da participação divergente em {row.get('name')}.")
+    if int(part.get("turnout") or 0)+int(part.get("abstention") or 0)!=int(part.get("electorate") or 0):
+        fail(f"Comparecimento + abstenção não fecha o eleitorado em {row.get('name')}.")
     for field in ("turnout_pct","abstention_pct"):
         value=float(part.get(field) or 0)
         if value<=0 or value>100:
             fail(f"Indicador {field} inválido em {row.get('name')}: {value}.")
             break
+    for office in ("president","governor"):
+        office_data=part.get(office) or {}
+        total=float(office_data.get("total_votes") or 0)
+        if total<=0:
+            fail(f"Total de votos ausente em {row.get('name')} / {office}.")
+            continue
+        blank_calc=100*float(office_data.get("blank") or 0)/total
+        null_calc=100*float(office_data.get("null") or 0)/total
+        if abs(blank_calc-float(office_data.get("blank_pct") or 0))>0.02:
+            fail(f"Percentual de brancos divergente em {row.get('name')} / {office}.")
+        if abs(null_calc-float(office_data.get("null_pct") or 0))>0.02:
+            fail(f"Percentual de nulos divergente em {row.get('name')} / {office}.")
 analises_html=(ROOT/"analises.html").read_text(encoding="utf-8")
 analises_js=(ROOT/"analises.js").read_text(encoding="utf-8")
 for marker in ("crossCanvas","participationCanvas","crossPostText","participationPostText","crossMap","participationMap"):
