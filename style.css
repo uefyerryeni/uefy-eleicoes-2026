@@ -900,7 +900,7 @@ body.dark .rn-leader-mun.filtered-out{opacity:.18}
 
 
 /* Preparação para acesso público · revisão móvel 2026-10-05 */
-html,body{max-width:100%;overflow-x:clip}
+html,body{max-width:100%;overflow-x:hidden;overflow-x:clip}
 img,svg,canvas,video{max-width:100%}
 input,select,textarea,button{max-width:100%}
 .brand,.brandtext,.nav,.main-grid>*,.rn-layout>*,.rn-total-map-grid>*,.analysis-workbench>*,.analysis-main>*,.radar-workbench>*,.radar-map-grid>*,.radar-municipality-grid>*,.radar-main-controls>*{min-width:0}
