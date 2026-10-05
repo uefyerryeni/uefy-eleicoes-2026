@@ -263,7 +263,25 @@ def main():
                     [{'label':'Três municípios','value':integer(top3_votes)},{'label':'Total no RN','value':integer(total)},{'label':'Maior votação municipal','value':top_name}],
                     card_note=detail
                 ))
-        offices_meta[office]={'label':meta['label'],'progress':state['progress'],'candidates_with_votes':sum(1 for c in state['candidates'] if c['votes']>0)}
+        statewide_ranked=sorted(
+            [c for c in state['candidates'] if c['votes']>0],
+            key=lambda c:(-int(c.get('votes') or 0),int(c.get('seq') or 999999))
+        )
+        offices_meta[office]={
+            'label':meta['label'],
+            'progress':state['progress'],
+            'candidates_with_votes':sum(1 for c in state['candidates'] if c['votes']>0),
+            'statewide_candidates':[
+                {
+                    'number':c.get('number') or c.get('id') or '',
+                    'name':c.get('name') or '',
+                    'party':c.get('party') or '',
+                    'votes':int(c.get('votes') or 0),
+                    'pct':round(float(c.get('pct') or 0),2)
+                }
+                for c in statewide_ranked
+            ]
+        }
         missing=sorted(state_candidate_ids_with_votes[office]-finding_candidate_ids[office])
         offices_meta[office]['integrity']={
             'state_candidates_with_votes':len(state_candidate_ids_with_votes[office]),
