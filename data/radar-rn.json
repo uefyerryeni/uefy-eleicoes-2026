@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-04T22:14:11-03:00",
+  "generated_at": "2026-10-04T22:21:04-03:00",
   "source_generated_at": "04/10/2026 · 22:07:31",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
@@ -11,6 +11,99 @@
       "label": "Senador",
       "progress": 99.99,
       "candidates_with_votes": 13,
+      "statewide_candidates": [
+        {
+          "number": "200",
+          "name": "STYVENSON VALENTIM",
+          "party": "PODE",
+          "votes": 1054851,
+          "pct": 29.25
+        },
+        {
+          "number": "131",
+          "name": "SAMANDA DE LULA",
+          "party": "PT",
+          "votes": 635854,
+          "pct": 17.63
+        },
+        {
+          "number": "555",
+          "name": "ZENAIDE MAIA",
+          "party": "PSD",
+          "votes": 630071,
+          "pct": 17.47
+        },
+        {
+          "number": "222",
+          "name": "CORONEL HÉLIO",
+          "party": "PL",
+          "votes": 620278,
+          "pct": 17.2
+        },
+        {
+          "number": "123",
+          "name": "RAFAEL MOTTA",
+          "party": "PDT",
+          "votes": 510616,
+          "pct": 14.16
+        },
+        {
+          "number": "444",
+          "name": "TÉRCIO TINÔCO",
+          "party": "UNIÃO",
+          "votes": 102806,
+          "pct": 2.85
+        },
+        {
+          "number": "500",
+          "name": "SANDRO PIMENTEL",
+          "party": "PSOL",
+          "votes": 22233,
+          "pct": 0.62
+        },
+        {
+          "number": "501",
+          "name": "SONIA GODEIRO",
+          "party": "PSOL",
+          "votes": 14334,
+          "pct": 0.4
+        },
+        {
+          "number": "800",
+          "name": "PROFESSOR GUILHERME",
+          "party": "UP",
+          "votes": 5510,
+          "pct": 0.15
+        },
+        {
+          "number": "166",
+          "name": "ROSÁLIA FERNANDES",
+          "party": "PSTU",
+          "votes": 3794,
+          "pct": 0.11
+        },
+        {
+          "number": "161",
+          "name": "LUCIANA MANDU",
+          "party": "PSTU",
+          "votes": 2485,
+          "pct": 0.07
+        },
+        {
+          "number": "369",
+          "name": "CLÓVIS COSTA DO COLETIVO NÓS",
+          "party": "AGIR",
+          "votes": 1796,
+          "pct": 0.05
+        },
+        {
+          "number": "360",
+          "name": "GARI WENDELL BATISTA",
+          "party": "AGIR",
+          "votes": 1698,
+          "pct": 0.05
+        }
+      ],
       "integrity": {
         "state_candidates_with_votes": 13,
         "candidates_with_findings": 13,
@@ -21,6 +114,701 @@
       "label": "Deputado federal",
       "progress": 99.99,
       "candidates_with_votes": 99,
+      "statewide_candidates": [
+        {
+          "number": "1311",
+          "name": "NATÁLIA BONAVIDES",
+          "party": "PT",
+          "votes": 215483,
+          "pct": 10.95
+        },
+        {
+          "number": "2233",
+          "name": "NINA",
+          "party": "PL",
+          "votes": 185231,
+          "pct": 9.41
+        },
+        {
+          "number": "4444",
+          "name": "BENES LEOCÁDIO",
+          "party": "UNIÃO",
+          "votes": 171328,
+          "pct": 8.71
+        },
+        {
+          "number": "2222",
+          "name": "SARGENTO GONÇALVES",
+          "party": "PL",
+          "votes": 154055,
+          "pct": 7.83
+        },
+        {
+          "number": "2210",
+          "name": "GENERAL GIRÃO",
+          "party": "PL",
+          "votes": 133234,
+          "pct": 6.77
+        },
+        {
+          "number": "4300",
+          "name": "DR. BERNARDO",
+          "party": "PV",
+          "votes": 130828,
+          "pct": 6.65
+        },
+        {
+          "number": "1111",
+          "name": "JOÃO MAIA",
+          "party": "PP",
+          "votes": 123040,
+          "pct": 6.25
+        },
+        {
+          "number": "1155",
+          "name": "ROBINSON FARIA",
+          "party": "PP",
+          "votes": 123005,
+          "pct": 6.25
+        },
+        {
+          "number": "2288",
+          "name": "CABO DEYVISON",
+          "party": "PL",
+          "votes": 100795,
+          "pct": 5.12
+        },
+        {
+          "number": "4343",
+          "name": "THABATTA PIMENTA",
+          "party": "PV",
+          "votes": 92735,
+          "pct": 4.71
+        },
+        {
+          "number": "2200",
+          "name": "JUNINHO SAIA RODADA",
+          "party": "PL",
+          "votes": 84127,
+          "pct": 4.28
+        },
+        {
+          "number": "1333",
+          "name": "MINEIRO",
+          "party": "PT",
+          "votes": 75087,
+          "pct": 3.82
+        },
+        {
+          "number": "2211",
+          "name": "CARLA DICKSON",
+          "party": "PL",
+          "votes": 67629,
+          "pct": 3.44
+        },
+        {
+          "number": "1345",
+          "name": "ODON JUNIOR",
+          "party": "PT",
+          "votes": 51402,
+          "pct": 2.61
+        },
+        {
+          "number": "4455",
+          "name": "FAUSTINO",
+          "party": "UNIÃO",
+          "votes": 40913,
+          "pct": 2.08
+        },
+        {
+          "number": "1313",
+          "name": "BRISA",
+          "party": "PT",
+          "votes": 27652,
+          "pct": 1.41
+        },
+        {
+          "number": "2255",
+          "name": "PEDRO FILHO",
+          "party": "PL",
+          "votes": 19499,
+          "pct": 0.99
+        },
+        {
+          "number": "2244",
+          "name": "CORONEL BRILHANTE",
+          "party": "PL",
+          "votes": 12116,
+          "pct": 0.62
+        },
+        {
+          "number": "1300",
+          "name": "MARLEIDE CUNHA",
+          "party": "PT",
+          "votes": 11928,
+          "pct": 0.61
+        },
+        {
+          "number": "6513",
+          "name": "RAPOSINHA",
+          "party": "PCDOB",
+          "votes": 8097,
+          "pct": 0.41
+        },
+        {
+          "number": "1144",
+          "name": "LEILA MAIA",
+          "party": "PP",
+          "votes": 7144,
+          "pct": 0.36
+        },
+        {
+          "number": "1212",
+          "name": "CINTIA MAIA",
+          "party": "PDT",
+          "votes": 5764,
+          "pct": 0.29
+        },
+        {
+          "number": "4400",
+          "name": "DANI RIBEIRO",
+          "party": "UNIÃO",
+          "votes": 5735,
+          "pct": 0.29
+        },
+        {
+          "number": "7722",
+          "name": "JOHN KENNETH",
+          "party": "SOLIDARIEDADE",
+          "votes": 4567,
+          "pct": 0.23
+        },
+        {
+          "number": "4555",
+          "name": "NEGA DE NENEM BORGES",
+          "party": "PSDB",
+          "votes": 4274,
+          "pct": 0.22
+        },
+        {
+          "number": "2277",
+          "name": "GABI TRAJANO",
+          "party": "PL",
+          "votes": 3766,
+          "pct": 0.19
+        },
+        {
+          "number": "1122",
+          "name": "PAULINHA GALDINO",
+          "party": "PP",
+          "votes": 3316,
+          "pct": 0.17
+        },
+        {
+          "number": "1244",
+          "name": "PROFESSOR EDVALDO JÚNIOR",
+          "party": "PDT",
+          "votes": 2618,
+          "pct": 0.13
+        },
+        {
+          "number": "1233",
+          "name": "DR. ESTÁCIO",
+          "party": "PDT",
+          "votes": 2199,
+          "pct": 0.11
+        },
+        {
+          "number": "4477",
+          "name": "NAGILA DINIZ",
+          "party": "UNIÃO",
+          "votes": 2130,
+          "pct": 0.11
+        },
+        {
+          "number": "7012",
+          "name": "GABRIEL NUNES",
+          "party": "AVANTE",
+          "votes": 2101,
+          "pct": 0.11
+        },
+        {
+          "number": "7022",
+          "name": "VITOR MARQUES",
+          "party": "AVANTE",
+          "votes": 2055,
+          "pct": 0.1
+        },
+        {
+          "number": "1414",
+          "name": "VIVIANE AVELINO",
+          "party": "MISSÃO",
+          "votes": 2040,
+          "pct": 0.1
+        },
+        {
+          "number": "1234",
+          "name": "SUSAPE AUGUSTO",
+          "party": "PDT",
+          "votes": 1949,
+          "pct": 0.1
+        },
+        {
+          "number": "4512",
+          "name": "FLAVIO LUIZ",
+          "party": "PSDB",
+          "votes": 1838,
+          "pct": 0.09
+        },
+        {
+          "number": "1444",
+          "name": "ANA CLARA GURGEL",
+          "party": "MISSÃO",
+          "votes": 1419,
+          "pct": 0.07
+        },
+        {
+          "number": "4040",
+          "name": "ERMINIO FELIX",
+          "party": "PSB",
+          "votes": 1417,
+          "pct": 0.07
+        },
+        {
+          "number": "1400",
+          "name": "ABIMAEL COSTA",
+          "party": "MISSÃO",
+          "votes": 1309,
+          "pct": 0.07
+        },
+        {
+          "number": "3030",
+          "name": "ABEL FARIAS",
+          "party": "NOVO",
+          "votes": 1296,
+          "pct": 0.07
+        },
+        {
+          "number": "7044",
+          "name": "LILIAN CYNTHIA",
+          "party": "AVANTE",
+          "votes": 1083,
+          "pct": 0.06
+        },
+        {
+          "number": "1213",
+          "name": "NAXSON PALHARES",
+          "party": "PDT",
+          "votes": 1033,
+          "pct": 0.05
+        },
+        {
+          "number": "3000",
+          "name": "RAPHAEL FERREIRA",
+          "party": "NOVO",
+          "votes": 1002,
+          "pct": 0.05
+        },
+        {
+          "number": "7011",
+          "name": "PALHAÇO  FUXIQUINHO",
+          "party": "AVANTE",
+          "votes": 943,
+          "pct": 0.05
+        },
+        {
+          "number": "3033",
+          "name": "DRA. DALILA VETERINÁRIA",
+          "party": "NOVO",
+          "votes": 923,
+          "pct": 0.05
+        },
+        {
+          "number": "3044",
+          "name": "DR DANIEL",
+          "party": "NOVO",
+          "votes": 868,
+          "pct": 0.04
+        },
+        {
+          "number": "1255",
+          "name": "PATRÍCIA CASTRO",
+          "party": "PDT",
+          "votes": 810,
+          "pct": 0.04
+        },
+        {
+          "number": "2500",
+          "name": "CARLOS ENFERMEIRO",
+          "party": "PRD",
+          "votes": 800,
+          "pct": 0.04
+        },
+        {
+          "number": "2570",
+          "name": "GARIBALDE LEITE",
+          "party": "PRD",
+          "votes": 712,
+          "pct": 0.04
+        },
+        {
+          "number": "8080",
+          "name": "VICTOR HUGO",
+          "party": "UP",
+          "votes": 616,
+          "pct": 0.03
+        },
+        {
+          "number": "1230",
+          "name": "PROFESSORA SÂMELA",
+          "party": "PDT",
+          "votes": 614,
+          "pct": 0.03
+        },
+        {
+          "number": "3003",
+          "name": "DIRETOR DILSON LIMA",
+          "party": "NOVO",
+          "votes": 590,
+          "pct": 0.03
+        },
+        {
+          "number": "1447",
+          "name": "ALANNA BEATRIZ",
+          "party": "MISSÃO",
+          "votes": 556,
+          "pct": 0.03
+        },
+        {
+          "number": "1411",
+          "name": "DR. SALOMÃO",
+          "party": "MISSÃO",
+          "votes": 540,
+          "pct": 0.03
+        },
+        {
+          "number": "7070",
+          "name": "HUDSON TOURINHO",
+          "party": "AVANTE",
+          "votes": 519,
+          "pct": 0.03
+        },
+        {
+          "number": "1277",
+          "name": "DAVI RODRIGUES JR.",
+          "party": "PDT",
+          "votes": 504,
+          "pct": 0.03
+        },
+        {
+          "number": "7010",
+          "name": "APOLLIANE SOUZA",
+          "party": "AVANTE",
+          "votes": 494,
+          "pct": 0.03
+        },
+        {
+          "number": "1200",
+          "name": "PEDRO CHE",
+          "party": "PDT",
+          "votes": 480,
+          "pct": 0.02
+        },
+        {
+          "number": "1455",
+          "name": "IGOR RAYAN",
+          "party": "MISSÃO",
+          "votes": 452,
+          "pct": 0.02
+        },
+        {
+          "number": "7077",
+          "name": "ADRIANA ALBUQUERQUE",
+          "party": "AVANTE",
+          "votes": 429,
+          "pct": 0.02
+        },
+        {
+          "number": "2544",
+          "name": "FRAN BARBEIRO",
+          "party": "PRD",
+          "votes": 409,
+          "pct": 0.02
+        },
+        {
+          "number": "1477",
+          "name": "FELIX SANTOS",
+          "party": "MISSÃO",
+          "votes": 400,
+          "pct": 0.02
+        },
+        {
+          "number": "4508",
+          "name": "ALEX KROOS",
+          "party": "PSDB",
+          "votes": 390,
+          "pct": 0.02
+        },
+        {
+          "number": "1401",
+          "name": "GABRIEL BOTELHO",
+          "party": "MISSÃO",
+          "votes": 362,
+          "pct": 0.02
+        },
+        {
+          "number": "5044",
+          "name": "PHILIPE DO VAT",
+          "party": "PSOL",
+          "votes": 346,
+          "pct": 0.02
+        },
+        {
+          "number": "7732",
+          "name": "CRISTIANI ARTESÃ",
+          "party": "SOLIDARIEDADE",
+          "votes": 331,
+          "pct": 0.02
+        },
+        {
+          "number": "8000",
+          "name": "BIA DO MLB",
+          "party": "UP",
+          "votes": 319,
+          "pct": 0.02
+        },
+        {
+          "number": "2555",
+          "name": "NARDE SANTOS",
+          "party": "PRD",
+          "votes": 305,
+          "pct": 0.02
+        },
+        {
+          "number": "2724",
+          "name": "XEXEU DE NATAL",
+          "party": "DC",
+          "votes": 297,
+          "pct": 0.02
+        },
+        {
+          "number": "2323",
+          "name": "ANNE BEZERRA",
+          "party": "CIDADANIA",
+          "votes": 287,
+          "pct": 0.01
+        },
+        {
+          "number": "3055",
+          "name": "DANIEL RIZZI",
+          "party": "NOVO",
+          "votes": 255,
+          "pct": 0.01
+        },
+        {
+          "number": "4055",
+          "name": "ARAPUÁ DE MACAU",
+          "party": "PSB",
+          "votes": 252,
+          "pct": 0.01
+        },
+        {
+          "number": "6565",
+          "name": "KEROLAYNE FERREIRA",
+          "party": "PCDOB",
+          "votes": 242,
+          "pct": 0.01
+        },
+        {
+          "number": "4012",
+          "name": "MOACIR J. BARROS",
+          "party": "PSB",
+          "votes": 235,
+          "pct": 0.01
+        },
+        {
+          "number": "3333",
+          "name": "WENDER ANDRADE",
+          "party": "MOBILIZA",
+          "votes": 229,
+          "pct": 0.01
+        },
+        {
+          "number": "4013",
+          "name": "DRA GLEUCE LEITE",
+          "party": "PSB",
+          "votes": 220,
+          "pct": 0.01
+        },
+        {
+          "number": "3310",
+          "name": "NALBA DA SAUDE",
+          "party": "MOBILIZA",
+          "votes": 200,
+          "pct": 0.01
+        },
+        {
+          "number": "2345",
+          "name": "PAULO OVÍDIO",
+          "party": "CIDADANIA",
+          "votes": 197,
+          "pct": 0.01
+        },
+        {
+          "number": "3010",
+          "name": "SUYANE VARELA",
+          "party": "NOVO",
+          "votes": 196,
+          "pct": 0.01
+        },
+        {
+          "number": "4010",
+          "name": "AILTON RAMOS POR K",
+          "party": "PSB",
+          "votes": 190,
+          "pct": 0.01
+        },
+        {
+          "number": "7777",
+          "name": "FRED BRAGA",
+          "party": "SOLIDARIEDADE",
+          "votes": 189,
+          "pct": 0.01
+        },
+        {
+          "number": "4011",
+          "name": "HELIA LIMA",
+          "party": "PSB",
+          "votes": 179,
+          "pct": 0.01
+        },
+        {
+          "number": "7717",
+          "name": "DÉBORAH SUELLEN",
+          "party": "SOLIDARIEDADE",
+          "votes": 161,
+          "pct": 0.01
+        },
+        {
+          "number": "2512",
+          "name": "RAMA CUNHA",
+          "party": "PRD",
+          "votes": 134,
+          "pct": 0.01
+        },
+        {
+          "number": "3322",
+          "name": "SAMARA TORRES",
+          "party": "MOBILIZA",
+          "votes": 128,
+          "pct": 0.01
+        },
+        {
+          "number": "2730",
+          "name": "PROFESSORA CLARICE",
+          "party": "DC",
+          "votes": 115,
+          "pct": 0.01
+        },
+        {
+          "number": "3001",
+          "name": "RICHARDSON",
+          "party": "NOVO",
+          "votes": 113,
+          "pct": 0.01
+        },
+        {
+          "number": "3022",
+          "name": "CAMILA ATÍPICA",
+          "party": "NOVO",
+          "votes": 112,
+          "pct": 0.01
+        },
+        {
+          "number": "3312",
+          "name": "MAGNO REIS",
+          "party": "MOBILIZA",
+          "votes": 103,
+          "pct": 0.01
+        },
+        {
+          "number": "5055",
+          "name": "PASTORA VERONICA",
+          "party": "PSOL",
+          "votes": 95,
+          "pct": 0.01
+        },
+        {
+          "number": "2722",
+          "name": "SARGENTO MELQUISEDEC",
+          "party": "DC",
+          "votes": 95,
+          "pct": 0.01
+        },
+        {
+          "number": "5013",
+          "name": "VANUZIA",
+          "party": "PSOL",
+          "votes": 87,
+          "pct": 0.01
+        },
+        {
+          "number": "3350",
+          "name": "ALEXANDRE RAMOS",
+          "party": "MOBILIZA",
+          "votes": 70,
+          "pct": 0.01
+        },
+        {
+          "number": "5088",
+          "name": "ED RODRIGUES",
+          "party": "PSOL",
+          "votes": 70,
+          "pct": 0.01
+        },
+        {
+          "number": "1441",
+          "name": "IGOR FERNANDES",
+          "party": "MISSÃO",
+          "votes": 66,
+          "pct": 0.01
+        },
+        {
+          "number": "3324",
+          "name": "WINDSON XUXU",
+          "party": "MOBILIZA",
+          "votes": 44,
+          "pct": 0.01
+        },
+        {
+          "number": "5098",
+          "name": "IGOR ROCHA",
+          "party": "PSOL",
+          "votes": 33,
+          "pct": 0.01
+        },
+        {
+          "number": "3335",
+          "name": "ANGELITA DA VILA",
+          "party": "MOBILIZA",
+          "votes": 31,
+          "pct": 0.01
+        },
+        {
+          "number": "3323",
+          "name": "PATRICIA FERREIRA",
+          "party": "MOBILIZA",
+          "votes": 29,
+          "pct": 0.01
+        },
+        {
+          "number": "3309",
+          "name": "KARINE DA VILA",
+          "party": "MOBILIZA",
+          "votes": 25,
+          "pct": 0.01
+        }
+      ],
       "integrity": {
         "state_candidates_with_votes": 99,
         "candidates_with_findings": 99,
@@ -31,6 +819,1044 @@
       "label": "Deputado estadual",
       "progress": 99.99,
       "candidates_with_votes": 148,
+      "statewide_candidates": [
+        {
+          "number": "22222",
+          "name": "CORONEL AZEVEDO",
+          "party": "PL",
+          "votes": 105379,
+          "pct": 5.43
+        },
+        {
+          "number": "45678",
+          "name": "EZEQUIEL",
+          "party": "PSDB",
+          "votes": 73217,
+          "pct": 3.77
+        },
+        {
+          "number": "44555",
+          "name": "ROBSON CARVALHO",
+          "party": "UNIÃO",
+          "votes": 69537,
+          "pct": 3.58
+        },
+        {
+          "number": "11555",
+          "name": "JULIO CESAR",
+          "party": "PP",
+          "votes": 66748,
+          "pct": 3.44
+        },
+        {
+          "number": "11999",
+          "name": "KLEBER RODRIGUES",
+          "party": "PP",
+          "votes": 66166,
+          "pct": 3.41
+        },
+        {
+          "number": "13222",
+          "name": "FRANCISCO DO PT",
+          "party": "PT",
+          "votes": 62655,
+          "pct": 3.23
+        },
+        {
+          "number": "43000",
+          "name": "KALINE DE DR. BERNARDO",
+          "party": "PV",
+          "votes": 61905,
+          "pct": 3.19
+        },
+        {
+          "number": "44444",
+          "name": "CINTHIA DE ALLYSON",
+          "party": "UNIÃO",
+          "votes": 61584,
+          "pct": 3.17
+        },
+        {
+          "number": "13123",
+          "name": "ISOLDA DANTAS",
+          "party": "PT",
+          "votes": 60226,
+          "pct": 3.1
+        },
+        {
+          "number": "13613",
+          "name": "DIVANEIDE BASÍLIO",
+          "party": "PT",
+          "votes": 59664,
+          "pct": 3.07
+        },
+        {
+          "number": "11111",
+          "name": "NEILTON DIÓGENES",
+          "party": "PP",
+          "votes": 57715,
+          "pct": 2.97
+        },
+        {
+          "number": "22100",
+          "name": "DR. KERGINALDO",
+          "party": "PL",
+          "votes": 54134,
+          "pct": 2.79
+        },
+        {
+          "number": "45123",
+          "name": "DR GUSTAVO SOARES",
+          "party": "PSDB",
+          "votes": 53653,
+          "pct": 2.76
+        },
+        {
+          "number": "11222",
+          "name": "NELTER QUEIROZ",
+          "party": "PP",
+          "votes": 52387,
+          "pct": 2.7
+        },
+        {
+          "number": "13111",
+          "name": "DANIEL VALENÇA",
+          "party": "PT",
+          "votes": 52092,
+          "pct": 2.68
+        },
+        {
+          "number": "22333",
+          "name": "TOMBA FARIAS",
+          "party": "PL",
+          "votes": 50307,
+          "pct": 2.59
+        },
+        {
+          "number": "45555",
+          "name": "CRISTIANE DANTAS",
+          "party": "PSDB",
+          "votes": 49586,
+          "pct": 2.55
+        },
+        {
+          "number": "22888",
+          "name": "GUSTAVO CARVALHO",
+          "party": "PL",
+          "votes": 49528,
+          "pct": 2.55
+        },
+        {
+          "number": "15555",
+          "name": "BIBIANO",
+          "party": "MDB",
+          "votes": 49038,
+          "pct": 2.53
+        },
+        {
+          "number": "43666",
+          "name": "EUDIANE MACEDO",
+          "party": "PV",
+          "votes": 48487,
+          "pct": 2.5
+        },
+        {
+          "number": "43333",
+          "name": "IVANILSON OLIVEIRA",
+          "party": "PV",
+          "votes": 47830,
+          "pct": 2.46
+        },
+        {
+          "number": "44544",
+          "name": "GALENO TORQUATO",
+          "party": "UNIÃO",
+          "votes": 46129,
+          "pct": 2.38
+        },
+        {
+          "number": "45111",
+          "name": "ERIKO JÁCOME",
+          "party": "PSDB",
+          "votes": 45875,
+          "pct": 2.36
+        },
+        {
+          "number": "43222",
+          "name": "UBALDO FERNANDES",
+          "party": "PV",
+          "votes": 44748,
+          "pct": 2.3
+        },
+        {
+          "number": "15678",
+          "name": "WALTER ALVES",
+          "party": "MDB",
+          "votes": 44216,
+          "pct": 2.28
+        },
+        {
+          "number": "22555",
+          "name": "LUÍZ EDUARDO",
+          "party": "PL",
+          "votes": 39916,
+          "pct": 2.06
+        },
+        {
+          "number": "22111",
+          "name": "ADJUTO DIAS",
+          "party": "PL",
+          "votes": 37874,
+          "pct": 1.95
+        },
+        {
+          "number": "22777",
+          "name": "CAMILA ARAÚJO",
+          "party": "PL",
+          "votes": 31435,
+          "pct": 1.62
+        },
+        {
+          "number": "22000",
+          "name": "JORGE DO ROSÁRIO",
+          "party": "PL",
+          "votes": 24199,
+          "pct": 1.25
+        },
+        {
+          "number": "22123",
+          "name": "TEREZINHA MAIA",
+          "party": "PL",
+          "votes": 23893,
+          "pct": 1.23
+        },
+        {
+          "number": "22110",
+          "name": "GETÚLIO RÊGO",
+          "party": "PL",
+          "votes": 21626,
+          "pct": 1.11
+        },
+        {
+          "number": "22444",
+          "name": "GABRIEL CÉSAR",
+          "party": "PL",
+          "votes": 20713,
+          "pct": 1.07
+        },
+        {
+          "number": "45000",
+          "name": "TAVEIRA JÚNIOR",
+          "party": "PSDB",
+          "votes": 16847,
+          "pct": 0.87
+        },
+        {
+          "number": "22762",
+          "name": "ANNE LAGARTIXA",
+          "party": "PL",
+          "votes": 15046,
+          "pct": 0.77
+        },
+        {
+          "number": "15222",
+          "name": "IVAN JUNIOR",
+          "party": "MDB",
+          "votes": 14701,
+          "pct": 0.76
+        },
+        {
+          "number": "22022",
+          "name": "JOSEMAR VARELA",
+          "party": "PL",
+          "votes": 14675,
+          "pct": 0.76
+        },
+        {
+          "number": "50100",
+          "name": "LOURENÇO",
+          "party": "PSOL",
+          "votes": 14270,
+          "pct": 0.73
+        },
+        {
+          "number": "22456",
+          "name": "BISPO PAULO LUIZ",
+          "party": "PL",
+          "votes": 12565,
+          "pct": 0.65
+        },
+        {
+          "number": "15133",
+          "name": "DR ANTÔNIO JÁCOME",
+          "party": "MDB",
+          "votes": 9403,
+          "pct": 0.48
+        },
+        {
+          "number": "45444",
+          "name": "DAIANA VALENTIM",
+          "party": "PSDB",
+          "votes": 8735,
+          "pct": 0.45
+        },
+        {
+          "number": "45700",
+          "name": "LÉO SOUZA",
+          "party": "PSDB",
+          "votes": 6571,
+          "pct": 0.34
+        },
+        {
+          "number": "13000",
+          "name": "PEDRO LOPES",
+          "party": "PT",
+          "votes": 6209,
+          "pct": 0.32
+        },
+        {
+          "number": "14000",
+          "name": "FÁBIO SILVEIRA",
+          "party": "MISSÃO",
+          "votes": 5955,
+          "pct": 0.31
+        },
+        {
+          "number": "43100",
+          "name": "MILKLEI DO PV",
+          "party": "PV",
+          "votes": 5168,
+          "pct": 0.27
+        },
+        {
+          "number": "22322",
+          "name": "BIBI COSTA",
+          "party": "PL",
+          "votes": 4176,
+          "pct": 0.22
+        },
+        {
+          "number": "15123",
+          "name": "PROFESSOR EMERSON",
+          "party": "MDB",
+          "votes": 3922,
+          "pct": 0.2
+        },
+        {
+          "number": "13113",
+          "name": "JULIANA GARCIA",
+          "party": "PT",
+          "votes": 3710,
+          "pct": 0.19
+        },
+        {
+          "number": "13777",
+          "name": "ALINE JULIETE",
+          "party": "PT",
+          "votes": 3531,
+          "pct": 0.18
+        },
+        {
+          "number": "65123",
+          "name": "CEZINHA NUNES",
+          "party": "PCDOB",
+          "votes": 3437,
+          "pct": 0.18
+        },
+        {
+          "number": "45222",
+          "name": "EXPEDITO FERREIRA",
+          "party": "PSDB",
+          "votes": 2785,
+          "pct": 0.14
+        },
+        {
+          "number": "15180",
+          "name": "ANA LUISA",
+          "party": "MDB",
+          "votes": 2776,
+          "pct": 0.14
+        },
+        {
+          "number": "22556",
+          "name": "SARGENTO MANASSES",
+          "party": "PL",
+          "votes": 2728,
+          "pct": 0.14
+        },
+        {
+          "number": "22345",
+          "name": "RENAN DA FEDERAL",
+          "party": "PL",
+          "votes": 2619,
+          "pct": 0.13
+        },
+        {
+          "number": "45777",
+          "name": "JONATA NASCIMENTO",
+          "party": "PSDB",
+          "votes": 2561,
+          "pct": 0.13
+        },
+        {
+          "number": "22422",
+          "name": "MICHAEL DINIZ",
+          "party": "PL",
+          "votes": 2426,
+          "pct": 0.12
+        },
+        {
+          "number": "45321",
+          "name": "CLEITON DA POLICLÍNICA",
+          "party": "PSDB",
+          "votes": 2174,
+          "pct": 0.11
+        },
+        {
+          "number": "15333",
+          "name": "HOLDERLIN SILVA",
+          "party": "MDB",
+          "votes": 2032,
+          "pct": 0.1
+        },
+        {
+          "number": "11777",
+          "name": "SIRLENO JUNIOR",
+          "party": "PP",
+          "votes": 1954,
+          "pct": 0.1
+        },
+        {
+          "number": "15999",
+          "name": "DR MILANO MAXIMO",
+          "party": "MDB",
+          "votes": 1891,
+          "pct": 0.1
+        },
+        {
+          "number": "15100",
+          "name": "ANGELA PAIVA",
+          "party": "MDB",
+          "votes": 1845,
+          "pct": 0.1
+        },
+        {
+          "number": "18888",
+          "name": "ÉDSON NEGRÃO",
+          "party": "REDE",
+          "votes": 1823,
+          "pct": 0.09
+        },
+        {
+          "number": "50123",
+          "name": "ANA SOS PATINHAS",
+          "party": "PSOL",
+          "votes": 1780,
+          "pct": 0.09
+        },
+        {
+          "number": "15000",
+          "name": "CLOVIS JUNIOR",
+          "party": "MDB",
+          "votes": 1722,
+          "pct": 0.09
+        },
+        {
+          "number": "15111",
+          "name": "JUNIOR MARQUES",
+          "party": "MDB",
+          "votes": 1468,
+          "pct": 0.08
+        },
+        {
+          "number": "11123",
+          "name": "POLYANNA DANTAS",
+          "party": "PP",
+          "votes": 1453,
+          "pct": 0.07
+        },
+        {
+          "number": "22522",
+          "name": "GABRIEL RIBEIRO",
+          "party": "PL",
+          "votes": 1434,
+          "pct": 0.07
+        },
+        {
+          "number": "45999",
+          "name": "DELEGADO LEOCÁDIO",
+          "party": "PSDB",
+          "votes": 1391,
+          "pct": 0.07
+        },
+        {
+          "number": "44123",
+          "name": "VAVÁ AZEVEDO",
+          "party": "UNIÃO",
+          "votes": 1338,
+          "pct": 0.07
+        },
+        {
+          "number": "22190",
+          "name": "SARGENTO RIVALDO",
+          "party": "PL",
+          "votes": 1271,
+          "pct": 0.07
+        },
+        {
+          "number": "13333",
+          "name": "GERLAILSON ABRANTES (NENEM)",
+          "party": "PT",
+          "votes": 1182,
+          "pct": 0.06
+        },
+        {
+          "number": "15444",
+          "name": "PROFESSOR LUIS CARLOS NORONHA",
+          "party": "MDB",
+          "votes": 1115,
+          "pct": 0.06
+        },
+        {
+          "number": "15666",
+          "name": "ELVIS DE DAL",
+          "party": "MDB",
+          "votes": 1097,
+          "pct": 0.06
+        },
+        {
+          "number": "45190",
+          "name": "POLICIAL CANTOR",
+          "party": "PSDB",
+          "votes": 1077,
+          "pct": 0.06
+        },
+        {
+          "number": "15015",
+          "name": "MARLENE MONTE",
+          "party": "MDB",
+          "votes": 1065,
+          "pct": 0.05
+        },
+        {
+          "number": "43123",
+          "name": "RONNY HOLANDA",
+          "party": "PV",
+          "votes": 1009,
+          "pct": 0.05
+        },
+        {
+          "number": "45333",
+          "name": "JÚNIOR COLAÇA",
+          "party": "PSDB",
+          "votes": 974,
+          "pct": 0.05
+        },
+        {
+          "number": "11333",
+          "name": "DERLANDIO JACKSON",
+          "party": "PP",
+          "votes": 964,
+          "pct": 0.05
+        },
+        {
+          "number": "22722",
+          "name": "DANIELE PRADO",
+          "party": "PL",
+          "votes": 884,
+          "pct": 0.05
+        },
+        {
+          "number": "44333",
+          "name": "NENEL LUCAS",
+          "party": "UNIÃO",
+          "votes": 846,
+          "pct": 0.04
+        },
+        {
+          "number": "15456",
+          "name": "YARA GOIS",
+          "party": "MDB",
+          "votes": 845,
+          "pct": 0.04
+        },
+        {
+          "number": "45084",
+          "name": "GILVAN BALADA",
+          "party": "PSDB",
+          "votes": 811,
+          "pct": 0.04
+        },
+        {
+          "number": "65555",
+          "name": "FÁTIMA SOUZA",
+          "party": "PCDOB",
+          "votes": 806,
+          "pct": 0.04
+        },
+        {
+          "number": "45456",
+          "name": "REITORA LUDIMILLA",
+          "party": "PSDB",
+          "votes": 769,
+          "pct": 0.04
+        },
+        {
+          "number": "44888",
+          "name": "NATALIA LEOPOLDINA",
+          "party": "UNIÃO",
+          "votes": 767,
+          "pct": 0.04
+        },
+        {
+          "number": "14777",
+          "name": "RAYANNE FIGUEIREDO",
+          "party": "MISSÃO",
+          "votes": 720,
+          "pct": 0.04
+        },
+        {
+          "number": "15155",
+          "name": "SARA SANTOS",
+          "party": "MDB",
+          "votes": 667,
+          "pct": 0.03
+        },
+        {
+          "number": "11666",
+          "name": "MAJOR CARLA CÂMARA",
+          "party": "PP",
+          "votes": 657,
+          "pct": 0.03
+        },
+        {
+          "number": "15777",
+          "name": "JEFERSON BRITO",
+          "party": "MDB",
+          "votes": 651,
+          "pct": 0.03
+        },
+        {
+          "number": "11711",
+          "name": "BAMBAM",
+          "party": "PP",
+          "votes": 616,
+          "pct": 0.03
+        },
+        {
+          "number": "44222",
+          "name": "MACIEL GOMES",
+          "party": "UNIÃO",
+          "votes": 537,
+          "pct": 0.03
+        },
+        {
+          "number": "23456",
+          "name": "CABO RALPH",
+          "party": "CIDADANIA",
+          "votes": 532,
+          "pct": 0.03
+        },
+        {
+          "number": "80180",
+          "name": "MILENNE BARBOSA",
+          "party": "UP",
+          "votes": 525,
+          "pct": 0.03
+        },
+        {
+          "number": "44111",
+          "name": "DEIVID SIMÃO",
+          "party": "UNIÃO",
+          "votes": 503,
+          "pct": 0.03
+        },
+        {
+          "number": "45455",
+          "name": "LEIDE FIT",
+          "party": "PSDB",
+          "votes": 493,
+          "pct": 0.03
+        },
+        {
+          "number": "15190",
+          "name": "MAJOR EMERSON",
+          "party": "MDB",
+          "votes": 490,
+          "pct": 0.03
+        },
+        {
+          "number": "50222",
+          "name": "WILSON DUARTE",
+          "party": "PSOL",
+          "votes": 456,
+          "pct": 0.02
+        },
+        {
+          "number": "45666",
+          "name": "DRA KARINA PEREIRA",
+          "party": "PSDB",
+          "votes": 443,
+          "pct": 0.02
+        },
+        {
+          "number": "25555",
+          "name": "NILDETE VITORINO",
+          "party": "PRD",
+          "votes": 423,
+          "pct": 0.02
+        },
+        {
+          "number": "15300",
+          "name": "ELLEM ROCHA",
+          "party": "MDB",
+          "votes": 411,
+          "pct": 0.02
+        },
+        {
+          "number": "50050",
+          "name": "CARLINHOS DO GÁS",
+          "party": "PSOL",
+          "votes": 409,
+          "pct": 0.02
+        },
+        {
+          "number": "13713",
+          "name": "JORGE DE LIMA",
+          "party": "PT",
+          "votes": 402,
+          "pct": 0.02
+        },
+        {
+          "number": "45789",
+          "name": "DAVI FERNANDES",
+          "party": "PSDB",
+          "votes": 397,
+          "pct": 0.02
+        },
+        {
+          "number": "25777",
+          "name": "PROFESSORA APARECIDA",
+          "party": "PRD",
+          "votes": 392,
+          "pct": 0.02
+        },
+        {
+          "number": "25700",
+          "name": "RONALDO CACHORRÃO",
+          "party": "PRD",
+          "votes": 388,
+          "pct": 0.02
+        },
+        {
+          "number": "45454",
+          "name": "ENGRÁCIA ALVES",
+          "party": "PSDB",
+          "votes": 381,
+          "pct": 0.02
+        },
+        {
+          "number": "25111",
+          "name": "MANOEL FELIX",
+          "party": "PRD",
+          "votes": 373,
+          "pct": 0.02
+        },
+        {
+          "number": "22999",
+          "name": "MARCELA ALVES",
+          "party": "PL",
+          "votes": 357,
+          "pct": 0.02
+        },
+        {
+          "number": "44190",
+          "name": "MARLENE BEZERRA",
+          "party": "UNIÃO",
+          "votes": 351,
+          "pct": 0.02
+        },
+        {
+          "number": "15400",
+          "name": "SALETE CAMPELO",
+          "party": "MDB",
+          "votes": 334,
+          "pct": 0.02
+        },
+        {
+          "number": "15888",
+          "name": "LUCIANO BARBOSA",
+          "party": "MDB",
+          "votes": 328,
+          "pct": 0.02
+        },
+        {
+          "number": "18118",
+          "name": "RENAN RIBEIRO",
+          "party": "REDE",
+          "votes": 325,
+          "pct": 0.02
+        },
+        {
+          "number": "22234",
+          "name": "PASTORA JOIS",
+          "party": "PL",
+          "votes": 315,
+          "pct": 0.02
+        },
+        {
+          "number": "45888",
+          "name": "EUGÊNIO RIBEIRO",
+          "party": "PSDB",
+          "votes": 299,
+          "pct": 0.02
+        },
+        {
+          "number": "11000",
+          "name": "ADRIANA TROMBETA",
+          "party": "PP",
+          "votes": 296,
+          "pct": 0.02
+        },
+        {
+          "number": "22007",
+          "name": "AMORA BRAYAN",
+          "party": "PL",
+          "votes": 292,
+          "pct": 0.02
+        },
+        {
+          "number": "22220",
+          "name": "KARINA PIMENTA",
+          "party": "PL",
+          "votes": 273,
+          "pct": 0.01
+        },
+        {
+          "number": "13882",
+          "name": "DÉBORA REFE",
+          "party": "PT",
+          "votes": 269,
+          "pct": 0.01
+        },
+        {
+          "number": "25222",
+          "name": "EDMILSON ACARI",
+          "party": "PRD",
+          "votes": 264,
+          "pct": 0.01
+        },
+        {
+          "number": "16456",
+          "name": "PROFESSORA ANA CELIA",
+          "party": "PSTU",
+          "votes": 255,
+          "pct": 0.01
+        },
+        {
+          "number": "23123",
+          "name": "DRA TATIANE COSTA",
+          "party": "CIDADANIA",
+          "votes": 247,
+          "pct": 0.01
+        },
+        {
+          "number": "25600",
+          "name": "CHICO CHAPÉU DE COURO",
+          "party": "PRD",
+          "votes": 244,
+          "pct": 0.01
+        },
+        {
+          "number": "45045",
+          "name": "NEY ROBSON",
+          "party": "PSDB",
+          "votes": 225,
+          "pct": 0.01
+        },
+        {
+          "number": "80000",
+          "name": "JULIO DA FNR",
+          "party": "UP",
+          "votes": 218,
+          "pct": 0.01
+        },
+        {
+          "number": "50000",
+          "name": "IRAMÁ BARBOSA",
+          "party": "PSOL",
+          "votes": 190,
+          "pct": 0.01
+        },
+        {
+          "number": "25001",
+          "name": "J LIMA",
+          "party": "PRD",
+          "votes": 185,
+          "pct": 0.01
+        },
+        {
+          "number": "50005",
+          "name": "ALEXANDRA",
+          "party": "PSOL",
+          "votes": 179,
+          "pct": 0.01
+        },
+        {
+          "number": "15500",
+          "name": "ISMENIA ARAUJO",
+          "party": "MDB",
+          "votes": 165,
+          "pct": 0.01
+        },
+        {
+          "number": "50555",
+          "name": "AURELIO OLIVEIRA",
+          "party": "PSOL",
+          "votes": 152,
+          "pct": 0.01
+        },
+        {
+          "number": "18000",
+          "name": "LILA",
+          "party": "REDE",
+          "votes": 151,
+          "pct": 0.01
+        },
+        {
+          "number": "25333",
+          "name": "GEOVANA SILVA",
+          "party": "PRD",
+          "votes": 144,
+          "pct": 0.01
+        },
+        {
+          "number": "25456",
+          "name": "GILBERTO OLINTO",
+          "party": "PRD",
+          "votes": 137,
+          "pct": 0.01
+        },
+        {
+          "number": "18333",
+          "name": "PAULO BINHO",
+          "party": "REDE",
+          "votes": 136,
+          "pct": 0.01
+        },
+        {
+          "number": "43777",
+          "name": "VALÉRIA CICLISTA",
+          "party": "PV",
+          "votes": 122,
+          "pct": 0.01
+        },
+        {
+          "number": "16123",
+          "name": "TIAGO SILVA",
+          "party": "PSTU",
+          "votes": 122,
+          "pct": 0.01
+        },
+        {
+          "number": "18456",
+          "name": "CHICO GUERREIRO",
+          "party": "REDE",
+          "votes": 102,
+          "pct": 0.01
+        },
+        {
+          "number": "25065",
+          "name": "PROF. MARCELO FELIPPE",
+          "party": "PRD",
+          "votes": 101,
+          "pct": 0.01
+        },
+        {
+          "number": "65777",
+          "name": "GLECIO ROCHA - O REI DO BODE",
+          "party": "PCDOB",
+          "votes": 99,
+          "pct": 0.01
+        },
+        {
+          "number": "15115",
+          "name": "IVANILDA TENORIO",
+          "party": "MDB",
+          "votes": 95,
+          "pct": 0.01
+        },
+        {
+          "number": "18018",
+          "name": "PROFESSORA MÁRCIA",
+          "party": "REDE",
+          "votes": 88,
+          "pct": 0.01
+        },
+        {
+          "number": "45707",
+          "name": "ANY ALCÂNTARA",
+          "party": "PSDB",
+          "votes": 82,
+          "pct": 0.01
+        },
+        {
+          "number": "50013",
+          "name": "GEORGE",
+          "party": "PSOL",
+          "votes": 77,
+          "pct": 0.01
+        },
+        {
+          "number": "18999",
+          "name": "ROBERTO MOSSORÓ",
+          "party": "REDE",
+          "votes": 71,
+          "pct": 0.01
+        },
+        {
+          "number": "50024",
+          "name": "JESSICA ELIAS",
+          "party": "PSOL",
+          "votes": 66,
+          "pct": 0.01
+        },
+        {
+          "number": "25444",
+          "name": "JUSSY NUNES",
+          "party": "PRD",
+          "votes": 65,
+          "pct": 0.01
+        },
+        {
+          "number": "18123",
+          "name": "GUILHERME QUEIROZ",
+          "party": "REDE",
+          "votes": 45,
+          "pct": 0.01
+        },
+        {
+          "number": "25900",
+          "name": "ALEXSANDRA XAVIER",
+          "party": "PRD",
+          "votes": 42,
+          "pct": 0.01
+        },
+        {
+          "number": "18777",
+          "name": "RAPHAELA ARAÚJO",
+          "party": "REDE",
+          "votes": 16,
+          "pct": 0.01
+        },
+        {
+          "number": "25789",
+          "name": "DANIEL SANTOS",
+          "party": "PRD",
+          "votes": 8,
+          "pct": 0.01
+        }
+      ],
       "integrity": {
         "state_candidates_with_votes": 148,
         "candidates_with_findings": 148,
