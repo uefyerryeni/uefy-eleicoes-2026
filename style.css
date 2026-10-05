@@ -867,3 +867,16 @@ body.dark .rn-leader-mun.filtered-out{opacity:.18}
   .rn-map-filter label{min-width:0}
   .rn-map-filter-status{padding:0}
 }
+
+
+/* Homologação 2026-10-05 · garante separação dos controles no mobile */
+@media(max-width:600px){
+  .float-refresh{
+    right:12px;
+    bottom:calc(104px + env(safe-area-inset-bottom));
+  }
+  .to-top{
+    right:74px;
+    bottom:calc(108px + env(safe-area-inset-bottom));
+  }
+}
