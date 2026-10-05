@@ -7,6 +7,9 @@ const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadu
 const OFFICE_CARGO={sen:5,depf:6,depe:7};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
 const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b','#c2185b','#6d4c41','#455a64','#5c6bc0','#ad1457','#558b2f','#00838f','#6a1b9a','#f57c00','#3949ab'];
+const LEGISLATIVE_FIXED_COLORS={
+  '1311':'#d62828' // Natália Bonavides · vermelho
+};
 const LEGISLATIVE_WINNER_PALETTE=[
   '#d62828','#1d4ed8','#15803d','#7e22ce','#f59e0b','#0f766e',
   '#db2777','#92400e','#0e7490','#4f46e5','#65a30d','#c2410c',
@@ -56,6 +59,8 @@ function candidateLabel(row){
 }
 function legislativeWinnerColor(number,name=''){
   if(activeOffice()==='sen')return null;
+  const num=String(number||'').replace(/\D/g,'');
+  if(LEGISLATIVE_FIXED_COLORS[num])return LEGISLATIVE_FIXED_COLORS[num];
   const key=String(number||name||'');
   const winners=mapSummaryUnfiltered().slice().sort((a,b)=>{
     const an=String(a.number||a.name||''),bn=String(b.number||b.name||'');
