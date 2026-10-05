@@ -25,7 +25,7 @@ jobs:
         run: python scripts/build_rn_analises.py
       - name: Publicar snapshot se mudou
         run: |
-          if git diff --quiet -- data/rn-analises.json; then
+          if [ -z "$(git status --porcelain -- data/rn-analises.json)" ]; then
             echo "Sem mudanças."
             exit 0
           fi
