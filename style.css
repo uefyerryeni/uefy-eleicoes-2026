@@ -880,3 +880,20 @@ body.dark .rn-leader-mun.filtered-out{opacity:.18}
     bottom:calc(108px + env(safe-area-inset-bottom));
   }
 }
+
+
+/* Homologação final mobile 2026-10-05 · separação inequívoca */
+@media(max-width:600px){
+  .float-refresh{
+    right:10px !important;
+    bottom:calc(118px + env(safe-area-inset-bottom)) !important;
+    width:52px !important;
+    height:52px !important;
+  }
+  .to-top{
+    right:82px !important;
+    bottom:calc(121px + env(safe-area-inset-bottom)) !important;
+    width:44px !important;
+    height:44px !important;
+  }
+}
