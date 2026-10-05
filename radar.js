@@ -7,6 +7,21 @@ const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadu
 const OFFICE_CARGO={sen:5,depf:6,depe:7};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
 const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b','#c2185b','#6d4c41','#455a64','#5c6bc0','#ad1457','#558b2f','#00838f','#6a1b9a','#f57c00','#3949ab'];
+const SENATE_COLORS_BY_NUMBER={
+  '123':'#ef6c00', // Rafael Motta · laranja
+  '131':'#d62828', // Samanda de Lula · vermelho
+  '161':'#7b2cbf', // Luciana Mandu · roxo
+  '166':'#c2185b', // Rosália Fernandes · magenta
+  '200':'#17375e', // Styvenson Valentim · azul-marinho
+  '222':'#2e7d32', // Coronel Hélio · verde
+  '360':'#8d6e63', // Gari Wendell Batista · marrom
+  '369':'#5c6bc0', // Clóvis Costa · índigo
+  '444':'#1976d2', // Tércio Tinôco · azul
+  '500':'#6a1b9a', // Sandro Pimentel · violeta
+  '501':'#ad1457', // Sonia Godeiro · vinho
+  '555':'#00897b', // Zenaide Maia · verde-petróleo
+  '800':'#455a64'  // Professor Guilherme · grafite
+};
 
 let radar={status:'loading',findings:[],offices:{},municipal_maps:{}};
 let candidateRegistry=[],rnMap=null,radarMode='official',publicationTextMode='full',radarLoading=false,radarAutoTimer=null;
@@ -34,6 +49,8 @@ function candidateLabel(row){
   const d=String(row?.vote_destination||'').trim();return base+(d&&!/^válido$/i.test(d)?' · '+d:'');
 }
 function candidateColor(number,name=''){
+  const num=String(number||'').replace(/\D/g,'');
+  if(activeOffice()==='sen'&&SENATE_COLORS_BY_NUMBER[num])return SENATE_COLORS_BY_NUMBER[num];
   const key=String(number||name||'0');
   let h=0;for(const ch of key)h=(h*31+ch.charCodeAt(0))>>>0;
   return COLOR_PALETTE[h%COLOR_PALETTE.length];
