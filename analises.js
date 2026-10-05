@@ -187,19 +187,21 @@ function crossPostText(){
   const sel=selectedPair(),lines=['ELEIÇÕES 2026 | RIO GRANDE DO NORTE','PRESIDENTE × GOVERNADOR',''];
   if(sel){
     lines.push(personText(sel.president)+' × '+personText(sel.governor),'liderou simultaneamente em '+sel.municipalities+' município(s) do RN.','');
-    lines.push('Municípios: '+sel.names.join(', ')+'.');
+    const sample=sel.names.slice(0,12);
+    lines.push((sel.names.length>12?'Entre os municípios: ':'Municípios: ')+sample.join(', ')+(sel.names.length>12?' e outros.':'.'));
   }else{
-    pairRows().forEach(x=>lines.push(pairLabel(x)+' — '+x.municipalities+' município(s)'));
+    pairRows().forEach(x=>lines.push(personText(x.president)+' × '+personText(x.governor)+' — '+x.municipalities+' município(s)'));
   }
   lines.push('','O cruzamento é territorial e usa resultados agregados por município. Não indica que os mesmos eleitores fizeram as duas escolhas.','','Fonte: Tribunal Superior Eleitoral');
   return lines.join('\n');
 }
 function participationPostText(){
-  const meta=METRICS[metric],state=getPath(DATA.participation?.state_2026||{},meta.state),top=metricRows().slice().sort((a,b)=>metricValue(b)-metricValue(a)).slice(0,5);
+  const meta=METRICS[metric],state=getPath(DATA.participation?.state_2026||{},meta.state),ordered=sortedMetricRows().slice(0,5);
+  const directionLabel=rankingDirection==='asc'?'Menores':'Maiores';
   const lines=['ELEIÇÕES 2026 | RIO GRANDE DO NORTE',meta.label.toUpperCase(),'',
     'No estado: '+fmtPct(state||0)+'.','',
-    'Maiores percentuais municipais:'];
-  top.forEach((x,i)=>lines.push((i+1)+'. '+x.name+' — '+fmtPct(metricValue(x))));
+    directionLabel+' percentuais municipais:'];
+  ordered.forEach((x,i)=>lines.push((i+1)+'. '+x.name+' — '+fmtPct(metricValue(x))));
   lines.push('','O mapa mostra a distribuição municipal do indicador.','','Fonte: Tribunal Superior Eleitoral');
   return lines.join('\n');
 }
@@ -236,8 +238,9 @@ function drawParticipationCanvas(){
   if(!DATA||!FC)return;const c=$('#participationCanvas'),ctx=c.getContext('2d'),meta=METRICS[metric],rows=metricRows(),values=rows.map(r=>metricValue(r)),[min,max]=extent(values),state=getPath(DATA.participation?.state_2026||{},meta.state);
   canvasBase(ctx,'Análises RN',meta.label+' no RN','Distribuição municipal · '+fmtPct(state||0)+' no estado');
   drawMapCanvas(ctx,f=>{const row=rowForFeature(f),v=row?metricValue(row):0;return v?metricColor(v,min,max):'#d9dee2'},52,340,650,500);
-  ctx.fillStyle='#17191c';ctx.font='800 20px Inter,Segoe UI,Arial';ctx.fillText('Maiores percentuais',750,385);
-  let yy=430;rows.slice().sort((a,b)=>metricValue(b)-metricValue(a)).slice(0,6).forEach((x,i)=>{ctx.fillStyle='#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText((i+1)+'. '+x.name.slice(0,20),750,yy);ctx.fillStyle='#606970';ctx.font='700 17px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(metricValue(x)),750,yy+25);yy+=67});
+  const ordered=rows.slice().sort((a,b)=>rankingDirection==='asc'?metricValue(a)-metricValue(b):metricValue(b)-metricValue(a));
+  ctx.fillStyle='#17191c';ctx.font='800 20px Inter,Segoe UI,Arial';ctx.fillText((rankingDirection==='asc'?'Menores':'Maiores')+' percentuais',750,385);
+  let yy=430;ordered.slice(0,6).forEach((x,i)=>{ctx.fillStyle='#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText((i+1)+'. '+x.name.slice(0,20),750,yy);ctx.fillStyle='#606970';ctx.font='700 17px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(metricValue(x)),750,yy+25);yy+=67});
   ctx.strokeStyle='#d4d9dc';ctx.beginPath();ctx.moveTo(64,965);ctx.lineTo(1016,965);ctx.stroke();ctx.fillStyle='#596168';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral · '+(DATA.municipalities_read||167)+' municípios',64,1002);ctx.textAlign='right';ctx.fillText(DATA.source_generated_at||nowStamp(),1016,1032);ctx.textAlign='left';
 }
 function bindPublishers(){
