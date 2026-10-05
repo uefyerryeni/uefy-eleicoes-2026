@@ -269,7 +269,7 @@
             "null": 292,
             "null_pct": 3.88,
             "valid": 7120,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 253,
@@ -314,7 +314,7 @@
             "null": 229,
             "null_pct": 2.71,
             "valid": 8125,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 238,
@@ -359,7 +359,7 @@
             "null": 281,
             "null_pct": 2.97,
             "valid": 9094,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 266,
@@ -404,7 +404,7 @@
             "null": 104,
             "null_pct": 2.4,
             "valid": 4169,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 142,
@@ -412,7 +412,7 @@
             "null": 131,
             "null_pct": 3.02,
             "valid": 4065,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -449,7 +449,7 @@
             "null": 284,
             "null_pct": 2.97,
             "valid": 9181,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 327,
@@ -494,7 +494,7 @@
             "null": 244,
             "null_pct": 2.91,
             "valid": 8057,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 236,
@@ -539,7 +539,7 @@
             "null": 217,
             "null_pct": 4.32,
             "valid": 4751,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 118,
@@ -584,7 +584,7 @@
             "null": 740,
             "null_pct": 2.87,
             "valid": 24663,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1264,
@@ -629,7 +629,7 @@
             "null": 669,
             "null_pct": 3.82,
             "valid": 16542,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 808,
@@ -637,7 +637,7 @@
             "null": 1099,
             "null_pct": 6.27,
             "valid": 15622,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -674,7 +674,7 @@
             "null": 367,
             "null_pct": 3.96,
             "valid": 8714,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 416,
@@ -719,7 +719,7 @@
             "null": 1026,
             "null_pct": 2.78,
             "valid": 35339,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1490,
@@ -764,7 +764,7 @@
             "null": 486,
             "null_pct": 2.68,
             "valid": 17394,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 719,
@@ -809,7 +809,7 @@
             "null": 132,
             "null_pct": 3.4,
             "valid": 3709,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 68,
@@ -817,7 +817,7 @@
             "null": 163,
             "null_pct": 4.2,
             "valid": 3646,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -854,7 +854,7 @@
             "null": 164,
             "null_pct": 2.78,
             "valid": 5651,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 305,
@@ -899,7 +899,7 @@
             "null": 115,
             "null_pct": 2.77,
             "valid": 3989,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 123,
@@ -907,7 +907,7 @@
             "null": 159,
             "null_pct": 3.83,
             "valid": 3866,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -944,7 +944,7 @@
             "null": 301,
             "null_pct": 4.58,
             "valid": 6177,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 145,
@@ -952,7 +952,7 @@
             "null": 335,
             "null_pct": 5.1,
             "valid": 6086,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -989,7 +989,7 @@
             "null": 93,
             "null_pct": 3.16,
             "valid": 2805,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 58,
@@ -997,7 +997,7 @@
             "null": 127,
             "null_pct": 4.32,
             "valid": 2756,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1034,7 +1034,7 @@
             "null": 223,
             "null_pct": 2.98,
             "valid": 7162,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 190,
@@ -1042,7 +1042,7 @@
             "null": 289,
             "null_pct": 3.87,
             "valid": 6998,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1079,7 +1079,7 @@
             "null": 297,
             "null_pct": 3.73,
             "valid": 7529,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 266,
@@ -1124,7 +1124,7 @@
             "null": 1040,
             "null_pct": 2.74,
             "valid": 36284,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1267,
@@ -1169,7 +1169,7 @@
             "null": 126,
             "null_pct": 2.86,
             "valid": 4216,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 150,
@@ -1177,7 +1177,7 @@
             "null": 207,
             "null_pct": 4.7,
             "valid": 4046,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1214,7 +1214,7 @@
             "null": 103,
             "null_pct": 2.93,
             "valid": 3381,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 39,
@@ -1259,7 +1259,7 @@
             "null": 211,
             "null_pct": 2.92,
             "valid": 6898,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 239,
@@ -1267,7 +1267,7 @@
             "null": 290,
             "null_pct": 4.01,
             "valid": 6696,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1304,7 +1304,7 @@
             "null": 211,
             "null_pct": 3.01,
             "valid": 6692,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 251,
@@ -1349,7 +1349,7 @@
             "null": 537,
             "null_pct": 2.69,
             "valid": 19158,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1035,
@@ -1394,7 +1394,7 @@
             "null": 427,
             "null_pct": 2.7,
             "valid": 15076,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 822,
@@ -1439,7 +1439,7 @@
             "null": 239,
             "null_pct": 3.37,
             "valid": 6760,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 206,
@@ -1484,7 +1484,7 @@
             "null": 233,
             "null_pct": 4.41,
             "valid": 4933,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 313,
@@ -1492,7 +1492,7 @@
             "null": 486,
             "null_pct": 9.19,
             "valid": 4488,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1529,7 +1529,7 @@
             "null": 1520,
             "null_pct": 3.07,
             "valid": 47119,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 2765,
@@ -1572,9 +1572,9 @@
             "blank": 91,
             "blank_pct": 1.21,
             "null": 301,
-            "null_pct": 4.0,
+            "null_pct": 4,
             "valid": 7136,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 165,
@@ -1619,7 +1619,7 @@
             "null": 140,
             "null_pct": 3.48,
             "valid": 3832,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 84,
@@ -1627,7 +1627,7 @@
             "null": 180,
             "null_pct": 4.48,
             "valid": 3753,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1664,7 +1664,7 @@
             "null": 139,
             "null_pct": 4.17,
             "valid": 3158,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 152,
@@ -1672,7 +1672,7 @@
             "null": 261,
             "null_pct": 7.83,
             "valid": 2921,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1709,7 +1709,7 @@
             "null": 197,
             "null_pct": 3.45,
             "valid": 5398,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 277,
@@ -1717,7 +1717,7 @@
             "null": 348,
             "null_pct": 6.09,
             "valid": 5088,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1754,7 +1754,7 @@
             "null": 863,
             "null_pct": 3.25,
             "valid": 25175,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1306,
@@ -1799,7 +1799,7 @@
             "null": 124,
             "null_pct": 2.38,
             "valid": 5045,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 87,
@@ -1807,7 +1807,7 @@
             "null": 186,
             "null_pct": 3.57,
             "valid": 4941,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -1844,7 +1844,7 @@
             "null": 131,
             "null_pct": 3.13,
             "valid": 4029,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 115,
@@ -1889,7 +1889,7 @@
             "null": 156,
             "null_pct": 3.92,
             "valid": 3763,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 194,
@@ -1934,7 +1934,7 @@
             "null": 236,
             "null_pct": 3.7,
             "valid": 6035,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 209,
@@ -1979,7 +1979,7 @@
             "null": 878,
             "null_pct": 2.69,
             "valid": 31333,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1285,
@@ -2024,7 +2024,7 @@
             "null": 153,
             "null_pct": 2.54,
             "valid": 5774,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 286,
@@ -2069,7 +2069,7 @@
             "null": 108,
             "null_pct": 3.78,
             "valid": 2717,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 88,
@@ -2077,7 +2077,7 @@
             "null": 122,
             "null_pct": 4.27,
             "valid": 2649,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2114,7 +2114,7 @@
             "null": 217,
             "null_pct": 3.16,
             "valid": 6588,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 180,
@@ -2122,7 +2122,7 @@
             "null": 393,
             "null_pct": 5.72,
             "valid": 6294,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2159,7 +2159,7 @@
             "null": 76,
             "null_pct": 3.11,
             "valid": 2350,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 41,
@@ -2167,7 +2167,7 @@
             "null": 94,
             "null_pct": 3.85,
             "valid": 2305,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2204,7 +2204,7 @@
             "null": 56,
             "null_pct": 1.59,
             "valid": 3416,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 54,
@@ -2212,7 +2212,7 @@
             "null": 92,
             "null_pct": 2.62,
             "valid": 3366,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2249,7 +2249,7 @@
             "null": 45,
             "null_pct": 1.93,
             "valid": 2253,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 44,
@@ -2257,7 +2257,7 @@
             "null": 68,
             "null_pct": 2.92,
             "valid": 2213,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2294,7 +2294,7 @@
             "null": 662,
             "null_pct": 3.61,
             "valid": 17335,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 832,
@@ -2339,7 +2339,7 @@
             "null": 392,
             "null_pct": 3.9,
             "valid": 9450,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 443,
@@ -2384,7 +2384,7 @@
             "null": 255,
             "null_pct": 3.1,
             "valid": 7783,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 270,
@@ -2392,7 +2392,7 @@
             "null": 286,
             "null_pct": 3.48,
             "valid": 7658,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2429,13 +2429,13 @@
             "null": 346,
             "null_pct": 2.87,
             "valid": 11559,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 320,
             "blank_pct": 2.65,
             "null": 482,
-            "null_pct": 4.0,
+            "null_pct": 4,
             "valid": 11262,
             "valid_pct": 99.99
           }
@@ -2474,7 +2474,7 @@
             "null": 210,
             "null_pct": 2.15,
             "valid": 9419,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 283,
@@ -2519,7 +2519,7 @@
             "null": 222,
             "null_pct": 2.13,
             "valid": 10080,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 381,
@@ -2527,7 +2527,7 @@
             "null": 420,
             "null_pct": 4.03,
             "valid": 9614,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2564,7 +2564,7 @@
             "null": 31,
             "null_pct": 1.69,
             "valid": 1790,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 47,
@@ -2572,7 +2572,7 @@
             "null": 62,
             "null_pct": 3.38,
             "valid": 1724,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2609,7 +2609,7 @@
             "null": 119,
             "null_pct": 1.99,
             "valid": 5775,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 171,
@@ -2654,7 +2654,7 @@
             "null": 136,
             "null_pct": 3.17,
             "valid": 4101,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 82,
@@ -2662,7 +2662,7 @@
             "null": 149,
             "null_pct": 3.48,
             "valid": 4052,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2699,7 +2699,7 @@
             "null": 165,
             "null_pct": 3.1,
             "valid": 5104,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 88,
@@ -2707,7 +2707,7 @@
             "null": 195,
             "null_pct": 3.66,
             "valid": 5043,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2744,7 +2744,7 @@
             "null": 83,
             "null_pct": 2.23,
             "valid": 3594,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 80,
@@ -2752,7 +2752,7 @@
             "null": 125,
             "null_pct": 3.36,
             "valid": 3517,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2789,7 +2789,7 @@
             "null": 143,
             "null_pct": 3.03,
             "valid": 4528,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 83,
@@ -2797,7 +2797,7 @@
             "null": 195,
             "null_pct": 4.14,
             "valid": 4434,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2834,7 +2834,7 @@
             "null": 66,
             "null_pct": 2.45,
             "valid": 2601,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 48,
@@ -2842,7 +2842,7 @@
             "null": 84,
             "null_pct": 3.12,
             "valid": 2561,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2879,7 +2879,7 @@
             "null": 224,
             "null_pct": 2.35,
             "valid": 9178,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 401,
@@ -2887,7 +2887,7 @@
             "null": 440,
             "null_pct": 4.62,
             "valid": 8673,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -2924,7 +2924,7 @@
             "null": 391,
             "null_pct": 4.47,
             "valid": 8145,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 455,
@@ -2969,7 +2969,7 @@
             "null": 186,
             "null_pct": 3.54,
             "valid": 4992,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 154,
@@ -3014,7 +3014,7 @@
             "null": 129,
             "null_pct": 3.03,
             "valid": 4079,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 167,
@@ -3022,7 +3022,7 @@
             "null": 207,
             "null_pct": 4.86,
             "valid": 3889,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3059,7 +3059,7 @@
             "null": 651,
             "null_pct": 2.83,
             "valid": 22029,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 685,
@@ -3104,7 +3104,7 @@
             "null": 89,
             "null_pct": 3.73,
             "valid": 2270,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 57,
@@ -3112,7 +3112,7 @@
             "null": 115,
             "null_pct": 4.83,
             "valid": 2210,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3149,7 +3149,7 @@
             "null": 392,
             "null_pct": 3.03,
             "valid": 12385,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 358,
@@ -3157,7 +3157,7 @@
             "null": 610,
             "null_pct": 4.72,
             "valid": 11964,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3194,7 +3194,7 @@
             "null": 142,
             "null_pct": 3.62,
             "valid": 3724,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 94,
@@ -3202,7 +3202,7 @@
             "null": 169,
             "null_pct": 4.31,
             "valid": 3662,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3239,7 +3239,7 @@
             "null": 154,
             "null_pct": 3.01,
             "valid": 4908,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 153,
@@ -3247,7 +3247,7 @@
             "null": 203,
             "null_pct": 3.97,
             "valid": 4757,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3284,7 +3284,7 @@
             "null": 244,
             "null_pct": 3.83,
             "valid": 6034,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 170,
@@ -3292,7 +3292,7 @@
             "null": 303,
             "null_pct": 4.75,
             "valid": 5903,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3329,7 +3329,7 @@
             "null": 87,
             "null_pct": 3.16,
             "valid": 2636,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 63,
@@ -3374,7 +3374,7 @@
             "null": 321,
             "null_pct": 3.17,
             "valid": 9613,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 398,
@@ -3382,7 +3382,7 @@
             "null": 512,
             "null_pct": 5.06,
             "valid": 9210,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3419,7 +3419,7 @@
             "null": 363,
             "null_pct": 4.7,
             "valid": 7207,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 297,
@@ -3464,7 +3464,7 @@
             "null": 211,
             "null_pct": 2.78,
             "valid": 7303,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 139,
@@ -3472,7 +3472,7 @@
             "null": 259,
             "null_pct": 3.42,
             "valid": 7185,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3509,7 +3509,7 @@
             "null": 124,
             "null_pct": 2.84,
             "valid": 4172,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 112,
@@ -3517,7 +3517,7 @@
             "null": 175,
             "null_pct": 4.01,
             "valid": 4074,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3554,7 +3554,7 @@
             "null": 56,
             "null_pct": 1.86,
             "valid": 2926,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 49,
@@ -3562,7 +3562,7 @@
             "null": 95,
             "null_pct": 3.16,
             "valid": 2858,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3599,7 +3599,7 @@
             "null": 224,
             "null_pct": 3.97,
             "valid": 5348,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 250,
@@ -3644,7 +3644,7 @@
             "null": 447,
             "null_pct": 2.53,
             "valid": 16971,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 790,
@@ -3652,7 +3652,7 @@
             "null": 735,
             "null_pct": 4.16,
             "valid": 16161,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3689,7 +3689,7 @@
             "null": 1593,
             "null_pct": 3.53,
             "valid": 42758,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1724,
@@ -3734,7 +3734,7 @@
             "null": 85,
             "null_pct": 3.28,
             "valid": 2486,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 47,
@@ -3742,7 +3742,7 @@
             "null": 105,
             "null_pct": 4.05,
             "valid": 2442,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3779,7 +3779,7 @@
             "null": 191,
             "null_pct": 3.23,
             "valid": 5661,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 171,
@@ -3787,7 +3787,7 @@
             "null": 248,
             "null_pct": 4.2,
             "valid": 5492,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3824,7 +3824,7 @@
             "null": 173,
             "null_pct": 2.79,
             "valid": 5971,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 134,
@@ -3832,7 +3832,7 @@
             "null": 274,
             "null_pct": 4.42,
             "valid": 5790,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3869,7 +3869,7 @@
             "null": 223,
             "null_pct": 2.62,
             "valid": 8148,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 294,
@@ -3877,7 +3877,7 @@
             "null": 357,
             "null_pct": 4.2,
             "valid": 7851,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3914,7 +3914,7 @@
             "null": 123,
             "null_pct": 3.07,
             "valid": 3833,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 125,
@@ -3922,7 +3922,7 @@
             "null": 172,
             "null_pct": 4.29,
             "valid": 3709,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3959,7 +3959,7 @@
             "null": 284,
             "null_pct": 3.68,
             "valid": 7303,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 313,
@@ -3967,7 +3967,7 @@
             "null": 399,
             "null_pct": 5.18,
             "valid": 6994,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -3979,7 +3979,7 @@
           "name": "LULA",
           "party": "PT",
           "votes": 7772,
-          "pct": 58.0,
+          "pct": 58,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -4004,7 +4004,7 @@
             "null": 485,
             "null_pct": 3.43,
             "valid": 13399,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 587,
@@ -4012,7 +4012,7 @@
             "null": 656,
             "null_pct": 4.65,
             "valid": 12876,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4049,7 +4049,7 @@
             "null": 85,
             "null_pct": 3.3,
             "valid": 2464,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 27,
@@ -4057,7 +4057,7 @@
             "null": 117,
             "null_pct": 4.54,
             "valid": 2433,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4094,7 +4094,7 @@
             "null": 4904,
             "null_pct": 3.1,
             "valid": 150164,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 4751,
@@ -4139,7 +4139,7 @@
             "null": 12495,
             "null_pct": 2.74,
             "valid": 436377,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 15016,
@@ -4184,7 +4184,7 @@
             "null": 785,
             "null_pct": 3.49,
             "valid": 21272,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1117,
@@ -4229,7 +4229,7 @@
             "null": 596,
             "null_pct": 3.05,
             "valid": 18629,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 631,
@@ -4274,7 +4274,7 @@
             "null": 122,
             "null_pct": 3.21,
             "valid": 3611,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 136,
@@ -4282,7 +4282,7 @@
             "null": 148,
             "null_pct": 3.9,
             "valid": 3509,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4319,7 +4319,7 @@
             "null": 126,
             "null_pct": 3.35,
             "valid": 3568,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 144,
@@ -4327,7 +4327,7 @@
             "null": 245,
             "null_pct": 6.52,
             "valid": 3367,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4364,7 +4364,7 @@
             "null": 89,
             "null_pct": 2.65,
             "valid": 3242,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 75,
@@ -4372,7 +4372,7 @@
             "null": 113,
             "null_pct": 3.36,
             "valid": 3171,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4400,16 +4400,16 @@
         "participation": {
           "electorate": 5532,
           "turnout": 4536,
-          "turnout_pct": 82.0,
+          "turnout_pct": 82,
           "abstention": 996,
-          "abstention_pct": 18.0,
+          "abstention_pct": 18,
           "president": {
             "blank": 46,
             "blank_pct": 1.01,
             "null": 138,
             "null_pct": 3.04,
             "valid": 4352,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 88,
@@ -4417,7 +4417,7 @@
             "null": 175,
             "null_pct": 3.86,
             "valid": 4272,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4454,7 +4454,7 @@
             "null": 137,
             "null_pct": 3.78,
             "valid": 3439,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 84,
@@ -4462,7 +4462,7 @@
             "null": 127,
             "null_pct": 3.5,
             "valid": 3418,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4499,7 +4499,7 @@
             "null": 677,
             "null_pct": 4.61,
             "valid": 13645,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 929,
@@ -4544,7 +4544,7 @@
             "null": 3271,
             "null_pct": 2.69,
             "valid": 116543,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 4640,
@@ -4589,7 +4589,7 @@
             "null": 313,
             "null_pct": 3.8,
             "valid": 7782,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 249,
@@ -4597,7 +4597,7 @@
             "null": 459,
             "null_pct": 5.57,
             "valid": 7531,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4634,7 +4634,7 @@
             "null": 127,
             "null_pct": 3.32,
             "valid": 3640,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 72,
@@ -4642,7 +4642,7 @@
             "null": 165,
             "null_pct": 4.32,
             "valid": 3586,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4679,7 +4679,7 @@
             "null": 251,
             "null_pct": 3.02,
             "valid": 7962,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 297,
@@ -4687,7 +4687,7 @@
             "null": 346,
             "null_pct": 4.16,
             "valid": 7665,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4724,7 +4724,7 @@
             "null": 466,
             "null_pct": 2.65,
             "valid": 16855,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 643,
@@ -4769,7 +4769,7 @@
             "null": 82,
             "null_pct": 2.42,
             "valid": 3276,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 80,
@@ -4777,7 +4777,7 @@
             "null": 118,
             "null_pct": 3.48,
             "valid": 3190,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4814,7 +4814,7 @@
             "null": 72,
             "null_pct": 2.64,
             "valid": 2634,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 45,
@@ -4822,7 +4822,7 @@
             "null": 99,
             "null_pct": 3.63,
             "valid": 2581,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4859,7 +4859,7 @@
             "null": 172,
             "null_pct": 3.46,
             "valid": 4734,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 126,
@@ -4867,7 +4867,7 @@
             "null": 180,
             "null_pct": 3.63,
             "valid": 4658,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4904,7 +4904,7 @@
             "null": 339,
             "null_pct": 3.49,
             "valid": 9249,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 416,
@@ -4912,7 +4912,7 @@
             "null": 598,
             "null_pct": 6.15,
             "valid": 8709,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4949,7 +4949,7 @@
             "null": 225,
             "null_pct": 2.62,
             "valid": 8244,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 346,
@@ -4957,7 +4957,7 @@
             "null": 399,
             "null_pct": 4.65,
             "valid": 7830,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -4994,7 +4994,7 @@
             "null": 51,
             "null_pct": 1.77,
             "valid": 2812,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 56,
@@ -5002,7 +5002,7 @@
             "null": 91,
             "null_pct": 3.15,
             "valid": 2739,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5039,7 +5039,7 @@
             "null": 190,
             "null_pct": 3.4,
             "valid": 5290,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 171,
@@ -5047,7 +5047,7 @@
             "null": 317,
             "null_pct": 5.68,
             "valid": 5092,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5084,7 +5084,7 @@
             "null": 112,
             "null_pct": 2.68,
             "valid": 4010,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 89,
@@ -5129,7 +5129,7 @@
             "null": 305,
             "null_pct": 3.18,
             "valid": 9133,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 338,
@@ -5137,7 +5137,7 @@
             "null": 492,
             "null_pct": 5.13,
             "valid": 8754,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5174,7 +5174,7 @@
             "null": 254,
             "null_pct": 3.6,
             "valid": 6676,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 205,
@@ -5219,7 +5219,7 @@
             "null": 128,
             "null_pct": 3.12,
             "valid": 3910,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 176,
@@ -5227,7 +5227,7 @@
             "null": 169,
             "null_pct": 4.12,
             "valid": 3752,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5264,7 +5264,7 @@
             "null": 52,
             "null_pct": 1.72,
             "valid": 2937,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 52,
@@ -5272,7 +5272,7 @@
             "null": 60,
             "null_pct": 1.99,
             "valid": 2905,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5309,7 +5309,7 @@
             "null": 62,
             "null_pct": 2.62,
             "valid": 2278,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 25,
@@ -5317,7 +5317,7 @@
             "null": 69,
             "null_pct": 2.92,
             "valid": 2270,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5354,7 +5354,7 @@
             "null": 119,
             "null_pct": 3.76,
             "valid": 3020,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 69,
@@ -5362,7 +5362,7 @@
             "null": 158,
             "null_pct": 4.99,
             "valid": 2938,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5399,7 +5399,7 @@
             "null": 154,
             "null_pct": 2.67,
             "valid": 5566,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 92,
@@ -5407,7 +5407,7 @@
             "null": 179,
             "null_pct": 3.11,
             "valid": 5493,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5444,7 +5444,7 @@
             "null": 209,
             "null_pct": 2.3,
             "valid": 8749,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 333,
@@ -5452,7 +5452,7 @@
             "null": 346,
             "null_pct": 3.8,
             "valid": 8417,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5489,7 +5489,7 @@
             "null": 105,
             "null_pct": 2.71,
             "valid": 3731,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 86,
@@ -5497,7 +5497,7 @@
             "null": 150,
             "null_pct": 3.88,
             "valid": 3632,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5534,7 +5534,7 @@
             "null": 88,
             "null_pct": 2.61,
             "valid": 3252,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 67,
@@ -5542,7 +5542,7 @@
             "null": 95,
             "null_pct": 2.82,
             "valid": 3209,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5579,7 +5579,7 @@
             "null": 680,
             "null_pct": 2.99,
             "valid": 21722,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 882,
@@ -5624,7 +5624,7 @@
             "null": 125,
             "null_pct": 2.99,
             "valid": 4001,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 106,
@@ -5669,7 +5669,7 @@
             "null": 287,
             "null_pct": 3.19,
             "valid": 8575,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 255,
@@ -5677,7 +5677,7 @@
             "null": 439,
             "null_pct": 4.88,
             "valid": 8303,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5714,7 +5714,7 @@
             "null": 95,
             "null_pct": 4.2,
             "valid": 2111,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 111,
@@ -5759,7 +5759,7 @@
             "null": 584,
             "null_pct": 3.8,
             "valid": 14579,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 515,
@@ -5804,7 +5804,7 @@
             "null": 166,
             "null_pct": 3.49,
             "valid": 4526,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 115,
@@ -5812,7 +5812,7 @@
             "null": 232,
             "null_pct": 4.88,
             "valid": 4403,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5849,7 +5849,7 @@
             "null": 116,
             "null_pct": 3.81,
             "valid": 2870,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 87,
@@ -5857,7 +5857,7 @@
             "null": 132,
             "null_pct": 4.33,
             "valid": 2829,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5894,7 +5894,7 @@
             "null": 232,
             "null_pct": 3.17,
             "valid": 6999,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 177,
@@ -5902,7 +5902,7 @@
             "null": 327,
             "null_pct": 4.46,
             "valid": 6822,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5939,7 +5939,7 @@
             "null": 184,
             "null_pct": 3.65,
             "valid": 4807,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 123,
@@ -5947,7 +5947,7 @@
             "null": 305,
             "null_pct": 6.04,
             "valid": 4618,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -5984,15 +5984,15 @@
             "null": 273,
             "null_pct": 2.4,
             "valid": 10919,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 337,
             "blank_pct": 2.96,
             "null": 341,
-            "null_pct": 3.0,
+            "null_pct": 3,
             "valid": 10705,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6029,7 +6029,7 @@
             "null": 180,
             "null_pct": 3.5,
             "valid": 4872,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 194,
@@ -6074,7 +6074,7 @@
             "null": 251,
             "null_pct": 4.34,
             "valid": 5441,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 167,
@@ -6082,7 +6082,7 @@
             "null": 314,
             "null_pct": 5.43,
             "valid": 5303,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6119,7 +6119,7 @@
             "null": 113,
             "null_pct": 3.17,
             "valid": 3390,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 119,
@@ -6127,7 +6127,7 @@
             "null": 156,
             "null_pct": 4.38,
             "valid": 3288,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6164,7 +6164,7 @@
             "null": 159,
             "null_pct": 2.81,
             "valid": 5434,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 201,
@@ -6172,7 +6172,7 @@
             "null": 211,
             "null_pct": 3.72,
             "valid": 5256,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6209,7 +6209,7 @@
             "null": 82,
             "null_pct": 2.45,
             "valid": 3224,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 101,
@@ -6217,7 +6217,7 @@
             "null": 97,
             "null_pct": 2.9,
             "valid": 3144,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6254,7 +6254,7 @@
             "null": 147,
             "null_pct": 4.17,
             "valid": 3339,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 68,
@@ -6262,7 +6262,7 @@
             "null": 178,
             "null_pct": 5.05,
             "valid": 3282,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6299,7 +6299,7 @@
             "null": 119,
             "null_pct": 3.72,
             "valid": 3058,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 67,
@@ -6307,7 +6307,7 @@
             "null": 185,
             "null_pct": 5.78,
             "valid": 2951,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6344,7 +6344,7 @@
             "null": 89,
             "null_pct": 2.71,
             "valid": 3146,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 145,
@@ -6352,7 +6352,7 @@
             "null": 150,
             "null_pct": 4.56,
             "valid": 2992,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6389,7 +6389,7 @@
             "null": 1981,
             "null_pct": 3.05,
             "valid": 62004,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 2345,
@@ -6434,7 +6434,7 @@
             "null": 1032,
             "null_pct": 3.57,
             "valid": 27360,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1266,
@@ -6479,7 +6479,7 @@
             "null": 289,
             "null_pct": 3.37,
             "valid": 8136,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 365,
@@ -6524,7 +6524,7 @@
             "null": 126,
             "null_pct": 3.25,
             "valid": 3680,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 140,
@@ -6569,7 +6569,7 @@
             "null": 99,
             "null_pct": 2.21,
             "valid": 4319,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 110,
@@ -6577,7 +6577,7 @@
             "null": 169,
             "null_pct": 3.78,
             "valid": 4193,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6614,7 +6614,7 @@
             "null": 655,
             "null_pct": 4.3,
             "valid": 14253,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 1111,
@@ -6659,7 +6659,7 @@
             "null": 275,
             "null_pct": 3.43,
             "valid": 7639,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 205,
@@ -6667,7 +6667,7 @@
             "null": 364,
             "null_pct": 4.55,
             "valid": 7439,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6704,7 +6704,7 @@
             "null": 357,
             "null_pct": 2.98,
             "valid": 11401,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 376,
@@ -6749,7 +6749,7 @@
             "null": 159,
             "null_pct": 2.98,
             "valid": 5106,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 103,
@@ -6757,7 +6757,7 @@
             "null": 154,
             "null_pct": 2.88,
             "valid": 5084,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6794,7 +6794,7 @@
             "null": 224,
             "null_pct": 3.64,
             "valid": 5836,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 137,
@@ -6802,7 +6802,7 @@
             "null": 298,
             "null_pct": 4.85,
             "valid": 5711,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6839,7 +6839,7 @@
             "null": 206,
             "null_pct": 2.77,
             "valid": 7170,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 98,
@@ -6884,7 +6884,7 @@
             "null": 173,
             "null_pct": 3.83,
             "valid": 4284,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 142,
@@ -6892,7 +6892,7 @@
             "null": 323,
             "null_pct": 7.16,
             "valid": 4049,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6929,7 +6929,7 @@
             "null": 138,
             "null_pct": 3.26,
             "valid": 4034,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 145,
@@ -6937,7 +6937,7 @@
             "null": 194,
             "null_pct": 4.59,
             "valid": 3892,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -6974,7 +6974,7 @@
             "null": 48,
             "null_pct": 2.13,
             "valid": 2171,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 44,
@@ -6982,7 +6982,7 @@
             "null": 71,
             "null_pct": 3.15,
             "valid": 2137,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7019,7 +7019,7 @@
             "null": 275,
             "null_pct": 3.11,
             "valid": 8394,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 385,
@@ -7055,16 +7055,16 @@
         "participation": {
           "electorate": 12583,
           "turnout": 9689,
-          "turnout_pct": 77.0,
+          "turnout_pct": 77,
           "abstention": 2894,
-          "abstention_pct": 23.0,
+          "abstention_pct": 23,
           "president": {
             "blank": 183,
             "blank_pct": 1.89,
             "null": 365,
             "null_pct": 3.77,
             "valid": 9141,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 407,
@@ -7072,7 +7072,7 @@
             "null": 556,
             "null_pct": 5.74,
             "valid": 8726,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7109,7 +7109,7 @@
             "null": 157,
             "null_pct": 2.29,
             "valid": 6648,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 166,
@@ -7154,7 +7154,7 @@
             "null": 170,
             "null_pct": 3.7,
             "valid": 4374,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 132,
@@ -7199,7 +7199,7 @@
             "null": 192,
             "null_pct": 2.74,
             "valid": 6710,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 327,
@@ -7235,16 +7235,16 @@
         "participation": {
           "electorate": 13651,
           "turnout": 11057,
-          "turnout_pct": 81.0,
+          "turnout_pct": 81,
           "abstention": 2594,
-          "abstention_pct": 19.0,
+          "abstention_pct": 19,
           "president": {
             "blank": 186,
             "blank_pct": 1.68,
             "null": 307,
             "null_pct": 2.78,
             "valid": 10564,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 484,
@@ -7289,7 +7289,7 @@
             "null": 62,
             "null_pct": 2.62,
             "valid": 2277,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 51,
@@ -7297,7 +7297,7 @@
             "null": 88,
             "null_pct": 3.72,
             "valid": 2226,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7334,11 +7334,11 @@
             "null": 772,
             "null_pct": 3.3,
             "valid": 22304,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 702,
-            "blank_pct": 3.0,
+            "blank_pct": 3,
             "null": 1097,
             "null_pct": 4.69,
             "valid": 21586,
@@ -7370,16 +7370,16 @@
         "participation": {
           "electorate": 4239,
           "turnout": 3603,
-          "turnout_pct": 85.0,
+          "turnout_pct": 85,
           "abstention": 636,
-          "abstention_pct": 15.0,
+          "abstention_pct": 15,
           "president": {
             "blank": 43,
             "blank_pct": 1.19,
             "null": 107,
             "null_pct": 2.97,
             "valid": 3453,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 80,
@@ -7387,7 +7387,7 @@
             "null": 148,
             "null_pct": 4.11,
             "valid": 3374,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7424,7 +7424,7 @@
             "null": 270,
             "null_pct": 3.67,
             "valid": 6993,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 221,
@@ -7469,7 +7469,7 @@
             "null": 340,
             "null_pct": 3.36,
             "valid": 9639,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 317,
@@ -7477,7 +7477,7 @@
             "null": 440,
             "null_pct": 4.34,
             "valid": 9375,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7514,7 +7514,7 @@
             "null": 100,
             "null_pct": 3.33,
             "valid": 2873,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 96,
@@ -7522,7 +7522,7 @@
             "null": 157,
             "null_pct": 5.22,
             "valid": 2754,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7559,7 +7559,7 @@
             "null": 316,
             "null_pct": 3.39,
             "valid": 8820,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 366,
@@ -7567,7 +7567,7 @@
             "null": 420,
             "null_pct": 4.51,
             "valid": 8531,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7579,7 +7579,7 @@
           "name": "LULA",
           "party": "PT",
           "votes": 1758,
-          "pct": 69.0,
+          "pct": 69,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -7604,7 +7604,7 @@
             "null": 105,
             "null_pct": 3.88,
             "valid": 2548,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 130,
@@ -7612,7 +7612,7 @@
             "null": 155,
             "null_pct": 5.73,
             "valid": 2422,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7649,7 +7649,7 @@
             "null": 58,
             "null_pct": 3.71,
             "valid": 1488,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 39,
@@ -7657,7 +7657,7 @@
             "null": 73,
             "null_pct": 4.67,
             "valid": 1452,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       },
@@ -7694,7 +7694,7 @@
             "null": 145,
             "null_pct": 3.06,
             "valid": 4531,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 103,
@@ -7739,7 +7739,7 @@
             "null": 104,
             "null_pct": 4.11,
             "valid": 2401,
-            "valid_pct": 100.0
+            "valid_pct": 100
           },
           "governor": {
             "blank": 89,
@@ -7747,7 +7747,7 @@
             "null": 114,
             "null_pct": 4.5,
             "valid": 2328,
-            "valid_pct": 100.0
+            "valid_pct": 100
           }
         }
       }
@@ -7763,7 +7763,7 @@
         "abstention_pct": 18.38,
         "total_votes": 2171013,
         "valid": 2071898,
-        "valid_pct": 100.0,
+        "valid_pct": 100,
         "blank": 33172,
         "blank_pct": 1.53,
         "null": 65943,
@@ -7788,10 +7788,34 @@
     },
     "state_2022": {
       "pres": {
-        "error": "HTTP Error 404: Not Found"
+        "electorate": 2550381,
+        "turnout": 2086722,
+        "turnout_pct": 81.82,
+        "abstention": 463659,
+        "abstention_pct": 18.18,
+        "total_votes": 2090604,
+        "valid": 2007264,
+        "valid_pct": 96.01,
+        "blank": 26151,
+        "blank_pct": 1.25,
+        "null": 57189,
+        "null_pct": 2.74,
+        "source": "TRE-RN · resultado final do 1º turno de 2022"
       },
       "gov": {
-        "error": "HTTP Error 404: Not Found"
+        "electorate": 2550381,
+        "turnout": 2086722,
+        "turnout_pct": 81.82,
+        "abstention": 463659,
+        "abstention_pct": 18.18,
+        "total_votes": 2086722,
+        "valid": 1828974,
+        "valid_pct": 87.65,
+        "blank": 95721,
+        "blank_pct": 4.59,
+        "null": 162027,
+        "null_pct": 7.76,
+        "source": "TRE-RN · resultado final do 1º turno de 2022"
       }
     },
     "rankings": {
@@ -7814,7 +7838,7 @@
         },
         {
           "name": "TANGARÁ",
-          "value": 23.0
+          "value": 23
         },
         {
           "name": "GUAMARÉ",
@@ -8052,6 +8076,6 @@
   "methodology": {
     "cross_note": "O cruzamento é territorial e agregado por município. Não permite afirmar que os mesmos eleitores votaram nas duas candidaturas.",
     "participation_note": "Comparecimento e abstenção vêm do eleitorado das seções instaladas. Brancos e nulos são específicos de cada cargo.",
-    "source": "Tribunal Superior Eleitoral — arquivos oficiais de resultado unificado (EA20) de 2026; resultados simplificados oficiais do 1º turno de 2022 para a comparação estadual."
+    "source": "Tribunal Superior Eleitoral — resultados oficiais de 2026; TRE-RN — estatísticas finais oficiais do 1º turno de 2022 para a comparação estadual."
   }
 }

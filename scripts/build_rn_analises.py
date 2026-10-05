@@ -77,21 +77,50 @@ def metrics26(data):
         'null_pct':dec(v.get('ptvn'))
     }
 
-def metrics22(data):
-    return {
-        'electorate':num(data.get('e') or data.get('ea')),
-        'turnout':num(data.get('c')),
-        'turnout_pct':dec(data.get('pc')),
-        'abstention':num(data.get('a')),
-        'abstention_pct':dec(data.get('pa')),
-        'total_votes':num(data.get('tv')),
-        'valid':num(data.get('vv') or data.get('vvc')),
-        'valid_pct':dec(data.get('pvv') or data.get('pvvc')),
-        'blank':num(data.get('vb')),
-        'blank_pct':dec(data.get('pvb')),
-        'null':num(data.get('tvn') or data.get('vn')),
-        'null_pct':dec(data.get('ptvn') or data.get('pvn'))
+def official_2022_rn():
+    # Estatísticas finais do 1º turno divulgadas oficialmente pelo TRE-RN.
+    # Comparecimento/abstenção são do eleitorado do RN; brancos/nulos são por cargo.
+    common={
+        'electorate':2550381,
+        'turnout':2086722,
+        'turnout_pct':81.82,
+        'abstention':463659,
+        'abstention_pct':18.18
     }
+    return {
+        'pres':{
+            **common,
+            'total_votes':2090604,
+            'valid':2007264,'valid_pct':96.01,
+            'blank':26151,'blank_pct':1.25,
+            'null':57189,'null_pct':2.74,
+            'source':'TRE-RN · resultado final do 1º turno de 2022'
+        },
+        'gov':{
+            **common,
+            'total_votes':2086722,
+            'valid':1828974,'valid_pct':87.65,
+            'blank':95721,'blank_pct':4.59,
+            'null':162027,'null_pct':7.76,
+            'source':'TRE-RN · resultado final do 1º turno de 2022'
+        }
+    }
+
+def write_if_changed(data):
+    OUT.parent.mkdir(parents=True,exist_ok=True)
+    old=None
+    try:
+        old=json.loads(OUT.read_text(encoding='utf-8'))
+    except Exception:
+        pass
+    def comparable(obj):
+        if not isinstance(obj,dict): return obj
+        return {k:v for k,v in obj.items() if k!='generated_at'}
+    if old is not None and comparable(old)==comparable(data):
+        print('Sem mudança material nas análises; snapshot preservado.')
+        return False
+    OUT.write_text(json.dumps(data,ensure_ascii=False,indent=2),encoding='utf-8')
+    return True
 
 def stamp(data):
     return ' · '.join(x for x in [str(data.get('dg') or data.get('dt') or '').strip(),str(data.get('hg') or data.get('ht') or '').strip()] if x)
@@ -105,11 +134,6 @@ def state26(office):
     if office=='pres':
         return f'{BASE26}/{FED26}/dados/rn/rn-c0001-e{FED26_PAD}-u.json'
     return f'{BASE26}/{EST26}/dados/rn/rn-c0003-e{EST26_PAD}-u.json'
-
-def legacy22(office):
-    if office=='pres':
-        return 'https://resultados.tse.jus.br/oficial/ele2022/544/dados-simplificados/rn/rn-c0001-e000544-r.json'
-    return 'https://resultados.tse.jus.br/oficial/ele2022/546/dados-simplificados/rn/rn-c0003-e000546-r.json'
 
 def leader(rows):
     valid=[x for x in rows if x['votes']>0 and x.get('vote_destination') not in ('anulado','anulado sub judice')]
@@ -179,10 +203,7 @@ def main():
             d=fetch_json(state26(off)); state[off]=metrics26(d); state[off]['source_generated_at']=stamp(d)
         except Exception as e:
             state[off]={'error':str(e)[:160]}
-    hist={}
-    for off in ('pres','gov'):
-        try: hist[off]=metrics22(fetch_json(legacy22(off)))
-        except Exception as e: hist[off]={'error':str(e)[:160]}
+    hist=official_2022_rn()
 
     out={
         'status':'ok' if rows else 'waiting',
@@ -207,15 +228,17 @@ def main():
         'methodology':{
             'cross_note':'O cruzamento é territorial e agregado por município. Não permite afirmar que os mesmos eleitores votaram nas duas candidaturas.',
             'participation_note':'Comparecimento e abstenção vêm do eleitorado das seções instaladas. Brancos e nulos são específicos de cada cargo.',
-            'source':'Tribunal Superior Eleitoral — arquivos oficiais de resultado unificado (EA20) de 2026; resultados simplificados oficiais do 1º turno de 2022 para a comparação estadual.'
+            'source':'Tribunal Superior Eleitoral — resultados oficiais de 2026; TRE-RN — estatísticas finais oficiais do 1º turno de 2022 para a comparação estadual.'
         }
     }
-    OUT.write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf-8')
-    print(f"RN análises: {len(rows)}/{len(mun)} municípios; {len(errors)} erro(s).")
+    changed=write_if_changed(out)
+    print((f"RN análises: {len(rows)}/{len(mun)} municípios; {len(errors)} erro(s)." if changed else "Snapshot das análises já corresponde aos dados atuais."))
 
 if __name__=='__main__':
     try: main()
     except Exception as e:
         print('ERRO:',e,file=sys.stderr)
-        OUT.write_text(json.dumps({'status':'error','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),'message':str(e)},ensure_ascii=False,indent=2),encoding='utf-8')
+        # Nunca destrói o último snapshot válido por uma falha transitória de rede/TSE.
+        if not OUT.exists():
+            OUT.write_text(json.dumps({'status':'error','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),'message':str(e)},ensure_ascii=False,indent=2),encoding='utf-8')
         raise

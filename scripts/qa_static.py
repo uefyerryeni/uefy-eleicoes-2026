@@ -215,6 +215,19 @@ for marker in ("crossPostText","participationPostText","drawCrossCanvas","drawPa
     if marker not in analises_js:
         fail(f"Análises RN sem lógica obrigatória: {marker}.")
 
+# 6b) Histórico 2022 das Análises RN deve ser oficial, completo e publicável.
+hist22=((analises.get("participation") or {}).get("state_2022") or {})
+for office in ("pres","gov"):
+    row=hist22.get(office) or {}
+    if row.get("error"):
+        fail(f"Histórico 2022 das Análises RN ainda contém erro em {office}.")
+    for field in ("turnout_pct","abstention_pct","blank_pct","null_pct"):
+        value=float(row.get(field) or 0)
+        if value<=0 or value>100:
+            fail(f"Histórico 2022 inválido: {office}.{field}={value}.")
+if round(float((hist22.get("pres") or {}).get("turnout_pct") or 0),2)!=81.82:
+    fail("Histórico 2022: comparecimento oficial do RN divergente.")
+
 
 if errors:
     print("\n".join("ERRO: "+e for e in errors))

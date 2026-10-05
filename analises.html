@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Análises RN</title>
   <link rel="stylesheet" href="style.css?v=20261005-refino">
-  <link rel="stylesheet" href="analises.css?v=20261005-refino3">
+  <link rel="stylesheet" href="analises.css?v=20261005-refino4">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -177,13 +177,13 @@
         </section>
 
         <section class="card analysis-detail-card history-card">
-          <div class="analysis-card-head"><div><h3>Comparação com 2022</h3><p>O histórico só entra quando a base oficial puder ser importada com segurança.</p></div></div>
+          <div class="analysis-card-head"><div><h3>Comparação com 2022</h3><p>Comparação estadual do 1º turno entre 2022 e 2026.</p></div></div>
           <div id="historyCompare"></div>
         </section>
       </div>
 
       <aside class="card analysis-publisher" id="publicacao-participacao">
-        <div class="publisher-head"><span>Publicação</span><strong id="participationPubTitle">Abstenção no RN</strong><small>Mapa municipal + destaques</small></div>
+        <div class="publisher-head"><span>Publicação</span><strong id="participationPubTitle">Abstenção no RN</strong><small>Mapa municipal + destaques + comparação 2022</small></div>
         <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
         <div class="canvas-box"><canvas id="participationCanvas" width="1080" height="1080"></canvas></div>
         <div class="block-title text-title"><span>Texto</span><span id="participationChars">0 caracteres</span></div>
@@ -211,6 +211,6 @@
 <footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Análises RN</strong><span>Mapas, dados e publicações a partir dos resultados oficiais.</span></div></footer>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador</a><a href="radar.html">Legislativo</a><a href="analises.html" class="active">Análises</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="analises.js?v=20261005-refino3"></script>
+<script src="analises.js?v=20261005-refino4"></script>
 </body>
 </html>

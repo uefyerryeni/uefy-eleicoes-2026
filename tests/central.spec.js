@@ -62,4 +62,6 @@ test('Análises RN carrega 167 municípios, mapas e publicação no desktop',asy
   await page.locator('#metricSelect').selectOption('president.null_pct');
   await expect(page.locator('#participationPubTitle')).toContainText('Nulos');
   await expect(page.locator('#participationPostText')).toHaveValue(/NULOS/);
+  await expect(page.locator('#participationPostText')).toHaveValue(/2022/);
+  await expect(page.locator('#historyCompare .history-row')).toHaveCount(6);
 });

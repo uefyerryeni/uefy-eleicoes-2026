@@ -14,6 +14,7 @@ function pairLabel(x){return (x?.president?.name||'—')+' × '+(x?.governor?.na
 function personText(x){return x?(x.name+(x.party?' ('+x.party+')':'')):'—'}
 function personHtml(x){return x?esc(x.name)+(x.party?' <small>'+esc(x.party)+'</small>':''):'—'}
 function nowStamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
+function ppDiff(a,b){const n=Number(a||0)-Number(b||0);return (n>0?'+':'')+n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.'}
 
 function coordsOfGeometry(g,out=[]){if(!g)return out;if(g.type==='Polygon')g.coordinates.forEach(r=>r.forEach(p=>out.push(p)));else if(g.type==='MultiPolygon')g.coordinates.forEach(poly=>poly.forEach(r=>r.forEach(p=>out.push(p))));return out}
 function boundsOf(collection){const pts=[];collection.features.forEach(f=>coordsOfGeometry(f.geometry,pts));let minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;pts.forEach(([x,y])=>{minX=Math.min(minX,x);maxX=Math.max(maxX,x);minY=Math.min(minY,y);maxY=Math.max(maxY,y)});return{minX,minY,maxX,maxY}}
@@ -24,7 +25,7 @@ function featureName(f){return f?.properties?.nome||f?.properties?.name||''}
 function rowForFeature(f){const key=municipalityKey(featureName(f));return (DATA.cross?.municipalities||[]).find(r=>municipalityKey(r.name)===key)}
 function pairRows(){return DATA.cross?.pairs||[]}
 function selectedPair(){return pairRows().find(x=>pairKey(x.president,x.governor)===pairFilter)||null}
-const PAIR_COLORS=['#d62828','#1976d2','#2e7d32','#ef8f00','#7b61a8','#00897b','#a33d5b','#5c6f7b'];
+const PAIR_COLORS=['#d62828','#1976d2','#2e7d32','#ef8f00','#c2185b','#00897b','#6d4c41','#455a64'];
 function pairColor(x){const rows=pairRows(),idx=Math.max(0,rows.findIndex(p=>pairKey(p.president,p.governor)===pairKey(x?.president,x?.governor)));return PAIR_COLORS[idx%PAIR_COLORS.length]}
 
 const METRICS={
@@ -163,8 +164,8 @@ function renderParticipationMap(){
   }).join('');
   const steps=5;let scale='';for(let i=0;i<steps;i++){const v=min+(max-min)*(i/(steps-1));scale+='<span><i style="background:'+metricColor(v,min,max)+'"></i>'+fmtPct(v,1)+'</span>'}
   $('#participationScale').innerHTML=scale;
-  const state=getPath(DATA.participation?.state_2026||{},meta.state);
-  $('#participationCaption').textContent='No estado, '+meta.label.toLowerCase()+': '+fmtPct(state||0)+'. Entre os municípios, o indicador varia de '+fmtPct(min)+' a '+fmtPct(max)+'.';
+  const state=getPath(DATA.participation?.state_2026||{},meta.state),state22=getPath(DATA.participation?.state_2022||{},meta.state);
+  $('#participationCaption').textContent='RN em 2026: '+fmtPct(state||0)+' · 2022: '+fmtPct(state22||0)+' ('+ppDiff(state,state22)+'). Entre os municípios em 2026, o indicador varia de '+fmtPct(min)+' a '+fmtPct(max)+'.';
 }
 function sortedMetricRows(){
   return metricRows().slice().sort((a,b)=>rankingDirection==='asc'?metricValue(a)-metricValue(b):metricValue(b)-metricValue(a));
@@ -175,12 +176,22 @@ function renderParticipationRanking(){
   $('#rankingList').innerHTML=rows.map((x,i)=>'<div class="ranking-row"><b>'+(i+1)+'</b><span><strong>'+esc(x.name)+'</strong><small>'+meta.label+'</small></span><em>'+fmtPct(metricValue(x))+'</em></div>').join('');
 }
 function renderHistory(){
+  const p26=DATA.participation?.state_2026?.pres||{},g26=DATA.participation?.state_2026?.gov||{};
   const p22=DATA.participation?.state_2022?.pres||{},g22=DATA.participation?.state_2022?.gov||{};
   if(p22.error||g22.error){
-    $('#historyCompare').innerHTML='<div class="analysis-history-note"><strong>2022 ainda não integrado</strong><p>A Central não converte ausência de histórico em zero. O comparativo será liberado quando a base oficial de 2022 for importada e conferida.</p></div>';
+    $('#historyCompare').innerHTML='<div class="analysis-history-note"><strong>Histórico indisponível</strong><p>A Central não converte ausência de dados em zero.</p></div>';
     return;
   }
-  $('#historyCompare').innerHTML='<div class="analysis-history-note"><strong>Histórico disponível</strong><p>A base de 2022 foi carregada. O comparador completo será ativado nesta área.</p></div>';
+  const rows=[
+    ['Comparecimento',p22.turnout_pct,p26.turnout_pct],
+    ['Abstenção',p22.abstention_pct,p26.abstention_pct],
+    ['Brancos · Presidente',p22.blank_pct,p26.blank_pct],
+    ['Nulos · Presidente',p22.null_pct,p26.null_pct],
+    ['Brancos · Governador',g22.blank_pct,g26.blank_pct],
+    ['Nulos · Governador',g22.null_pct,g26.null_pct]
+  ];
+  $('#historyCompare').innerHTML='<div class="history-head"><span>Indicador</span><b>2022</b><b>2026</b><b>Dif.</b></div>'+
+    rows.map(x=>'<div class="history-row"><strong>'+x[0]+'</strong><span>'+fmtPct(x[1])+'</span><span>'+fmtPct(x[2])+'</span><em>'+ppDiff(x[2],x[1])+'</em></div>').join('');
 }
 
 function crossPostText(){
@@ -196,13 +207,14 @@ function crossPostText(){
   return lines.join('\n');
 }
 function participationPostText(){
-  const meta=METRICS[metric],state=getPath(DATA.participation?.state_2026||{},meta.state),ordered=sortedMetricRows().slice(0,5);
+  const meta=METRICS[metric],state26=getPath(DATA.participation?.state_2026||{},meta.state),state22=getPath(DATA.participation?.state_2022||{},meta.state),ordered=sortedMetricRows().slice(0,5);
   const directionLabel=rankingDirection==='asc'?'Menores':'Maiores';
   const lines=['ELEIÇÕES 2026 | RIO GRANDE DO NORTE',meta.label.toUpperCase(),'',
-    'No estado: '+fmtPct(state||0)+'.','',
-    directionLabel+' percentuais municipais:'];
+    'RN em 2026: '+fmtPct(state26||0)+'.',
+    'RN em 2022: '+fmtPct(state22||0)+' ('+ppDiff(state26,state22)+').','',
+    directionLabel+' percentuais municipais em 2026:'];
   ordered.forEach((x,i)=>lines.push((i+1)+'. '+x.name+' — '+fmtPct(metricValue(x))));
-  lines.push('','O mapa mostra a distribuição municipal do indicador.','','Fonte: Tribunal Superior Eleitoral');
+  lines.push('','O mapa mostra a distribuição municipal do indicador em 2026. A comparação com 2022 é estadual.','','Fontes: TSE (2026) · TRE-RN (2022)');
   return lines.join('\n');
 }
 function renderCrossPublication(){
@@ -235,8 +247,8 @@ function drawCrossCanvas(){
   ctx.strokeStyle='#d4d9dc';ctx.beginPath();ctx.moveTo(64,965);ctx.lineTo(1016,965);ctx.stroke();ctx.fillStyle='#596168';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral · '+(DATA.municipalities_read||167)+' municípios',64,1002);ctx.textAlign='right';ctx.fillText(DATA.source_generated_at||nowStamp(),1016,1032);ctx.textAlign='left';
 }
 function drawParticipationCanvas(){
-  if(!DATA||!FC)return;const c=$('#participationCanvas'),ctx=c.getContext('2d'),meta=METRICS[metric],rows=metricRows(),values=rows.map(r=>metricValue(r)),[min,max]=extent(values),state=getPath(DATA.participation?.state_2026||{},meta.state);
-  canvasBase(ctx,'Análises RN',meta.label+' no RN','Distribuição municipal · '+fmtPct(state||0)+' no estado');
+  if(!DATA||!FC)return;const c=$('#participationCanvas'),ctx=c.getContext('2d'),meta=METRICS[metric],rows=metricRows(),values=rows.map(r=>metricValue(r)),[min,max]=extent(values),state=getPath(DATA.participation?.state_2026||{},meta.state),state22=getPath(DATA.participation?.state_2022||{},meta.state);
+  canvasBase(ctx,'Análises RN',meta.label+' no RN','2026: '+fmtPct(state||0)+' · 2022: '+fmtPct(state22||0)+' · '+ppDiff(state,state22));
   drawMapCanvas(ctx,f=>{const row=rowForFeature(f),v=row?metricValue(row):0;return v?metricColor(v,min,max):'#d9dee2'},52,340,650,500);
   const ordered=rows.slice().sort((a,b)=>rankingDirection==='asc'?metricValue(a)-metricValue(b):metricValue(b)-metricValue(a));
   ctx.fillStyle='#17191c';ctx.font='800 20px Inter,Segoe UI,Arial';ctx.fillText((rankingDirection==='asc'?'Menores':'Maiores')+' percentuais',750,385);
