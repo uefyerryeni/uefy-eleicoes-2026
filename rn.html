@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Rio Grande do Norte</title>
-  <link rel="stylesheet" href="style.css?v=20261004-munpub">
+  <link rel="stylesheet" href="style.css?v=20261004-candidate-filter">
   <script>
 (function(){
   fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
@@ -91,6 +91,15 @@
         <small id="rnMapBase">Aguardando TSE</small>
       </div>
     </div>
+    <div class="rn-map-filter" aria-label="Filtro de candidatura no mapa">
+      <label for="rnLeaderFilter">
+        <span>Mostrar no mapa</span>
+        <select id="rnLeaderFilter">
+          <option value="">Todos os candidatos</option>
+        </select>
+      </label>
+      <div class="rn-map-filter-status" id="rnLeaderFilterStatus">Exibindo todos os municípios com liderança registrada.</div>
+    </div>
     <div class="rn-total-map-grid">
       <div class="rn-total-map-card">
         <svg id="rnLeaderMap" class="rn-leader-map" viewBox="0 0 760 560" aria-label="Mapa de liderança por município para governador"></svg>
@@ -168,6 +177,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">Governador RN</a><a href="radar.html">Legislativo</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261004-munpub"></script>
+<script src="rn.js?v=20261004-candidate-filter"></script>
 </body>
 </html>
