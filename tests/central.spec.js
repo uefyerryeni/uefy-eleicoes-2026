@@ -44,3 +44,24 @@ for(const viewport of [{width:1440,height:900},{width:390,height:844}]){test('co
 test('Radar bloqueia ações finais sem snapshot publicável',async({page})=>{await page.goto('/radar.html?v='+BUILD);const disabled=await page.evaluate(()=>{radar={status:'waiting',offices:{},municipal_maps:{}};publicationView='map';renderAll();return document.querySelector('#openRadarX').disabled&&document.querySelector('#copyRadarImage').disabled&&document.querySelector('#shareRadarBundle').disabled});expect(disabled).toBeTruthy()});
 
 test('contadores de publicação não impõem limite de 280',async({page})=>{await page.goto('/index.html?v='+BUILD);await expect(page.locator('#charCount')).not.toContainText('/280');await page.goto('/rn.html?v='+BUILD);await expect(page.locator('#rnChars')).not.toContainText('/280');await page.goto('/radar.html?v='+BUILD);await expect(page.locator('#radarChars')).not.toContainText('/280')});
+
+
+test('Análises RN carrega mapas e publicação',async({page})=>{
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>typeof DATA!=='undefined'&&DATA&&typeof FC!=='undefined'&&FC);
+  await expect(page.locator('#crossMap path')).toHaveCount(167);
+  await expect(page.locator('#participationMap path')).toHaveCount(167);
+  await expect(page.locator('#crossPostText')).not.toHaveValue('');
+  await expect(page.locator('#participationPostText')).not.toHaveValue('');
+  await expect(page.locator('#crossCanvas')).toBeVisible();
+  await expect(page.locator('#participationCanvas')).toBeVisible();
+});
+
+test('Análises RN responde no mobile sem sobreposição estrutural',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>typeof DATA!=='undefined'&&DATA);
+  await expect(page.locator('#crossMap')).toBeVisible();
+  await expect(page.locator('#participationMap')).toBeVisible();
+  await expect(page.locator('.analysis-publisher')).toHaveCount(2);
+});
