@@ -126,3 +126,20 @@ test('Raio-X municipal mostra números absolutos e ranking',async({page})=>{
   await expect(page.locator('#municipalPostText')).toHaveValue(/eleitores/);
   await expect(page.locator('#municipalPostText')).toHaveValue(/Posição no RN/);
 });
+
+
+test('Card municipal prioriza indicador único com layout de alta legibilidade',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  await expect(page.locator('#municipalPublicationMode')).toHaveValue('abstention_pct');
+  const options=await page.locator('#municipalPublicationMode option').allTextContents();
+  expect(options[0]).toContain('Abstenção');
+  expect(options[options.length-1]).toContain('Raio-X completo');
+  const funcs=await page.evaluate(()=>({
+    indicator:typeof drawMunicipalIndicatorCanvas==='function',
+    profile:typeof drawMunicipalProfileCanvas==='function'
+  }));
+  expect(funcs).toEqual({indicator:true,profile:true});
+  await expect(page.locator('#municipalPubMode')).toContainText('Abstenção');
+});

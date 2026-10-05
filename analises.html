@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Análises RN</title>
   <link rel="stylesheet" href="style.css?v=20261005-refino">
-  <link rel="stylesheet" href="analises.css?v=20261005-refino5">
+  <link rel="stylesheet" href="analises.css?v=20261005-refino6">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -218,13 +218,13 @@
       <label class="municipal-mode">
         <span>Publicação</span>
         <select id="municipalPublicationMode">
-          <option value="profile">Raio-X completo</option>
           <option value="abstention_pct">Abstenção</option>
           <option value="turnout_pct">Comparecimento</option>
           <option value="president.blank_pct">Brancos · Presidente</option>
           <option value="president.null_pct">Nulos · Presidente</option>
           <option value="governor.blank_pct">Brancos · Governador</option>
           <option value="governor.null_pct">Nulos · Governador</option>
+          <option value="profile">Raio-X completo</option>
         </select>
       </label>
     </div>
@@ -262,7 +262,7 @@
       </div>
 
       <aside class="card analysis-publisher" id="publicacao-municipal">
-        <div class="publisher-head"><span>Publicação municipal</span><strong id="municipalPubTitle">Raio-X municipal</strong><small id="municipalPubMode">Perfil completo</small></div>
+        <div class="publisher-head"><span>Publicação municipal</span><strong id="municipalPubTitle">Raio-X municipal</strong><small id="municipalPubMode">Abstenção</small></div>
         <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
         <div class="canvas-box"><canvas id="municipalCanvas" width="1080" height="1080"></canvas></div>
         <div class="block-title text-title"><span>Texto</span><span id="municipalChars">0 caracteres</span></div>
@@ -290,6 +290,6 @@
 <footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Análises RN</strong><span>Mapas, dados e publicações a partir dos resultados oficiais.</span></div></footer>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador</a><a href="radar.html">Legislativo</a><a href="analises.html" class="active">Análises</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="analises.js?v=20261005-refino5"></script>
+<script src="analises.js?v=20261005-refino6"></script>
 </body>
 </html>
