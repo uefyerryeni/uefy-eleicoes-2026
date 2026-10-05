@@ -7,6 +7,12 @@ const OFFICE_LABELS={sen:'Senador',depf:'Deputado federal',depe:'Deputado estadu
 const OFFICE_CARGO={sen:5,depf:6,depe:7};
 const TYPE_LABELS={territorial_coverage:'Presença municipal',capital_share:'Natal x interior',top_municipalities:'Concentração territorial',municipal_leads:'Primeiro lugar nos municípios'};
 const COLOR_PALETTE=['#d62828','#1976d2','#2e7d32','#7b2cbf','#ef6c00','#00897b','#c2185b','#6d4c41','#455a64','#5c6bc0','#ad1457','#558b2f','#00838f','#6a1b9a','#f57c00','#3949ab'];
+const LEGISLATIVE_WINNER_PALETTE=[
+  '#d62828','#1d4ed8','#15803d','#7e22ce','#f59e0b','#0f766e',
+  '#db2777','#92400e','#0e7490','#4f46e5','#65a30d','#c2410c',
+  '#0891b2','#9333ea','#475569','#be123c','#0369a1','#a16207',
+  '#047857','#6d28d9','#b45309','#155e75','#9f1239','#166534'
+];
 const SENATE_COLORS_BY_NUMBER={
   '123':'#f28c00', // Rafael Motta · laranja âmbar
   '131':'#d62828', // Samanda de Lula · vermelho
@@ -48,9 +54,21 @@ function candidateLabel(row){
   const base=(row?.name||meta.name||'Candidatura')+(row?.party||meta.party?' ('+(row?.party||meta.party)+')':'');
   const d=String(row?.vote_destination||'').trim();return base+(d&&!/^válido$/i.test(d)?' · '+d:'');
 }
+function legislativeWinnerColor(number,name=''){
+  if(activeOffice()==='sen')return null;
+  const key=String(number||name||'');
+  const winners=mapSummaryUnfiltered().slice().sort((a,b)=>{
+    const an=String(a.number||a.name||''),bn=String(b.number||b.name||'');
+    return an.localeCompare(bn,'pt-BR',{numeric:true})||String(a.name).localeCompare(String(b.name),'pt-BR');
+  });
+  const idx=winners.findIndex(x=>String(x.number||x.name||'')===key);
+  return idx>=0?LEGISLATIVE_WINNER_PALETTE[idx%LEGISLATIVE_WINNER_PALETTE.length]:null;
+}
 function candidateColor(number,name=''){
   const num=String(number||'').replace(/\D/g,'');
   if(activeOffice()==='sen'&&SENATE_COLORS_BY_NUMBER[num])return SENATE_COLORS_BY_NUMBER[num];
+  const winnerColor=legislativeWinnerColor(number,name);
+  if(winnerColor)return winnerColor;
   const key=String(number||name||'0');
   let h=0;for(const ch of key)h=(h*31+ch.charCodeAt(0))>>>0;
   return COLOR_PALETTE[h%COLOR_PALETTE.length];
