@@ -88,6 +88,77 @@ if m.get("publication_ready"):
         fail("Mapa de governador liberado sem todos os municípios.")
     if m.get("errors"): fail("Mapa de governador liberado com erros de leitura.")
 
+# 4b) Mapa de governador: auditoria estrutural completa.
+# Esta etapa roda depois que o snapshot é gerado pelo workflow. Se qualquer
+# inconsistência aparecer, o workflow falha antes de commitar/publicar.
+leaders=m.get("leaders") or {}
+expected=int(m.get("municipalities_expected",167) or 167)
+read=int(m.get("municipalities_read",0) or 0)
+if len(leaders)!=read:
+    fail(f"Mapa de governador: leaders={len(leaders)} diverge de municipalities_read={read}.")
+
+codes=[str(v.get("code") or "") for v in leaders.values()]
+if any(not c for c in codes):
+    fail("Mapa de governador contém município sem código oficial.")
+if len(codes)!=len(set(codes)):
+    fail("Mapa de governador contém códigos municipais duplicados.")
+
+recomputed={}
+for mun,v in leaders.items():
+    status=v.get("status")
+    progress=float(v.get("progress") or 0)
+    if progress<0 or progress>100:
+        fail(f"Mapa de governador: progresso inválido em {mun}: {progress}.")
+    if m.get("publication_ready") and status!="ok":
+        fail(f"Mapa de governador liberado com município sem resultado válido: {mun} ({status}).")
+    if status!="ok":
+        continue
+    top=v.get("top3") or []
+    if not top:
+        fail(f"Mapa de governador: {mun} sem top3.")
+        continue
+    first=top[0]
+    if (
+        str(first.get("number") or "")!=str(v.get("candidate_number") or "")
+        or str(first.get("name") or "")!=str(v.get("candidate") or "")
+        or int(first.get("votes") or 0)!=int(v.get("votes") or 0)
+        or round(float(first.get("pct") or 0),2)!=round(float(v.get("pct") or 0),2)
+    ):
+        fail(f"Mapa de governador: líder diverge do primeiro colocado em {mun}.")
+    last_votes=None
+    for row in top:
+        votes=int(row.get("votes") or 0)
+        percentage=float(row.get("pct") or 0)
+        if votes<0 or percentage<0 or percentage>100:
+            fail(f"Mapa de governador: voto/percentual inválido em {mun}.")
+        if last_votes is not None and votes>last_votes:
+            fail(f"Mapa de governador: top3 fora de ordem em {mun}.")
+        last_votes=votes
+    num=str(v.get("candidate_number") or "")
+    recomputed[num]=recomputed.get(num,0)+1
+
+summary={str(x.get("number") or ""):int(x.get("municipalities") or 0) for x in (m.get("summary") or [])}
+if recomputed!=summary:
+    fail(f"Mapa de governador: resumo por candidatura diverge da recontagem municipal: {summary} != {recomputed}.")
+
+if m.get("publication_ready"):
+    if len(leaders)!=expected:
+        fail(f"Mapa de governador liberado com {len(leaders)}/{expected} municípios.")
+    if sum(recomputed.values())!=expected:
+        fail("Mapa de governador liberado sem uma liderança válida para cada município.")
+
+natal=m.get("natal")
+if natal:
+    natal_leader=leaders.get("Natal") or leaders.get("NATAL")
+    if natal_leader!=natal:
+        fail("Mapa de governador: destaque de Natal diverge do registro municipal.")
+
+state_progress=float((m.get("outcome") or {}).get("progress") or 0)
+if state_progress<0 or state_progress>100:
+    fail(f"Mapa de governador: progresso estadual inválido: {state_progress}.")
+if m.get("final_result") and not (m.get("outcome") or {}).get("final_totalization"):
+    fail("Mapa marcado como resultado final sem final_totalization do TSE.")
+
 # 5) Paleta de governador obrigatória e única.
 required={
  "13":"#d62828","16":"#7b2cbf","22":"#2e7d32","27":"#ef6c00",
