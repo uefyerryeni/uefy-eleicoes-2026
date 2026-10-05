@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-04T22:21:04-03:00",
+  "generated_at": "2026-10-04T22:34:55-03:00",
   "source_generated_at": "04/10/2026 · 22:07:31",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
@@ -39319,7 +39319,7 @@
         }
       ],
       "explanation": "O município com maior número de votos nominais para esta candidatura é BARAÚNA, com 300 votos (59,6% do total estadual).",
-      "card_note": "BARAÚNA: 300; MOSSORÓ: 64; NATAL: 64"
+      "card_note": "BARAÚNA: 300; NATAL: 64; MOSSORÓ: 64"
     },
     {
       "id": "capital-depe-45999",
@@ -39535,7 +39535,7 @@
         }
       ],
       "explanation": "O município com maior número de votos nominais para esta candidatura é CARAÚBAS, com 607 votos (63,0% do total estadual).",
-      "card_note": "CARAÚBAS: 607; APODI: 90; MOSSORÓ: 20"
+      "card_note": "CARAÚBAS: 607; APODI: 90; NATAL: 20"
     },
     {
       "id": "capital-depe-13613",
