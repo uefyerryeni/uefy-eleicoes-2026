@@ -248,11 +248,6 @@ if "recorte estadual da eleição para Governador" not in analises_js:
     fail("Análises RN sem explicação do recorte estadual para comparecimento/abstenção.")
 
 
-if errors:
-    print("\n".join("ERRO: "+e for e in errors))
-    raise SystemExit(1)
-print("QA estático OK")
-
 
 # 7) Preparação para acesso público: contato de correção e estrutura móvel comum.
 for name in ("index.html","rn.html","radar.html","analises.html"):
@@ -264,3 +259,8 @@ style=(ROOT/"style.css").read_text(encoding="utf-8")
 for marker in (".contact-panel",".mobile-dock","overflow-x:clip"):
     if marker not in style:
         fail(f"CSS sem guarda pública/móvel obrigatória: {marker}.")
+
+if errors:
+    print("\n".join("ERRO: "+e for e in errors))
+    raise SystemExit(1)
+print("QA estático OK")

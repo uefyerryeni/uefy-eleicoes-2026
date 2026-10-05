@@ -1004,3 +1004,8 @@ body.dark .contact-btn.primary{background:var(--yellow);border-color:var(--yello
   .brandtext strong{max-width:150px;font-size:14px}
   .mobile-dock a{font-size:9.5px}
 }
+
+@media(max-width:600px){
+  .mobile-dock.mobile-dock-five{grid-template-columns:repeat(5,minmax(0,1fr))}
+  .mobile-dock.mobile-dock-five a{font-size:9.5px;padding-inline:2px}
+}
