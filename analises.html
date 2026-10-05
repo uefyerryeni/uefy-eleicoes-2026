@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5c400">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <title>Central das Eleições UEFY — Análises RN</title>
+  <link rel="stylesheet" href="style.css?v=20261005-analises">
+  <link rel="stylesheet" href="analises.css?v=20261005-01">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
+      <div class="brandtext"><strong>Central das Eleições UEFY</strong><span>Análises do Rio Grande do Norte</span></div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">Apuração geral</a>
+      <a href="rn.html">Governador RN</a>
+      <a href="radar.html">Legislativo RN</a>
+      <a class="active" href="analises.html">Análises RN</a>
+      <details class="mobile-menu"><summary aria-label="Abrir menu">Menu</summary><div class="mobile-menu-panel">
+        <a href="index.html">Apuração geral</a><a href="rn.html">Governador RN</a><a href="radar.html">Legislativo RN</a><a href="analises.html">Análises RN</a>
+      </div></details>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+      <span class="live"><i></i><span>TSE oficial</span></span>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap analysis-shell">
+  <section class="analysis-hero">
+    <div><span class="rn-badge">RN · 167 municípios</span><h1>O que os votos revelam sobre o território.</h1>
+      <p>Dois recortes por enquanto: Presidente × Governador e participação eleitoral, com abstenção, brancos e nulos.</p></div>
+    <div class="analysis-source"><span>Base oficial</span><strong id="sourceStamp">Carregando…</strong><small id="coverage">Tribunal Superior Eleitoral</small></div>
+  </section>
+
+  <section class="analysis-warning">
+    <strong>Leitura correta do cruzamento</strong>
+    <p>Os dados são agregados por município. Uma combinação territorial não significa que as mesmas pessoas tenham votado nos dois candidatos.</p>
+  </section>
+
+  <section class="analysis-section" id="presidente-governador">
+    <div class="section-head analysis-heading"><div><span class="analysis-number">03</span><h2>Presidente × Governador</h2></div><span>Cruzamento dos 167 municípios</span></div>
+    <div class="analysis-kpis" id="crossKpis"></div>
+    <div class="analysis-grid-two">
+      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>Combinações mais frequentes</h3><p>Quem ficou em 1º para Presidente e Governador em cada município.</p></div></div><div id="pairList" class="pair-list"></div></article>
+      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>Consulta por município</h3><p>Veja lado a lado os dois resultados municipais.</p></div></div>
+        <input id="crossSearch" class="analysis-search" type="search" placeholder="Buscar município">
+        <div class="analysis-table-wrap"><table class="analysis-table"><thead><tr><th>Município</th><th>Presidente</th><th>Governador</th></tr></thead><tbody id="crossTable"></tbody></table></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="analysis-section" id="participacao">
+    <div class="section-head analysis-heading"><div><span class="analysis-number">07</span><h2>Comparecimento, abstenção, brancos e nulos</h2></div><span>2026 · comparação estadual com 2022</span></div>
+    <div class="analysis-kpis" id="participationKpis"></div>
+    <div class="analysis-grid-two">
+      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>RN: 2022 × 2026</h3><p>Comparação estadual do 1º turno.</p></div></div><div id="historyCompare"></div></article>
+      <article class="card analysis-card"><div class="analysis-card-head"><div><h3>Extremos municipais</h3><p>Municípios que mais se destacam em participação e votos não válidos.</p></div></div>
+        <label class="analysis-select"><span>Indicador</span><select id="rankingSelect">
+          <option value="highest_abstention">Maior abstenção</option><option value="lowest_abstention">Menor abstenção</option>
+          <option value="highest_blank_president">Mais brancos · Presidente</option><option value="highest_null_president">Mais nulos · Presidente</option>
+          <option value="highest_blank_governor">Mais brancos · Governador</option><option value="highest_null_governor">Mais nulos · Governador</option>
+        </select></label>
+        <div id="rankingList" class="ranking-list"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="analysis-method card">
+    <h2>Metodologia</h2>
+    <p id="methodCross"></p><p id="methodParticipation"></p><p><strong>Fonte:</strong> <span id="methodSource"></span></p>
+  </section>
+</main>
+<footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Análises RN</strong><span>Dados agregados; interpretação jornalística com cautela metodológica.</span></div></footer>
+<nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador</a><a href="radar.html">Legislativo</a><a href="analises.html" class="active">Análises</a></nav>
+<button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
+<script src="analises.js?v=20261005-01"></script>
+</body></html>
