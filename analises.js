@@ -40,6 +40,18 @@ const METRICS={
 function getPath(obj,path){return path.reduce((a,k)=>a?.[k],obj)}
 function metricValue(row,key=metric){return Number(getPath(row,METRICS[key].field)||0)}
 function metricRows(key=metric){return (DATA.cross?.municipalities||[]).filter(r=>metricValue(r,key)>0)}
+function metricCount(row,key){
+  const paths={
+    'turnout_pct':['participation','turnout'],
+    'abstention_pct':['participation','abstention'],
+    'president.blank_pct':['participation','president','blank'],
+    'president.null_pct':['participation','president','null'],
+    'governor.blank_pct':['participation','governor','blank'],
+    'governor.null_pct':['participation','governor','null']
+  };
+  return Number(getPath(row,paths[key])||0);
+}
+function metricCountLabel(key){return key==='turnout_pct'||key==='abstention_pct'?'eleitores':'votos'}
 function extent(values){return [Math.min(...values),Math.max(...values)]}
 function lerp(a,b,t){return Math.round(a+(b-a)*t)}
 function metricColor(v,min,max){const t=max<=min?0.5:Math.max(0,Math.min(1,(v-min)/(max-min)));const a=[244,221,25],b=[31,35,38];return 'rgb('+lerp(a[0],b[0],t)+','+lerp(a[1],b[1],t)+','+lerp(a[2],b[2],t)+')'}
@@ -186,8 +198,8 @@ function renderHistory(){
     return;
   }
   const rows=[
-    ['Comparecimento',p22.turnout_pct,p26.turnout_pct],
-    ['Abstenção',p22.abstention_pct,p26.abstention_pct],
+    ['Comparecimento',p22.turnout_pct,g26.turnout_pct],
+    ['Abstenção',p22.abstention_pct,g26.abstention_pct],
     ['Brancos · Presidente',p22.blank_pct,p26.blank_pct],
     ['Nulos · Presidente',p22.null_pct,p26.null_pct],
     ['Brancos · Governador',g22.blank_pct,g26.blank_pct],
@@ -249,7 +261,7 @@ function rankForMunicipality(row,key){
 function municipalMetricCards(row){
   return Object.entries(METRICS).map(([key,meta])=>{
     const value=metricValue(row,key),avg=stateMetricValue(key),rank=rankForMunicipality(row,key),delta=value-avg;
-    return '<article class="municipal-metric-card" data-municipal-metric="'+key+'"><span>'+esc(meta.label)+'</span><strong>'+fmtPct(value)+'</strong><em>'+(delta>0?'+':'')+delta.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p. vs RN</em><small>'+(rank?'#'+rank+' de 167':'—')+'</small></article>';
+    return '<article class="municipal-metric-card" data-municipal-metric="'+key+'"><span>'+esc(meta.label)+'</span><strong>'+fmtPct(value)+'</strong><em>'+fmtNum(metricCount(row,key))+' '+metricCountLabel(key)+'</em><small>'+(delta>0?'+':'')+delta.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p. vs RN · '+(rank?'#'+rank+' de 167':'—')+'</small></article>';
   }).join('');
 }
 function renderMunicipal(){
@@ -297,7 +309,7 @@ function municipalPostText(){
   }else{
     const meta=METRICS[municipalPublicationMode],value=metricValue(row,municipalPublicationMode),avg=stateMetricValue(municipalPublicationMode),rank=rankForMunicipality(row,municipalPublicationMode),delta=value-avg;
     lines.push(meta.label.toUpperCase(),'',
-      row.name+': '+fmtPct(value)+'.',
+      row.name+': '+fmtPct(value)+' ('+fmtNum(metricCount(row,municipalPublicationMode))+' '+metricCountLabel(municipalPublicationMode)+').',
       'Média do RN: '+fmtPct(avg)+'.',
       'Diferença: '+(delta>0?'+':'')+delta.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.',
       'Posição no RN: '+rank+'º entre 167 municípios.');
@@ -340,10 +352,11 @@ function drawMunicipalCanvas(){
     const meta=METRICS[municipalPublicationMode],value=metricValue(row,municipalPublicationMode),avg=stateMetricValue(municipalPublicationMode),rank=rankForMunicipality(row,municipalPublicationMode),delta=value-avg;
     ctx.fillStyle='#17191c';ctx.font='800 70px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(value),560,450);
     ctx.fillStyle='#606970';ctx.font='700 20px Inter,Segoe UI,Arial';ctx.fillText(meta.label,560,485);
-    ctx.fillStyle='#eef0ed';ctx.beginPath();ctx.roundRect(560,530,430,130,16);ctx.fill();
-    ctx.fillStyle='#17191c';ctx.font='800 22px Inter,Segoe UI,Arial';ctx.fillText('Média do RN: '+fmtPct(avg),585,570);
-    ctx.fillText('Diferença: '+(delta>0?'+':'')+delta.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.',585,607);
-    ctx.fillText('Ranking: '+rank+'º de 167',585,644);
+    ctx.fillStyle='#606970';ctx.font='700 18px Inter,Segoe UI,Arial';ctx.fillText(fmtNum(metricCount(row,municipalPublicationMode))+' '+metricCountLabel(municipalPublicationMode),560,518);
+    ctx.fillStyle='#eef0ed';ctx.beginPath();ctx.roundRect(560,545,430,130,16);ctx.fill();
+    ctx.fillStyle='#17191c';ctx.font='800 22px Inter,Segoe UI,Arial';ctx.fillText('Média do RN: '+fmtPct(avg),585,585);
+    ctx.fillText('Diferença: '+(delta>0?'+':'')+delta.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.',585,622);
+    ctx.fillText('Ranking: '+rank+'º de 167',585,659);
   }
   ctx.strokeStyle='#d4d9dc';ctx.beginPath();ctx.moveTo(64,965);ctx.lineTo(1016,965);ctx.stroke();
   ctx.fillStyle='#596168';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral',64,1002);

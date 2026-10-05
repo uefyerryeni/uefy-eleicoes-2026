@@ -114,3 +114,15 @@ test('Raio-X municipal permite trocar de cidade e recalcula os dados',async({pag
   await expect(page.locator('#municipalWinners')).toContainText('Presidente mais votado');
   await expect(page.locator('#municipalComparison > div')).toHaveCount(6);
 });
+
+
+test('Raio-X municipal mostra números absolutos e ranking',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  await page.locator('#municipalitySelect').selectOption({label:'NATAL'});
+  await expect(page.locator('#municipalMetrics')).toContainText(/eleitores|votos/);
+  await page.locator('#municipalPublicationMode').selectOption('abstention_pct');
+  await expect(page.locator('#municipalPostText')).toHaveValue(/eleitores/);
+  await expect(page.locator('#municipalPostText')).toHaveValue(/Posição no RN/);
+});
