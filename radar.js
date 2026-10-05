@@ -166,7 +166,7 @@ function renderAll(){
   const senate=activeOffice()==='sen';
   $('#senateRankSwitch').hidden=!senate;
   $('#senateCandidateFilterWrap').hidden=!senate;
-  $('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
+  $$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.classList.toggle('active',Number(b.dataset.senateRank)===senateMapRank));
   if(senate){
     const select=$('#senateCandidateFilter'),top3=senateTopCandidates();
     if(select){
@@ -376,9 +376,9 @@ async function shareRadar(){
 async function openX(text,w=null){const encoded=encodeURIComponent(text),useIntent=encoded.length<=6000,u=useIntent?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';if(!useIntent)try{await navigator.clipboard.writeText(text)}catch{}if(w){w.opener=null;w.location.href=u}else window.open(u,'_blank','noopener,noreferrer');return useIntent}
 
 $('#officeFilter').onchange=()=>{publicationView='map';senateMapRank=1;senateCandidateFilter='';renderAll()};
-$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
+$$('#senateRankSwitch [data-senate-rank]').forEach(b=>b.onclick=()=>{
   senateMapRank=Number(b.dataset.senateRank)||1;
-  $('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
+  $$('#senateRankSwitch [data-senate-rank]').forEach(x=>x.classList.toggle('active',x===b));
   publicationView='map';renderMap();updatePublication();renderAll();
 });
 $('#senateCandidateFilter').onchange=e=>{
