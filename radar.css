@@ -82,7 +82,7 @@ body.dark .radar-municipal-row .bar{background:#30383f}
 
 
 /* Regras eleitorais do mapa legislativo · 2026-10-02 */
-.senate-rank-switch{display:inline-grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:12px;padding:4px;border:1px solid var(--rule);border-radius:10px;background:var(--soft)}
+.senate-rank-switch{display:inline-grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:12px;padding:4px;border:1px solid var(--rule);border-radius:10px;background:var(--soft)}
 .senate-rank-switch[hidden]{display:none}
 .senate-rank-switch button{border:0;border-radius:7px;background:transparent;color:var(--muted);padding:7px 11px;font-size:10px;font-weight:800}
 .senate-rank-switch button.active{background:var(--surface);color:var(--text);box-shadow:0 1px 4px rgba(25,31,38,.1)}
@@ -93,4 +93,19 @@ body.dark .radar-electoral-note{background:rgba(245,196,0,.08);border-color:rgba
 @media(max-width:560px){
   .senate-rank-switch{display:grid;width:100%}
   .radar-electoral-note{margin:10px 12px 14px}
+}
+
+
+/* Senado · mapa dos três principais candidatos · 2026-10-05 */
+.senate-candidate-filter{display:flex;align-items:end;gap:12px;margin-top:10px}
+.senate-candidate-filter[hidden]{display:none}
+.senate-candidate-filter label{display:grid;gap:5px;min-width:min(100%,390px)}
+.senate-candidate-filter label>span{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.senate-candidate-filter select{min-height:42px;width:100%;border:1px solid var(--rule);border-radius:9px;background:var(--surface);color:var(--text);padding:0 11px;font-weight:750}
+.senate-candidate-filter small{max-width:420px;padding-bottom:7px;font-size:10px;line-height:1.4;color:var(--muted)}
+body.dark .senate-candidate-filter select{background:#1a1f24;color:#eef1f3;border-color:#343c43}
+@media(max-width:650px){
+  .senate-candidate-filter{display:grid;grid-template-columns:1fr}
+  .senate-candidate-filter label{min-width:0}
+  .senate-candidate-filter small{padding-bottom:0}
 }
