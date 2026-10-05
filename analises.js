@@ -249,10 +249,28 @@ function drawCrossCanvas(){
   let yy=390;const list=(sel?[sel]:pairRows()).slice(0,6);list.forEach(x=>{ctx.fillStyle=pairColor(x);ctx.fillRect(750,yy-17,16,16);ctx.fillStyle='#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';fitText(ctx,pairShort(x),780,yy,255,18,13);ctx.fillStyle='#606970';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',780,yy+27);yy+=74});
   ctx.strokeStyle='#d4d9dc';ctx.beginPath();ctx.moveTo(64,965);ctx.lineTo(1016,965);ctx.stroke();ctx.fillStyle='#596168';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral · '+(DATA.municipalities_read||167)+' municípios',64,1002);ctx.textAlign='right';ctx.fillText(DATA.source_generated_at||nowStamp(),1016,1032);ctx.textAlign='left';
 }
+function drawMetricScaleCanvas(ctx,min,max,x,y,w){
+  const steps=5,gap=18,swatchW=(w-gap*(steps-1))/steps,swatchH=18;
+  ctx.save();
+  ctx.textAlign='center';
+  for(let i=0;i<steps;i++){
+    const value=min+(max-min)*(i/(steps-1)),sx=x+i*(swatchW+gap);
+    ctx.fillStyle=metricColor(value,min,max);
+    ctx.beginPath();
+    ctx.roundRect(sx,y,swatchW,swatchH,5);
+    ctx.fill();
+    ctx.fillStyle='#596168';
+    ctx.font='700 16px Inter,Segoe UI,Arial';
+    ctx.fillText(fmtPct(value,1),sx+swatchW/2,y+42);
+  }
+  ctx.textAlign='left';
+  ctx.restore();
+}
 function drawParticipationCanvas(){
   if(!DATA||!FC)return;const c=$('#participationCanvas'),ctx=c.getContext('2d'),meta=METRICS[metric],rows=metricRows(),values=rows.map(r=>metricValue(r)),[min,max]=extent(values),state=getPath(DATA.participation?.state_2026||{},meta.state),state22=getPath(DATA.participation?.state_2022||{},meta.state);
   canvasBase(ctx,'Análises RN',meta.label+' no RN','2026: '+fmtPct(state||0)+' · 2022: '+fmtPct(state22||0)+' · '+ppDiff(state,state22));
   drawMapCanvas(ctx,f=>{const row=rowForFeature(f),v=row?metricValue(row):0;return v?metricColor(v,min,max):'#d9dee2'},52,340,650,500);
+  drawMetricScaleCanvas(ctx,min,max,70,858,615);
   const ordered=rows.slice().sort((a,b)=>rankingDirection==='asc'?metricValue(a)-metricValue(b):metricValue(b)-metricValue(a));
   ctx.fillStyle='#17191c';ctx.font='800 20px Inter,Segoe UI,Arial';ctx.fillText((rankingDirection==='asc'?'Menores':'Maiores')+' percentuais',750,385);
   let yy=430;ordered.slice(0,6).forEach((x,i)=>{ctx.fillStyle='#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText((i+1)+'. '+x.name.slice(0,20),750,yy);ctx.fillStyle='#606970';ctx.font='700 17px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(metricValue(x)),750,yy+25);yy+=67});

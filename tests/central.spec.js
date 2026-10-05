@@ -79,3 +79,13 @@ test('Linguagem do cruzamento é explícita e publicação não usa sinal de con
   await expect(page.locator('#crossPostText')).not.toHaveValue(/×/);
   await expect(page.locator('#comparecimentoScopeNote')).toContainText('Governador');
 });
+
+
+test('Card de participação inclui escala cromática no canvas',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  const hasScale=await page.evaluate(()=>typeof drawMetricScaleCanvas==='function');
+  expect(hasScale).toBeTruthy();
+  await expect(page.locator('#participationCanvas')).toBeVisible();
+});

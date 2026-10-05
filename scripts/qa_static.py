@@ -228,7 +228,7 @@ analises_js=(ROOT/"analises.js").read_text(encoding="utf-8")
 for marker in ("crossCanvas","participationCanvas","crossPostText","participationPostText","crossMap","participationMap"):
     if marker not in analises_html:
         fail(f"Análises RN sem elemento obrigatório de publicação: {marker}.")
-for marker in ("crossPostText","participationPostText","drawCrossCanvas","drawParticipationCanvas","__analysisReady"):
+for marker in ("crossPostText","participationPostText","drawCrossCanvas","drawParticipationCanvas","drawMetricScaleCanvas","__analysisReady"):
     if marker not in analises_js:
         fail(f"Análises RN sem lógica obrigatória: {marker}.")
 
