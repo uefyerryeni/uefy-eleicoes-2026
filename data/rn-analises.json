@@ -1,6 +1,6 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-05T15:23:25-03:00",
+  "generated_at": "2026-10-05T18:42:11-03:00",
   "source_generated_at": "05/10/2026 · 12:52:21",
   "municipalities_expected": 167,
   "municipalities_read": 167,
@@ -264,20 +264,32 @@
           "abstention": 1839,
           "abstention_pct": 19.63,
           "president": {
+            "electorate": 9368,
+            "turnout": 7529,
+            "turnout_pct": 80.37,
+            "abstention": 1839,
+            "abstention_pct": 19.63,
             "blank": 117,
             "blank_pct": 1.55,
             "null": 292,
             "null_pct": 3.88,
             "valid": 7120,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7529
           },
           "governor": {
+            "electorate": 9368,
+            "turnout": 7529,
+            "turnout_pct": 80.37,
+            "abstention": 1839,
+            "abstention_pct": 19.63,
             "blank": 253,
             "blank_pct": 3.36,
             "null": 467,
             "null_pct": 6.2,
             "valid": 6808,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 7529
           }
         }
       },
@@ -309,20 +321,32 @@
           "abstention": 2082,
           "abstention_pct": 19.76,
           "president": {
+            "electorate": 10537,
+            "turnout": 8455,
+            "turnout_pct": 80.24,
+            "abstention": 2082,
+            "abstention_pct": 19.76,
             "blank": 101,
             "blank_pct": 1.19,
             "null": 229,
             "null_pct": 2.71,
             "valid": 8125,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8455
           },
           "governor": {
+            "electorate": 10537,
+            "turnout": 8455,
+            "turnout_pct": 80.24,
+            "abstention": 2082,
+            "abstention_pct": 19.76,
             "blank": 238,
             "blank_pct": 2.81,
             "null": 326,
             "null_pct": 3.86,
             "valid": 7890,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 8455
           }
         }
       },
@@ -348,26 +372,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 11804,
-          "turnout": 9452,
-          "turnout_pct": 80.07,
+          "electorate": 11794,
+          "turnout": 9442,
+          "turnout_pct": 80.06,
           "abstention": 2352,
-          "abstention_pct": 19.93,
+          "abstention_pct": 19.94,
           "president": {
+            "electorate": 11804,
+            "turnout": 9452,
+            "turnout_pct": 80.07,
+            "abstention": 2352,
+            "abstention_pct": 19.93,
             "blank": 77,
             "blank_pct": 0.81,
             "null": 281,
             "null_pct": 2.97,
             "valid": 9094,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9452
           },
           "governor": {
+            "electorate": 11794,
+            "turnout": 9442,
+            "turnout_pct": 80.06,
+            "abstention": 2352,
+            "abstention_pct": 19.94,
             "blank": 266,
             "blank_pct": 2.82,
             "null": 439,
             "null_pct": 4.65,
             "valid": 8735,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 9442
           }
         }
       },
@@ -393,26 +429,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5166,
-          "turnout": 4339,
+          "electorate": 5165,
+          "turnout": 4338,
           "turnout_pct": 83.99,
           "abstention": 827,
           "abstention_pct": 16.01,
           "president": {
+            "electorate": 5166,
+            "turnout": 4339,
+            "turnout_pct": 83.99,
+            "abstention": 827,
+            "abstention_pct": 16.01,
             "blank": 66,
             "blank_pct": 1.52,
             "null": 104,
             "null_pct": 2.4,
             "valid": 4169,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4339
           },
           "governor": {
+            "electorate": 5165,
+            "turnout": 4338,
+            "turnout_pct": 83.99,
+            "abstention": 827,
+            "abstention_pct": 16.01,
             "blank": 142,
             "blank_pct": 3.27,
             "null": 131,
             "null_pct": 3.02,
             "valid": 4065,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4338
           }
         }
       },
@@ -438,26 +486,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 12062,
-          "turnout": 9578,
-          "turnout_pct": 79.41,
-          "abstention": 2484,
-          "abstention_pct": 20.59,
+          "electorate": 12059,
+          "turnout": 9577,
+          "turnout_pct": 79.42,
+          "abstention": 2482,
+          "abstention_pct": 20.58,
           "president": {
+            "electorate": 12062,
+            "turnout": 9578,
+            "turnout_pct": 79.41,
+            "abstention": 2484,
+            "abstention_pct": 20.59,
             "blank": 113,
             "blank_pct": 1.18,
             "null": 284,
             "null_pct": 2.97,
             "valid": 9181,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9578
           },
           "governor": {
+            "electorate": 12059,
+            "turnout": 9577,
+            "turnout_pct": 79.42,
+            "abstention": 2482,
+            "abstention_pct": 20.58,
             "blank": 327,
             "blank_pct": 3.41,
             "null": 489,
             "null_pct": 5.11,
             "valid": 8759,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 9577
           }
         }
       },
@@ -483,26 +543,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 10219,
-          "turnout": 8396,
+          "electorate": 10218,
+          "turnout": 8395,
           "turnout_pct": 82.16,
           "abstention": 1823,
           "abstention_pct": 17.84,
           "president": {
+            "electorate": 10219,
+            "turnout": 8396,
+            "turnout_pct": 82.16,
+            "abstention": 1823,
+            "abstention_pct": 17.84,
             "blank": 95,
             "blank_pct": 1.13,
             "null": 244,
             "null_pct": 2.91,
             "valid": 8057,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8396
           },
           "governor": {
+            "electorate": 10218,
+            "turnout": 8395,
+            "turnout_pct": 82.16,
+            "abstention": 1823,
+            "abstention_pct": 17.84,
             "blank": 236,
             "blank_pct": 2.81,
             "null": 378,
             "null_pct": 4.5,
             "valid": 7779,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 8395
           }
         }
       },
@@ -528,26 +600,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5912,
-          "turnout": 5027,
-          "turnout_pct": 85.03,
+          "electorate": 5909,
+          "turnout": 5024,
+          "turnout_pct": 85.02,
           "abstention": 885,
-          "abstention_pct": 14.97,
+          "abstention_pct": 14.98,
           "president": {
+            "electorate": 5912,
+            "turnout": 5027,
+            "turnout_pct": 85.03,
+            "abstention": 885,
+            "abstention_pct": 14.97,
             "blank": 59,
             "blank_pct": 1.17,
             "null": 217,
             "null_pct": 4.32,
             "valid": 4751,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5027
           },
           "governor": {
+            "electorate": 5909,
+            "turnout": 5024,
+            "turnout_pct": 85.02,
+            "abstention": 885,
+            "abstention_pct": 14.98,
             "blank": 118,
             "blank_pct": 2.35,
             "null": 220,
             "null_pct": 4.38,
             "valid": 4685,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 5024
           }
         }
       },
@@ -573,26 +657,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 30219,
-          "turnout": 25821,
-          "turnout_pct": 85.45,
+          "electorate": 30214,
+          "turnout": 25816,
+          "turnout_pct": 85.44,
           "abstention": 4398,
-          "abstention_pct": 14.55,
+          "abstention_pct": 14.56,
           "president": {
+            "electorate": 30219,
+            "turnout": 25821,
+            "turnout_pct": 85.45,
+            "abstention": 4398,
+            "abstention_pct": 14.55,
             "blank": 418,
             "blank_pct": 1.62,
             "null": 740,
             "null_pct": 2.87,
             "valid": 24663,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 25821
           },
           "governor": {
+            "electorate": 30214,
+            "turnout": 25816,
+            "turnout_pct": 85.44,
+            "abstention": 4398,
+            "abstention_pct": 14.56,
             "blank": 1264,
             "blank_pct": 4.9,
             "null": 1231,
             "null_pct": 4.77,
             "valid": 23320,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 25816
           }
         }
       },
@@ -618,26 +714,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 22037,
-          "turnout": 17534,
-          "turnout_pct": 79.57,
+          "electorate": 22032,
+          "turnout": 17529,
+          "turnout_pct": 79.56,
           "abstention": 4503,
-          "abstention_pct": 20.43,
+          "abstention_pct": 20.44,
           "president": {
+            "electorate": 22037,
+            "turnout": 17534,
+            "turnout_pct": 79.57,
+            "abstention": 4503,
+            "abstention_pct": 20.43,
             "blank": 323,
             "blank_pct": 1.84,
             "null": 669,
             "null_pct": 3.82,
             "valid": 16542,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 17534
           },
           "governor": {
+            "electorate": 22032,
+            "turnout": 17529,
+            "turnout_pct": 79.56,
+            "abstention": 4503,
+            "abstention_pct": 20.44,
             "blank": 808,
             "blank_pct": 4.61,
             "null": 1099,
             "null_pct": 6.27,
             "valid": 15622,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 17529
           }
         }
       },
@@ -663,26 +771,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 11506,
-          "turnout": 9277,
+          "electorate": 11505,
+          "turnout": 9276,
           "turnout_pct": 80.63,
           "abstention": 2229,
           "abstention_pct": 19.37,
           "president": {
+            "electorate": 11506,
+            "turnout": 9277,
+            "turnout_pct": 80.63,
+            "abstention": 2229,
+            "abstention_pct": 19.37,
             "blank": 196,
             "blank_pct": 2.11,
             "null": 367,
             "null_pct": 3.96,
             "valid": 8714,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9277
           },
           "governor": {
+            "electorate": 11505,
+            "turnout": 9276,
+            "turnout_pct": 80.63,
+            "abstention": 2229,
+            "abstention_pct": 19.37,
             "blank": 416,
             "blank_pct": 4.48,
             "null": 559,
             "null_pct": 6.03,
             "valid": 8300,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 9276
           }
         }
       },
@@ -708,26 +828,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 45551,
-          "turnout": 36943,
+          "electorate": 45542,
+          "turnout": 36934,
           "turnout_pct": 81.1,
           "abstention": 8608,
           "abstention_pct": 18.9,
           "president": {
+            "electorate": 45551,
+            "turnout": 36943,
+            "turnout_pct": 81.1,
+            "abstention": 8608,
+            "abstention_pct": 18.9,
             "blank": 578,
             "blank_pct": 1.56,
             "null": 1026,
             "null_pct": 2.78,
             "valid": 35339,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 36943
           },
           "governor": {
+            "electorate": 45542,
+            "turnout": 36934,
+            "turnout_pct": 81.1,
+            "abstention": 8608,
+            "abstention_pct": 18.9,
             "blank": 1490,
             "blank_pct": 4.03,
             "null": 1785,
             "null_pct": 4.83,
             "valid": 33658,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 36934
           }
         }
       },
@@ -759,20 +891,32 @@
           "abstention": 3887,
           "abstention_pct": 17.64,
           "president": {
+            "electorate": 22038,
+            "turnout": 18151,
+            "turnout_pct": 82.36,
+            "abstention": 3887,
+            "abstention_pct": 17.64,
             "blank": 271,
             "blank_pct": 1.49,
             "null": 486,
             "null_pct": 2.68,
             "valid": 17394,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 18151
           },
           "governor": {
+            "electorate": 22038,
+            "turnout": 18151,
+            "turnout_pct": 82.36,
+            "abstention": 3887,
+            "abstention_pct": 17.64,
             "blank": 719,
             "blank_pct": 3.96,
             "null": 749,
             "null_pct": 4.13,
             "valid": 16682,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 18151
           }
         }
       },
@@ -804,20 +948,32 @@
           "abstention": 802,
           "abstention_pct": 17.14,
           "president": {
+            "electorate": 4679,
+            "turnout": 3877,
+            "turnout_pct": 82.86,
+            "abstention": 802,
+            "abstention_pct": 17.14,
             "blank": 36,
             "blank_pct": 0.93,
             "null": 132,
             "null_pct": 3.4,
             "valid": 3709,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3877
           },
           "governor": {
+            "electorate": 4679,
+            "turnout": 3877,
+            "turnout_pct": 82.86,
+            "abstention": 802,
+            "abstention_pct": 17.14,
             "blank": 68,
             "blank_pct": 1.75,
             "null": 163,
             "null_pct": 4.2,
             "valid": 3646,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3877
           }
         }
       },
@@ -843,26 +999,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 7404,
-          "turnout": 5906,
-          "turnout_pct": 79.77,
+          "electorate": 7402,
+          "turnout": 5904,
+          "turnout_pct": 79.76,
           "abstention": 1498,
-          "abstention_pct": 20.23,
+          "abstention_pct": 20.24,
           "president": {
+            "electorate": 7404,
+            "turnout": 5906,
+            "turnout_pct": 79.77,
+            "abstention": 1498,
+            "abstention_pct": 20.23,
             "blank": 91,
             "blank_pct": 1.54,
             "null": 164,
             "null_pct": 2.78,
             "valid": 5651,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5906
           },
           "governor": {
+            "electorate": 7402,
+            "turnout": 5904,
+            "turnout_pct": 79.76,
+            "abstention": 1498,
+            "abstention_pct": 20.24,
             "blank": 305,
             "blank_pct": 5.17,
             "null": 275,
             "null_pct": 4.66,
             "valid": 5323,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 5904
           }
         }
       },
@@ -888,26 +1056,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4926,
+          "electorate": 4925,
           "turnout": 4148,
-          "turnout_pct": 84.21,
-          "abstention": 778,
-          "abstention_pct": 15.79,
+          "turnout_pct": 84.22,
+          "abstention": 777,
+          "abstention_pct": 15.78,
           "president": {
+            "electorate": 4926,
+            "turnout": 4148,
+            "turnout_pct": 84.21,
+            "abstention": 778,
+            "abstention_pct": 15.79,
             "blank": 44,
             "blank_pct": 1.06,
             "null": 115,
             "null_pct": 2.77,
             "valid": 3989,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4148
           },
           "governor": {
+            "electorate": 4925,
+            "turnout": 4148,
+            "turnout_pct": 84.22,
+            "abstention": 777,
+            "abstention_pct": 15.78,
             "blank": 123,
             "blank_pct": 2.97,
             "null": 159,
             "null_pct": 3.83,
             "valid": 3866,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4148
           }
         }
       },
@@ -939,20 +1119,32 @@
           "abstention": 1496,
           "abstention_pct": 18.56,
           "president": {
+            "electorate": 8062,
+            "turnout": 6566,
+            "turnout_pct": 81.44,
+            "abstention": 1496,
+            "abstention_pct": 18.56,
             "blank": 88,
             "blank_pct": 1.34,
             "null": 301,
             "null_pct": 4.58,
             "valid": 6177,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6566
           },
           "governor": {
+            "electorate": 8062,
+            "turnout": 6566,
+            "turnout_pct": 81.44,
+            "abstention": 1496,
+            "abstention_pct": 18.56,
             "blank": 145,
             "blank_pct": 2.21,
             "null": 335,
             "null_pct": 5.1,
             "valid": 6086,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6566
           }
         }
       },
@@ -984,20 +1176,32 @@
           "abstention": 843,
           "abstention_pct": 22.28,
           "president": {
+            "electorate": 3784,
+            "turnout": 2941,
+            "turnout_pct": 77.72,
+            "abstention": 843,
+            "abstention_pct": 22.28,
             "blank": 43,
             "blank_pct": 1.46,
             "null": 93,
             "null_pct": 3.16,
             "valid": 2805,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2941
           },
           "governor": {
+            "electorate": 3784,
+            "turnout": 2941,
+            "turnout_pct": 77.72,
+            "abstention": 843,
+            "abstention_pct": 22.28,
             "blank": 58,
             "blank_pct": 1.97,
             "null": 127,
             "null_pct": 4.32,
             "valid": 2756,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2941
           }
         }
       },
@@ -1023,26 +1227,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9083,
-          "turnout": 7478,
-          "turnout_pct": 82.33,
-          "abstention": 1605,
-          "abstention_pct": 17.67,
+          "electorate": 9081,
+          "turnout": 7477,
+          "turnout_pct": 82.34,
+          "abstention": 1604,
+          "abstention_pct": 17.66,
           "president": {
+            "electorate": 9083,
+            "turnout": 7478,
+            "turnout_pct": 82.33,
+            "abstention": 1605,
+            "abstention_pct": 17.67,
             "blank": 93,
             "blank_pct": 1.24,
             "null": 223,
             "null_pct": 2.98,
             "valid": 7162,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7478
           },
           "governor": {
+            "electorate": 9081,
+            "turnout": 7477,
+            "turnout_pct": 82.34,
+            "abstention": 1604,
+            "abstention_pct": 17.66,
             "blank": 190,
             "blank_pct": 2.54,
             "null": 289,
             "null_pct": 3.87,
             "valid": 6998,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7477
           }
         }
       },
@@ -1074,20 +1290,32 @@
           "abstention": 2136,
           "abstention_pct": 21.14,
           "president": {
+            "electorate": 10102,
+            "turnout": 7966,
+            "turnout_pct": 78.86,
+            "abstention": 2136,
+            "abstention_pct": 21.14,
             "blank": 140,
             "blank_pct": 1.76,
             "null": 297,
             "null_pct": 3.73,
             "valid": 7529,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7966
           },
           "governor": {
+            "electorate": 10102,
+            "turnout": 7966,
+            "turnout_pct": 78.86,
+            "abstention": 2136,
+            "abstention_pct": 21.14,
             "blank": 266,
             "blank_pct": 3.34,
             "null": 529,
             "null_pct": 6.64,
             "valid": 7170,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 7966
           }
         }
       },
@@ -1113,26 +1341,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 45036,
-          "turnout": 37929,
+          "electorate": 45030,
+          "turnout": 37923,
           "turnout_pct": 84.22,
           "abstention": 7107,
           "abstention_pct": 15.78,
           "president": {
+            "electorate": 45036,
+            "turnout": 37929,
+            "turnout_pct": 84.22,
+            "abstention": 7107,
+            "abstention_pct": 15.78,
             "blank": 605,
             "blank_pct": 1.6,
             "null": 1040,
             "null_pct": 2.74,
             "valid": 36284,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 37929
           },
           "governor": {
+            "electorate": 45030,
+            "turnout": 37923,
+            "turnout_pct": 84.22,
+            "abstention": 7107,
+            "abstention_pct": 15.78,
             "blank": 1267,
             "blank_pct": 3.34,
             "null": 1778,
             "null_pct": 4.69,
             "valid": 34872,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 37923
           }
         }
       },
@@ -1164,20 +1404,32 @@
           "abstention": 1148,
           "abstention_pct": 20.68,
           "president": {
+            "electorate": 5551,
+            "turnout": 4403,
+            "turnout_pct": 79.32,
+            "abstention": 1148,
+            "abstention_pct": 20.68,
             "blank": 61,
             "blank_pct": 1.39,
             "null": 126,
             "null_pct": 2.86,
             "valid": 4216,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4403
           },
           "governor": {
+            "electorate": 5551,
+            "turnout": 4403,
+            "turnout_pct": 79.32,
+            "abstention": 1148,
+            "abstention_pct": 20.68,
             "blank": 150,
             "blank_pct": 3.41,
             "null": 207,
             "null_pct": 4.7,
             "valid": 4046,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4403
           }
         }
       },
@@ -1203,26 +1455,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4196,
-          "turnout": 3513,
-          "turnout_pct": 83.72,
-          "abstention": 683,
-          "abstention_pct": 16.28,
+          "electorate": 4194,
+          "turnout": 3512,
+          "turnout_pct": 83.74,
+          "abstention": 682,
+          "abstention_pct": 16.26,
           "president": {
+            "electorate": 4196,
+            "turnout": 3513,
+            "turnout_pct": 83.72,
+            "abstention": 683,
+            "abstention_pct": 16.28,
             "blank": 29,
             "blank_pct": 0.83,
             "null": 103,
             "null_pct": 2.93,
             "valid": 3381,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3513
           },
           "governor": {
+            "electorate": 4194,
+            "turnout": 3512,
+            "turnout_pct": 83.74,
+            "abstention": 682,
+            "abstention_pct": 16.26,
             "blank": 39,
             "blank_pct": 1.11,
             "null": 111,
             "null_pct": 3.16,
             "valid": 3361,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 3512
           }
         }
       },
@@ -1248,26 +1512,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 8816,
-          "turnout": 7228,
-          "turnout_pct": 81.99,
+          "electorate": 8813,
+          "turnout": 7225,
+          "turnout_pct": 81.98,
           "abstention": 1588,
-          "abstention_pct": 18.01,
+          "abstention_pct": 18.02,
           "president": {
+            "electorate": 8816,
+            "turnout": 7228,
+            "turnout_pct": 81.99,
+            "abstention": 1588,
+            "abstention_pct": 18.01,
             "blank": 119,
             "blank_pct": 1.65,
             "null": 211,
             "null_pct": 2.92,
             "valid": 6898,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7228
           },
           "governor": {
+            "electorate": 8813,
+            "turnout": 7225,
+            "turnout_pct": 81.98,
+            "abstention": 1588,
+            "abstention_pct": 18.02,
             "blank": 239,
             "blank_pct": 3.31,
             "null": 290,
             "null_pct": 4.01,
             "valid": 6696,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7225
           }
         }
       },
@@ -1299,20 +1575,32 @@
           "abstention": 1607,
           "abstention_pct": 18.64,
           "president": {
+            "electorate": 8619,
+            "turnout": 7012,
+            "turnout_pct": 81.36,
+            "abstention": 1607,
+            "abstention_pct": 18.64,
             "blank": 109,
             "blank_pct": 1.55,
             "null": 211,
             "null_pct": 3.01,
             "valid": 6692,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7012
           },
           "governor": {
+            "electorate": 8619,
+            "turnout": 7012,
+            "turnout_pct": 81.36,
+            "abstention": 1607,
+            "abstention_pct": 18.64,
             "blank": 251,
             "blank_pct": 3.58,
             "null": 397,
             "null_pct": 5.66,
             "valid": 6363,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 7012
           }
         }
       },
@@ -1338,26 +1626,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 24690,
-          "turnout": 19967,
+          "electorate": 24685,
+          "turnout": 19962,
           "turnout_pct": 80.87,
           "abstention": 4723,
           "abstention_pct": 19.13,
           "president": {
+            "electorate": 24690,
+            "turnout": 19967,
+            "turnout_pct": 80.87,
+            "abstention": 4723,
+            "abstention_pct": 19.13,
             "blank": 272,
             "blank_pct": 1.36,
             "null": 537,
             "null_pct": 2.69,
             "valid": 19158,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 19967
           },
           "governor": {
+            "electorate": 24685,
+            "turnout": 19962,
+            "turnout_pct": 80.87,
+            "abstention": 4723,
+            "abstention_pct": 19.13,
             "blank": 1035,
             "blank_pct": 5.18,
             "null": 1070,
             "null_pct": 5.36,
             "valid": 17854,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 19962
           }
         }
       },
@@ -1383,26 +1683,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 18980,
-          "turnout": 15808,
-          "turnout_pct": 83.29,
+          "electorate": 18974,
+          "turnout": 15802,
+          "turnout_pct": 83.28,
           "abstention": 3172,
-          "abstention_pct": 16.71,
+          "abstention_pct": 16.72,
           "president": {
+            "electorate": 18980,
+            "turnout": 15808,
+            "turnout_pct": 83.29,
+            "abstention": 3172,
+            "abstention_pct": 16.71,
             "blank": 305,
             "blank_pct": 1.93,
             "null": 427,
             "null_pct": 2.7,
             "valid": 15076,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 15808
           },
           "governor": {
+            "electorate": 18974,
+            "turnout": 15802,
+            "turnout_pct": 83.28,
+            "abstention": 3172,
+            "abstention_pct": 16.72,
             "blank": 822,
             "blank_pct": 5.2,
             "null": 765,
             "null_pct": 4.84,
             "valid": 14213,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 15802
           }
         }
       },
@@ -1434,20 +1746,32 @@
           "abstention": 1586,
           "abstention_pct": 18.26,
           "president": {
+            "electorate": 8684,
+            "turnout": 7098,
+            "turnout_pct": 81.74,
+            "abstention": 1586,
+            "abstention_pct": 18.26,
             "blank": 99,
             "blank_pct": 1.39,
             "null": 239,
             "null_pct": 3.37,
             "valid": 6760,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7098
           },
           "governor": {
+            "electorate": 8684,
+            "turnout": 7098,
+            "turnout_pct": 81.74,
+            "abstention": 1586,
+            "abstention_pct": 18.26,
             "blank": 206,
             "blank_pct": 2.9,
             "null": 314,
             "null_pct": 4.42,
             "valid": 6577,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 7098
           }
         }
       },
@@ -1479,20 +1803,32 @@
           "abstention": 1037,
           "abstention_pct": 16.4,
           "president": {
+            "electorate": 6324,
+            "turnout": 5287,
+            "turnout_pct": 83.6,
+            "abstention": 1037,
+            "abstention_pct": 16.4,
             "blank": 121,
             "blank_pct": 2.29,
             "null": 233,
             "null_pct": 4.41,
             "valid": 4933,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5287
           },
           "governor": {
+            "electorate": 6324,
+            "turnout": 5287,
+            "turnout_pct": 83.6,
+            "abstention": 1037,
+            "abstention_pct": 16.4,
             "blank": 313,
             "blank_pct": 5.92,
             "null": 486,
             "null_pct": 9.19,
             "valid": 4488,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5287
           }
         }
       },
@@ -1518,26 +1854,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 60280,
-          "turnout": 49504,
+          "electorate": 60279,
+          "turnout": 49503,
           "turnout_pct": 82.12,
           "abstention": 10776,
           "abstention_pct": 17.88,
           "president": {
+            "electorate": 60280,
+            "turnout": 49504,
+            "turnout_pct": 82.12,
+            "abstention": 10776,
+            "abstention_pct": 17.88,
             "blank": 865,
             "blank_pct": 1.75,
             "null": 1520,
             "null_pct": 3.07,
             "valid": 47119,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 49504
           },
           "governor": {
+            "electorate": 60279,
+            "turnout": 49503,
+            "turnout_pct": 82.12,
+            "abstention": 10776,
+            "abstention_pct": 17.88,
             "blank": 2765,
             "blank_pct": 5.59,
             "null": 2927,
             "null_pct": 5.91,
             "valid": 43806,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 49503
           }
         }
       },
@@ -1563,26 +1911,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9720,
-          "turnout": 7528,
+          "electorate": 9719,
+          "turnout": 7527,
           "turnout_pct": 77.45,
           "abstention": 2192,
           "abstention_pct": 22.55,
           "president": {
+            "electorate": 9720,
+            "turnout": 7528,
+            "turnout_pct": 77.45,
+            "abstention": 2192,
+            "abstention_pct": 22.55,
             "blank": 91,
             "blank_pct": 1.21,
             "null": 301,
-            "null_pct": 4,
+            "null_pct": 4.0,
             "valid": 7136,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7528
           },
           "governor": {
+            "electorate": 9719,
+            "turnout": 7527,
+            "turnout_pct": 77.45,
+            "abstention": 2192,
+            "abstention_pct": 22.55,
             "blank": 165,
             "blank_pct": 2.19,
             "null": 403,
             "null_pct": 5.35,
             "valid": 6958,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 7527
           }
         }
       },
@@ -1608,26 +1968,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4902,
-          "turnout": 4022,
-          "turnout_pct": 82.05,
+          "electorate": 4897,
+          "turnout": 4017,
+          "turnout_pct": 82.03,
           "abstention": 880,
-          "abstention_pct": 17.95,
+          "abstention_pct": 17.97,
           "president": {
+            "electorate": 4902,
+            "turnout": 4022,
+            "turnout_pct": 82.05,
+            "abstention": 880,
+            "abstention_pct": 17.95,
             "blank": 50,
             "blank_pct": 1.24,
             "null": 140,
             "null_pct": 3.48,
             "valid": 3832,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4022
           },
           "governor": {
+            "electorate": 4897,
+            "turnout": 4017,
+            "turnout_pct": 82.03,
+            "abstention": 880,
+            "abstention_pct": 17.97,
             "blank": 84,
             "blank_pct": 2.09,
             "null": 180,
             "null_pct": 4.48,
             "valid": 3753,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4017
           }
         }
       },
@@ -1659,20 +2031,32 @@
           "abstention": 739,
           "abstention_pct": 18.14,
           "president": {
+            "electorate": 4073,
+            "turnout": 3334,
+            "turnout_pct": 81.86,
+            "abstention": 739,
+            "abstention_pct": 18.14,
             "blank": 37,
             "blank_pct": 1.11,
             "null": 139,
             "null_pct": 4.17,
             "valid": 3158,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3334
           },
           "governor": {
+            "electorate": 4073,
+            "turnout": 3334,
+            "turnout_pct": 81.86,
+            "abstention": 739,
+            "abstention_pct": 18.14,
             "blank": 152,
             "blank_pct": 4.56,
             "null": 261,
             "null_pct": 7.83,
             "valid": 2921,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3334
           }
         }
       },
@@ -1698,26 +2082,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6955,
-          "turnout": 5714,
-          "turnout_pct": 82.16,
+          "electorate": 6954,
+          "turnout": 5713,
+          "turnout_pct": 82.15,
           "abstention": 1241,
-          "abstention_pct": 17.84,
+          "abstention_pct": 17.85,
           "president": {
+            "electorate": 6955,
+            "turnout": 5714,
+            "turnout_pct": 82.16,
+            "abstention": 1241,
+            "abstention_pct": 17.84,
             "blank": 119,
             "blank_pct": 2.08,
             "null": 197,
             "null_pct": 3.45,
             "valid": 5398,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5714
           },
           "governor": {
+            "electorate": 6954,
+            "turnout": 5713,
+            "turnout_pct": 82.15,
+            "abstention": 1241,
+            "abstention_pct": 17.85,
             "blank": 277,
             "blank_pct": 4.85,
             "null": 348,
             "null_pct": 6.09,
             "valid": 5088,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5713
           }
         }
       },
@@ -1743,26 +2139,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 32922,
-          "turnout": 26529,
+          "electorate": 32921,
+          "turnout": 26528,
           "turnout_pct": 80.58,
           "abstention": 6393,
           "abstention_pct": 19.42,
           "president": {
+            "electorate": 32922,
+            "turnout": 26529,
+            "turnout_pct": 80.58,
+            "abstention": 6393,
+            "abstention_pct": 19.42,
             "blank": 491,
             "blank_pct": 1.85,
             "null": 863,
             "null_pct": 3.25,
             "valid": 25175,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 26529
           },
           "governor": {
+            "electorate": 32921,
+            "turnout": 26528,
+            "turnout_pct": 80.58,
+            "abstention": 6393,
+            "abstention_pct": 19.42,
             "blank": 1306,
             "blank_pct": 4.92,
             "null": 1805,
             "null_pct": 6.8,
             "valid": 23416,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 26528
           }
         }
       },
@@ -1788,26 +2196,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6326,
-          "turnout": 5216,
+          "electorate": 6324,
+          "turnout": 5214,
           "turnout_pct": 82.45,
           "abstention": 1110,
           "abstention_pct": 17.55,
           "president": {
+            "electorate": 6326,
+            "turnout": 5216,
+            "turnout_pct": 82.45,
+            "abstention": 1110,
+            "abstention_pct": 17.55,
             "blank": 47,
             "blank_pct": 0.9,
             "null": 124,
             "null_pct": 2.38,
             "valid": 5045,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5216
           },
           "governor": {
+            "electorate": 6324,
+            "turnout": 5214,
+            "turnout_pct": 82.45,
+            "abstention": 1110,
+            "abstention_pct": 17.55,
             "blank": 87,
             "blank_pct": 1.67,
             "null": 186,
             "null_pct": 3.57,
             "valid": 4941,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5214
           }
         }
       },
@@ -1839,20 +2259,32 @@
           "abstention": 949,
           "abstention_pct": 18.46,
           "president": {
+            "electorate": 5141,
+            "turnout": 4192,
+            "turnout_pct": 81.54,
+            "abstention": 949,
+            "abstention_pct": 18.46,
             "blank": 32,
             "blank_pct": 0.76,
             "null": 131,
             "null_pct": 3.13,
             "valid": 4029,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4192
           },
           "governor": {
+            "electorate": 5141,
+            "turnout": 4192,
+            "turnout_pct": 81.54,
+            "abstention": 949,
+            "abstention_pct": 18.46,
             "blank": 115,
             "blank_pct": 2.74,
             "null": 226,
             "null_pct": 5.39,
             "valid": 3850,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 4192
           }
         }
       },
@@ -1884,20 +2316,32 @@
           "abstention": 790,
           "abstention_pct": 16.57,
           "president": {
+            "electorate": 4769,
+            "turnout": 3979,
+            "turnout_pct": 83.43,
+            "abstention": 790,
+            "abstention_pct": 16.57,
             "blank": 60,
             "blank_pct": 1.51,
             "null": 156,
             "null_pct": 3.92,
             "valid": 3763,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3979
           },
           "governor": {
+            "electorate": 4769,
+            "turnout": 3979,
+            "turnout_pct": 83.43,
+            "abstention": 790,
+            "abstention_pct": 16.57,
             "blank": 194,
             "blank_pct": 4.88,
             "null": 340,
             "null_pct": 8.54,
             "valid": 3444,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 3979
           }
         }
       },
@@ -1923,26 +2367,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 7961,
-          "turnout": 6380,
+          "electorate": 7959,
+          "turnout": 6378,
           "turnout_pct": 80.14,
           "abstention": 1581,
           "abstention_pct": 19.86,
           "president": {
+            "electorate": 7961,
+            "turnout": 6380,
+            "turnout_pct": 80.14,
+            "abstention": 1581,
+            "abstention_pct": 19.86,
             "blank": 109,
             "blank_pct": 1.71,
             "null": 236,
             "null_pct": 3.7,
             "valid": 6035,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6380
           },
           "governor": {
+            "electorate": 7959,
+            "turnout": 6378,
+            "turnout_pct": 80.14,
+            "abstention": 1581,
+            "abstention_pct": 19.86,
             "blank": 209,
             "blank_pct": 3.28,
             "null": 294,
             "null_pct": 4.61,
             "valid": 5874,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 6378
           }
         }
       },
@@ -1968,26 +2424,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 39504,
-          "turnout": 32688,
+          "electorate": 39503,
+          "turnout": 32687,
           "turnout_pct": 82.75,
           "abstention": 6816,
           "abstention_pct": 17.25,
           "president": {
+            "electorate": 39504,
+            "turnout": 32688,
+            "turnout_pct": 82.75,
+            "abstention": 6816,
+            "abstention_pct": 17.25,
             "blank": 477,
             "blank_pct": 1.46,
             "null": 878,
             "null_pct": 2.69,
             "valid": 31333,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 32688
           },
           "governor": {
+            "electorate": 39503,
+            "turnout": 32687,
+            "turnout_pct": 82.75,
+            "abstention": 6816,
+            "abstention_pct": 17.25,
             "blank": 1285,
             "blank_pct": 3.93,
             "null": 1518,
             "null_pct": 4.64,
             "valid": 29880,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 32687
           }
         }
       },
@@ -2019,20 +2487,32 @@
           "abstention": 1052,
           "abstention_pct": 14.88,
           "president": {
+            "electorate": 7070,
+            "turnout": 6018,
+            "turnout_pct": 85.12,
+            "abstention": 1052,
+            "abstention_pct": 14.88,
             "blank": 91,
             "blank_pct": 1.51,
             "null": 153,
             "null_pct": 2.54,
             "valid": 5774,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6018
           },
           "governor": {
+            "electorate": 7070,
+            "turnout": 6018,
+            "turnout_pct": 85.12,
+            "abstention": 1052,
+            "abstention_pct": 14.88,
             "blank": 286,
             "blank_pct": 4.75,
             "null": 224,
             "null_pct": 3.72,
             "valid": 5507,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 6018
           }
         }
       },
@@ -2064,20 +2544,32 @@
           "abstention": 550,
           "abstention_pct": 16.13,
           "president": {
+            "electorate": 3409,
+            "turnout": 2859,
+            "turnout_pct": 83.87,
+            "abstention": 550,
+            "abstention_pct": 16.13,
             "blank": 34,
             "blank_pct": 1.19,
             "null": 108,
             "null_pct": 3.78,
             "valid": 2717,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2859
           },
           "governor": {
+            "electorate": 3409,
+            "turnout": 2859,
+            "turnout_pct": 83.87,
+            "abstention": 550,
+            "abstention_pct": 16.13,
             "blank": 88,
             "blank_pct": 3.08,
             "null": 122,
             "null_pct": 4.27,
             "valid": 2649,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2859
           }
         }
       },
@@ -2103,26 +2595,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 8397,
-          "turnout": 6868,
+          "electorate": 8396,
+          "turnout": 6867,
           "turnout_pct": 81.79,
           "abstention": 1529,
           "abstention_pct": 18.21,
           "president": {
+            "electorate": 8397,
+            "turnout": 6868,
+            "turnout_pct": 81.79,
+            "abstention": 1529,
+            "abstention_pct": 18.21,
             "blank": 63,
             "blank_pct": 0.92,
             "null": 217,
             "null_pct": 3.16,
             "valid": 6588,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6868
           },
           "governor": {
+            "electorate": 8396,
+            "turnout": 6867,
+            "turnout_pct": 81.79,
+            "abstention": 1529,
+            "abstention_pct": 18.21,
             "blank": 180,
             "blank_pct": 2.62,
             "null": 393,
             "null_pct": 5.72,
             "valid": 6294,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6867
           }
         }
       },
@@ -2148,26 +2652,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 2868,
-          "turnout": 2441,
-          "turnout_pct": 85.11,
-          "abstention": 427,
-          "abstention_pct": 14.89,
+          "electorate": 2866,
+          "turnout": 2440,
+          "turnout_pct": 85.14,
+          "abstention": 426,
+          "abstention_pct": 14.86,
           "president": {
+            "electorate": 2868,
+            "turnout": 2441,
+            "turnout_pct": 85.11,
+            "abstention": 427,
+            "abstention_pct": 14.89,
             "blank": 15,
             "blank_pct": 0.61,
             "null": 76,
             "null_pct": 3.11,
             "valid": 2350,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2441
           },
           "governor": {
+            "electorate": 2866,
+            "turnout": 2440,
+            "turnout_pct": 85.14,
+            "abstention": 426,
+            "abstention_pct": 14.86,
             "blank": 41,
             "blank_pct": 1.68,
             "null": 94,
             "null_pct": 3.85,
             "valid": 2305,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2440
           }
         }
       },
@@ -2193,26 +2709,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4173,
-          "turnout": 3514,
-          "turnout_pct": 84.21,
+          "electorate": 4171,
+          "turnout": 3512,
+          "turnout_pct": 84.2,
           "abstention": 659,
-          "abstention_pct": 15.79,
+          "abstention_pct": 15.8,
           "president": {
+            "electorate": 4173,
+            "turnout": 3514,
+            "turnout_pct": 84.21,
+            "abstention": 659,
+            "abstention_pct": 15.79,
             "blank": 42,
             "blank_pct": 1.2,
             "null": 56,
             "null_pct": 1.59,
             "valid": 3416,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3514
           },
           "governor": {
+            "electorate": 4171,
+            "turnout": 3512,
+            "turnout_pct": 84.2,
+            "abstention": 659,
+            "abstention_pct": 15.8,
             "blank": 54,
             "blank_pct": 1.54,
             "null": 92,
             "null_pct": 2.62,
             "valid": 3366,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3512
           }
         }
       },
@@ -2238,26 +2766,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 2858,
-          "turnout": 2326,
-          "turnout_pct": 81.39,
+          "electorate": 2857,
+          "turnout": 2325,
+          "turnout_pct": 81.38,
           "abstention": 532,
-          "abstention_pct": 18.61,
+          "abstention_pct": 18.62,
           "president": {
+            "electorate": 2858,
+            "turnout": 2326,
+            "turnout_pct": 81.39,
+            "abstention": 532,
+            "abstention_pct": 18.61,
             "blank": 28,
             "blank_pct": 1.2,
             "null": 45,
             "null_pct": 1.93,
             "valid": 2253,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2326
           },
           "governor": {
+            "electorate": 2857,
+            "turnout": 2325,
+            "turnout_pct": 81.38,
+            "abstention": 532,
+            "abstention_pct": 18.62,
             "blank": 44,
             "blank_pct": 1.89,
             "null": 68,
             "null_pct": 2.92,
             "valid": 2213,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2325
           }
         }
       },
@@ -2283,26 +2823,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 22264,
-          "turnout": 18347,
+          "electorate": 22259,
+          "turnout": 18343,
           "turnout_pct": 82.41,
-          "abstention": 3917,
+          "abstention": 3916,
           "abstention_pct": 17.59,
           "president": {
+            "electorate": 22264,
+            "turnout": 18347,
+            "turnout_pct": 82.41,
+            "abstention": 3917,
+            "abstention_pct": 17.59,
             "blank": 350,
             "blank_pct": 1.91,
             "null": 662,
             "null_pct": 3.61,
             "valid": 17335,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 18347
           },
           "governor": {
+            "electorate": 22259,
+            "turnout": 18343,
+            "turnout_pct": 82.41,
+            "abstention": 3916,
+            "abstention_pct": 17.59,
             "blank": 832,
             "blank_pct": 4.54,
             "null": 1010,
             "null_pct": 5.51,
             "valid": 16500,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 18343
           }
         }
       },
@@ -2334,20 +2886,32 @@
           "abstention": 2091,
           "abstention_pct": 17.24,
           "president": {
+            "electorate": 12132,
+            "turnout": 10041,
+            "turnout_pct": 82.76,
+            "abstention": 2091,
+            "abstention_pct": 17.24,
             "blank": 199,
             "blank_pct": 1.98,
             "null": 392,
             "null_pct": 3.9,
             "valid": 9450,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10041
           },
           "governor": {
+            "electorate": 12132,
+            "turnout": 10041,
+            "turnout_pct": 82.76,
+            "abstention": 2091,
+            "abstention_pct": 17.24,
             "blank": 443,
             "blank_pct": 4.41,
             "null": 614,
             "null_pct": 6.11,
             "valid": 8982,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 10041
           }
         }
       },
@@ -2379,20 +2943,32 @@
           "abstention": 1343,
           "abstention_pct": 14.05,
           "president": {
+            "electorate": 9557,
+            "turnout": 8214,
+            "turnout_pct": 85.95,
+            "abstention": 1343,
+            "abstention_pct": 14.05,
             "blank": 176,
             "blank_pct": 2.14,
             "null": 255,
             "null_pct": 3.1,
             "valid": 7783,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8214
           },
           "governor": {
+            "electorate": 9557,
+            "turnout": 8214,
+            "turnout_pct": 85.95,
+            "abstention": 1343,
+            "abstention_pct": 14.05,
             "blank": 270,
             "blank_pct": 3.29,
             "null": 286,
             "null_pct": 3.48,
             "valid": 7658,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8214
           }
         }
       },
@@ -2418,26 +2994,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 15625,
-          "turnout": 12066,
+          "electorate": 15624,
+          "turnout": 12065,
           "turnout_pct": 77.22,
           "abstention": 3559,
           "abstention_pct": 22.78,
           "president": {
+            "electorate": 15625,
+            "turnout": 12066,
+            "turnout_pct": 77.22,
+            "abstention": 3559,
+            "abstention_pct": 22.78,
             "blank": 161,
             "blank_pct": 1.33,
             "null": 346,
             "null_pct": 2.87,
             "valid": 11559,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 12066
           },
           "governor": {
+            "electorate": 15624,
+            "turnout": 12065,
+            "turnout_pct": 77.22,
+            "abstention": 3559,
+            "abstention_pct": 22.78,
             "blank": 320,
             "blank_pct": 2.65,
             "null": 482,
-            "null_pct": 4,
+            "null_pct": 4.0,
             "valid": 11262,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 12065
           }
         }
       },
@@ -2469,20 +3057,32 @@
           "abstention": 1776,
           "abstention_pct": 15.4,
           "president": {
+            "electorate": 11530,
+            "turnout": 9754,
+            "turnout_pct": 84.6,
+            "abstention": 1776,
+            "abstention_pct": 15.4,
             "blank": 125,
             "blank_pct": 1.28,
             "null": 210,
             "null_pct": 2.15,
             "valid": 9419,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9754
           },
           "governor": {
+            "electorate": 11530,
+            "turnout": 9754,
+            "turnout_pct": 84.6,
+            "abstention": 1776,
+            "abstention_pct": 15.4,
             "blank": 283,
             "blank_pct": 2.9,
             "null": 290,
             "null_pct": 2.97,
             "valid": 9180,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 9754
           }
         }
       },
@@ -2514,20 +3114,32 @@
           "abstention": 2496,
           "abstention_pct": 19.33,
           "president": {
+            "electorate": 12911,
+            "turnout": 10415,
+            "turnout_pct": 80.67,
+            "abstention": 2496,
+            "abstention_pct": 19.33,
             "blank": 113,
             "blank_pct": 1.08,
             "null": 222,
             "null_pct": 2.13,
             "valid": 10080,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10415
           },
           "governor": {
+            "electorate": 12911,
+            "turnout": 10415,
+            "turnout_pct": 80.67,
+            "abstention": 2496,
+            "abstention_pct": 19.33,
             "blank": 381,
             "blank_pct": 3.66,
             "null": 420,
             "null_pct": 4.03,
             "valid": 9614,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10415
           }
         }
       },
@@ -2559,20 +3171,32 @@
           "abstention": 352,
           "abstention_pct": 16.11,
           "president": {
+            "electorate": 2185,
+            "turnout": 1833,
+            "turnout_pct": 83.89,
+            "abstention": 352,
+            "abstention_pct": 16.11,
             "blank": 12,
             "blank_pct": 0.65,
             "null": 31,
             "null_pct": 1.69,
             "valid": 1790,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 1833
           },
           "governor": {
+            "electorate": 2185,
+            "turnout": 1833,
+            "turnout_pct": 83.89,
+            "abstention": 352,
+            "abstention_pct": 16.11,
             "blank": 47,
             "blank_pct": 2.56,
             "null": 62,
             "null_pct": 3.38,
             "valid": 1724,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 1833
           }
         }
       },
@@ -2604,20 +3228,32 @@
           "abstention": 1312,
           "abstention_pct": 18.01,
           "president": {
+            "electorate": 7286,
+            "turnout": 5974,
+            "turnout_pct": 81.99,
+            "abstention": 1312,
+            "abstention_pct": 18.01,
             "blank": 80,
             "blank_pct": 1.34,
             "null": 119,
             "null_pct": 1.99,
             "valid": 5775,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5974
           },
           "governor": {
+            "electorate": 7286,
+            "turnout": 5974,
+            "turnout_pct": 81.99,
+            "abstention": 1312,
+            "abstention_pct": 18.01,
             "blank": 171,
             "blank_pct": 2.86,
             "null": 194,
             "null_pct": 3.25,
             "valid": 5607,
-            "valid_pct": 99.96
+            "valid_pct": 99.96,
+            "total_votes": 5974
           }
         }
       },
@@ -2643,26 +3279,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5189,
-          "turnout": 4284,
+          "electorate": 5188,
+          "turnout": 4283,
           "turnout_pct": 82.56,
           "abstention": 905,
           "abstention_pct": 17.44,
           "president": {
+            "electorate": 5189,
+            "turnout": 4284,
+            "turnout_pct": 82.56,
+            "abstention": 905,
+            "abstention_pct": 17.44,
             "blank": 47,
             "blank_pct": 1.1,
             "null": 136,
             "null_pct": 3.17,
             "valid": 4101,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4284
           },
           "governor": {
+            "electorate": 5188,
+            "turnout": 4283,
+            "turnout_pct": 82.56,
+            "abstention": 905,
+            "abstention_pct": 17.44,
             "blank": 82,
             "blank_pct": 1.91,
             "null": 149,
             "null_pct": 3.48,
             "valid": 4052,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4283
           }
         }
       },
@@ -2694,20 +3342,32 @@
           "abstention": 1070,
           "abstention_pct": 16.73,
           "president": {
+            "electorate": 6396,
+            "turnout": 5326,
+            "turnout_pct": 83.27,
+            "abstention": 1070,
+            "abstention_pct": 16.73,
             "blank": 57,
             "blank_pct": 1.07,
             "null": 165,
             "null_pct": 3.1,
             "valid": 5104,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5326
           },
           "governor": {
+            "electorate": 6396,
+            "turnout": 5326,
+            "turnout_pct": 83.27,
+            "abstention": 1070,
+            "abstention_pct": 16.73,
             "blank": 88,
             "blank_pct": 1.65,
             "null": 195,
             "null_pct": 3.66,
             "valid": 5043,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5326
           }
         }
       },
@@ -2733,26 +3393,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4474,
-          "turnout": 3726,
-          "turnout_pct": 83.28,
+          "electorate": 4470,
+          "turnout": 3722,
+          "turnout_pct": 83.27,
           "abstention": 748,
-          "abstention_pct": 16.72,
+          "abstention_pct": 16.73,
           "president": {
+            "electorate": 4474,
+            "turnout": 3726,
+            "turnout_pct": 83.28,
+            "abstention": 748,
+            "abstention_pct": 16.72,
             "blank": 49,
             "blank_pct": 1.32,
             "null": 83,
             "null_pct": 2.23,
             "valid": 3594,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3726
           },
           "governor": {
+            "electorate": 4470,
+            "turnout": 3722,
+            "turnout_pct": 83.27,
+            "abstention": 748,
+            "abstention_pct": 16.73,
             "blank": 80,
             "blank_pct": 2.15,
             "null": 125,
             "null_pct": 3.36,
             "valid": 3517,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3722
           }
         }
       },
@@ -2778,26 +3450,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5746,
-          "turnout": 4714,
-          "turnout_pct": 82.04,
+          "electorate": 5744,
+          "turnout": 4712,
+          "turnout_pct": 82.03,
           "abstention": 1032,
-          "abstention_pct": 17.96,
+          "abstention_pct": 17.97,
           "president": {
+            "electorate": 5746,
+            "turnout": 4714,
+            "turnout_pct": 82.04,
+            "abstention": 1032,
+            "abstention_pct": 17.96,
             "blank": 43,
             "blank_pct": 0.91,
             "null": 143,
             "null_pct": 3.03,
             "valid": 4528,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4714
           },
           "governor": {
+            "electorate": 5744,
+            "turnout": 4712,
+            "turnout_pct": 82.03,
+            "abstention": 1032,
+            "abstention_pct": 17.97,
             "blank": 83,
             "blank_pct": 1.76,
             "null": 195,
             "null_pct": 4.14,
             "valid": 4434,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4712
           }
         }
       },
@@ -2823,26 +3507,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3156,
-          "turnout": 2695,
-          "turnout_pct": 85.39,
+          "electorate": 3154,
+          "turnout": 2693,
+          "turnout_pct": 85.38,
           "abstention": 461,
-          "abstention_pct": 14.61,
+          "abstention_pct": 14.62,
           "president": {
+            "electorate": 3156,
+            "turnout": 2695,
+            "turnout_pct": 85.39,
+            "abstention": 461,
+            "abstention_pct": 14.61,
             "blank": 28,
             "blank_pct": 1.04,
             "null": 66,
             "null_pct": 2.45,
             "valid": 2601,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2695
           },
           "governor": {
+            "electorate": 3154,
+            "turnout": 2693,
+            "turnout_pct": 85.38,
+            "abstention": 461,
+            "abstention_pct": 14.62,
             "blank": 48,
             "blank_pct": 1.78,
             "null": 84,
             "null_pct": 3.12,
             "valid": 2561,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2693
           }
         }
       },
@@ -2868,26 +3564,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 11100,
-          "turnout": 9520,
-          "turnout_pct": 85.77,
+          "electorate": 11094,
+          "turnout": 9514,
+          "turnout_pct": 85.76,
           "abstention": 1580,
-          "abstention_pct": 14.23,
+          "abstention_pct": 14.24,
           "president": {
+            "electorate": 11100,
+            "turnout": 9520,
+            "turnout_pct": 85.77,
+            "abstention": 1580,
+            "abstention_pct": 14.23,
             "blank": 118,
             "blank_pct": 1.24,
             "null": 224,
             "null_pct": 2.35,
             "valid": 9178,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9520
           },
           "governor": {
+            "electorate": 11094,
+            "turnout": 9514,
+            "turnout_pct": 85.76,
+            "abstention": 1580,
+            "abstention_pct": 14.24,
             "blank": 401,
             "blank_pct": 4.21,
             "null": 440,
             "null_pct": 4.62,
             "valid": 8673,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9514
           }
         }
       },
@@ -2913,26 +3621,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 10316,
-          "turnout": 8745,
+          "electorate": 10313,
+          "turnout": 8742,
           "turnout_pct": 84.77,
           "abstention": 1571,
           "abstention_pct": 15.23,
           "president": {
+            "electorate": 10316,
+            "turnout": 8745,
+            "turnout_pct": 84.77,
+            "abstention": 1571,
+            "abstention_pct": 15.23,
             "blank": 209,
             "blank_pct": 2.39,
             "null": 391,
             "null_pct": 4.47,
             "valid": 8145,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8745
           },
           "governor": {
+            "electorate": 10313,
+            "turnout": 8742,
+            "turnout_pct": 84.77,
+            "abstention": 1571,
+            "abstention_pct": 15.23,
             "blank": 455,
             "blank_pct": 5.2,
             "null": 789,
             "null_pct": 9.03,
             "valid": 7497,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 8742
           }
         }
       },
@@ -2958,26 +3678,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6324,
-          "turnout": 5247,
-          "turnout_pct": 82.97,
+          "electorate": 6322,
+          "turnout": 5245,
+          "turnout_pct": 82.96,
           "abstention": 1077,
-          "abstention_pct": 17.03,
+          "abstention_pct": 17.04,
           "president": {
+            "electorate": 6324,
+            "turnout": 5247,
+            "turnout_pct": 82.97,
+            "abstention": 1077,
+            "abstention_pct": 17.03,
             "blank": 69,
             "blank_pct": 1.32,
             "null": 186,
             "null_pct": 3.54,
             "valid": 4992,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5247
           },
           "governor": {
+            "electorate": 6322,
+            "turnout": 5245,
+            "turnout_pct": 82.96,
+            "abstention": 1077,
+            "abstention_pct": 17.04,
             "blank": 154,
             "blank_pct": 2.94,
             "null": 300,
             "null_pct": 5.72,
             "valid": 4790,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 5245
           }
         }
       },
@@ -3003,26 +3735,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5251,
-          "turnout": 4264,
+          "electorate": 5250,
+          "turnout": 4263,
           "turnout_pct": 81.2,
           "abstention": 987,
           "abstention_pct": 18.8,
           "president": {
+            "electorate": 5251,
+            "turnout": 4264,
+            "turnout_pct": 81.2,
+            "abstention": 987,
+            "abstention_pct": 18.8,
             "blank": 56,
             "blank_pct": 1.31,
             "null": 129,
             "null_pct": 3.03,
             "valid": 4079,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4264
           },
           "governor": {
+            "electorate": 5250,
+            "turnout": 4263,
+            "turnout_pct": 81.2,
+            "abstention": 987,
+            "abstention_pct": 18.8,
             "blank": 167,
             "blank_pct": 3.92,
             "null": 207,
             "null_pct": 4.86,
             "valid": 3889,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4263
           }
         }
       },
@@ -3048,26 +3792,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 27705,
-          "turnout": 23010,
+          "electorate": 27694,
+          "turnout": 22999,
           "turnout_pct": 83.05,
           "abstention": 4695,
           "abstention_pct": 16.95,
           "president": {
+            "electorate": 27705,
+            "turnout": 23010,
+            "turnout_pct": 83.05,
+            "abstention": 4695,
+            "abstention_pct": 16.95,
             "blank": 330,
             "blank_pct": 1.43,
             "null": 651,
             "null_pct": 2.83,
             "valid": 22029,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 23010
           },
           "governor": {
+            "electorate": 27694,
+            "turnout": 22999,
+            "turnout_pct": 83.05,
+            "abstention": 4695,
+            "abstention_pct": 16.95,
             "blank": 685,
             "blank_pct": 2.98,
             "null": 826,
             "null_pct": 3.59,
             "valid": 21486,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 22999
           }
         }
       },
@@ -3093,26 +3849,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3082,
-          "turnout": 2385,
-          "turnout_pct": 77.38,
+          "electorate": 3079,
+          "turnout": 2382,
+          "turnout_pct": 77.36,
           "abstention": 697,
-          "abstention_pct": 22.62,
+          "abstention_pct": 22.64,
           "president": {
+            "electorate": 3082,
+            "turnout": 2385,
+            "turnout_pct": 77.38,
+            "abstention": 697,
+            "abstention_pct": 22.62,
             "blank": 26,
             "blank_pct": 1.09,
             "null": 89,
             "null_pct": 3.73,
             "valid": 2270,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2385
           },
           "governor": {
+            "electorate": 3079,
+            "turnout": 2382,
+            "turnout_pct": 77.36,
+            "abstention": 697,
+            "abstention_pct": 22.64,
             "blank": 57,
             "blank_pct": 2.39,
             "null": 115,
             "null_pct": 4.83,
             "valid": 2210,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2382
           }
         }
       },
@@ -3144,20 +3912,32 @@
           "abstention": 2489,
           "abstention_pct": 16.14,
           "president": {
+            "electorate": 15421,
+            "turnout": 12932,
+            "turnout_pct": 83.86,
+            "abstention": 2489,
+            "abstention_pct": 16.14,
             "blank": 155,
             "blank_pct": 1.2,
             "null": 392,
             "null_pct": 3.03,
             "valid": 12385,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 12932
           },
           "governor": {
+            "electorate": 15421,
+            "turnout": 12932,
+            "turnout_pct": 83.86,
+            "abstention": 2489,
+            "abstention_pct": 16.14,
             "blank": 358,
             "blank_pct": 2.77,
             "null": 610,
             "null_pct": 4.72,
             "valid": 11964,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 12932
           }
         }
       },
@@ -3189,20 +3969,32 @@
           "abstention": 850,
           "abstention_pct": 17.8,
           "president": {
+            "electorate": 4775,
+            "turnout": 3925,
+            "turnout_pct": 82.2,
+            "abstention": 850,
+            "abstention_pct": 17.8,
             "blank": 59,
             "blank_pct": 1.5,
             "null": 142,
             "null_pct": 3.62,
             "valid": 3724,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3925
           },
           "governor": {
+            "electorate": 4775,
+            "turnout": 3925,
+            "turnout_pct": 82.2,
+            "abstention": 850,
+            "abstention_pct": 17.8,
             "blank": 94,
             "blank_pct": 2.39,
             "null": 169,
             "null_pct": 4.31,
             "valid": 3662,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3925
           }
         }
       },
@@ -3228,26 +4020,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6393,
-          "turnout": 5114,
+          "electorate": 6392,
+          "turnout": 5113,
           "turnout_pct": 79.99,
           "abstention": 1279,
           "abstention_pct": 20.01,
           "president": {
+            "electorate": 6393,
+            "turnout": 5114,
+            "turnout_pct": 79.99,
+            "abstention": 1279,
+            "abstention_pct": 20.01,
             "blank": 52,
             "blank_pct": 1.02,
             "null": 154,
             "null_pct": 3.01,
             "valid": 4908,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5114
           },
           "governor": {
+            "electorate": 6392,
+            "turnout": 5113,
+            "turnout_pct": 79.99,
+            "abstention": 1279,
+            "abstention_pct": 20.01,
             "blank": 153,
             "blank_pct": 2.99,
             "null": 203,
             "null_pct": 3.97,
             "valid": 4757,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5113
           }
         }
       },
@@ -3273,26 +4077,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 7693,
-          "turnout": 6377,
+          "electorate": 7692,
+          "turnout": 6376,
           "turnout_pct": 82.89,
           "abstention": 1316,
           "abstention_pct": 17.11,
           "president": {
+            "electorate": 7693,
+            "turnout": 6377,
+            "turnout_pct": 82.89,
+            "abstention": 1316,
+            "abstention_pct": 17.11,
             "blank": 99,
             "blank_pct": 1.55,
             "null": 244,
             "null_pct": 3.83,
             "valid": 6034,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6377
           },
           "governor": {
+            "electorate": 7692,
+            "turnout": 6376,
+            "turnout_pct": 82.89,
+            "abstention": 1316,
+            "abstention_pct": 17.11,
             "blank": 170,
             "blank_pct": 2.67,
             "null": 303,
             "null_pct": 4.75,
             "valid": 5903,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6376
           }
         }
       },
@@ -3318,26 +4134,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3314,
-          "turnout": 2756,
+          "electorate": 3313,
+          "turnout": 2755,
           "turnout_pct": 83.16,
           "abstention": 558,
           "abstention_pct": 16.84,
           "president": {
+            "electorate": 3314,
+            "turnout": 2756,
+            "turnout_pct": 83.16,
+            "abstention": 558,
+            "abstention_pct": 16.84,
             "blank": 33,
             "blank_pct": 1.2,
             "null": 87,
             "null_pct": 3.16,
             "valid": 2636,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2756
           },
           "governor": {
+            "electorate": 3313,
+            "turnout": 2755,
+            "turnout_pct": 83.16,
+            "abstention": 558,
+            "abstention_pct": 16.84,
             "blank": 63,
             "blank_pct": 2.29,
             "null": 137,
             "null_pct": 4.97,
             "valid": 2554,
-            "valid_pct": 99.96
+            "valid_pct": 99.96,
+            "total_votes": 2755
           }
         }
       },
@@ -3369,20 +4197,32 @@
           "abstention": 2755,
           "abstention_pct": 21.4,
           "president": {
+            "electorate": 12875,
+            "turnout": 10120,
+            "turnout_pct": 78.6,
+            "abstention": 2755,
+            "abstention_pct": 21.4,
             "blank": 186,
             "blank_pct": 1.84,
             "null": 321,
             "null_pct": 3.17,
             "valid": 9613,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10120
           },
           "governor": {
+            "electorate": 12875,
+            "turnout": 10120,
+            "turnout_pct": 78.6,
+            "abstention": 2755,
+            "abstention_pct": 21.4,
             "blank": 398,
             "blank_pct": 3.93,
             "null": 512,
             "null_pct": 5.06,
             "valid": 9210,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10120
           }
         }
       },
@@ -3408,26 +4248,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9613,
-          "turnout": 7726,
+          "electorate": 9612,
+          "turnout": 7725,
           "turnout_pct": 80.37,
           "abstention": 1887,
           "abstention_pct": 19.63,
           "president": {
+            "electorate": 9613,
+            "turnout": 7726,
+            "turnout_pct": 80.37,
+            "abstention": 1887,
+            "abstention_pct": 19.63,
             "blank": 156,
             "blank_pct": 2.02,
             "null": 363,
             "null_pct": 4.7,
             "valid": 7207,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7726
           },
           "governor": {
+            "electorate": 9612,
+            "turnout": 7725,
+            "turnout_pct": 80.37,
+            "abstention": 1887,
+            "abstention_pct": 19.63,
             "blank": 297,
             "blank_pct": 3.84,
             "null": 469,
             "null_pct": 6.07,
             "valid": 6956,
-            "valid_pct": 99.96
+            "valid_pct": 99.96,
+            "total_votes": 7725
           }
         }
       },
@@ -3453,26 +4305,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9481,
-          "turnout": 7586,
+          "electorate": 9478,
+          "turnout": 7583,
           "turnout_pct": 80.01,
           "abstention": 1895,
           "abstention_pct": 19.99,
           "president": {
+            "electorate": 9481,
+            "turnout": 7586,
+            "turnout_pct": 80.01,
+            "abstention": 1895,
+            "abstention_pct": 19.99,
             "blank": 72,
             "blank_pct": 0.95,
             "null": 211,
             "null_pct": 2.78,
             "valid": 7303,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7586
           },
           "governor": {
+            "electorate": 9478,
+            "turnout": 7583,
+            "turnout_pct": 80.01,
+            "abstention": 1895,
+            "abstention_pct": 19.99,
             "blank": 139,
             "blank_pct": 1.83,
             "null": 259,
             "null_pct": 3.42,
             "valid": 7185,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7583
           }
         }
       },
@@ -3498,26 +4362,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5230,
-          "turnout": 4363,
+          "electorate": 5228,
+          "turnout": 4361,
           "turnout_pct": 83.42,
           "abstention": 867,
           "abstention_pct": 16.58,
           "president": {
+            "electorate": 5230,
+            "turnout": 4363,
+            "turnout_pct": 83.42,
+            "abstention": 867,
+            "abstention_pct": 16.58,
             "blank": 67,
             "blank_pct": 1.54,
             "null": 124,
             "null_pct": 2.84,
             "valid": 4172,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4363
           },
           "governor": {
+            "electorate": 5228,
+            "turnout": 4361,
+            "turnout_pct": 83.42,
+            "abstention": 867,
+            "abstention_pct": 16.58,
             "blank": 112,
             "blank_pct": 2.57,
             "null": 175,
             "null_pct": 4.01,
             "valid": 4074,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4361
           }
         }
       },
@@ -3543,26 +4419,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3467,
-          "turnout": 3004,
-          "turnout_pct": 86.65,
+          "electorate": 3465,
+          "turnout": 3002,
+          "turnout_pct": 86.64,
           "abstention": 463,
-          "abstention_pct": 13.35,
+          "abstention_pct": 13.36,
           "president": {
+            "electorate": 3467,
+            "turnout": 3004,
+            "turnout_pct": 86.65,
+            "abstention": 463,
+            "abstention_pct": 13.35,
             "blank": 22,
             "blank_pct": 0.73,
             "null": 56,
             "null_pct": 1.86,
             "valid": 2926,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3004
           },
           "governor": {
+            "electorate": 3465,
+            "turnout": 3002,
+            "turnout_pct": 86.64,
+            "abstention": 463,
+            "abstention_pct": 13.36,
             "blank": 49,
             "blank_pct": 1.63,
             "null": 95,
             "null_pct": 3.16,
             "valid": 2858,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3002
           }
         }
       },
@@ -3588,26 +4476,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 7360,
-          "turnout": 5642,
+          "electorate": 7356,
+          "turnout": 5639,
           "turnout_pct": 76.66,
-          "abstention": 1718,
+          "abstention": 1717,
           "abstention_pct": 23.34,
           "president": {
+            "electorate": 7360,
+            "turnout": 5642,
+            "turnout_pct": 76.66,
+            "abstention": 1718,
+            "abstention_pct": 23.34,
             "blank": 70,
             "blank_pct": 1.24,
             "null": 224,
             "null_pct": 3.97,
             "valid": 5348,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5642
           },
           "governor": {
+            "electorate": 7356,
+            "turnout": 5639,
+            "turnout_pct": 76.66,
+            "abstention": 1717,
+            "abstention_pct": 23.34,
             "blank": 250,
             "blank_pct": 4.43,
             "null": 357,
             "null_pct": 6.33,
             "valid": 5030,
-            "valid_pct": 99.96
+            "valid_pct": 99.96,
+            "total_votes": 5639
           }
         }
       },
@@ -3633,26 +4533,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 22534,
-          "turnout": 17691,
+          "electorate": 22528,
+          "turnout": 17686,
           "turnout_pct": 78.51,
-          "abstention": 4843,
+          "abstention": 4842,
           "abstention_pct": 21.49,
           "president": {
+            "electorate": 22534,
+            "turnout": 17691,
+            "turnout_pct": 78.51,
+            "abstention": 4843,
+            "abstention_pct": 21.49,
             "blank": 273,
             "blank_pct": 1.54,
             "null": 447,
             "null_pct": 2.53,
             "valid": 16971,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 17691
           },
           "governor": {
+            "electorate": 22528,
+            "turnout": 17686,
+            "turnout_pct": 78.51,
+            "abstention": 4842,
+            "abstention_pct": 21.49,
             "blank": 790,
             "blank_pct": 4.47,
             "null": 735,
             "null_pct": 4.16,
             "valid": 16161,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 17686
           }
         }
       },
@@ -3678,26 +4590,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 54350,
-          "turnout": 45104,
-          "turnout_pct": 82.99,
+          "electorate": 54336,
+          "turnout": 45090,
+          "turnout_pct": 82.98,
           "abstention": 9246,
-          "abstention_pct": 17.01,
+          "abstention_pct": 17.02,
           "president": {
+            "electorate": 54350,
+            "turnout": 45104,
+            "turnout_pct": 82.99,
+            "abstention": 9246,
+            "abstention_pct": 17.01,
             "blank": 753,
             "blank_pct": 1.67,
             "null": 1593,
             "null_pct": 3.53,
             "valid": 42758,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 45104
           },
           "governor": {
+            "electorate": 54336,
+            "turnout": 45090,
+            "turnout_pct": 82.98,
+            "abstention": 9246,
+            "abstention_pct": 17.02,
             "blank": 1724,
             "blank_pct": 3.82,
             "null": 2307,
             "null_pct": 5.12,
             "valid": 41055,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 45090
           }
         }
       },
@@ -3723,26 +4647,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3212,
-          "turnout": 2595,
-          "turnout_pct": 80.79,
+          "electorate": 3211,
+          "turnout": 2594,
+          "turnout_pct": 80.78,
           "abstention": 617,
-          "abstention_pct": 19.21,
+          "abstention_pct": 19.22,
           "president": {
+            "electorate": 3212,
+            "turnout": 2595,
+            "turnout_pct": 80.79,
+            "abstention": 617,
+            "abstention_pct": 19.21,
             "blank": 24,
             "blank_pct": 0.92,
             "null": 85,
             "null_pct": 3.28,
             "valid": 2486,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2595
           },
           "governor": {
+            "electorate": 3211,
+            "turnout": 2594,
+            "turnout_pct": 80.78,
+            "abstention": 617,
+            "abstention_pct": 19.22,
             "blank": 47,
             "blank_pct": 1.81,
             "null": 105,
             "null_pct": 4.05,
             "valid": 2442,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2594
           }
         }
       },
@@ -3768,26 +4704,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 7032,
-          "turnout": 5916,
-          "turnout_pct": 84.13,
+          "electorate": 7027,
+          "turnout": 5911,
+          "turnout_pct": 84.12,
           "abstention": 1116,
-          "abstention_pct": 15.87,
+          "abstention_pct": 15.88,
           "president": {
+            "electorate": 7032,
+            "turnout": 5916,
+            "turnout_pct": 84.13,
+            "abstention": 1116,
+            "abstention_pct": 15.87,
             "blank": 64,
             "blank_pct": 1.08,
             "null": 191,
             "null_pct": 3.23,
             "valid": 5661,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5916
           },
           "governor": {
+            "electorate": 7027,
+            "turnout": 5911,
+            "turnout_pct": 84.12,
+            "abstention": 1116,
+            "abstention_pct": 15.88,
             "blank": 171,
             "blank_pct": 2.89,
             "null": 248,
             "null_pct": 4.2,
             "valid": 5492,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5911
           }
         }
       },
@@ -3813,26 +4761,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 7611,
-          "turnout": 6200,
-          "turnout_pct": 81.46,
-          "abstention": 1411,
-          "abstention_pct": 18.54,
+          "electorate": 7608,
+          "turnout": 6198,
+          "turnout_pct": 81.47,
+          "abstention": 1410,
+          "abstention_pct": 18.53,
           "president": {
+            "electorate": 7611,
+            "turnout": 6200,
+            "turnout_pct": 81.46,
+            "abstention": 1411,
+            "abstention_pct": 18.54,
             "blank": 56,
             "blank_pct": 0.9,
             "null": 173,
             "null_pct": 2.79,
             "valid": 5971,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6200
           },
           "governor": {
+            "electorate": 7608,
+            "turnout": 6198,
+            "turnout_pct": 81.47,
+            "abstention": 1410,
+            "abstention_pct": 18.53,
             "blank": 134,
             "blank_pct": 2.16,
             "null": 274,
             "null_pct": 4.42,
             "valid": 5790,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6198
           }
         }
       },
@@ -3864,20 +4824,32 @@
           "abstention": 1935,
           "abstention_pct": 18.54,
           "president": {
+            "electorate": 10437,
+            "turnout": 8502,
+            "turnout_pct": 81.46,
+            "abstention": 1935,
+            "abstention_pct": 18.54,
             "blank": 131,
             "blank_pct": 1.54,
             "null": 223,
             "null_pct": 2.62,
             "valid": 8148,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8502
           },
           "governor": {
+            "electorate": 10437,
+            "turnout": 8502,
+            "turnout_pct": 81.46,
+            "abstention": 1935,
+            "abstention_pct": 18.54,
             "blank": 294,
             "blank_pct": 3.46,
             "null": 357,
             "null_pct": 4.2,
             "valid": 7851,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8502
           }
         }
       },
@@ -3909,20 +4881,32 @@
           "abstention": 709,
           "abstention_pct": 15.04,
           "president": {
+            "electorate": 4715,
+            "turnout": 4006,
+            "turnout_pct": 84.96,
+            "abstention": 709,
+            "abstention_pct": 15.04,
             "blank": 50,
             "blank_pct": 1.25,
             "null": 123,
             "null_pct": 3.07,
             "valid": 3833,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4006
           },
           "governor": {
+            "electorate": 4715,
+            "turnout": 4006,
+            "turnout_pct": 84.96,
+            "abstention": 709,
+            "abstention_pct": 15.04,
             "blank": 125,
             "blank_pct": 3.12,
             "null": 172,
             "null_pct": 4.29,
             "valid": 3709,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4006
           }
         }
       },
@@ -3948,26 +4932,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9623,
-          "turnout": 7708,
+          "electorate": 9621,
+          "turnout": 7706,
           "turnout_pct": 80.1,
           "abstention": 1915,
           "abstention_pct": 19.9,
           "president": {
+            "electorate": 9623,
+            "turnout": 7708,
+            "turnout_pct": 80.1,
+            "abstention": 1915,
+            "abstention_pct": 19.9,
             "blank": 121,
             "blank_pct": 1.57,
             "null": 284,
             "null_pct": 3.68,
             "valid": 7303,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7708
           },
           "governor": {
+            "electorate": 9621,
+            "turnout": 7706,
+            "turnout_pct": 80.1,
+            "abstention": 1915,
+            "abstention_pct": 19.9,
             "blank": 313,
             "blank_pct": 4.06,
             "null": 399,
             "null_pct": 5.18,
             "valid": 6994,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7706
           }
         }
       },
@@ -3979,7 +4975,7 @@
           "name": "LULA",
           "party": "PT",
           "votes": 7772,
-          "pct": 58,
+          "pct": 58.0,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -3993,26 +4989,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 17267,
-          "turnout": 14120,
+          "electorate": 17266,
+          "turnout": 14119,
           "turnout_pct": 81.77,
           "abstention": 3147,
           "abstention_pct": 18.23,
           "president": {
+            "electorate": 17267,
+            "turnout": 14120,
+            "turnout_pct": 81.77,
+            "abstention": 3147,
+            "abstention_pct": 18.23,
             "blank": 236,
             "blank_pct": 1.67,
             "null": 485,
             "null_pct": 3.43,
             "valid": 13399,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 14120
           },
           "governor": {
+            "electorate": 17266,
+            "turnout": 14119,
+            "turnout_pct": 81.77,
+            "abstention": 3147,
+            "abstention_pct": 18.23,
             "blank": 587,
             "blank_pct": 4.16,
             "null": 656,
             "null_pct": 4.65,
             "valid": 12876,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 14119
           }
         }
       },
@@ -4044,20 +5052,32 @@
           "abstention": 475,
           "abstention_pct": 15.56,
           "president": {
+            "electorate": 3052,
+            "turnout": 2577,
+            "turnout_pct": 84.44,
+            "abstention": 475,
+            "abstention_pct": 15.56,
             "blank": 28,
             "blank_pct": 1.09,
             "null": 85,
             "null_pct": 3.3,
             "valid": 2464,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2577
           },
           "governor": {
+            "electorate": 3052,
+            "turnout": 2577,
+            "turnout_pct": 84.44,
+            "abstention": 475,
+            "abstention_pct": 15.56,
             "blank": 27,
             "blank_pct": 1.05,
             "null": 117,
             "null_pct": 4.54,
             "valid": 2433,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2577
           }
         }
       },
@@ -4083,26 +5103,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 188013,
-          "turnout": 157998,
-          "turnout_pct": 84.04,
-          "abstention": 30015,
-          "abstention_pct": 15.96,
+          "electorate": 187604,
+          "turnout": 157644,
+          "turnout_pct": 84.03,
+          "abstention": 29960,
+          "abstention_pct": 15.97,
           "president": {
+            "electorate": 188013,
+            "turnout": 157998,
+            "turnout_pct": 84.04,
+            "abstention": 30015,
+            "abstention_pct": 15.96,
             "blank": 2930,
             "blank_pct": 1.85,
             "null": 4904,
             "null_pct": 3.1,
             "valid": 150164,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 157998
           },
           "governor": {
+            "electorate": 187604,
+            "turnout": 157644,
+            "turnout_pct": 84.03,
+            "abstention": 29960,
+            "abstention_pct": 15.97,
             "blank": 4751,
             "blank_pct": 3.01,
             "null": 6337,
             "null_pct": 4.02,
             "valid": 146541,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 157644
           }
         }
       },
@@ -4128,26 +5160,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 573148,
-          "turnout": 455580,
-          "turnout_pct": 79.49,
-          "abstention": 117568,
-          "abstention_pct": 20.51,
+          "electorate": 570792,
+          "turnout": 453418,
+          "turnout_pct": 79.44,
+          "abstention": 117374,
+          "abstention_pct": 20.56,
           "president": {
+            "electorate": 573148,
+            "turnout": 455580,
+            "turnout_pct": 79.49,
+            "abstention": 117568,
+            "abstention_pct": 20.51,
             "blank": 6708,
             "blank_pct": 1.47,
             "null": 12495,
             "null_pct": 2.74,
             "valid": 436377,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 455580
           },
           "governor": {
+            "electorate": 570792,
+            "turnout": 453418,
+            "turnout_pct": 79.44,
+            "abstention": 117374,
+            "abstention_pct": 20.56,
             "blank": 15016,
             "blank_pct": 3.31,
             "null": 22114,
             "null_pct": 4.88,
             "valid": 416219,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 453418
           }
         }
       },
@@ -4173,26 +5217,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 27948,
-          "turnout": 22467,
+          "electorate": 27945,
+          "turnout": 22465,
           "turnout_pct": 80.39,
-          "abstention": 5481,
+          "abstention": 5480,
           "abstention_pct": 19.61,
           "president": {
+            "electorate": 27948,
+            "turnout": 22467,
+            "turnout_pct": 80.39,
+            "abstention": 5481,
+            "abstention_pct": 19.61,
             "blank": 410,
             "blank_pct": 1.82,
             "null": 785,
             "null_pct": 3.49,
             "valid": 21272,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 22467
           },
           "governor": {
+            "electorate": 27945,
+            "turnout": 22465,
+            "turnout_pct": 80.39,
+            "abstention": 5480,
+            "abstention_pct": 19.61,
             "blank": 1117,
             "blank_pct": 4.97,
             "null": 1369,
             "null_pct": 6.09,
             "valid": 19976,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 22465
           }
         }
       },
@@ -4224,20 +5280,32 @@
           "abstention": 3860,
           "abstention_pct": 16.5,
           "president": {
+            "electorate": 23401,
+            "turnout": 19541,
+            "turnout_pct": 83.5,
+            "abstention": 3860,
+            "abstention_pct": 16.5,
             "blank": 316,
             "blank_pct": 1.62,
             "null": 596,
             "null_pct": 3.05,
             "valid": 18629,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 19541
           },
           "governor": {
+            "electorate": 23401,
+            "turnout": 19541,
+            "turnout_pct": 83.5,
+            "abstention": 3860,
+            "abstention_pct": 16.5,
             "blank": 631,
             "blank_pct": 3.23,
             "null": 714,
             "null_pct": 3.65,
             "valid": 18178,
-            "valid_pct": 99.9
+            "valid_pct": 99.9,
+            "total_votes": 19541
           }
         }
       },
@@ -4263,26 +5331,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4689,
-          "turnout": 3796,
-          "turnout_pct": 80.96,
+          "electorate": 4686,
+          "turnout": 3793,
+          "turnout_pct": 80.94,
           "abstention": 893,
-          "abstention_pct": 19.04,
+          "abstention_pct": 19.06,
           "president": {
+            "electorate": 4689,
+            "turnout": 3796,
+            "turnout_pct": 80.96,
+            "abstention": 893,
+            "abstention_pct": 19.04,
             "blank": 63,
             "blank_pct": 1.66,
             "null": 122,
             "null_pct": 3.21,
             "valid": 3611,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3796
           },
           "governor": {
+            "electorate": 4686,
+            "turnout": 3793,
+            "turnout_pct": 80.94,
+            "abstention": 893,
+            "abstention_pct": 19.06,
             "blank": 136,
             "blank_pct": 3.59,
             "null": 148,
             "null_pct": 3.9,
             "valid": 3509,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3793
           }
         }
       },
@@ -4308,26 +5388,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4580,
-          "turnout": 3758,
-          "turnout_pct": 82.05,
+          "electorate": 4578,
+          "turnout": 3756,
+          "turnout_pct": 82.04,
           "abstention": 822,
-          "abstention_pct": 17.95,
+          "abstention_pct": 17.96,
           "president": {
+            "electorate": 4580,
+            "turnout": 3758,
+            "turnout_pct": 82.05,
+            "abstention": 822,
+            "abstention_pct": 17.95,
             "blank": 64,
             "blank_pct": 1.7,
             "null": 126,
             "null_pct": 3.35,
             "valid": 3568,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3758
           },
           "governor": {
+            "electorate": 4578,
+            "turnout": 3756,
+            "turnout_pct": 82.04,
+            "abstention": 822,
+            "abstention_pct": 17.96,
             "blank": 144,
             "blank_pct": 3.83,
             "null": 245,
             "null_pct": 6.52,
             "valid": 3367,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3756
           }
         }
       },
@@ -4359,20 +5451,32 @@
           "abstention": 876,
           "abstention_pct": 20.68,
           "president": {
+            "electorate": 4235,
+            "turnout": 3359,
+            "turnout_pct": 79.32,
+            "abstention": 876,
+            "abstention_pct": 20.68,
             "blank": 28,
             "blank_pct": 0.83,
             "null": 89,
             "null_pct": 2.65,
             "valid": 3242,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3359
           },
           "governor": {
+            "electorate": 4235,
+            "turnout": 3359,
+            "turnout_pct": 79.32,
+            "abstention": 876,
+            "abstention_pct": 20.68,
             "blank": 75,
             "blank_pct": 2.23,
             "null": 113,
             "null_pct": 3.36,
             "valid": 3171,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3359
           }
         }
       },
@@ -4398,26 +5502,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5532,
-          "turnout": 4536,
-          "turnout_pct": 82,
+          "electorate": 5531,
+          "turnout": 4535,
+          "turnout_pct": 81.99,
           "abstention": 996,
-          "abstention_pct": 18,
+          "abstention_pct": 18.01,
           "president": {
+            "electorate": 5532,
+            "turnout": 4536,
+            "turnout_pct": 82.0,
+            "abstention": 996,
+            "abstention_pct": 18.0,
             "blank": 46,
             "blank_pct": 1.01,
             "null": 138,
             "null_pct": 3.04,
             "valid": 4352,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4536
           },
           "governor": {
+            "electorate": 5531,
+            "turnout": 4535,
+            "turnout_pct": 81.99,
+            "abstention": 996,
+            "abstention_pct": 18.01,
             "blank": 88,
             "blank_pct": 1.94,
             "null": 175,
             "null_pct": 3.86,
             "valid": 4272,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4535
           }
         }
       },
@@ -4449,20 +5565,32 @@
           "abstention": 710,
           "abstention_pct": 16.36,
           "president": {
+            "electorate": 4339,
+            "turnout": 3629,
+            "turnout_pct": 83.64,
+            "abstention": 710,
+            "abstention_pct": 16.36,
             "blank": 53,
             "blank_pct": 1.46,
             "null": 137,
             "null_pct": 3.78,
             "valid": 3439,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3629
           },
           "governor": {
+            "electorate": 4339,
+            "turnout": 3629,
+            "turnout_pct": 83.64,
+            "abstention": 710,
+            "abstention_pct": 16.36,
             "blank": 84,
             "blank_pct": 2.31,
             "null": 127,
             "null_pct": 3.5,
             "valid": 3418,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3629
           }
         }
       },
@@ -4488,26 +5616,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 17461,
-          "turnout": 14687,
+          "electorate": 17459,
+          "turnout": 14685,
           "turnout_pct": 84.11,
           "abstention": 2774,
           "abstention_pct": 15.89,
           "president": {
+            "electorate": 17461,
+            "turnout": 14687,
+            "turnout_pct": 84.11,
+            "abstention": 2774,
+            "abstention_pct": 15.89,
             "blank": 365,
             "blank_pct": 2.49,
             "null": 677,
             "null_pct": 4.61,
             "valid": 13645,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 14687
           },
           "governor": {
+            "electorate": 17459,
+            "turnout": 14685,
+            "turnout_pct": 84.11,
+            "abstention": 2774,
+            "abstention_pct": 15.89,
             "blank": 929,
             "blank_pct": 6.33,
             "null": 1343,
             "null_pct": 9.15,
             "valid": 12410,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 14685
           }
         }
       },
@@ -4533,26 +5673,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 147649,
-          "turnout": 121719,
-          "turnout_pct": 82.44,
-          "abstention": 25930,
-          "abstention_pct": 17.56,
+          "electorate": 147053,
+          "turnout": 121179,
+          "turnout_pct": 82.4,
+          "abstention": 25874,
+          "abstention_pct": 17.6,
           "president": {
+            "electorate": 147649,
+            "turnout": 121719,
+            "turnout_pct": 82.44,
+            "abstention": 25930,
+            "abstention_pct": 17.56,
             "blank": 1905,
             "blank_pct": 1.57,
             "null": 3271,
             "null_pct": 2.69,
             "valid": 116543,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 121719
           },
           "governor": {
+            "electorate": 147053,
+            "turnout": 121179,
+            "turnout_pct": 82.4,
+            "abstention": 25874,
+            "abstention_pct": 17.6,
             "blank": 4640,
             "blank_pct": 3.83,
             "null": 5536,
             "null_pct": 4.57,
             "valid": 110987,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 121179
           }
         }
       },
@@ -4584,20 +5736,32 @@
           "abstention": 1815,
           "abstention_pct": 18.05,
           "president": {
+            "electorate": 10054,
+            "turnout": 8239,
+            "turnout_pct": 81.95,
+            "abstention": 1815,
+            "abstention_pct": 18.05,
             "blank": 144,
             "blank_pct": 1.75,
             "null": 313,
             "null_pct": 3.8,
             "valid": 7782,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8239
           },
           "governor": {
+            "electorate": 10054,
+            "turnout": 8239,
+            "turnout_pct": 81.95,
+            "abstention": 1815,
+            "abstention_pct": 18.05,
             "blank": 249,
             "blank_pct": 3.02,
             "null": 459,
             "null_pct": 5.57,
             "valid": 7531,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8239
           }
         }
       },
@@ -4629,20 +5793,32 @@
           "abstention": 724,
           "abstention_pct": 15.92,
           "president": {
+            "electorate": 4547,
+            "turnout": 3823,
+            "turnout_pct": 84.08,
+            "abstention": 724,
+            "abstention_pct": 15.92,
             "blank": 56,
             "blank_pct": 1.46,
             "null": 127,
             "null_pct": 3.32,
             "valid": 3640,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3823
           },
           "governor": {
+            "electorate": 4547,
+            "turnout": 3823,
+            "turnout_pct": 84.08,
+            "abstention": 724,
+            "abstention_pct": 15.92,
             "blank": 72,
             "blank_pct": 1.88,
             "null": 165,
             "null_pct": 4.32,
             "valid": 3586,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3823
           }
         }
       },
@@ -4668,26 +5844,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9946,
-          "turnout": 8310,
+          "electorate": 9944,
+          "turnout": 8308,
           "turnout_pct": 83.55,
           "abstention": 1636,
           "abstention_pct": 16.45,
           "president": {
+            "electorate": 9946,
+            "turnout": 8310,
+            "turnout_pct": 83.55,
+            "abstention": 1636,
+            "abstention_pct": 16.45,
             "blank": 97,
             "blank_pct": 1.17,
             "null": 251,
             "null_pct": 3.02,
             "valid": 7962,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8310
           },
           "governor": {
+            "electorate": 9944,
+            "turnout": 8308,
+            "turnout_pct": 83.55,
+            "abstention": 1636,
+            "abstention_pct": 16.45,
             "blank": 297,
             "blank_pct": 3.57,
             "null": 346,
             "null_pct": 4.16,
             "valid": 7665,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8308
           }
         }
       },
@@ -4713,26 +5901,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 21145,
-          "turnout": 17558,
-          "turnout_pct": 83.04,
+          "electorate": 21143,
+          "turnout": 17556,
+          "turnout_pct": 83.03,
           "abstention": 3587,
-          "abstention_pct": 16.96,
+          "abstention_pct": 16.97,
           "president": {
+            "electorate": 21145,
+            "turnout": 17558,
+            "turnout_pct": 83.04,
+            "abstention": 3587,
+            "abstention_pct": 16.96,
             "blank": 237,
             "blank_pct": 1.35,
             "null": 466,
             "null_pct": 2.65,
             "valid": 16855,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 17558
           },
           "governor": {
+            "electorate": 21143,
+            "turnout": 17556,
+            "turnout_pct": 83.03,
+            "abstention": 3587,
+            "abstention_pct": 16.97,
             "blank": 643,
             "blank_pct": 3.66,
             "null": 692,
             "null_pct": 3.94,
             "valid": 16220,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 17556
           }
         }
       },
@@ -4764,20 +5964,32 @@
           "abstention": 952,
           "abstention_pct": 21.94,
           "president": {
+            "electorate": 4340,
+            "turnout": 3388,
+            "turnout_pct": 78.06,
+            "abstention": 952,
+            "abstention_pct": 21.94,
             "blank": 30,
             "blank_pct": 0.89,
             "null": 82,
             "null_pct": 2.42,
             "valid": 3276,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3388
           },
           "governor": {
+            "electorate": 4340,
+            "turnout": 3388,
+            "turnout_pct": 78.06,
+            "abstention": 952,
+            "abstention_pct": 21.94,
             "blank": 80,
             "blank_pct": 2.36,
             "null": 118,
             "null_pct": 3.48,
             "valid": 3190,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3388
           }
         }
       },
@@ -4809,20 +6021,32 @@
           "abstention": 570,
           "abstention_pct": 17.3,
           "president": {
+            "electorate": 3295,
+            "turnout": 2725,
+            "turnout_pct": 82.7,
+            "abstention": 570,
+            "abstention_pct": 17.3,
             "blank": 19,
             "blank_pct": 0.7,
             "null": 72,
             "null_pct": 2.64,
             "valid": 2634,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2725
           },
           "governor": {
+            "electorate": 3295,
+            "turnout": 2725,
+            "turnout_pct": 82.7,
+            "abstention": 570,
+            "abstention_pct": 17.3,
             "blank": 45,
             "blank_pct": 1.65,
             "null": 99,
             "null_pct": 3.63,
             "valid": 2581,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2725
           }
         }
       },
@@ -4854,20 +6078,32 @@
           "abstention": 1590,
           "abstention_pct": 24.26,
           "president": {
+            "electorate": 6554,
+            "turnout": 4964,
+            "turnout_pct": 75.74,
+            "abstention": 1590,
+            "abstention_pct": 24.26,
             "blank": 58,
             "blank_pct": 1.17,
             "null": 172,
             "null_pct": 3.46,
             "valid": 4734,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4964
           },
           "governor": {
+            "electorate": 6554,
+            "turnout": 4964,
+            "turnout_pct": 75.74,
+            "abstention": 1590,
+            "abstention_pct": 24.26,
             "blank": 126,
             "blank_pct": 2.54,
             "null": 180,
             "null_pct": 3.63,
             "valid": 4658,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4964
           }
         }
       },
@@ -4893,26 +6129,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 11914,
-          "turnout": 9725,
-          "turnout_pct": 81.63,
+          "electorate": 11912,
+          "turnout": 9723,
+          "turnout_pct": 81.62,
           "abstention": 2189,
-          "abstention_pct": 18.37,
+          "abstention_pct": 18.38,
           "president": {
+            "electorate": 11914,
+            "turnout": 9725,
+            "turnout_pct": 81.63,
+            "abstention": 2189,
+            "abstention_pct": 18.37,
             "blank": 137,
             "blank_pct": 1.41,
             "null": 339,
             "null_pct": 3.49,
             "valid": 9249,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9725
           },
           "governor": {
+            "electorate": 11912,
+            "turnout": 9723,
+            "turnout_pct": 81.62,
+            "abstention": 2189,
+            "abstention_pct": 18.38,
             "blank": 416,
             "blank_pct": 4.28,
             "null": 598,
             "null_pct": 6.15,
             "valid": 8709,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9723
           }
         }
       },
@@ -4938,26 +6186,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 10931,
-          "turnout": 8578,
-          "turnout_pct": 78.47,
-          "abstention": 2353,
-          "abstention_pct": 21.53,
+          "electorate": 10927,
+          "turnout": 8575,
+          "turnout_pct": 78.48,
+          "abstention": 2352,
+          "abstention_pct": 21.52,
           "president": {
+            "electorate": 10931,
+            "turnout": 8578,
+            "turnout_pct": 78.47,
+            "abstention": 2353,
+            "abstention_pct": 21.53,
             "blank": 109,
             "blank_pct": 1.27,
             "null": 225,
             "null_pct": 2.62,
             "valid": 8244,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8578
           },
           "governor": {
+            "electorate": 10927,
+            "turnout": 8575,
+            "turnout_pct": 78.48,
+            "abstention": 2352,
+            "abstention_pct": 21.52,
             "blank": 346,
             "blank_pct": 4.03,
             "null": 399,
             "null_pct": 4.65,
             "valid": 7830,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8575
           }
         }
       },
@@ -4983,26 +6243,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3577,
-          "turnout": 2889,
-          "turnout_pct": 80.77,
+          "electorate": 3574,
+          "turnout": 2886,
+          "turnout_pct": 80.75,
           "abstention": 688,
-          "abstention_pct": 19.23,
+          "abstention_pct": 19.25,
           "president": {
+            "electorate": 3577,
+            "turnout": 2889,
+            "turnout_pct": 80.77,
+            "abstention": 688,
+            "abstention_pct": 19.23,
             "blank": 26,
             "blank_pct": 0.9,
             "null": 51,
             "null_pct": 1.77,
             "valid": 2812,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2889
           },
           "governor": {
+            "electorate": 3574,
+            "turnout": 2886,
+            "turnout_pct": 80.75,
+            "abstention": 688,
+            "abstention_pct": 19.25,
             "blank": 56,
             "blank_pct": 1.94,
             "null": 91,
             "null_pct": 3.15,
             "valid": 2739,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2886
           }
         }
       },
@@ -5028,26 +6300,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6896,
-          "turnout": 5581,
+          "electorate": 6895,
+          "turnout": 5580,
           "turnout_pct": 80.93,
           "abstention": 1315,
           "abstention_pct": 19.07,
           "president": {
+            "electorate": 6896,
+            "turnout": 5581,
+            "turnout_pct": 80.93,
+            "abstention": 1315,
+            "abstention_pct": 19.07,
             "blank": 101,
             "blank_pct": 1.81,
             "null": 190,
             "null_pct": 3.4,
             "valid": 5290,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5581
           },
           "governor": {
+            "electorate": 6895,
+            "turnout": 5580,
+            "turnout_pct": 80.93,
+            "abstention": 1315,
+            "abstention_pct": 19.07,
             "blank": 171,
             "blank_pct": 3.06,
             "null": 317,
             "null_pct": 5.68,
             "valid": 5092,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5580
           }
         }
       },
@@ -5073,26 +6357,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5103,
-          "turnout": 4172,
-          "turnout_pct": 81.76,
+          "electorate": 5102,
+          "turnout": 4171,
+          "turnout_pct": 81.75,
           "abstention": 931,
-          "abstention_pct": 18.24,
+          "abstention_pct": 18.25,
           "president": {
+            "electorate": 5103,
+            "turnout": 4172,
+            "turnout_pct": 81.76,
+            "abstention": 931,
+            "abstention_pct": 18.24,
             "blank": 50,
             "blank_pct": 1.2,
             "null": 112,
             "null_pct": 2.68,
             "valid": 4010,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4172
           },
           "governor": {
+            "electorate": 5102,
+            "turnout": 4171,
+            "turnout_pct": 81.75,
+            "abstention": 931,
+            "abstention_pct": 18.25,
             "blank": 89,
             "blank_pct": 2.13,
             "null": 159,
             "null_pct": 3.81,
             "valid": 3920,
-            "valid_pct": 99.92
+            "valid_pct": 99.92,
+            "total_votes": 4171
           }
         }
       },
@@ -5124,20 +6420,32 @@
           "abstention": 2090,
           "abstention_pct": 17.9,
           "president": {
+            "electorate": 11674,
+            "turnout": 9584,
+            "turnout_pct": 82.1,
+            "abstention": 2090,
+            "abstention_pct": 17.9,
             "blank": 146,
             "blank_pct": 1.52,
             "null": 305,
             "null_pct": 3.18,
             "valid": 9133,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9584
           },
           "governor": {
+            "electorate": 11674,
+            "turnout": 9584,
+            "turnout_pct": 82.1,
+            "abstention": 2090,
+            "abstention_pct": 17.9,
             "blank": 338,
             "blank_pct": 3.53,
             "null": 492,
             "null_pct": 5.13,
             "valid": 8754,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9584
           }
         }
       },
@@ -5169,20 +6477,32 @@
           "abstention": 1456,
           "abstention_pct": 17.13,
           "president": {
+            "electorate": 8502,
+            "turnout": 7046,
+            "turnout_pct": 82.87,
+            "abstention": 1456,
+            "abstention_pct": 17.13,
             "blank": 116,
             "blank_pct": 1.65,
             "null": 254,
             "null_pct": 3.6,
             "valid": 6676,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7046
           },
           "governor": {
+            "electorate": 8502,
+            "turnout": 7046,
+            "turnout_pct": 82.87,
+            "abstention": 1456,
+            "abstention_pct": 17.13,
             "blank": 205,
             "blank_pct": 2.91,
             "null": 303,
             "null_pct": 4.3,
             "valid": 6537,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 7046
           }
         }
       },
@@ -5208,26 +6528,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4933,
-          "turnout": 4098,
+          "electorate": 4932,
+          "turnout": 4097,
           "turnout_pct": 83.07,
           "abstention": 835,
           "abstention_pct": 16.93,
           "president": {
+            "electorate": 4933,
+            "turnout": 4098,
+            "turnout_pct": 83.07,
+            "abstention": 835,
+            "abstention_pct": 16.93,
             "blank": 60,
             "blank_pct": 1.46,
             "null": 128,
             "null_pct": 3.12,
             "valid": 3910,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4098
           },
           "governor": {
+            "electorate": 4932,
+            "turnout": 4097,
+            "turnout_pct": 83.07,
+            "abstention": 835,
+            "abstention_pct": 16.93,
             "blank": 176,
             "blank_pct": 4.3,
             "null": 169,
             "null_pct": 4.12,
             "valid": 3752,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4097
           }
         }
       },
@@ -5259,20 +6591,32 @@
           "abstention": 650,
           "abstention_pct": 17.73,
           "president": {
+            "electorate": 3667,
+            "turnout": 3017,
+            "turnout_pct": 82.27,
+            "abstention": 650,
+            "abstention_pct": 17.73,
             "blank": 28,
             "blank_pct": 0.93,
             "null": 52,
             "null_pct": 1.72,
             "valid": 2937,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3017
           },
           "governor": {
+            "electorate": 3667,
+            "turnout": 3017,
+            "turnout_pct": 82.27,
+            "abstention": 650,
+            "abstention_pct": 17.73,
             "blank": 52,
             "blank_pct": 1.72,
             "null": 60,
             "null_pct": 1.99,
             "valid": 2905,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3017
           }
         }
       },
@@ -5304,20 +6648,32 @@
           "abstention": 395,
           "abstention_pct": 14.32,
           "president": {
+            "electorate": 2759,
+            "turnout": 2364,
+            "turnout_pct": 85.68,
+            "abstention": 395,
+            "abstention_pct": 14.32,
             "blank": 24,
             "blank_pct": 1.02,
             "null": 62,
             "null_pct": 2.62,
             "valid": 2278,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2364
           },
           "governor": {
+            "electorate": 2759,
+            "turnout": 2364,
+            "turnout_pct": 85.68,
+            "abstention": 395,
+            "abstention_pct": 14.32,
             "blank": 25,
             "blank_pct": 1.06,
             "null": 69,
             "null_pct": 2.92,
             "valid": 2270,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2364
           }
         }
       },
@@ -5349,20 +6705,32 @@
           "abstention": 678,
           "abstention_pct": 17.64,
           "president": {
+            "electorate": 3843,
+            "turnout": 3165,
+            "turnout_pct": 82.36,
+            "abstention": 678,
+            "abstention_pct": 17.64,
             "blank": 26,
             "blank_pct": 0.82,
             "null": 119,
             "null_pct": 3.76,
             "valid": 3020,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3165
           },
           "governor": {
+            "electorate": 3843,
+            "turnout": 3165,
+            "turnout_pct": 82.36,
+            "abstention": 678,
+            "abstention_pct": 17.64,
             "blank": 69,
             "blank_pct": 2.18,
             "null": 158,
             "null_pct": 4.99,
             "valid": 2938,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3165
           }
         }
       },
@@ -5388,26 +6756,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6909,
-          "turnout": 5765,
+          "electorate": 6908,
+          "turnout": 5764,
           "turnout_pct": 83.44,
           "abstention": 1144,
           "abstention_pct": 16.56,
           "president": {
+            "electorate": 6909,
+            "turnout": 5765,
+            "turnout_pct": 83.44,
+            "abstention": 1144,
+            "abstention_pct": 16.56,
             "blank": 45,
             "blank_pct": 0.78,
             "null": 154,
             "null_pct": 2.67,
             "valid": 5566,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5765
           },
           "governor": {
+            "electorate": 6908,
+            "turnout": 5764,
+            "turnout_pct": 83.44,
+            "abstention": 1144,
+            "abstention_pct": 16.56,
             "blank": 92,
             "blank_pct": 1.6,
             "null": 179,
             "null_pct": 3.11,
             "valid": 5493,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5764
           }
         }
       },
@@ -5433,26 +6813,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 10982,
-          "turnout": 9097,
-          "turnout_pct": 82.84,
+          "electorate": 10981,
+          "turnout": 9096,
+          "turnout_pct": 82.83,
           "abstention": 1885,
-          "abstention_pct": 17.16,
+          "abstention_pct": 17.17,
           "president": {
+            "electorate": 10982,
+            "turnout": 9097,
+            "turnout_pct": 82.84,
+            "abstention": 1885,
+            "abstention_pct": 17.16,
             "blank": 139,
             "blank_pct": 1.53,
             "null": 209,
             "null_pct": 2.3,
             "valid": 8749,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9097
           },
           "governor": {
+            "electorate": 10981,
+            "turnout": 9096,
+            "turnout_pct": 82.83,
+            "abstention": 1885,
+            "abstention_pct": 17.17,
             "blank": 333,
             "blank_pct": 3.66,
             "null": 346,
             "null_pct": 3.8,
             "valid": 8417,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9096
           }
         }
       },
@@ -5484,20 +6876,32 @@
           "abstention": 773,
           "abstention_pct": 16.66,
           "president": {
+            "electorate": 4641,
+            "turnout": 3868,
+            "turnout_pct": 83.34,
+            "abstention": 773,
+            "abstention_pct": 16.66,
             "blank": 32,
             "blank_pct": 0.83,
             "null": 105,
             "null_pct": 2.71,
             "valid": 3731,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3868
           },
           "governor": {
+            "electorate": 4641,
+            "turnout": 3868,
+            "turnout_pct": 83.34,
+            "abstention": 773,
+            "abstention_pct": 16.66,
             "blank": 86,
             "blank_pct": 2.22,
             "null": 150,
             "null_pct": 3.88,
             "valid": 3632,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3868
           }
         }
       },
@@ -5523,26 +6927,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4188,
-          "turnout": 3372,
-          "turnout_pct": 80.52,
+          "electorate": 4187,
+          "turnout": 3371,
+          "turnout_pct": 80.51,
           "abstention": 816,
-          "abstention_pct": 19.48,
+          "abstention_pct": 19.49,
           "president": {
+            "electorate": 4188,
+            "turnout": 3372,
+            "turnout_pct": 80.52,
+            "abstention": 816,
+            "abstention_pct": 19.48,
             "blank": 32,
             "blank_pct": 0.95,
             "null": 88,
             "null_pct": 2.61,
             "valid": 3252,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3372
           },
           "governor": {
+            "electorate": 4187,
+            "turnout": 3371,
+            "turnout_pct": 80.51,
+            "abstention": 816,
+            "abstention_pct": 19.49,
             "blank": 67,
             "blank_pct": 1.99,
             "null": 95,
             "null_pct": 2.82,
             "valid": 3209,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3371
           }
         }
       },
@@ -5568,26 +6984,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 27658,
-          "turnout": 22761,
+          "electorate": 27655,
+          "turnout": 22758,
           "turnout_pct": 82.29,
           "abstention": 4897,
           "abstention_pct": 17.71,
           "president": {
+            "electorate": 27658,
+            "turnout": 22761,
+            "turnout_pct": 82.29,
+            "abstention": 4897,
+            "abstention_pct": 17.71,
             "blank": 359,
             "blank_pct": 1.58,
             "null": 680,
             "null_pct": 2.99,
             "valid": 21722,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 22761
           },
           "governor": {
+            "electorate": 27655,
+            "turnout": 22758,
+            "turnout_pct": 82.29,
+            "abstention": 4897,
+            "abstention_pct": 17.71,
             "blank": 882,
             "blank_pct": 3.88,
             "null": 1188,
             "null_pct": 5.22,
             "valid": 20687,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 22758
           }
         }
       },
@@ -5613,26 +7041,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5115,
-          "turnout": 4180,
+          "electorate": 5114,
+          "turnout": 4179,
           "turnout_pct": 81.72,
           "abstention": 935,
           "abstention_pct": 18.28,
           "president": {
+            "electorate": 5115,
+            "turnout": 4180,
+            "turnout_pct": 81.72,
+            "abstention": 935,
+            "abstention_pct": 18.28,
             "blank": 54,
             "blank_pct": 1.29,
             "null": 125,
             "null_pct": 2.99,
             "valid": 4001,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4180
           },
           "governor": {
+            "electorate": 5114,
+            "turnout": 4179,
+            "turnout_pct": 81.72,
+            "abstention": 935,
+            "abstention_pct": 18.28,
             "blank": 106,
             "blank_pct": 2.54,
             "null": 165,
             "null_pct": 3.95,
             "valid": 3907,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 4179
           }
         }
       },
@@ -5658,26 +7098,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 11151,
-          "turnout": 9003,
-          "turnout_pct": 80.74,
+          "electorate": 11145,
+          "turnout": 8997,
+          "turnout_pct": 80.73,
           "abstention": 2148,
-          "abstention_pct": 19.26,
+          "abstention_pct": 19.27,
           "president": {
+            "electorate": 11151,
+            "turnout": 9003,
+            "turnout_pct": 80.74,
+            "abstention": 2148,
+            "abstention_pct": 19.26,
             "blank": 141,
             "blank_pct": 1.57,
             "null": 287,
             "null_pct": 3.19,
             "valid": 8575,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9003
           },
           "governor": {
+            "electorate": 11145,
+            "turnout": 8997,
+            "turnout_pct": 80.73,
+            "abstention": 2148,
+            "abstention_pct": 19.27,
             "blank": 255,
             "blank_pct": 2.83,
             "null": 439,
             "null_pct": 4.88,
             "valid": 8303,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8997
           }
         }
       },
@@ -5703,26 +7155,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 2635,
-          "turnout": 2264,
-          "turnout_pct": 85.92,
+          "electorate": 2634,
+          "turnout": 2263,
+          "turnout_pct": 85.91,
           "abstention": 371,
-          "abstention_pct": 14.08,
+          "abstention_pct": 14.09,
           "president": {
+            "electorate": 2635,
+            "turnout": 2264,
+            "turnout_pct": 85.92,
+            "abstention": 371,
+            "abstention_pct": 14.08,
             "blank": 58,
             "blank_pct": 2.56,
             "null": 95,
             "null_pct": 4.2,
             "valid": 2111,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2264
           },
           "governor": {
+            "electorate": 2634,
+            "turnout": 2263,
+            "turnout_pct": 85.91,
+            "abstention": 371,
+            "abstention_pct": 14.09,
             "blank": 111,
             "blank_pct": 4.9,
             "null": 172,
             "null_pct": 7.6,
             "valid": 1979,
-            "valid_pct": 99.95
+            "valid_pct": 99.95,
+            "total_votes": 2263
           }
         }
       },
@@ -5748,26 +7212,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 19114,
-          "turnout": 15376,
-          "turnout_pct": 80.44,
-          "abstention": 3738,
-          "abstention_pct": 19.56,
+          "electorate": 19111,
+          "turnout": 15374,
+          "turnout_pct": 80.45,
+          "abstention": 3737,
+          "abstention_pct": 19.55,
           "president": {
+            "electorate": 19114,
+            "turnout": 15376,
+            "turnout_pct": 80.44,
+            "abstention": 3738,
+            "abstention_pct": 19.56,
             "blank": 213,
             "blank_pct": 1.39,
             "null": 584,
             "null_pct": 3.8,
             "valid": 14579,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 15376
           },
           "governor": {
+            "electorate": 19111,
+            "turnout": 15374,
+            "turnout_pct": 80.45,
+            "abstention": 3737,
+            "abstention_pct": 19.55,
             "blank": 515,
             "blank_pct": 3.35,
             "null": 855,
             "null_pct": 5.56,
             "valid": 14003,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 15374
           }
         }
       },
@@ -5799,20 +7275,32 @@
           "abstention": 998,
           "abstention_pct": 17.36,
           "president": {
+            "electorate": 5748,
+            "turnout": 4750,
+            "turnout_pct": 82.64,
+            "abstention": 998,
+            "abstention_pct": 17.36,
             "blank": 58,
             "blank_pct": 1.22,
             "null": 166,
             "null_pct": 3.49,
             "valid": 4526,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4750
           },
           "governor": {
+            "electorate": 5748,
+            "turnout": 4750,
+            "turnout_pct": 82.64,
+            "abstention": 998,
+            "abstention_pct": 17.36,
             "blank": 115,
             "blank_pct": 2.42,
             "null": 232,
             "null_pct": 4.88,
             "valid": 4403,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4750
           }
         }
       },
@@ -5844,20 +7332,32 @@
           "abstention": 713,
           "abstention_pct": 18.96,
           "president": {
+            "electorate": 3761,
+            "turnout": 3048,
+            "turnout_pct": 81.04,
+            "abstention": 713,
+            "abstention_pct": 18.96,
             "blank": 62,
             "blank_pct": 2.03,
             "null": 116,
             "null_pct": 3.81,
             "valid": 2870,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3048
           },
           "governor": {
+            "electorate": 3761,
+            "turnout": 3048,
+            "turnout_pct": 81.04,
+            "abstention": 713,
+            "abstention_pct": 18.96,
             "blank": 87,
             "blank_pct": 2.85,
             "null": 132,
             "null_pct": 4.33,
             "valid": 2829,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3048
           }
         }
       },
@@ -5883,26 +7383,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9065,
-          "turnout": 7327,
+          "electorate": 9064,
+          "turnout": 7326,
           "turnout_pct": 80.83,
           "abstention": 1738,
           "abstention_pct": 19.17,
           "president": {
+            "electorate": 9065,
+            "turnout": 7327,
+            "turnout_pct": 80.83,
+            "abstention": 1738,
+            "abstention_pct": 19.17,
             "blank": 96,
             "blank_pct": 1.31,
             "null": 232,
             "null_pct": 3.17,
             "valid": 6999,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7327
           },
           "governor": {
+            "electorate": 9064,
+            "turnout": 7326,
+            "turnout_pct": 80.83,
+            "abstention": 1738,
+            "abstention_pct": 19.17,
             "blank": 177,
             "blank_pct": 2.42,
             "null": 327,
             "null_pct": 4.46,
             "valid": 6822,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7326
           }
         }
       },
@@ -5934,20 +7446,32 @@
           "abstention": 1139,
           "abstention_pct": 18.42,
           "president": {
+            "electorate": 6185,
+            "turnout": 5046,
+            "turnout_pct": 81.58,
+            "abstention": 1139,
+            "abstention_pct": 18.42,
             "blank": 55,
             "blank_pct": 1.09,
             "null": 184,
             "null_pct": 3.65,
             "valid": 4807,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5046
           },
           "governor": {
+            "electorate": 6185,
+            "turnout": 5046,
+            "turnout_pct": 81.58,
+            "abstention": 1139,
+            "abstention_pct": 18.42,
             "blank": 123,
             "blank_pct": 2.44,
             "null": 305,
             "null_pct": 6.04,
             "valid": 4618,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5046
           }
         }
       },
@@ -5979,20 +7503,32 @@
           "abstention": 1842,
           "abstention_pct": 13.93,
           "president": {
+            "electorate": 13225,
+            "turnout": 11383,
+            "turnout_pct": 86.07,
+            "abstention": 1842,
+            "abstention_pct": 13.93,
             "blank": 191,
             "blank_pct": 1.68,
             "null": 273,
             "null_pct": 2.4,
             "valid": 10919,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 11383
           },
           "governor": {
+            "electorate": 13225,
+            "turnout": 11383,
+            "turnout_pct": 86.07,
+            "abstention": 1842,
+            "abstention_pct": 13.93,
             "blank": 337,
             "blank_pct": 2.96,
             "null": 341,
-            "null_pct": 3,
+            "null_pct": 3.0,
             "valid": 10705,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 11383
           }
         }
       },
@@ -6024,20 +7560,32 @@
           "abstention": 1124,
           "abstention_pct": 17.95,
           "president": {
+            "electorate": 6262,
+            "turnout": 5138,
+            "turnout_pct": 82.05,
+            "abstention": 1124,
+            "abstention_pct": 17.95,
             "blank": 86,
             "blank_pct": 1.67,
             "null": 180,
             "null_pct": 3.5,
             "valid": 4872,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5138
           },
           "governor": {
+            "electorate": 6262,
+            "turnout": 5138,
+            "turnout_pct": 82.05,
+            "abstention": 1124,
+            "abstention_pct": 17.95,
             "blank": 194,
             "blank_pct": 3.78,
             "null": 273,
             "null_pct": 5.31,
             "valid": 4668,
-            "valid_pct": 99.94
+            "valid_pct": 99.94,
+            "total_votes": 5138
           }
         }
       },
@@ -6069,20 +7617,32 @@
           "abstention": 1284,
           "abstention_pct": 18.17,
           "president": {
+            "electorate": 7068,
+            "turnout": 5784,
+            "turnout_pct": 81.83,
+            "abstention": 1284,
+            "abstention_pct": 18.17,
             "blank": 92,
             "blank_pct": 1.59,
             "null": 251,
             "null_pct": 4.34,
             "valid": 5441,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5784
           },
           "governor": {
+            "electorate": 7068,
+            "turnout": 5784,
+            "turnout_pct": 81.83,
+            "abstention": 1284,
+            "abstention_pct": 18.17,
             "blank": 167,
             "blank_pct": 2.89,
             "null": 314,
             "null_pct": 5.43,
             "valid": 5303,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5784
           }
         }
       },
@@ -6114,20 +7674,32 @@
           "abstention": 633,
           "abstention_pct": 15.09,
           "president": {
+            "electorate": 4196,
+            "turnout": 3563,
+            "turnout_pct": 84.91,
+            "abstention": 633,
+            "abstention_pct": 15.09,
             "blank": 60,
             "blank_pct": 1.68,
             "null": 113,
             "null_pct": 3.17,
             "valid": 3390,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3563
           },
           "governor": {
+            "electorate": 4196,
+            "turnout": 3563,
+            "turnout_pct": 84.91,
+            "abstention": 633,
+            "abstention_pct": 15.09,
             "blank": 119,
             "blank_pct": 3.34,
             "null": 156,
             "null_pct": 4.38,
             "valid": 3288,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3563
           }
         }
       },
@@ -6159,20 +7731,32 @@
           "abstention": 1145,
           "abstention_pct": 16.81,
           "president": {
+            "electorate": 6813,
+            "turnout": 5668,
+            "turnout_pct": 83.19,
+            "abstention": 1145,
+            "abstention_pct": 16.81,
             "blank": 75,
             "blank_pct": 1.32,
             "null": 159,
             "null_pct": 2.81,
             "valid": 5434,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5668
           },
           "governor": {
+            "electorate": 6813,
+            "turnout": 5668,
+            "turnout_pct": 83.19,
+            "abstention": 1145,
+            "abstention_pct": 16.81,
             "blank": 201,
             "blank_pct": 3.55,
             "null": 211,
             "null_pct": 3.72,
             "valid": 5256,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5668
           }
         }
       },
@@ -6198,26 +7782,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4259,
-          "turnout": 3343,
+          "electorate": 4258,
+          "turnout": 3342,
           "turnout_pct": 78.49,
           "abstention": 916,
           "abstention_pct": 21.51,
           "president": {
+            "electorate": 4259,
+            "turnout": 3343,
+            "turnout_pct": 78.49,
+            "abstention": 916,
+            "abstention_pct": 21.51,
             "blank": 37,
             "blank_pct": 1.11,
             "null": 82,
             "null_pct": 2.45,
             "valid": 3224,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3343
           },
           "governor": {
+            "electorate": 4258,
+            "turnout": 3342,
+            "turnout_pct": 78.49,
+            "abstention": 916,
+            "abstention_pct": 21.51,
             "blank": 101,
             "blank_pct": 3.02,
             "null": 97,
             "null_pct": 2.9,
             "valid": 3144,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3342
           }
         }
       },
@@ -6249,20 +7845,32 @@
           "abstention": 930,
           "abstention_pct": 20.86,
           "president": {
+            "electorate": 4458,
+            "turnout": 3528,
+            "turnout_pct": 79.14,
+            "abstention": 930,
+            "abstention_pct": 20.86,
             "blank": 42,
             "blank_pct": 1.19,
             "null": 147,
             "null_pct": 4.17,
             "valid": 3339,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3528
           },
           "governor": {
+            "electorate": 4458,
+            "turnout": 3528,
+            "turnout_pct": 79.14,
+            "abstention": 930,
+            "abstention_pct": 20.86,
             "blank": 68,
             "blank_pct": 1.93,
             "null": 178,
             "null_pct": 5.05,
             "valid": 3282,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3528
           }
         }
       },
@@ -6294,20 +7902,32 @@
           "abstention": 517,
           "abstention_pct": 13.9,
           "president": {
+            "electorate": 3720,
+            "turnout": 3203,
+            "turnout_pct": 86.1,
+            "abstention": 517,
+            "abstention_pct": 13.9,
             "blank": 26,
             "blank_pct": 0.81,
             "null": 119,
             "null_pct": 3.72,
             "valid": 3058,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3203
           },
           "governor": {
+            "electorate": 3720,
+            "turnout": 3203,
+            "turnout_pct": 86.1,
+            "abstention": 517,
+            "abstention_pct": 13.9,
             "blank": 67,
             "blank_pct": 2.09,
             "null": 185,
             "null_pct": 5.78,
             "valid": 2951,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3203
           }
         }
       },
@@ -6333,26 +7953,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4098,
-          "turnout": 3288,
+          "electorate": 4097,
+          "turnout": 3287,
           "turnout_pct": 80.23,
           "abstention": 810,
           "abstention_pct": 19.77,
           "president": {
+            "electorate": 4098,
+            "turnout": 3288,
+            "turnout_pct": 80.23,
+            "abstention": 810,
+            "abstention_pct": 19.77,
             "blank": 53,
             "blank_pct": 1.61,
             "null": 89,
             "null_pct": 2.71,
             "valid": 3146,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3288
           },
           "governor": {
+            "electorate": 4097,
+            "turnout": 3287,
+            "turnout_pct": 80.23,
+            "abstention": 810,
+            "abstention_pct": 19.77,
             "blank": 145,
             "blank_pct": 4.41,
             "null": 150,
             "null_pct": 4.56,
             "valid": 2992,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3287
           }
         }
       },
@@ -6378,26 +8010,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 77509,
-          "turnout": 64963,
+          "electorate": 77507,
+          "turnout": 64961,
           "turnout_pct": 83.81,
           "abstention": 12546,
           "abstention_pct": 16.19,
           "president": {
+            "electorate": 77509,
+            "turnout": 64963,
+            "turnout_pct": 83.81,
+            "abstention": 12546,
+            "abstention_pct": 16.19,
             "blank": 978,
             "blank_pct": 1.51,
             "null": 1981,
             "null_pct": 3.05,
             "valid": 62004,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 64963
           },
           "governor": {
+            "electorate": 77507,
+            "turnout": 64961,
+            "turnout_pct": 83.81,
+            "abstention": 12546,
+            "abstention_pct": 16.19,
             "blank": 2345,
             "blank_pct": 3.61,
             "null": 3111,
             "null_pct": 4.79,
             "valid": 59498,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 64961
           }
         }
       },
@@ -6423,26 +8067,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 35789,
-          "turnout": 28897,
+          "electorate": 35785,
+          "turnout": 28893,
           "turnout_pct": 80.74,
           "abstention": 6892,
           "abstention_pct": 19.26,
           "president": {
+            "electorate": 35789,
+            "turnout": 28897,
+            "turnout_pct": 80.74,
+            "abstention": 6892,
+            "abstention_pct": 19.26,
             "blank": 505,
             "blank_pct": 1.75,
             "null": 1032,
             "null_pct": 3.57,
             "valid": 27360,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 28897
           },
           "governor": {
+            "electorate": 35785,
+            "turnout": 28893,
+            "turnout_pct": 80.74,
+            "abstention": 6892,
+            "abstention_pct": 19.26,
             "blank": 1266,
             "blank_pct": 4.38,
             "null": 1674,
             "null_pct": 5.79,
             "valid": 25950,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 28893
           }
         }
       },
@@ -6474,20 +8130,32 @@
           "abstention": 1957,
           "abstention_pct": 18.57,
           "president": {
+            "electorate": 10539,
+            "turnout": 8582,
+            "turnout_pct": 81.43,
+            "abstention": 1957,
+            "abstention_pct": 18.57,
             "blank": 157,
             "blank_pct": 1.83,
             "null": 289,
             "null_pct": 3.37,
             "valid": 8136,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8582
           },
           "governor": {
+            "electorate": 10539,
+            "turnout": 8582,
+            "turnout_pct": 81.43,
+            "abstention": 1957,
+            "abstention_pct": 18.57,
             "blank": 365,
             "blank_pct": 4.25,
             "null": 509,
             "null_pct": 5.93,
             "valid": 7706,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 8582
           }
         }
       },
@@ -6519,20 +8187,32 @@
           "abstention": 635,
           "abstention_pct": 14.06,
           "president": {
+            "electorate": 4515,
+            "turnout": 3880,
+            "turnout_pct": 85.94,
+            "abstention": 635,
+            "abstention_pct": 14.06,
             "blank": 74,
             "blank_pct": 1.91,
             "null": 126,
             "null_pct": 3.25,
             "valid": 3680,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3880
           },
           "governor": {
+            "electorate": 4515,
+            "turnout": 3880,
+            "turnout_pct": 85.94,
+            "abstention": 635,
+            "abstention_pct": 14.06,
             "blank": 140,
             "blank_pct": 3.61,
             "null": 218,
             "null_pct": 5.62,
             "valid": 3521,
-            "valid_pct": 99.97
+            "valid_pct": 99.97,
+            "total_votes": 3880
           }
         }
       },
@@ -6558,26 +8238,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5309,
-          "turnout": 4473,
+          "electorate": 5308,
+          "turnout": 4472,
           "turnout_pct": 84.25,
           "abstention": 836,
           "abstention_pct": 15.75,
           "president": {
+            "electorate": 5309,
+            "turnout": 4473,
+            "turnout_pct": 84.25,
+            "abstention": 836,
+            "abstention_pct": 15.75,
             "blank": 55,
             "blank_pct": 1.23,
             "null": 99,
             "null_pct": 2.21,
             "valid": 4319,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4473
           },
           "governor": {
+            "electorate": 5308,
+            "turnout": 4472,
+            "turnout_pct": 84.25,
+            "abstention": 836,
+            "abstention_pct": 15.75,
             "blank": 110,
             "blank_pct": 2.46,
             "null": 169,
             "null_pct": 3.78,
             "valid": 4193,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4472
           }
         }
       },
@@ -6603,26 +8295,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 19466,
-          "turnout": 15239,
+          "electorate": 19462,
+          "turnout": 15236,
           "turnout_pct": 78.29,
-          "abstention": 4227,
+          "abstention": 4226,
           "abstention_pct": 21.71,
           "president": {
+            "electorate": 19466,
+            "turnout": 15239,
+            "turnout_pct": 78.29,
+            "abstention": 4227,
+            "abstention_pct": 21.71,
             "blank": 331,
             "blank_pct": 2.17,
             "null": 655,
             "null_pct": 4.3,
             "valid": 14253,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 15239
           },
           "governor": {
+            "electorate": 19462,
+            "turnout": 15236,
+            "turnout_pct": 78.29,
+            "abstention": 4226,
+            "abstention_pct": 21.71,
             "blank": 1111,
             "blank_pct": 7.29,
             "null": 1320,
             "null_pct": 8.66,
             "valid": 12804,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 15236
           }
         }
       },
@@ -6648,26 +8352,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9651,
-          "turnout": 8009,
-          "turnout_pct": 82.99,
+          "electorate": 9650,
+          "turnout": 8008,
+          "turnout_pct": 82.98,
           "abstention": 1642,
-          "abstention_pct": 17.01,
+          "abstention_pct": 17.02,
           "president": {
+            "electorate": 9651,
+            "turnout": 8009,
+            "turnout_pct": 82.99,
+            "abstention": 1642,
+            "abstention_pct": 17.01,
             "blank": 95,
             "blank_pct": 1.19,
             "null": 275,
             "null_pct": 3.43,
             "valid": 7639,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8009
           },
           "governor": {
+            "electorate": 9650,
+            "turnout": 8008,
+            "turnout_pct": 82.98,
+            "abstention": 1642,
+            "abstention_pct": 17.02,
             "blank": 205,
             "blank_pct": 2.56,
             "null": 364,
             "null_pct": 4.55,
             "valid": 7439,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8008
           }
         }
       },
@@ -6693,26 +8409,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 14677,
-          "turnout": 11967,
-          "turnout_pct": 81.54,
+          "electorate": 14676,
+          "turnout": 11966,
+          "turnout_pct": 81.53,
           "abstention": 2710,
-          "abstention_pct": 18.46,
+          "abstention_pct": 18.47,
           "president": {
+            "electorate": 14677,
+            "turnout": 11967,
+            "turnout_pct": 81.54,
+            "abstention": 2710,
+            "abstention_pct": 18.46,
             "blank": 209,
             "blank_pct": 1.75,
             "null": 357,
             "null_pct": 2.98,
             "valid": 11401,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 11967
           },
           "governor": {
+            "electorate": 14676,
+            "turnout": 11966,
+            "turnout_pct": 81.53,
+            "abstention": 2710,
+            "abstention_pct": 18.47,
             "blank": 376,
             "blank_pct": 3.14,
             "null": 515,
             "null_pct": 4.3,
             "valid": 11073,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 11966
           }
         }
       },
@@ -6738,26 +8466,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 6475,
-          "turnout": 5343,
-          "turnout_pct": 82.52,
+          "electorate": 6473,
+          "turnout": 5341,
+          "turnout_pct": 82.51,
           "abstention": 1132,
-          "abstention_pct": 17.48,
+          "abstention_pct": 17.49,
           "president": {
+            "electorate": 6475,
+            "turnout": 5343,
+            "turnout_pct": 82.52,
+            "abstention": 1132,
+            "abstention_pct": 17.48,
             "blank": 78,
             "blank_pct": 1.46,
             "null": 159,
             "null_pct": 2.98,
             "valid": 5106,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5343
           },
           "governor": {
+            "electorate": 6473,
+            "turnout": 5341,
+            "turnout_pct": 82.51,
+            "abstention": 1132,
+            "abstention_pct": 17.49,
             "blank": 103,
             "blank_pct": 1.93,
             "null": 154,
             "null_pct": 2.88,
             "valid": 5084,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 5341
           }
         }
       },
@@ -6789,20 +8529,32 @@
           "abstention": 1374,
           "abstention_pct": 18.27,
           "president": {
+            "electorate": 7520,
+            "turnout": 6146,
+            "turnout_pct": 81.73,
+            "abstention": 1374,
+            "abstention_pct": 18.27,
             "blank": 86,
             "blank_pct": 1.4,
             "null": 224,
             "null_pct": 3.64,
             "valid": 5836,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6146
           },
           "governor": {
+            "electorate": 7520,
+            "turnout": 6146,
+            "turnout_pct": 81.73,
+            "abstention": 1374,
+            "abstention_pct": 18.27,
             "blank": 137,
             "blank_pct": 2.23,
             "null": 298,
             "null_pct": 4.85,
             "valid": 5711,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6146
           }
         }
       },
@@ -6828,26 +8580,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9587,
-          "turnout": 7448,
+          "electorate": 9586,
+          "turnout": 7447,
           "turnout_pct": 77.69,
           "abstention": 2139,
           "abstention_pct": 22.31,
           "president": {
+            "electorate": 9587,
+            "turnout": 7448,
+            "turnout_pct": 77.69,
+            "abstention": 2139,
+            "abstention_pct": 22.31,
             "blank": 72,
             "blank_pct": 0.97,
             "null": 206,
             "null_pct": 2.77,
             "valid": 7170,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7448
           },
           "governor": {
+            "electorate": 9586,
+            "turnout": 7447,
+            "turnout_pct": 77.69,
+            "abstention": 2139,
+            "abstention_pct": 22.31,
             "blank": 98,
             "blank_pct": 1.32,
             "null": 236,
             "null_pct": 3.17,
             "valid": 7112,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 7447
           }
         }
       },
@@ -6879,20 +8643,32 @@
           "abstention": 882,
           "abstention_pct": 16.35,
           "president": {
+            "electorate": 5396,
+            "turnout": 4514,
+            "turnout_pct": 83.65,
+            "abstention": 882,
+            "abstention_pct": 16.35,
             "blank": 57,
             "blank_pct": 1.26,
             "null": 173,
             "null_pct": 3.83,
             "valid": 4284,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4514
           },
           "governor": {
+            "electorate": 5396,
+            "turnout": 4514,
+            "turnout_pct": 83.65,
+            "abstention": 882,
+            "abstention_pct": 16.35,
             "blank": 142,
             "blank_pct": 3.15,
             "null": 323,
             "null_pct": 7.16,
             "valid": 4049,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4514
           }
         }
       },
@@ -6918,26 +8694,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5162,
-          "turnout": 4232,
+          "electorate": 5161,
+          "turnout": 4231,
           "turnout_pct": 81.98,
           "abstention": 930,
           "abstention_pct": 18.02,
           "president": {
+            "electorate": 5162,
+            "turnout": 4232,
+            "turnout_pct": 81.98,
+            "abstention": 930,
+            "abstention_pct": 18.02,
             "blank": 60,
             "blank_pct": 1.42,
             "null": 138,
             "null_pct": 3.26,
             "valid": 4034,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4232
           },
           "governor": {
+            "electorate": 5161,
+            "turnout": 4231,
+            "turnout_pct": 81.98,
+            "abstention": 930,
+            "abstention_pct": 18.02,
             "blank": 145,
             "blank_pct": 3.43,
             "null": 194,
             "null_pct": 4.59,
             "valid": 3892,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4231
           }
         }
       },
@@ -6969,20 +8757,32 @@
           "abstention": 510,
           "abstention_pct": 18.46,
           "president": {
+            "electorate": 2762,
+            "turnout": 2252,
+            "turnout_pct": 81.54,
+            "abstention": 510,
+            "abstention_pct": 18.46,
             "blank": 33,
             "blank_pct": 1.47,
             "null": 48,
             "null_pct": 2.13,
             "valid": 2171,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2252
           },
           "governor": {
+            "electorate": 2762,
+            "turnout": 2252,
+            "turnout_pct": 81.54,
+            "abstention": 510,
+            "abstention_pct": 18.46,
             "blank": 44,
             "blank_pct": 1.95,
             "null": 71,
             "null_pct": 3.15,
             "valid": 2137,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2252
           }
         }
       },
@@ -7014,20 +8814,32 @@
           "abstention": 1710,
           "abstention_pct": 16.21,
           "president": {
+            "electorate": 10547,
+            "turnout": 8837,
+            "turnout_pct": 83.79,
+            "abstention": 1710,
+            "abstention_pct": 16.21,
             "blank": 168,
             "blank_pct": 1.9,
             "null": 275,
             "null_pct": 3.11,
             "valid": 8394,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 8837
           },
           "governor": {
+            "electorate": 10547,
+            "turnout": 8837,
+            "turnout_pct": 83.79,
+            "abstention": 1710,
+            "abstention_pct": 16.21,
             "blank": 385,
             "blank_pct": 4.36,
             "null": 452,
             "null_pct": 5.11,
             "valid": 7999,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 8837
           }
         }
       },
@@ -7055,24 +8867,36 @@
         "participation": {
           "electorate": 12583,
           "turnout": 9689,
-          "turnout_pct": 77,
+          "turnout_pct": 77.0,
           "abstention": 2894,
-          "abstention_pct": 23,
+          "abstention_pct": 23.0,
           "president": {
+            "electorate": 12583,
+            "turnout": 9689,
+            "turnout_pct": 77.0,
+            "abstention": 2894,
+            "abstention_pct": 23.0,
             "blank": 183,
             "blank_pct": 1.89,
             "null": 365,
             "null_pct": 3.77,
             "valid": 9141,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9689
           },
           "governor": {
+            "electorate": 12583,
+            "turnout": 9689,
+            "turnout_pct": 77.0,
+            "abstention": 2894,
+            "abstention_pct": 23.0,
             "blank": 407,
             "blank_pct": 4.2,
             "null": 556,
             "null_pct": 5.74,
             "valid": 8726,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9689
           }
         }
       },
@@ -7098,26 +8922,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 8205,
-          "turnout": 6853,
-          "turnout_pct": 83.52,
+          "electorate": 8199,
+          "turnout": 6847,
+          "turnout_pct": 83.51,
           "abstention": 1352,
-          "abstention_pct": 16.48,
+          "abstention_pct": 16.49,
           "president": {
+            "electorate": 8205,
+            "turnout": 6853,
+            "turnout_pct": 83.52,
+            "abstention": 1352,
+            "abstention_pct": 16.48,
             "blank": 48,
             "blank_pct": 0.7,
             "null": 157,
             "null_pct": 2.29,
             "valid": 6648,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 6853
           },
           "governor": {
+            "electorate": 8199,
+            "turnout": 6847,
+            "turnout_pct": 83.51,
+            "abstention": 1352,
+            "abstention_pct": 16.49,
             "blank": 166,
             "blank_pct": 2.42,
             "null": 266,
             "null_pct": 3.88,
             "valid": 6414,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 6847
           }
         }
       },
@@ -7149,20 +8985,32 @@
           "abstention": 988,
           "abstention_pct": 17.71,
           "president": {
+            "electorate": 5580,
+            "turnout": 4592,
+            "turnout_pct": 82.29,
+            "abstention": 988,
+            "abstention_pct": 17.71,
             "blank": 48,
             "blank_pct": 1.05,
             "null": 170,
             "null_pct": 3.7,
             "valid": 4374,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4592
           },
           "governor": {
+            "electorate": 5580,
+            "turnout": 4592,
+            "turnout_pct": 82.29,
+            "abstention": 988,
+            "abstention_pct": 17.71,
             "blank": 132,
             "blank_pct": 2.87,
             "null": 273,
             "null_pct": 5.95,
             "valid": 4186,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 4592
           }
         }
       },
@@ -7188,26 +9036,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 9238,
-          "turnout": 7020,
+          "electorate": 9237,
+          "turnout": 7019,
           "turnout_pct": 75.99,
           "abstention": 2218,
           "abstention_pct": 24.01,
           "president": {
+            "electorate": 9238,
+            "turnout": 7020,
+            "turnout_pct": 75.99,
+            "abstention": 2218,
+            "abstention_pct": 24.01,
             "blank": 118,
             "blank_pct": 1.68,
             "null": 192,
             "null_pct": 2.74,
             "valid": 6710,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7020
           },
           "governor": {
+            "electorate": 9237,
+            "turnout": 7019,
+            "turnout_pct": 75.99,
+            "abstention": 2218,
+            "abstention_pct": 24.01,
             "blank": 327,
             "blank_pct": 4.66,
             "null": 294,
             "null_pct": 4.19,
             "valid": 6397,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 7019
           }
         }
       },
@@ -7233,26 +9093,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 13651,
-          "turnout": 11057,
-          "turnout_pct": 81,
+          "electorate": 13647,
+          "turnout": 11053,
+          "turnout_pct": 80.99,
           "abstention": 2594,
-          "abstention_pct": 19,
+          "abstention_pct": 19.01,
           "president": {
+            "electorate": 13651,
+            "turnout": 11057,
+            "turnout_pct": 81.0,
+            "abstention": 2594,
+            "abstention_pct": 19.0,
             "blank": 186,
             "blank_pct": 1.68,
             "null": 307,
             "null_pct": 2.78,
             "valid": 10564,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 11057
           },
           "governor": {
+            "electorate": 13647,
+            "turnout": 11053,
+            "turnout_pct": 80.99,
+            "abstention": 2594,
+            "abstention_pct": 19.01,
             "blank": 484,
             "blank_pct": 4.38,
             "null": 563,
             "null_pct": 5.09,
             "valid": 10005,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 11053
           }
         }
       },
@@ -7278,26 +9150,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 2748,
-          "turnout": 2366,
-          "turnout_pct": 86.1,
+          "electorate": 2747,
+          "turnout": 2365,
+          "turnout_pct": 86.09,
           "abstention": 382,
-          "abstention_pct": 13.9,
+          "abstention_pct": 13.91,
           "president": {
+            "electorate": 2748,
+            "turnout": 2366,
+            "turnout_pct": 86.1,
+            "abstention": 382,
+            "abstention_pct": 13.9,
             "blank": 27,
             "blank_pct": 1.14,
             "null": 62,
             "null_pct": 2.62,
             "valid": 2277,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2366
           },
           "governor": {
+            "electorate": 2747,
+            "turnout": 2365,
+            "turnout_pct": 86.09,
+            "abstention": 382,
+            "abstention_pct": 13.91,
             "blank": 51,
             "blank_pct": 2.16,
             "null": 88,
             "null_pct": 3.72,
             "valid": 2226,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2365
           }
         }
       },
@@ -7323,26 +9207,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 28142,
-          "turnout": 23389,
+          "electorate": 28140,
+          "turnout": 23387,
           "turnout_pct": 83.11,
           "abstention": 4753,
           "abstention_pct": 16.89,
           "president": {
+            "electorate": 28142,
+            "turnout": 23389,
+            "turnout_pct": 83.11,
+            "abstention": 4753,
+            "abstention_pct": 16.89,
             "blank": 313,
             "blank_pct": 1.34,
             "null": 772,
             "null_pct": 3.3,
             "valid": 22304,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 23389
           },
           "governor": {
+            "electorate": 28140,
+            "turnout": 23387,
+            "turnout_pct": 83.11,
+            "abstention": 4753,
+            "abstention_pct": 16.89,
             "blank": 702,
-            "blank_pct": 3,
+            "blank_pct": 3.0,
             "null": 1097,
             "null_pct": 4.69,
             "valid": 21586,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 23387
           }
         }
       },
@@ -7368,26 +9264,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 4239,
-          "turnout": 3603,
-          "turnout_pct": 85,
+          "electorate": 4238,
+          "turnout": 3602,
+          "turnout_pct": 84.99,
           "abstention": 636,
-          "abstention_pct": 15,
+          "abstention_pct": 15.01,
           "president": {
+            "electorate": 4239,
+            "turnout": 3603,
+            "turnout_pct": 85.0,
+            "abstention": 636,
+            "abstention_pct": 15.0,
             "blank": 43,
             "blank_pct": 1.19,
             "null": 107,
             "null_pct": 2.97,
             "valid": 3453,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3603
           },
           "governor": {
+            "electorate": 4238,
+            "turnout": 3602,
+            "turnout_pct": 84.99,
+            "abstention": 636,
+            "abstention_pct": 15.01,
             "blank": 80,
             "blank_pct": 2.22,
             "null": 148,
             "null_pct": 4.11,
             "valid": 3374,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3602
           }
         }
       },
@@ -7413,26 +9321,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 8842,
-          "turnout": 7355,
+          "electorate": 8841,
+          "turnout": 7354,
           "turnout_pct": 83.18,
           "abstention": 1487,
           "abstention_pct": 16.82,
           "president": {
+            "electorate": 8842,
+            "turnout": 7355,
+            "turnout_pct": 83.18,
+            "abstention": 1487,
+            "abstention_pct": 16.82,
             "blank": 92,
             "blank_pct": 1.25,
             "null": 270,
             "null_pct": 3.67,
             "valid": 6993,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 7355
           },
           "governor": {
+            "electorate": 8841,
+            "turnout": 7354,
+            "turnout_pct": 83.18,
+            "abstention": 1487,
+            "abstention_pct": 16.82,
             "blank": 221,
             "blank_pct": 3.01,
             "null": 397,
             "null_pct": 5.4,
             "valid": 6735,
-            "valid_pct": 99.99
+            "valid_pct": 99.99,
+            "total_votes": 7354
           }
         }
       },
@@ -7464,20 +9384,32 @@
           "abstention": 2128,
           "abstention_pct": 17.36,
           "president": {
+            "electorate": 12260,
+            "turnout": 10132,
+            "turnout_pct": 82.64,
+            "abstention": 2128,
+            "abstention_pct": 17.36,
             "blank": 153,
             "blank_pct": 1.51,
             "null": 340,
             "null_pct": 3.36,
             "valid": 9639,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10132
           },
           "governor": {
+            "electorate": 12260,
+            "turnout": 10132,
+            "turnout_pct": 82.64,
+            "abstention": 2128,
+            "abstention_pct": 17.36,
             "blank": 317,
             "blank_pct": 3.13,
             "null": 440,
             "null_pct": 4.34,
             "valid": 9375,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 10132
           }
         }
       },
@@ -7509,20 +9441,32 @@
           "abstention": 911,
           "abstention_pct": 23.25,
           "president": {
+            "electorate": 3918,
+            "turnout": 3007,
+            "turnout_pct": 76.75,
+            "abstention": 911,
+            "abstention_pct": 23.25,
             "blank": 34,
             "blank_pct": 1.13,
             "null": 100,
             "null_pct": 3.33,
             "valid": 2873,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3007
           },
           "governor": {
+            "electorate": 3918,
+            "turnout": 3007,
+            "turnout_pct": 76.75,
+            "abstention": 911,
+            "abstention_pct": 23.25,
             "blank": 96,
             "blank_pct": 3.19,
             "null": 157,
             "null_pct": 5.22,
             "valid": 2754,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 3007
           }
         }
       },
@@ -7548,26 +9492,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 11417,
-          "turnout": 9318,
-          "turnout_pct": 81.62,
+          "electorate": 11416,
+          "turnout": 9317,
+          "turnout_pct": 81.61,
           "abstention": 2099,
-          "abstention_pct": 18.38,
+          "abstention_pct": 18.39,
           "president": {
+            "electorate": 11417,
+            "turnout": 9318,
+            "turnout_pct": 81.62,
+            "abstention": 2099,
+            "abstention_pct": 18.38,
             "blank": 182,
             "blank_pct": 1.95,
             "null": 316,
             "null_pct": 3.39,
             "valid": 8820,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9318
           },
           "governor": {
+            "electorate": 11416,
+            "turnout": 9317,
+            "turnout_pct": 81.61,
+            "abstention": 2099,
+            "abstention_pct": 18.39,
             "blank": 366,
             "blank_pct": 3.93,
             "null": 420,
             "null_pct": 4.51,
             "valid": 8531,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 9317
           }
         }
       },
@@ -7579,7 +9535,7 @@
           "name": "LULA",
           "party": "PT",
           "votes": 1758,
-          "pct": 69,
+          "pct": 69.0,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -7593,26 +9549,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 3254,
-          "turnout": 2708,
+          "electorate": 3253,
+          "turnout": 2707,
           "turnout_pct": 83.22,
           "abstention": 546,
           "abstention_pct": 16.78,
           "president": {
+            "electorate": 3254,
+            "turnout": 2708,
+            "turnout_pct": 83.22,
+            "abstention": 546,
+            "abstention_pct": 16.78,
             "blank": 55,
             "blank_pct": 2.03,
             "null": 105,
             "null_pct": 3.88,
             "valid": 2548,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2708
           },
           "governor": {
+            "electorate": 3253,
+            "turnout": 2707,
+            "turnout_pct": 83.22,
+            "abstention": 546,
+            "abstention_pct": 16.78,
             "blank": 130,
             "blank_pct": 4.8,
             "null": 155,
             "null_pct": 5.73,
             "valid": 2422,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2707
           }
         }
       },
@@ -7644,20 +9612,32 @@
           "abstention": 394,
           "abstention_pct": 20.12,
           "president": {
+            "electorate": 1958,
+            "turnout": 1564,
+            "turnout_pct": 79.88,
+            "abstention": 394,
+            "abstention_pct": 20.12,
             "blank": 18,
             "blank_pct": 1.15,
             "null": 58,
             "null_pct": 3.71,
             "valid": 1488,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 1564
           },
           "governor": {
+            "electorate": 1958,
+            "turnout": 1564,
+            "turnout_pct": 79.88,
+            "abstention": 394,
+            "abstention_pct": 20.12,
             "blank": 39,
             "blank_pct": 2.49,
             "null": 73,
             "null_pct": 4.67,
             "valid": 1452,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 1564
           }
         }
       },
@@ -7683,26 +9663,38 @@
           "vote_destination": "válido"
         },
         "participation": {
-          "electorate": 5584,
-          "turnout": 4731,
+          "electorate": 5582,
+          "turnout": 4729,
           "turnout_pct": 84.72,
           "abstention": 853,
           "abstention_pct": 15.28,
           "president": {
+            "electorate": 5584,
+            "turnout": 4731,
+            "turnout_pct": 84.72,
+            "abstention": 853,
+            "abstention_pct": 15.28,
             "blank": 55,
             "blank_pct": 1.16,
             "null": 145,
             "null_pct": 3.06,
             "valid": 4531,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 4731
           },
           "governor": {
+            "electorate": 5582,
+            "turnout": 4729,
+            "turnout_pct": 84.72,
+            "abstention": 853,
+            "abstention_pct": 15.28,
             "blank": 103,
             "blank_pct": 2.18,
             "null": 197,
             "null_pct": 4.17,
             "valid": 4428,
-            "valid_pct": 99.98
+            "valid_pct": 99.98,
+            "total_votes": 4729
           }
         }
       },
@@ -7734,20 +9726,32 @@
           "abstention": 478,
           "abstention_pct": 15.89,
           "president": {
+            "electorate": 3009,
+            "turnout": 2531,
+            "turnout_pct": 84.11,
+            "abstention": 478,
+            "abstention_pct": 15.89,
             "blank": 26,
             "blank_pct": 1.03,
             "null": 104,
             "null_pct": 4.11,
             "valid": 2401,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2531
           },
           "governor": {
+            "electorate": 3009,
+            "turnout": 2531,
+            "turnout_pct": 84.11,
+            "abstention": 478,
+            "abstention_pct": 15.89,
             "blank": 89,
             "blank_pct": 3.52,
             "null": 114,
             "null_pct": 4.5,
             "valid": 2328,
-            "valid_pct": 100
+            "valid_pct": 100.0,
+            "total_votes": 2531
           }
         }
       }
@@ -7763,7 +9767,7 @@
         "abstention_pct": 18.38,
         "total_votes": 2171013,
         "valid": 2071898,
-        "valid_pct": 100,
+        "valid_pct": 100.0,
         "blank": 33172,
         "blank_pct": 1.53,
         "null": 65943,
@@ -7838,7 +9842,7 @@
         },
         {
           "name": "TANGARÁ",
-          "value": 23
+          "value": 23.0
         },
         {
           "name": "GUAMARÉ",
@@ -7846,7 +9850,7 @@
         },
         {
           "name": "JOÃO DIAS",
-          "value": 22.62
+          "value": 22.64
         },
         {
           "name": "CERRO CORÁ",
@@ -7864,7 +9868,7 @@
       "lowest_abstention": [
         {
           "name": "LUCRÉCIA",
-          "value": 13.35
+          "value": 13.36
         },
         {
           "name": "SÃO FERNANDO",
@@ -7872,7 +9876,7 @@
         },
         {
           "name": "TIMBAÚBA DOS BATISTAS",
-          "value": 13.9
+          "value": 13.91
         },
         {
           "name": "SERRA DO MEL",
@@ -7888,11 +9892,11 @@
         },
         {
           "name": "SANTANA DO SERIDÓ",
-          "value": 14.08
+          "value": 14.09
         },
         {
           "name": "JARDIM DE PIRANHAS",
-          "value": 14.23
+          "value": 14.24
         },
         {
           "name": "RIACHO DA CRUZ",
@@ -7900,7 +9904,7 @@
         },
         {
           "name": "APODI",
-          "value": 14.55
+          "value": 14.56
         }
       ],
       "highest_blank_president": [
@@ -8075,7 +10079,7 @@
   },
   "methodology": {
     "cross_note": "O cruzamento é territorial e agregado por município. Não permite afirmar que os mesmos eleitores votaram nas duas candidaturas.",
-    "participation_note": "Comparecimento e abstenção vêm do eleitorado das seções instaladas. Brancos e nulos são específicos de cada cargo.",
+    "participation_note": "Comparecimento e abstenção usam o recorte estadual da eleição para Governador, mantendo o universo do eleitorado do RN e evitando a diferença causada por votos em trânsito exclusivos para Presidente. Brancos e nulos são específicos de cada cargo e seus percentuais são os divulgados oficialmente para o total de votos daquele cargo.",
     "source": "Tribunal Superior Eleitoral — resultados oficiais de 2026; TRE-RN — estatísticas finais oficiais do 1º turno de 2022 para a comparação estadual."
   }
 }
