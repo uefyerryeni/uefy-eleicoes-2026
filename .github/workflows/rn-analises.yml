@@ -1,0 +1,36 @@
+name: Atualizar análises RN
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_rn_analises.py'
+      - '.github/workflows/rn-analises.yml'
+  schedule:
+    - cron: '20 9 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Gerar base de análises
+        run: python scripts/build_rn_analises.py
+      - name: Publicar snapshot se mudou
+        run: |
+          if git diff --quiet -- data/rn-analises.json; then
+            echo "Sem mudanças."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/rn-analises.json
+          git commit -m "Atualiza análises eleitorais do RN"
+          git push
