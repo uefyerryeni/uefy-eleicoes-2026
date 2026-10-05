@@ -816,3 +816,54 @@ body{
 .auto-refresh-state{margin-top:10px;font-size:13px;font-weight:800;color:#59616a}.dark .auto-refresh-state{color:#b8c0c7}
 button:disabled{opacity:.5;cursor:not-allowed}
 .rn-municipality-list{order:5;border:1px solid var(--line,#d7d1c4);background:var(--card,#fff);margin-top:10px}.rn-municipality-list summary{cursor:pointer;min-height:48px;padding:13px 16px;font-weight:800}.rn-municipality-list .rn-list{max-height:280px}.rn-publisher-priority{order:4;margin-top:14px}.rn-publisher-priority.loading-municipality{opacity:.72}.rn-side{display:flex;flex-direction:column}.rn-selected{order:1}.rn-toolbar{order:2}.rn-publisher-priority{order:3}.rn-municipality-list{order:4}@media(max-width:700px){.rn-municipality-list .rn-list{max-height:220px}.rn-publisher-priority{margin-top:10px}}
+
+
+/* Filtro de candidatura no mapa estadual · 2026-10-04 */
+.rn-map-filter{
+  display:flex;
+  align-items:end;
+  gap:14px;
+  padding:12px 14px;
+  margin:-4px 0 16px;
+  border:1px solid var(--rule);
+  border-radius:13px;
+  background:var(--soft);
+}
+.rn-map-filter label{display:grid;gap:5px;min-width:min(100%,360px)}
+.rn-map-filter label>span{
+  font-size:9px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--muted);
+}
+.rn-map-filter select{
+  width:100%;
+  min-height:44px;
+  border:1px solid var(--rule);
+  border-radius:10px;
+  background:var(--surface);
+  color:var(--text);
+  padding:0 12px;
+  font:inherit;
+  font-weight:700;
+}
+.rn-map-filter-status{
+  flex:1;
+  min-width:0;
+  padding:0 2px 8px;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.35;
+}
+.rn-leader-mun.filtered-out{opacity:.28}
+.rn-map-legend span.active{font-weight:900;text-decoration:underline;text-underline-offset:3px}
+.rn-leader-row.active{background:rgba(245,196,0,.10);margin-inline:-7px;padding-inline:7px;border-radius:8px}
+body.dark .rn-map-filter{background:#171c20}
+body.dark .rn-map-filter select{background:#1a1f24;color:#eef1f3;border-color:#343c43}
+body.dark .rn-leader-mun.filtered-out{opacity:.18}
+@media(max-width:700px){
+  .rn-map-filter{display:grid;grid-template-columns:1fr;align-items:stretch}
+  .rn-map-filter label{min-width:0}
+  .rn-map-filter-status{padding:0}
+}
