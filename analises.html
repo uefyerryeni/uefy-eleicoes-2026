@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Análises RN</title>
   <link rel="stylesheet" href="style.css?v=20261005-refino">
-  <link rel="stylesheet" href="analises.css?v=20261005-refino4">
+  <link rel="stylesheet" href="analises.css?v=20261005-refino5">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -35,6 +35,7 @@
           <a href="analises.html">Análises RN</a>
           <a href="#presidente-governador">Presidente + Governador</a>
           <a href="#participacao">Participação eleitoral</a>
+          <a href="#raio-x-municipal">Raio-X municipal</a>
         </div>
       </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
@@ -64,6 +65,7 @@
     <nav>
       <a href="#presidente-governador"><b>03</b><span>Presidente + Governador</span></a>
       <a href="#participacao"><b>07</b><span>Participação, abstenção, brancos e nulos</span></a>
+      <a href="#raio-x-municipal"><b>09</b><span>Raio-X municipal</span></a>
     </nav>
   </section>
 
@@ -201,6 +203,82 @@
     </div>
   </section>
 
+
+  <section class="analysis-section" id="raio-x-municipal">
+    <div class="section-head analysis-section-head">
+      <div><span class="analysis-number">09</span><div><h2>Raio-X municipal</h2><p>Escolha qualquer município do RN e veja participação, brancos e nulos em uma única ficha.</p></div></div>
+      <span class="rn-source-chip">167 MUNICÍPIOS</span>
+    </div>
+
+    <div class="card municipal-toolbar">
+      <label class="municipal-search">
+        <span>Município</span>
+        <select id="municipalitySelect"></select>
+      </label>
+      <label class="municipal-mode">
+        <span>Publicação</span>
+        <select id="municipalPublicationMode">
+          <option value="profile">Raio-X completo</option>
+          <option value="abstention_pct">Abstenção</option>
+          <option value="turnout_pct">Comparecimento</option>
+          <option value="president.blank_pct">Brancos · Presidente</option>
+          <option value="president.null_pct">Nulos · Presidente</option>
+          <option value="governor.blank_pct">Brancos · Governador</option>
+          <option value="governor.null_pct">Nulos · Governador</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="analysis-workbench municipal-workbench">
+      <div class="analysis-main">
+        <section class="card municipal-profile-card">
+          <div class="municipal-profile-head">
+            <div>
+              <span class="analysis-kicker">Município selecionado</span>
+              <h2 id="municipalName">—</h2>
+              <p id="municipalSubtitle">Carregando dados municipais…</p>
+            </div>
+            <div class="municipal-winners" id="municipalWinners"></div>
+          </div>
+
+          <div class="municipal-profile-grid" id="municipalMetrics"></div>
+
+          <div class="municipal-context-grid">
+            <div class="municipal-map-box">
+              <div class="analysis-card-head"><div><h3>Onde fica no RN</h3><p>O município selecionado aparece destacado no mapa.</p></div></div>
+              <svg id="municipalMap" class="municipal-map" viewBox="0 0 760 560" aria-label="Localização do município no Rio Grande do Norte"></svg>
+            </div>
+            <div class="municipal-ranks-box">
+              <div class="analysis-card-head"><div><h3>Posição no estado</h3><p>Ranking entre os 167 municípios para cada indicador.</p></div></div>
+              <div id="municipalRanks" class="municipal-ranks"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card municipal-comparison-card">
+          <div class="analysis-card-head"><div><h3>Município × média do RN</h3><p>Diferença em pontos percentuais em relação ao resultado estadual.</p></div></div>
+          <div id="municipalComparison" class="municipal-comparison"></div>
+        </section>
+      </div>
+
+      <aside class="card analysis-publisher" id="publicacao-municipal">
+        <div class="publisher-head"><span>Publicação municipal</span><strong id="municipalPubTitle">Raio-X municipal</strong><small id="municipalPubMode">Perfil completo</small></div>
+        <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+        <div class="canvas-box"><canvas id="municipalCanvas" width="1080" height="1080"></canvas></div>
+        <div class="block-title text-title"><span>Texto</span><span id="municipalChars">0 caracteres</span></div>
+        <textarea id="municipalPostText"></textarea>
+        <div class="rn-actions analysis-actions">
+          <button class="btn" id="municipalCopyText">Copiar texto</button>
+          <button class="btn" id="municipalCopyImage">Copiar imagem</button>
+          <button class="btn primary" id="municipalOpenX">Publicar no X</button>
+          <button class="btn" id="municipalDownload">Baixar imagem</button>
+          <button class="btn primary full" id="municipalShare">Compartilhar imagem + texto</button>
+        </div>
+        <p class="share-note">Comparecimento/abstenção usam o recorte estadual. Brancos e nulos são específicos do cargo escolhido.</p>
+      </aside>
+    </div>
+  </section>
+
   <section class="card analysis-method">
     <div class="analysis-card-head"><div><span class="analysis-kicker">Transparência</span><h2>Como ler estes dados</h2></div></div>
     <p id="methodCross"></p>
@@ -212,6 +290,6 @@
 <footer class="foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Análises RN</strong><span>Mapas, dados e publicações a partir dos resultados oficiais.</span></div></footer>
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador</a><a href="radar.html">Legislativo</a><a href="analises.html" class="active">Análises</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="analises.js?v=20261005-refino4"></script>
+<script src="analises.js?v=20261005-refino5"></script>
 </body>
 </html>

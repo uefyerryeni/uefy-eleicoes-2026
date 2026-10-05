@@ -89,3 +89,28 @@ test('Card de participação inclui escala cromática no canvas',async({page})=>
   expect(hasScale).toBeTruthy();
   await expect(page.locator('#participationCanvas')).toBeVisible();
 });
+
+
+test('Raio-X municipal carrega os 167 municípios e gera publicação',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  await expect(page.locator('#municipalitySelect option')).toHaveCount(167);
+  await expect(page.locator('#municipalMap path')).toHaveCount(167);
+  await expect(page.locator('#municipalMetrics .municipal-metric-card')).toHaveCount(6);
+  await expect(page.locator('#municipalPostText')).not.toHaveValue('');
+  await expect(page.locator('#municipalCanvas')).toBeVisible();
+  await page.locator('#municipalPublicationMode').selectOption('president.null_pct');
+  await expect(page.locator('#municipalPubMode')).toContainText('Nulos');
+  await expect(page.locator('#municipalPostText')).toHaveValue(/Posição no RN/);
+});
+
+test('Raio-X municipal permite trocar de cidade e recalcula os dados',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  await page.locator('#municipalitySelect').selectOption({label:'NATAL'});
+  await expect(page.locator('#municipalName')).toHaveText('NATAL');
+  await expect(page.locator('#municipalWinners')).toContainText('Presidente mais votado');
+  await expect(page.locator('#municipalComparison > div')).toHaveCount(6);
+});

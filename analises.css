@@ -145,3 +145,41 @@ body.dark .analysis-method strong{color:#f3f5f6}
 .pair-row span strong>b{display:inline-block;margin:0 4px;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.04em}
 .pair-row span strong>u{text-decoration:none;color:var(--muted);margin:0 2px;font-weight:900}
 body.dark .analysis-scope-note{background:#171c20;border-color:#343c43}
+
+
+/* Raio-X municipal */
+.analysis-index nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+.municipal-toolbar{display:grid;grid-template-columns:minmax(260px,1fr) minmax(260px,.7fr);gap:14px;padding:16px 18px;margin-bottom:16px;border-radius:16px}
+.municipal-toolbar label>span{display:block;margin-bottom:5px;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.07em;font-weight:800}
+.municipal-toolbar select{width:100%;min-height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:12px;font-weight:750}
+.municipal-profile-card,.municipal-comparison-card{padding:20px;border-radius:18px;box-shadow:var(--shadow)}
+.municipal-profile-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.8fr);gap:18px;align-items:start;margin-bottom:18px}
+.municipal-profile-head h2{margin:5px 0 4px;font-size:34px;letter-spacing:-.045em}
+.municipal-profile-head p{margin:0;color:var(--muted);font-size:11px}
+.municipal-winners{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.municipal-winners>div{padding:12px;border:1px solid var(--rule);border-radius:12px;background:var(--soft)}
+.municipal-winners span,.municipal-winners strong,.municipal-winners small{display:block}
+.municipal-winners span{font-size:8px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}
+.municipal-winners strong{margin:5px 0 3px;font-size:12px}.municipal-winners strong small{display:inline;font-size:8px;color:var(--muted)}
+.municipal-winners small{font-size:10px;color:var(--muted);font-weight:800}
+.municipal-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-bottom:20px}
+.municipal-metric-card{padding:14px;border:1px solid var(--rule);border-radius:13px;background:var(--surface)}
+.municipal-metric-card span,.municipal-metric-card strong,.municipal-metric-card em,.municipal-metric-card small{display:block}
+.municipal-metric-card span{font-size:8px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:800}
+.municipal-metric-card strong{margin:7px 0 4px;font-size:23px;letter-spacing:-.035em}
+.municipal-metric-card em{font-style:normal;font-size:9px;color:var(--muted);font-weight:750}
+.municipal-metric-card small{margin-top:4px;font-size:9px;font-weight:900}
+.municipal-context-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:14px}
+.municipal-map-box,.municipal-ranks-box{padding:14px;border:1px solid var(--rule);border-radius:14px;background:var(--soft)}
+.municipal-map{display:block;width:100%;height:320px}
+.municipal-map-path.selected{stroke:#f4dd19;stroke-width:4}
+.municipal-ranks{display:grid}
+.municipal-ranks>div{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:9px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule)}
+.municipal-ranks>div:last-child{border-bottom:0}.municipal-ranks span{font-size:10px;font-weight:750}.municipal-ranks strong{font-size:13px}.municipal-ranks small{font-size:9px;color:var(--muted);font-weight:750}
+.municipal-comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.municipal-comparison>div{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:8px;align-items:center;padding:10px 12px;border:1px solid var(--rule);border-radius:11px;background:var(--soft)}
+.municipal-comparison span{font-size:10px;font-weight:800}.municipal-comparison b{font-size:11px}.municipal-comparison small{font-size:9px;color:var(--muted)}
+.municipal-comparison em{font-style:normal;font-size:9px;font-weight:900}.municipal-comparison em.above{color:#8a4a00}.municipal-comparison em.below{color:#286157}
+body.dark .municipal-toolbar select,body.dark .municipal-winners>div,body.dark .municipal-map-box,body.dark .municipal-ranks-box,body.dark .municipal-comparison>div{background:#171c20;border-color:#343c43}
+@media(max-width:980px){.analysis-index nav{grid-template-columns:1fr}.municipal-profile-head,.municipal-context-grid{grid-template-columns:1fr}.municipal-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.municipal-comparison{grid-template-columns:1fr}}
+@media(max-width:600px){.municipal-toolbar{grid-template-columns:1fr}.municipal-profile-grid{grid-template-columns:1fr 1fr}.municipal-winners{grid-template-columns:1fr}.municipal-profile-head h2{font-size:28px}.municipal-map{height:280px}}
