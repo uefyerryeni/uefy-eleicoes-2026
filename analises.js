@@ -40,7 +40,7 @@ function metricValue(row,key=metric){return Number(getPath(row,METRICS[key].fiel
 function metricRows(key=metric){return (DATA.cross?.municipalities||[]).filter(r=>metricValue(r,key)>0)}
 function extent(values){return [Math.min(...values),Math.max(...values)]}
 function lerp(a,b,t){return Math.round(a+(b-a)*t)}
-function metricColor(v,min,max){const t=max<=min?.5:Math.max(0,Math.min(1,(v-min)/(max-min)));const a=[244,221,25],b=[31,35,38];return 'rgb('+lerp(a[0],b[0],t)+','+lerp(a[1],b[1],t)+','+lerp(a[2],b[2],t)+')'}
+function metricColor(v,min,max){const t=max<=min?0.5:Math.max(0,Math.min(1,(v-min)/(max-min)));const a=[244,221,25],b=[31,35,38];return 'rgb('+lerp(a[0],b[0],t)+','+lerp(a[1],b[1],t)+','+lerp(a[2],b[2],t)+')'}
 
 async function init(){
   applySavedTheme();
