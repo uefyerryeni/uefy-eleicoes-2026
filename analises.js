@@ -12,7 +12,7 @@ function municipalityKey(name){const n=norm(name);return MUNICIPALITY_ALIASES[n]
 function pairKey(p,g){return String(p?.number||'')+'|'+String(g?.number||'')}
 function pairLabel(x){return (x?.president?.name||'—')+' × '+(x?.governor?.name||'—')}
 function personText(x){return x?(x.name+(x.party?' ('+x.party+')':'')):'—'}
-function personHtml(x){return x?esc(x.name)+(x.party?' <small>'+esc(x.party)+'</small>'):'—'}
+function personHtml(x){return x?esc(x.name)+(x.party?' <small>'+esc(x.party)+'</small>':''):'—'}
 function nowStamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
 
 function coordsOfGeometry(g,out=[]){if(!g)return out;if(g.type==='Polygon')g.coordinates.forEach(r=>r.forEach(p=>out.push(p)));else if(g.type==='MultiPolygon')g.coordinates.forEach(poly=>poly.forEach(r=>r.forEach(p=>out.push(p))));return out}
