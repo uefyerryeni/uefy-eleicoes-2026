@@ -9,7 +9,7 @@
   <meta http-equiv="Expires" content="0">
   <title>Central das Eleições UEFY — Legislativo RN</title>
   <link rel="stylesheet" href="style.css?v=20261003-04">
-  <link rel="stylesheet" href="radar.css?v=20261003-04">
+  <link rel="stylesheet" href="radar.css?v=20261005-senate-top3">
   <script>
   (function(){fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{if(!x?.build)return;const u=new URL(location.href);if(u.searchParams.get('v')!==x.build){u.searchParams.set('v',x.build);location.replace(u.pathname+u.search+u.hash)}}).catch(()=>{})})();
   </script>
@@ -83,6 +83,16 @@
         <div class="senate-rank-switch" id="senateRankSwitch" role="group" aria-label="Posição mostrada no mapa do Senado">
           <button type="button" class="active" data-senate-rank="1">1º no município</button>
           <button type="button" data-senate-rank="2">2º no município</button>
+          <button type="button" data-senate-rank="3">3º no município</button>
+        </div>
+        <div class="senate-candidate-filter" id="senateCandidateFilterWrap">
+          <label for="senateCandidateFilter">
+            <span>Candidato entre os 3 mais votados no RN</span>
+            <select id="senateCandidateFilter">
+              <option value="">Todos os 3 principais</option>
+            </select>
+          </label>
+          <small id="senateCandidateFilterStatus">O filtro usa a votação estadual oficial do TSE.</small>
         </div>
       </div>
       <button class="btn primary" id="radarMapPublish" type="button" disabled>Gerar publicação do mapa</button>
@@ -183,6 +193,6 @@
 <nav class="mobile-dock" aria-label="Ações rápidas"><a href="index.html">Geral</a><a href="rn.html">Governador RN</a><a href="radar.html" class="active">Legislativo</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="radar.js?v=20261003-04"></script>
+<script src="radar.js?v=20261005-senate-top3"></script>
 </body>
 </html>
