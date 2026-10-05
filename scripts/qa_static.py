@@ -159,21 +159,16 @@ if state_progress<0 or state_progress>100:
 if m.get("final_result") and not (m.get("outcome") or {}).get("final_totalization"):
     fail("Mapa marcado como resultado final sem final_totalization do TSE.")
 
-# 4c) Senado: mapa dos três principais candidatos.
+# 4c) Senado: mapa simples de vencedores municipais.
 radar_html=(ROOT/"radar.html").read_text(encoding="utf-8")
-if 'data-senate-rank="3"' not in radar_html:
-    fail("Radar Senado sem opção de 3º colocado por município.")
 if 'id="senateCandidateFilter"' not in radar_html:
-    fail("Radar Senado sem filtro dos três principais candidatos.")
+    fail("Radar Senado sem filtro por candidatura vencedora.")
+if 'data-senate-rank=' in radar_html:
+    fail("Radar Senado ainda expõe controles de 1º/2º/3º lugar.")
 radar_js=(ROOT/"radar.js").read_text(encoding="utf-8")
-for marker in ("senateTopCandidates","senateCandidateFilter","3 PRINCIPAIS DO RN"):
+for marker in ("mapSummaryUnfiltered","senateWinningMunicipalities","Todos os vencedores municipais","Quem venceu em cada município"):
     if marker not in radar_js:
         fail(f"Radar Senado sem lógica obrigatória: {marker}.")
-if radar.get("status")=="ok":
-    sen_meta=(radar.get("offices") or {}).get("sen") or {}
-    statewide=sen_meta.get("statewide_candidates")
-    if statewide is not None and len(statewide)<3:
-        fail("Radar Senado oficial com menos de três candidaturas na classificação estadual.")
 
 # 5) Paleta de governador obrigatória e única.
 required={
