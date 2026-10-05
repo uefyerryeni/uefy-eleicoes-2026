@@ -163,13 +163,26 @@ def main():
                     'code':m['code'],'name':m['name'],
                     'president':pl,'governor':gl,
                     'participation':{
-                        'electorate':pm['electorate'] or gm['electorate'],
-                        'turnout':pm['turnout'] or gm['turnout'],
-                        'turnout_pct':pm['turnout_pct'] or gm['turnout_pct'],
-                        'abstention':pm['abstention'] or gm['abstention'],
-                        'abstention_pct':pm['abstention_pct'] or gm['abstention_pct'],
-                        'president':{'blank':pm['blank'],'blank_pct':pm['blank_pct'],'null':pm['null'],'null_pct':pm['null_pct'],'valid':pm['valid'],'valid_pct':pm['valid_pct']},
-                        'governor':{'blank':gm['blank'],'blank_pct':gm['blank_pct'],'null':gm['null'],'null_pct':gm['null_pct'],'valid':gm['valid'],'valid_pct':gm['valid_pct']}
+                        # Comparecimento/abstenção usam o pleito estadual (Governador).
+                        # Assim o universo é o eleitorado do RN e não incorpora votos
+                        # exclusivos para Presidente de eleitores em trânsito de outra UF.
+                        'electorate':gm['electorate'],
+                        'turnout':gm['turnout'],
+                        'turnout_pct':gm['turnout_pct'],
+                        'abstention':gm['abstention'],
+                        'abstention_pct':gm['abstention_pct'],
+                        'president':{
+                            'electorate':pm['electorate'],'turnout':pm['turnout'],'turnout_pct':pm['turnout_pct'],
+                            'abstention':pm['abstention'],'abstention_pct':pm['abstention_pct'],
+                            'blank':pm['blank'],'blank_pct':pm['blank_pct'],'null':pm['null'],'null_pct':pm['null_pct'],
+                            'valid':pm['valid'],'valid_pct':pm['valid_pct'],'total_votes':pm['total_votes']
+                        },
+                        'governor':{
+                            'electorate':gm['electorate'],'turnout':gm['turnout'],'turnout_pct':gm['turnout_pct'],
+                            'abstention':gm['abstention'],'abstention_pct':gm['abstention_pct'],
+                            'blank':gm['blank'],'blank_pct':gm['blank_pct'],'null':gm['null'],'null_pct':gm['null_pct'],
+                            'valid':gm['valid'],'valid_pct':gm['valid_pct'],'total_votes':gm['total_votes']
+                        }
                     }
                 })
             except Exception as e:
@@ -227,7 +240,7 @@ def main():
         },
         'methodology':{
             'cross_note':'O cruzamento é territorial e agregado por município. Não permite afirmar que os mesmos eleitores votaram nas duas candidaturas.',
-            'participation_note':'Comparecimento e abstenção vêm do eleitorado das seções instaladas. Brancos e nulos são específicos de cada cargo.',
+            'participation_note':'Comparecimento e abstenção usam o recorte estadual da eleição para Governador, mantendo o universo do eleitorado do RN e evitando a diferença causada por votos em trânsito exclusivos para Presidente. Brancos e nulos são específicos de cada cargo e seus percentuais são os divulgados oficialmente para o total de votos daquele cargo.',
             'source':'Tribunal Superior Eleitoral — resultados oficiais de 2026; TRE-RN — estatísticas finais oficiais do 1º turno de 2022 para a comparação estadual.'
         }
     }

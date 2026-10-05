@@ -10,7 +10,8 @@ function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/
 const MUNICIPALITY_ALIASES={acu:'assu',ares:'arez',januariocicco:'boasaude'};
 function municipalityKey(name){const n=norm(name);return MUNICIPALITY_ALIASES[n]||n}
 function pairKey(p,g){return String(p?.number||'')+'|'+String(g?.number||'')}
-function pairLabel(x){return (x?.president?.name||'—')+' × '+(x?.governor?.name||'—')}
+function pairLabel(x){return (x?.president?.name||'—')+' (Presidente) + '+(x?.governor?.name||'—')+' (Governador)'}
+function pairShort(x){return (x?.president?.name||'—')+' + '+(x?.governor?.name||'—')}
 function personText(x){return x?(x.name+(x.party?' ('+x.party+')':'')):'—'}
 function personHtml(x){return x?esc(x.name)+(x.party?' <small>'+esc(x.party)+'</small>':''):'—'}
 function nowStamp(){return new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}
@@ -29,8 +30,8 @@ const PAIR_COLORS=['#d62828','#1976d2','#2e7d32','#ef8f00','#c2185b','#00897b','
 function pairColor(x){const rows=pairRows(),idx=Math.max(0,rows.findIndex(p=>pairKey(p.president,p.governor)===pairKey(x?.president,x?.governor)));return PAIR_COLORS[idx%PAIR_COLORS.length]}
 
 const METRICS={
-  'abstention_pct':{label:'Abstenção',title:'Abstenção por município',field:['participation','abstention_pct'],state:['pres','abstention_pct'],noun:'abstenção'},
-  'turnout_pct':{label:'Comparecimento',title:'Comparecimento por município',field:['participation','turnout_pct'],state:['pres','turnout_pct'],noun:'comparecimento'},
+  'abstention_pct':{label:'Abstenção',title:'Abstenção por município',field:['participation','abstention_pct'],state:['gov','abstention_pct'],noun:'abstenção'},
+  'turnout_pct':{label:'Comparecimento',title:'Comparecimento por município',field:['participation','turnout_pct'],state:['gov','turnout_pct'],noun:'comparecimento'},
   'president.blank_pct':{label:'Brancos · Presidente',title:'Votos brancos para Presidente',field:['participation','president','blank_pct'],state:['pres','blank_pct'],noun:'votos brancos para Presidente'},
   'president.null_pct':{label:'Nulos · Presidente',title:'Votos nulos para Presidente',field:['participation','president','null_pct'],state:['pres','null_pct'],noun:'votos nulos para Presidente'},
   'governor.blank_pct':{label:'Brancos · Governador',title:'Votos brancos para Governador',field:['participation','governor','blank_pct'],state:['gov','blank_pct'],noun:'votos brancos para Governador'},
@@ -116,13 +117,13 @@ function renderCross(){
     ['Líderes presidenciais',fmtNum(pres.size),'em ao menos um município'],
     ['Líderes para governo',fmtNum(gov.size),'em ao menos um município']
   ].map(x=>'<article class="analysis-kpi"><span>'+x[0]+'</span><strong>'+x[1]+'</strong><small>'+x[2]+'</small></article>').join('');
-  $('#pairFilter').innerHTML='<option value="">Todas as combinações</option>'+pairs.map(x=>'<option value="'+pairKey(x.president,x.governor)+'">'+esc(pairLabel(x))+' · '+x.municipalities+'</option>').join('');
+  $('#pairFilter').innerHTML='<option value="">Todas as combinações</option>'+pairs.map(x=>'<option value="'+pairKey(x.president,x.governor)+'">'+esc(pairLabel(x))+' — '+x.municipalities+' municípios</option>').join('');
   renderCrossMap();renderPairList();renderCrossTable('');renderCrossPublication();
 }
 function renderPairList(){
   $('#pairList').innerHTML=pairRows().map((x,i)=>{
     const key=pairKey(x.president,x.governor),active=key===pairFilter;
-    return '<button class="pair-row'+(active?' active':'')+'" data-pair="'+key+'" type="button"><i style="background:'+pairColor(x)+'"></i><span><strong>'+personHtml(x.president)+' <b>×</b> '+personHtml(x.governor)+'</strong><em>'+x.municipalities+' município(s)</em><small>'+x.names.slice(0,7).map(esc).join(', ')+(x.names.length>7?'…':'')+'</small></span><b>Ver</b></button>';
+    return '<button class="pair-row'+(active?' active':'')+'" data-pair="'+key+'" type="button"><i style="background:'+pairColor(x)+'"></i><span><strong>'+personHtml(x.president)+' <b>Presidente</b> <u>+</u> '+personHtml(x.governor)+' <b>Governador</b></strong><em>'+x.municipalities+' municípios</em><small>'+x.names.slice(0,7).map(esc).join(', ')+(x.names.length>7?'…':'')+'</small></span><b>Ver</b></button>';
   }).join('');
   $('#pairList').querySelectorAll('[data-pair]').forEach(btn=>btn.addEventListener('click',()=>{pairFilter=btn.dataset.pair;$('#pairFilter').value=pairFilter;renderCrossMap();renderPairList();renderCrossPublication();$('#crossMap').scrollIntoView({behavior:'smooth',block:'center'})}));
 }
@@ -136,7 +137,7 @@ function renderCrossMap(){
   }).join('');
   $('#crossLegend').innerHTML=pairRows().map(x=>'<button type="button" data-pair="'+pairKey(x.president,x.governor)+'" class="'+(pairKey(x.president,x.governor)===pairFilter?'active':'')+'"><i style="background:'+pairColor(x)+'"></i><span>'+esc(pairLabel(x))+'</span><b>'+x.municipalities+'</b></button>').join('');
   $('#crossLegend').querySelectorAll('[data-pair]').forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.pair;pairFilter=pairFilter===key?'':key;$('#pairFilter').value=pairFilter;renderCrossMap();renderPairList();renderCrossPublication()}));
-  $('#crossMapCaption').textContent=sel?pairLabel(sel)+' aparece em '+sel.municipalities+' município(s).':'O mapa reúne '+pairRows().length+' combinações de liderança encontradas nos '+(DATA.municipalities_read||167)+' municípios.';
+  $('#crossMapCaption').textContent=sel?('Em '+sel.municipalities+' municípios, '+sel.president.name+' foi o mais votado para Presidente e '+sel.governor.name+' foi o mais votado para Governador.'):('Foram encontradas '+pairRows().length+' combinações diferentes de candidatos mais votados para Presidente e Governador nos '+(DATA.municipalities_read||167)+' municípios.');
 }
 function renderCrossTable(q=''){
   const n=norm(q),rows=(DATA.cross?.municipalities||[]).filter(x=>norm(x.name).includes(n));
@@ -146,8 +147,8 @@ function renderCrossTable(q=''){
 function renderParticipation(){
   const p=DATA.participation?.state_2026?.pres||{},g=DATA.participation?.state_2026?.gov||{};
   $('#participationKpis').innerHTML=[
-    ['Comparecimento',fmtPct(p.turnout_pct),fmtNum(p.turnout)+' eleitores'],
-    ['Abstenção',fmtPct(p.abstention_pct),fmtNum(p.abstention)+' eleitores'],
+    ['Comparecimento',fmtPct(g.turnout_pct),fmtNum(g.turnout)+' eleitores'],
+    ['Abstenção',fmtPct(g.abstention_pct),fmtNum(g.abstention)+' eleitores'],
     ['Brancos · Presidente',fmtPct(p.blank_pct),fmtNum(p.blank)+' votos'],
     ['Nulos · Presidente',fmtPct(p.null_pct),fmtNum(p.null)+' votos'],
     ['Brancos · Governador',fmtPct(g.blank_pct),fmtNum(g.blank)+' votos'],
@@ -195,13 +196,13 @@ function renderHistory(){
 }
 
 function crossPostText(){
-  const sel=selectedPair(),lines=['ELEIÇÕES 2026 | RIO GRANDE DO NORTE','PRESIDENTE × GOVERNADOR',''];
+  const sel=selectedPair(),lines=['ELEIÇÕES 2026 | RIO GRANDE DO NORTE','PRESIDENTE + GOVERNADOR',''];
   if(sel){
-    lines.push(personText(sel.president)+' × '+personText(sel.governor),'liderou simultaneamente em '+sel.municipalities+' município(s) do RN.','');
+    lines.push('Em '+sel.municipalities+' municípios do RN, '+personText(sel.president)+' foi o candidato mais votado para Presidente e '+personText(sel.governor)+' foi o candidato mais votado para Governador.','');
     const sample=sel.names.slice(0,12);
     lines.push((sel.names.length>12?'Entre os municípios: ':'Municípios: ')+sample.join(', ')+(sel.names.length>12?' e outros.':'.'));
   }else{
-    pairRows().forEach(x=>lines.push(personText(x.president)+' × '+personText(x.governor)+' — '+x.municipalities+' município(s)'));
+    pairRows().forEach(x=>lines.push(x.president.name+' (Presidente) + '+x.governor.name+' (Governador) — '+x.municipalities+' municípios'));
   }
   lines.push('','O cruzamento é territorial e usa resultados agregados por município. Não indica que os mesmos eleitores fizeram as duas escolhas.','','Fonte: Tribunal Superior Eleitoral');
   return lines.join('\n');
@@ -214,11 +215,13 @@ function participationPostText(){
     'RN em 2022: '+fmtPct(state22||0)+' ('+ppDiff(state26,state22)+').','',
     directionLabel+' percentuais municipais em 2026:'];
   ordered.forEach((x,i)=>lines.push((i+1)+'. '+x.name+' — '+fmtPct(metricValue(x))));
-  lines.push('','O mapa mostra a distribuição municipal do indicador em 2026. A comparação com 2022 é estadual.','','Fontes: TSE (2026) · TRE-RN (2022)');
+  if(metric==='turnout_pct'||metric==='abstention_pct')lines.push('','Comparecimento/abstenção usam o recorte estadual da eleição para Governador, mantendo o universo do eleitorado do RN.');
+  else lines.push('','Brancos e nulos são específicos do cargo selecionado e o percentual usa o total de votos desse cargo.');
+  lines.push('O mapa mostra a distribuição municipal do indicador em 2026. A comparação com 2022 é estadual.','','Fontes: TSE (2026) · TRE-RN (2022)');
   return lines.join('\n');
 }
 function renderCrossPublication(){
-  const sel=selectedPair();$('#crossPubMode').textContent=sel?pairLabel(sel)+' · '+sel.municipalities+' municípios':'Mapa completo do RN';
+  const sel=selectedPair();$('#crossPubMode').textContent=sel?(pairLabel(sel)+' — '+sel.municipalities+' municípios'):'Quem foi mais votado em cada município do RN';
   const text=crossPostText();$('#crossPostText').value=text;$('#crossChars').textContent=text.length+' caracteres';drawCrossCanvas();
 }
 function renderParticipationPublication(){
@@ -241,9 +244,9 @@ function drawMapCanvas(ctx,colorFn,x,y,w,h){
 }
 function drawCrossCanvas(){
   if(!DATA||!FC)return;const c=$('#crossCanvas'),ctx=c.getContext('2d'),sel=selectedPair();
-  canvasBase(ctx,'Análises RN','Presidente × Governador',sel?pairLabel(sel):'Combinações de liderança por município');
+  canvasBase(ctx,'Análises RN',sel?pairShort(sel):'Presidente + Governador',sel?('Mais votados para os dois cargos em '+sel.municipalities+' municípios'):'Quem foi mais votado em cada município do RN');
   drawMapCanvas(ctx,f=>{const row=rowForFeature(f),key=row?pairKey(row.president,row.governor):'',p=pairRows().find(x=>pairKey(x.president,x.governor)===key);if(!row)return'#d9dee2';if(pairFilter&&key!==pairFilter)return'#e2e5e7';return pairColor(p)},52,340,650,500);
-  let yy=390;const list=(sel?[sel]:pairRows()).slice(0,6);list.forEach(x=>{ctx.fillStyle=pairColor(x);ctx.fillRect(750,yy-17,16,16);ctx.fillStyle='#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';fitText(ctx,pairLabel(x),780,yy,255,18,13);ctx.fillStyle='#606970';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',780,yy+27);yy+=74});
+  let yy=390;const list=(sel?[sel]:pairRows()).slice(0,6);list.forEach(x=>{ctx.fillStyle=pairColor(x);ctx.fillRect(750,yy-17,16,16);ctx.fillStyle='#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';fitText(ctx,pairShort(x),780,yy,255,18,13);ctx.fillStyle='#606970';ctx.font='700 16px Inter,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',780,yy+27);yy+=74});
   ctx.strokeStyle='#d4d9dc';ctx.beginPath();ctx.moveTo(64,965);ctx.lineTo(1016,965);ctx.stroke();ctx.fillStyle='#596168';ctx.font='600 17px Inter,Segoe UI,Arial';ctx.fillText('Fonte: Tribunal Superior Eleitoral · '+(DATA.municipalities_read||167)+' municípios',64,1002);ctx.textAlign='right';ctx.fillText(DATA.source_generated_at||nowStamp(),1016,1032);ctx.textAlign='left';
 }
 function drawParticipationCanvas(){

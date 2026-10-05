@@ -227,6 +227,8 @@ for office in ("pres","gov"):
             fail(f"Histórico 2022 inválido: {office}.{field}={value}.")
 if round(float((hist22.get("pres") or {}).get("turnout_pct") or 0),2)!=81.82:
     fail("Histórico 2022: comparecimento oficial do RN divergente.")
+if "recorte estadual da eleição para Governador" not in analises_js:
+    fail("Análises RN sem explicação do recorte estadual para comparecimento/abstenção.")
 
 
 if errors:

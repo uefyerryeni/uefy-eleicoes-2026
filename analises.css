@@ -139,3 +139,9 @@ body.dark .analysis-method strong{color:#f3f5f6}
   .analysis-actions{grid-template-columns:1fr}
   .analysis-table-wrap{max-height:360px}
 }
+
+.analysis-scope-note{margin-top:10px;padding:10px 12px;border:1px solid var(--rule);border-radius:10px;background:var(--soft);color:var(--muted);font-size:10px;line-height:1.45}
+.analysis-scope-note strong{color:var(--ink)}
+.pair-row span strong>b{display:inline-block;margin:0 4px;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.04em}
+.pair-row span strong>u{text-decoration:none;color:var(--muted);margin:0 2px;font-weight:900}
+body.dark .analysis-scope-note{background:#171c20;border-color:#343c43}

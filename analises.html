@@ -33,7 +33,7 @@
           <a href="rn.html">Governador RN</a>
           <a href="radar.html">Legislativo RN</a>
           <a href="analises.html">Análises RN</a>
-          <a href="#presidente-governador">Presidente × Governador</a>
+          <a href="#presidente-governador">Presidente + Governador</a>
           <a href="#participacao">Participação eleitoral</a>
         </div>
       </details>
@@ -62,14 +62,14 @@
       <strong>Escolha o recorte e publique o achado.</strong>
     </div>
     <nav>
-      <a href="#presidente-governador"><b>03</b><span>Presidente × Governador</span></a>
+      <a href="#presidente-governador"><b>03</b><span>Presidente + Governador</span></a>
       <a href="#participacao"><b>07</b><span>Participação, abstenção, brancos e nulos</span></a>
     </nav>
   </section>
 
   <section class="analysis-section" id="presidente-governador">
     <div class="section-head analysis-section-head">
-      <div><span class="analysis-number">03</span><div><h2>Presidente × Governador</h2><p>Como as lideranças dos dois cargos se combinaram no território potiguar.</p></div></div>
+      <div><span class="analysis-number">03</span><div><h2>Presidente + Governador</h2><p>Quem foi o candidato mais votado para cada um dos dois cargos em cada município.</p></div></div>
       <span class="rn-source-chip">OFICIAL TSE</span>
     </div>
 
@@ -81,8 +81,8 @@
           <div class="rn-total-map-head">
             <div>
               <div class="rn-map-titleline"><span class="rn-badge">Mapa territorial</span><span class="map-source">167 municípios</span></div>
-              <h2>Combinações de liderança</h2>
-              <p>Cada município recebe a cor da combinação entre quem ficou em 1º para Presidente e quem ficou em 1º para Governador.</p>
+              <h2>Quem foi mais votado para Presidente + Governador</h2>
+              <p>Cada cor mostra a combinação de candidatos mais votados: um para Presidente e outro para Governador, no mesmo município.</p>
             </div>
             <label class="analysis-map-filter">
               <span>Mostrar no mapa</span>
@@ -98,7 +98,7 @@
 
         <section class="card analysis-detail-card">
           <div class="analysis-card-head">
-            <div><h3>Combinações encontradas</h3><p>Selecione uma combinação para destacá-la no mapa e preparar uma publicação específica.</p></div>
+            <div><h3>Combinações encontradas</h3><p>Selecione uma combinação para ver em quais municípios os dois candidatos foram os mais votados e preparar a publicação.</p></div>
           </div>
           <div id="pairList" class="pair-list"></div>
         </section>
@@ -115,7 +115,7 @@
       </div>
 
       <aside class="card analysis-publisher" id="publicacao-cruzamento">
-        <div class="publisher-head"><span>Publicação</span><strong>Presidente × Governador</strong><small id="crossPubMode">Mapa completo do RN</small></div>
+        <div class="publisher-head"><span>Publicação</span><strong>Presidente + Governador</strong><small id="crossPubMode">Quem foi mais votado em cada município do RN</small></div>
         <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
         <div class="canvas-box"><canvas id="crossCanvas" width="1080" height="1080"></canvas></div>
         <div class="block-title text-title"><span>Texto</span><span id="crossChars">0 caracteres</span></div>
@@ -166,6 +166,7 @@
             <div class="analysis-scale" id="participationScale"></div>
           </div>
           <div class="analysis-map-caption" id="participationCaption">Carregando participação eleitoral…</div>
+          <div class="analysis-scope-note" id="comparecimentoScopeNote"><strong>Como ler:</strong> comparecimento e abstenção usam o recorte estadual da eleição para Governador. Brancos e nulos são calculados separadamente para o cargo selecionado.</div>
         </section>
 
         <section class="card analysis-detail-card">

@@ -65,3 +65,17 @@ test('Análises RN carrega 167 municípios, mapas e publicação no desktop',asy
   await expect(page.locator('#participationPostText')).toHaveValue(/2022/);
   await expect(page.locator('#historyCompare .history-row')).toHaveCount(6);
 });
+
+
+test('Linguagem do cruzamento é explícita e publicação não usa sinal de confronto',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  await expect(page.getByRole('heading',{name:/Quem foi mais votado para Presidente \+ Governador/i})).toBeVisible();
+  const options=await page.locator('#pairFilter option').allTextContents();
+  expect(options.some(x=>x.includes('(Presidente) +')&&x.includes('(Governador)'))).toBeTruthy();
+  await page.locator('#pairFilter').selectOption({index:1});
+  await expect(page.locator('#crossPostText')).toHaveValue(/foi o candidato mais votado para Presidente/);
+  await expect(page.locator('#crossPostText')).not.toHaveValue(/×/);
+  await expect(page.locator('#comparecimentoScopeNote')).toContainText('Governador');
+});
