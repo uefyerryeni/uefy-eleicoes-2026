@@ -1,7 +1,7 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-04T22:53:09-03:00",
-  "source_generated_at": "04/10/2026 · 22:51:11",
+  "generated_at": "2026-10-04T23:12:27-03:00",
+  "source_generated_at": "04/10/2026 · 23:02:13",
   "source_name": "Tribunal Superior Eleitoral · resultados oficiais",
   "source_url": "https://resultados.tse.jus.br/oficial/app/index.html#/eleicao/resultados",
   "progress": 100.0,
@@ -3113,8 +3113,8 @@
           "id": "200",
           "number": "200",
           "name": "STYVENSON VALENTIM",
-          "votes": 6048,
-          "pct": 33.51,
+          "votes": 6197,
+          "pct": 33.45,
           "party": "PODE"
         },
         "TIMBAÚBA DOS BATISTAS": {
@@ -12357,58 +12357,58 @@
             "id": "200",
             "number": "200",
             "name": "STYVENSON VALENTIM",
-            "votes": 6048,
-            "pct": 33.51,
+            "votes": 6197,
+            "pct": 33.45,
             "party": "PODE"
           },
           {
             "id": "555",
             "number": "555",
             "name": "ZENAIDE MAIA",
-            "votes": 4432,
-            "pct": 24.56
+            "votes": 4520,
+            "pct": 24.4
           },
           {
             "id": "222",
             "number": "222",
             "name": "CORONEL HÉLIO",
-            "votes": 2396,
-            "pct": 13.28
+            "votes": 2472,
+            "pct": 13.34
           },
           {
             "id": "131",
             "number": "131",
             "name": "SAMANDA DE LULA",
-            "votes": 2219,
-            "pct": 12.29
+            "votes": 2289,
+            "pct": 12.35
           },
           {
             "id": "123",
             "number": "123",
             "name": "RAFAEL MOTTA",
-            "votes": 2062,
-            "pct": 11.43
+            "votes": 2120,
+            "pct": 11.44
           },
           {
             "id": "444",
             "number": "444",
             "name": "TÉRCIO TINÔCO",
-            "votes": 730,
-            "pct": 4.04
+            "votes": 758,
+            "pct": 4.09
           },
           {
             "id": "500",
             "number": "500",
             "name": "SANDRO PIMENTEL",
-            "votes": 57,
-            "pct": 0.32
+            "votes": 61,
+            "pct": 0.33
           },
           {
             "id": "501",
             "number": "501",
             "name": "SONIA GODEIRO",
-            "votes": 56,
-            "pct": 0.31
+            "votes": 60,
+            "pct": 0.32
           }
         ],
         "TIMBAÚBA DOS BATISTAS": [
@@ -14341,8 +14341,8 @@
           "id": "4444",
           "number": "4444",
           "name": "BENES LEOCÁDIO",
-          "votes": 4113,
-          "pct": 43.23,
+          "votes": 4181,
+          "pct": 42.83,
           "party": "UNIÃO"
         },
         "TIMBAÚBA DOS BATISTAS": {
@@ -23585,58 +23585,58 @@
             "id": "4444",
             "number": "4444",
             "name": "BENES LEOCÁDIO",
-            "votes": 4113,
-            "pct": 43.23,
+            "votes": 4181,
+            "pct": 42.83,
             "party": "UNIÃO"
           },
           {
             "id": "2233",
             "number": "2233",
             "name": "NINA",
-            "votes": 815,
-            "pct": 8.57
+            "votes": 832,
+            "pct": 8.52
           },
           {
             "id": "1311",
             "number": "1311",
             "name": "NATÁLIA BONAVIDES",
-            "votes": 739,
-            "pct": 7.77
+            "votes": 765,
+            "pct": 7.84
           },
           {
             "id": "2200",
             "number": "2200",
             "name": "JUNINHO SAIA RODADA",
-            "votes": 593,
-            "pct": 6.23
+            "votes": 622,
+            "pct": 6.37
           },
           {
             "id": "1155",
             "number": "1155",
             "name": "ROBINSON FARIA",
-            "votes": 524,
-            "pct": 5.51
+            "votes": 527,
+            "pct": 5.4
           },
           {
             "id": "2210",
             "number": "2210",
             "name": "GENERAL GIRÃO",
-            "votes": 361,
-            "pct": 3.79
+            "votes": 385,
+            "pct": 3.94
           },
           {
             "id": "1313",
             "number": "1313",
             "name": "BRISA",
-            "votes": 360,
-            "pct": 3.78
+            "votes": 384,
+            "pct": 3.93
           },
           {
             "id": "2222",
             "number": "2222",
             "name": "SARGENTO GONÇALVES",
-            "votes": 357,
-            "pct": 3.75
+            "votes": 375,
+            "pct": 3.84
           }
         ],
         "TIMBAÚBA DOS BATISTAS": [
@@ -25629,8 +25629,8 @@
           "id": "45123",
           "number": "45123",
           "name": "DR GUSTAVO SOARES",
-          "votes": 3379,
-          "pct": 36.72,
+          "votes": 3427,
+          "pct": 36.28,
           "party": "PSDB"
         },
         "TIMBAÚBA DOS BATISTAS": {
@@ -34873,58 +34873,58 @@
             "id": "45123",
             "number": "45123",
             "name": "DR GUSTAVO SOARES",
-            "votes": 3379,
-            "pct": 36.72,
+            "votes": 3427,
+            "pct": 36.28,
             "party": "PSDB"
           },
           {
             "id": "22333",
             "number": "22333",
             "name": "TOMBA FARIAS",
-            "votes": 1388,
-            "pct": 15.09
+            "votes": 1431,
+            "pct": 15.15
           },
           {
             "id": "11999",
             "number": "11999",
             "name": "KLEBER RODRIGUES",
-            "votes": 636,
-            "pct": 6.91
+            "votes": 642,
+            "pct": 6.8
           },
           {
             "id": "22100",
             "number": "22100",
             "name": "DR. KERGINALDO",
-            "votes": 511,
-            "pct": 5.55
+            "votes": 542,
+            "pct": 5.74
           },
           {
             "id": "44544",
             "number": "44544",
             "name": "GALENO TORQUATO",
             "votes": 381,
-            "pct": 4.14
+            "pct": 4.03
           },
           {
             "id": "22222",
             "number": "22222",
             "name": "CORONEL AZEVEDO",
-            "votes": 356,
-            "pct": 3.87
+            "votes": 380,
+            "pct": 4.02
           },
           {
             "id": "22555",
             "number": "22555",
             "name": "LUÍZ EDUARDO",
-            "votes": 276,
-            "pct": 3.0
+            "votes": 278,
+            "pct": 2.94
           },
           {
             "id": "13613",
             "number": "13613",
             "name": "DIVANEIDE BASÍLIO",
-            "votes": 240,
-            "pct": 2.61
+            "votes": 256,
+            "pct": 2.71
           }
         ],
         "TIMBAÚBA DOS BATISTAS": [
@@ -39319,7 +39319,7 @@
         }
       ],
       "explanation": "O município com maior número de votos nominais para esta candidatura é BARAÚNA, com 300 votos (59,6% do total estadual).",
-      "card_note": "BARAÚNA: 300; NATAL: 64; MOSSORÓ: 64"
+      "card_note": "BARAÚNA: 300; MOSSORÓ: 64; NATAL: 64"
     },
     {
       "id": "capital-depe-45999",
@@ -39535,7 +39535,7 @@
         }
       ],
       "explanation": "O município com maior número de votos nominais para esta candidatura é CARAÚBAS, com 607 votos (63,0% do total estadual).",
-      "card_note": "CARAÚBAS: 607; APODI: 90; NATAL: 20"
+      "card_note": "CARAÚBAS: 607; APODI: 90; MOSSORÓ: 20"
     },
     {
       "id": "capital-depe-13613",
@@ -39839,15 +39839,15 @@
       "type": "top_municipalities",
       "office": "depe",
       "candidate": "DR GUSTAVO SOARES",
-      "headline": "Os três municípios com mais votos para DR GUSTAVO SOARES somam 47,0% da votação estadual da candidatura.",
+      "headline": "Os três municípios com mais votos para DR GUSTAVO SOARES somam 47,1% da votação estadual da candidatura.",
       "summary": "O município com maior número de votos nominais para esta candidatura é ASSÚ, com 19.319 votos (36,0% do total estadual).",
-      "display_value": "47,0%",
-      "calculation": "25.241 votos nos três municípios com maior votação ÷ 53.701 votos no RN = 47,0%.",
-      "post_text": "Os três municípios com mais votos para DR GUSTAVO SOARES somam 47,0% da votação estadual registrada da candidatura.",
+      "display_value": "47,1%",
+      "calculation": "25.289 votos nos três municípios com maior votação ÷ 53.701 votos no RN = 47,1%.",
+      "post_text": "Os três municípios com mais votos para DR GUSTAVO SOARES somam 47,1% da votação estadual registrada da candidatura.",
       "breakdown": [
         {
           "label": "Três municípios",
-          "value": "25.241"
+          "value": "25.289"
         },
         {
           "label": "Total no RN",
@@ -39859,7 +39859,7 @@
         }
       ],
       "explanation": "O município com maior número de votos nominais para esta candidatura é ASSÚ, com 19.319 votos (36,0% do total estadual).",
-      "card_note": "ASSÚ: 19.319; TIBAU DO SUL: 3.379; NATAL: 2.543"
+      "card_note": "ASSÚ: 19.319; TIBAU DO SUL: 3.427; NATAL: 2.543"
     },
     {
       "id": "capital-depe-15999",
