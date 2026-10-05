@@ -252,3 +252,15 @@ if errors:
     print("\n".join("ERRO: "+e for e in errors))
     raise SystemExit(1)
 print("QA estático OK")
+
+
+# 7) Preparação para acesso público: contato de correção e estrutura móvel comum.
+for name in ("index.html","rn.html","radar.html","analises.html"):
+    txt=(ROOT/name).read_text(encoding="utf-8")
+    for marker in ('class="wrap contact-panel"','data-contact="instagram"','data-contact="x"'):
+        if marker not in txt:
+            fail(f"{name} sem canal público de correção: {marker}.")
+style=(ROOT/"style.css").read_text(encoding="utf-8")
+for marker in (".contact-panel",".mobile-dock","overflow-x:clip"):
+    if marker not in style:
+        fail(f"CSS sem guarda pública/móvel obrigatória: {marker}.")

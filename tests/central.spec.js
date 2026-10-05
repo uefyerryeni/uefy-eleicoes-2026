@@ -146,3 +146,77 @@ test('Card municipal prioriza Raio-X completo com mapa da cidade e todos os indi
   await expect(page.locator('#municipalPostText')).toHaveValue(/Brancos para Presidente:/);
   await expect(page.locator('#municipalPostText')).toHaveValue(/Nulos para Governador:/);
 });
+
+
+async function horizontalOverflowReport(page){
+  return page.evaluate(()=>{
+    const vw=window.innerWidth;
+    const offenders=[...document.querySelectorAll('body *')].map(el=>{
+      const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+      return {tag:el.tagName,id:el.id||'',cls:String(el.className||'').slice(0,80),left:r.left,right:r.right,width:r.width,display:cs.display,position:cs.position,overflowX:cs.overflowX};
+    }).filter(x=>x.display!=='none'&&x.width>0&&(x.right>vw+2||x.left<-2))
+      .filter(x=>!['fixed','absolute'].includes(x.position))
+      .slice(0,20);
+    return {vw,scrollWidth:document.documentElement.scrollWidth,offenders};
+  });
+}
+
+for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,height:932}]){
+  test('site público não estoura horizontalmente em '+viewport.width+'px',async({page})=>{
+    await page.setViewportSize(viewport);
+    for(const path of ['/index.html','/rn.html','/radar.html','/analises.html']){
+      await page.goto(path+'?v='+BUILD);
+      if(path==='/analises.html') await page.waitForFunction(()=>window.__analysisReady===true||window.__analysisError!==null);
+      const report=await horizontalOverflowReport(page);
+      expect(report.scrollWidth,JSON.stringify(report)).toBeLessThanOrEqual(report.vw+2);
+      expect(report.offenders,JSON.stringify(report)).toEqual([]);
+    }
+  });
+}
+
+test('navegação e contato ficam utilizáveis no celular',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  for(const path of ['/index.html','/rn.html','/radar.html','/analises.html']){
+    await page.goto(path+'?v='+BUILD);
+    if(path==='/analises.html') await page.waitForFunction(()=>window.__analysisReady===true||window.__analysisError!==null);
+    const dock=page.locator('.mobile-dock');
+    await expect(dock).toBeVisible();
+    const dockBox=await dock.boundingBox();
+    expect(dockBox.height).toBeGreaterThanOrEqual(50);
+    const contact=page.locator('.contact-panel');
+    await expect(contact).toBeVisible();
+    const insta=contact.locator('[data-contact="instagram"]');
+    const x=contact.locator('[data-contact="x"]');
+    await expect(insta).toHaveAttribute('href','https://ig.me/m/uefyerryeni');
+    await expect(x).toHaveAttribute('href','https://x.com/Uefyerryeni');
+    expect((await insta.boundingBox()).height).toBeGreaterThanOrEqual(44);
+    expect((await x.boundingBox()).height).toBeGreaterThanOrEqual(44);
+  }
+});
+
+test('menu intermediário continua acessível em tablet/celular largo',async({page})=>{
+  await page.setViewportSize({width:768,height:900});
+  for(const path of ['/index.html','/rn.html','/radar.html','/analises.html']){
+    await page.goto(path+'?v='+BUILD);
+    const menu=page.locator('.mobile-menu');
+    await expect(menu).toBeVisible();
+    await menu.locator('summary').click();
+    await expect(menu.locator('.mobile-menu-panel')).toBeVisible();
+  }
+});
+
+test('publicações e mapas críticos permanecem visíveis em 390px',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/rn.html?v='+BUILD);
+  await expect(page.locator('.rn-map-large')).toBeVisible();
+  await expect(page.locator('#rnCanvas')).toBeVisible();
+
+  await page.goto('/radar.html?v='+BUILD);
+  await expect(page.locator('#radarLegMap')).toBeVisible();
+  await expect(page.locator('#radarCanvas')).toBeVisible();
+
+  await page.goto('/analises.html?v='+BUILD);
+  await page.waitForFunction(()=>window.__analysisReady===true);
+  await expect(page.locator('#participationMap')).toBeVisible();
+  await expect(page.locator('#municipalCanvas')).toBeVisible();
+});
