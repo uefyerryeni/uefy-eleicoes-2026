@@ -128,18 +128,21 @@ test('Raio-X municipal mostra números absolutos e ranking',async({page})=>{
 });
 
 
-test('Card municipal prioriza indicador único com layout de alta legibilidade',async({page})=>{
+test('Card municipal prioriza Raio-X completo com mapa da cidade e todos os indicadores',async({page})=>{
   await page.setViewportSize({width:1440,height:900});
   await page.goto('/analises.html?v='+BUILD);
   await page.waitForFunction(()=>window.__analysisReady===true);
-  await expect(page.locator('#municipalPublicationMode')).toHaveValue('abstention_pct');
+  await expect(page.locator('#municipalPublicationMode')).toHaveValue('profile');
   const options=await page.locator('#municipalPublicationMode option').allTextContents();
-  expect(options[0]).toContain('Abstenção');
-  expect(options[options.length-1]).toContain('Raio-X completo');
+  expect(options[0]).toContain('Raio-X completo');
   const funcs=await page.evaluate(()=>({
     indicator:typeof drawMunicipalIndicatorCanvas==='function',
-    profile:typeof drawMunicipalProfileCanvas==='function'
+    profile:typeof drawMunicipalProfileCanvas==='function',
+    shape:typeof drawMunicipalityShapeCanvas==='function'
   }));
-  expect(funcs).toEqual({indicator:true,profile:true});
-  await expect(page.locator('#municipalPubMode')).toContainText('Abstenção');
+  expect(funcs).toEqual({indicator:true,profile:true,shape:true});
+  await expect(page.locator('#municipalPubMode')).toContainText('Perfil completo');
+  await expect(page.locator('#municipalPostText')).toHaveValue(/Comparecimento:/);
+  await expect(page.locator('#municipalPostText')).toHaveValue(/Brancos para Presidente:/);
+  await expect(page.locator('#municipalPostText')).toHaveValue(/Nulos para Governador:/);
 });

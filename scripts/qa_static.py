@@ -228,7 +228,7 @@ analises_js=(ROOT/"analises.js").read_text(encoding="utf-8")
 for marker in ("crossCanvas","participationCanvas","municipalCanvas","crossPostText","participationPostText","municipalPostText","crossMap","participationMap","municipalMap","municipalitySelect"):
     if marker not in analises_html:
         fail(f"Análises RN sem elemento obrigatório de publicação: {marker}.")
-for marker in ("crossPostText","participationPostText","municipalPostText","drawCrossCanvas","drawParticipationCanvas","drawMunicipalCanvas","drawMunicipalIndicatorCanvas","drawMunicipalProfileCanvas","drawMetricScaleCanvas","rankForMunicipality","__analysisReady"):
+for marker in ("crossPostText","participationPostText","municipalPostText","drawCrossCanvas","drawParticipationCanvas","drawMunicipalCanvas","drawMunicipalIndicatorCanvas","drawMunicipalProfileCanvas","drawMunicipalityShapeCanvas","drawMetricScaleCanvas","rankForMunicipality","__analysisReady"):
     if marker not in analises_js:
         fail(f"Análises RN sem lógica obrigatória: {marker}.")
 

@@ -1,6 +1,6 @@
 const $=s=>document.querySelector(s);
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
-let DATA=null,FC=null,pairFilter='',metric='abstention_pct',rankingDirection='desc',municipalityName='',municipalPublicationMode='abstention_pct';
+let DATA=null,FC=null,pairFilter='',metric='abstention_pct',rankingDirection='desc',municipalityName='',municipalPublicationMode='profile';
 let logo=null;window.__analysisReady=false;window.__analysisError=null;
 
 function fmtNum(v){return Number(v||0).toLocaleString('pt-BR')}
@@ -299,12 +299,12 @@ function municipalPostText(){
   const lines=['ELEIÇÕES 2026 | '+row.name.toUpperCase()+' (RN)',''];
   if(municipalPublicationMode==='profile'){
     lines.push('RAIO-X MUNICIPAL','',
-      'Comparecimento: '+fmtPct(metricValue(row,'turnout_pct'))+'.',
-      'Abstenção: '+fmtPct(metricValue(row,'abstention_pct'))+'.',
-      'Brancos para Presidente: '+fmtPct(metricValue(row,'president.blank_pct'))+'.',
-      'Nulos para Presidente: '+fmtPct(metricValue(row,'president.null_pct'))+'.',
-      'Brancos para Governador: '+fmtPct(metricValue(row,'governor.blank_pct'))+'.',
-      'Nulos para Governador: '+fmtPct(metricValue(row,'governor.null_pct'))+'.','',
+      'Comparecimento: '+fmtPct(metricValue(row,'turnout_pct'))+' ('+fmtNum(metricCount(row,'turnout_pct'))+' eleitores).',
+      'Abstenção: '+fmtPct(metricValue(row,'abstention_pct'))+' ('+fmtNum(metricCount(row,'abstention_pct'))+' eleitores).',
+      'Brancos para Presidente: '+fmtPct(metricValue(row,'president.blank_pct'))+' ('+fmtNum(metricCount(row,'president.blank_pct'))+' votos).',
+      'Nulos para Presidente: '+fmtPct(metricValue(row,'president.null_pct'))+' ('+fmtNum(metricCount(row,'president.null_pct'))+' votos).',
+      'Brancos para Governador: '+fmtPct(metricValue(row,'governor.blank_pct'))+' ('+fmtNum(metricCount(row,'governor.blank_pct'))+' votos).',
+      'Nulos para Governador: '+fmtPct(metricValue(row,'governor.null_pct'))+' ('+fmtNum(metricCount(row,'governor.null_pct'))+' votos).','',
       row.president.name+' foi o mais votado para Presidente ('+fmtPct(row.president.pct)+') e '+row.governor.name+' foi o mais votado para Governador ('+fmtPct(row.governor.pct)+').');
   }else{
     const meta=METRICS[municipalPublicationMode],value=metricValue(row,municipalPublicationMode),avg=stateMetricValue(municipalPublicationMode),rank=rankForMunicipality(row,municipalPublicationMode),delta=value-avg;
@@ -360,39 +360,68 @@ function drawMunicipalIndicatorCanvas(ctx,row){
 
   drawMunicipalFooter(ctx);
 }
+function municipalityFeature(row){
+  const target=municipalityKey(row.name);
+  return FC.features.find(f=>municipalityKey(featureName(f))===target)||null;
+}
+function drawMunicipalityShapeCanvas(ctx,row,x,y,w,h){
+  const feature=municipalityFeature(row);if(!feature)return;
+  const collection={type:'FeatureCollection',features:[feature]},proj=projector(collection,w,h,18);
+  const g=feature.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];
+  ctx.save();ctx.translate(x,y);
+  ctx.fillStyle='#f4dd19';ctx.strokeStyle='#17191c';ctx.lineWidth=3.2;
+  polys.forEach(poly=>{
+    ctx.beginPath();
+    poly.forEach(ring=>ring.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));
+    ctx.closePath();ctx.fill('evenodd');ctx.stroke();
+  });
+  ctx.restore();
+}
 function drawMunicipalProfileCanvas(ctx,row){
-  drawMunicipalHeader(ctx,row,'Raio-X municipal · Eleições 2026');
+  drawMunicipalHeader(ctx,row,'Raio-X eleitoral · Eleições 2026');
 
-  const turnout=metricValue(row,'turnout_pct'),abst=metricValue(row,'abstention_pct');
+  // Mapa do município: elemento visual principal, sem o mapa estadual competindo com ele.
+  ctx.fillStyle='#eef0ed';ctx.beginPath();ctx.roundRect(64,360,390,420,22);ctx.fill();
+  drawMunicipalityShapeCanvas(ctx,row,88,390,342,320);
+  ctx.fillStyle='#606970';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText('MAPA DO MUNICÍPIO',92,745);
+  ctx.font='700 17px Inter,Segoe UI,Arial';ctx.fillText('Eleitorado: '+fmtNum(row.participation?.electorate||0),92,770);
+
+  // Dados principais.
   const primary=[
-    ['Comparecimento',turnout,metricCount(row,'turnout_pct')],
-    ['Abstenção',abst,metricCount(row,'abstention_pct')]
+    ['Comparecimento','turnout_pct'],
+    ['Abstenção','abstention_pct']
   ];
   primary.forEach((item,i)=>{
-    const x=64+i*490;
-    ctx.fillStyle=i===0?'#17191c':'#f4dd19';ctx.beginPath();ctx.roundRect(x,365,462,180,20);ctx.fill();
-    ctx.fillStyle=i===0?'#f5f6f4':'#17191c';ctx.font='800 20px Inter,Segoe UI,Arial';ctx.fillText(item[0].toUpperCase(),x+24,405);
-    ctx.font='900 64px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(item[1]),x+24,475);
-    ctx.font='700 20px Inter,Segoe UI,Arial';ctx.fillText(fmtNum(item[2])+' eleitores',x+24,515);
+    const key=item[1],x=486+i*266,y=360,w=250,h=170,value=metricValue(row,key);
+    ctx.fillStyle=i===0?'#17191c':'#f4dd19';ctx.beginPath();ctx.roundRect(x,y,w,h,20);ctx.fill();
+    ctx.fillStyle=i===0?'#f5f6f4':'#17191c';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText(item[0].toUpperCase(),x+20,y+35);
+    ctx.font='900 50px Inter,Segoe UI,Arial';fitText(ctx,fmtPct(value),x+20,y+95,w-40,50,40);
+    ctx.font='700 17px Inter,Segoe UI,Arial';fitText(ctx,fmtNum(metricCount(row,key))+' eleitores',x+20,y+132,w-40,17,14);
+    ctx.font='700 14px Inter,Segoe UI,Arial';ctx.fillText('RN '+fmtPct(stateMetricValue(key)),x+20,y+157);
   });
 
+  // Brancos e nulos: quatro indicadores legíveis na mesma tela.
   const secondary=[
-    ['Brancos · Pres.','president.blank_pct'],
-    ['Nulos · Pres.','president.null_pct'],
-    ['Brancos · Gov.','governor.blank_pct'],
-    ['Nulos · Gov.','governor.null_pct']
+    ['BRANCOS · PRES.','president.blank_pct'],
+    ['NULOS · PRES.','president.null_pct'],
+    ['BRANCOS · GOV.','governor.blank_pct'],
+    ['NULOS · GOV.','governor.null_pct']
   ];
   secondary.forEach((item,i)=>{
-    const col=i%2,rowi=Math.floor(i/2),x=64+col*490,y=575+rowi*130;
-    ctx.fillStyle='#eef0ed';ctx.beginPath();ctx.roundRect(x,y,462,108,16);ctx.fill();
-    ctx.fillStyle='#606970';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText(item[0].toUpperCase(),x+20,y+31);
-    ctx.fillStyle='#17191c';ctx.font='900 38px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(metricValue(row,item[1])),x+20,y+78);
-    ctx.fillStyle='#606970';ctx.font='700 17px Inter,Segoe UI,Arial';ctx.fillText(fmtNum(metricCount(row,item[1]))+' votos',x+180,y+75);
+    const col=i%2,rowi=Math.floor(i/2),x=486+col*266,y=550+rowi*115,w=250,h=98,key=item[1];
+    ctx.fillStyle='#eef0ed';ctx.beginPath();ctx.roundRect(x,y,w,h,15);ctx.fill();
+    ctx.fillStyle='#606970';ctx.font='800 15px Inter,Segoe UI,Arial';ctx.fillText(item[0],x+16,y+25);
+    ctx.fillStyle='#17191c';ctx.font='900 31px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(metricValue(row,key)),x+16,y+62);
+    ctx.fillStyle='#606970';ctx.font='700 13px Inter,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtNum(metricCount(row,key))+' votos',x+w-16,y+62);ctx.textAlign='left';
   });
 
+  // Mais votados no município.
+  ctx.fillStyle='#17191c';ctx.font='800 17px Inter,Segoe UI,Arial';ctx.fillText('MAIS VOTADOS NO MUNICÍPIO',64,835);
+  ctx.fillStyle='#eef0ed';ctx.beginPath();ctx.roundRect(64,852,952,88,16);ctx.fill();
+  ctx.fillStyle='#606970';ctx.font='800 14px Inter,Segoe UI,Arial';ctx.fillText('PRESIDENTE',86,880);ctx.fillText('GOVERNADOR',566,880);
   ctx.fillStyle='#17191c';ctx.font='800 22px Inter,Segoe UI,Arial';
-  fitText(ctx,row.president.name+' mais votado para Presidente · '+fmtPct(row.president.pct),64,885,950,22,17);
-  fitText(ctx,row.governor.name+' mais votado para Governador · '+fmtPct(row.governor.pct),64,922,950,22,17);
+  fitText(ctx,row.president.name+' · '+fmtPct(row.president.pct),86,916,420,22,16);
+  fitText(ctx,row.governor.name+' · '+fmtPct(row.governor.pct),566,916,420,22,16);
 
   drawMunicipalFooter(ctx);
 }
