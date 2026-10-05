@@ -113,6 +113,36 @@ function selectedLeaderSummary(){
   if(!leaderFilter)return null;
   return (leaderMapData.summary||[]).find(x=>leaderFilterValue(x.name,x.number)===leaderFilter)||null;
 }
+const RN_MAJOR_CITIES_2026=[
+  {name:'Natal',population:783196},
+  {name:'Mossoró',population:279100},
+  {name:'Parnamirim',population:273952},
+  {name:'São Gonçalo do Amarante',population:125691},
+  {name:'Macaíba',population:87634},
+  {name:'Ceará-Mirim',population:83662},
+  {name:'Extremoz',population:70452},
+  {name:'Caicó',population:63338},
+  {name:'Assú',population:59278},
+  {name:'São José de Mipibu',population:50386},
+  {name:'Currais Novos',population:42915},
+  {name:'Santa Cruz',population:39198},
+  {name:'Apodi',population:37574},
+  {name:'Nova Cruz',population:35514},
+  {name:'João Câmara',population:34925},
+  {name:'Nísia Floresta',population:34674},
+  {name:'Touros',population:34412},
+  {name:'Pau dos Ferros',population:32259},
+  {name:'Canguaretama',population:30773},
+  {name:'Goianinha',population:28616}
+];
+function majorCityHighlights(){
+  if(!leaderFilter)return [];
+  return RN_MAJOR_CITIES_2026.filter(city=>{
+    const entry=Object.entries(leaderMapData?.leaders||{}).find(([k])=>municipalityKey(k)===municipalityKey(city.name));
+    const lead=entry?.[1];
+    return lead?.status==='ok'&&leaderFilterValue(lead.candidate,lead.candidate_number)===leaderFilter;
+  });
+}
 async function loadLeaderMap(){
   if(mode==='sim'){
     leaderMapData={
@@ -237,11 +267,16 @@ function mapPostText(){
 
   if(filtered){
     const candidate=labeledCandidate(filtered.name,partyByNumber(filtered.number));
+    const highlights=majorCityHighlights();
     const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status+' — FILTRO POR CANDIDATURA','',candidate+' lidera em '+filtered.municipalities+' município(s) neste recorte.'];
+    if(highlights.length){
+      const top=highlights.slice(0,5).map(x=>x.name);
+      lines.push('','Destaques entre os municípios mais populosos do RN: '+top.join(', ')+'.');
+    }
     if(!final)lines.push('','O mapa representa o snapshot atual da apuração e pode mudar conforme novas seções forem totalizadas.');
     lines.push('Base municipal: '+Number(leaderMapData.municipalities_read||0)+'/'+Number(leaderMapData.municipalities_expected||167)+' municípios lidos.');
     if(leaderMapData.source_generated_at)lines.push('','Atualização: '+leaderMapData.source_generated_at);
-    lines.push('','Fonte: Tribunal Superior Eleitoral');
+    lines.push('','Fontes: Tribunal Superior Eleitoral · população: IBGE, estimativas 2026');
     return lines.join('\n');
   }
 
