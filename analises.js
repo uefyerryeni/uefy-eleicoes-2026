@@ -69,6 +69,10 @@ function diff(a,b){const d=Number(a||0)-Number(b||0);return (d>0?'+':'')+d.toLoc
 function renderHistory(){
   const p26=DATA.participation?.state_2026?.pres||{}, g26=DATA.participation?.state_2026?.gov||{};
   const p22=DATA.participation?.state_2022?.pres||{}, g22=DATA.participation?.state_2022?.gov||{};
+  if(p22.error||g22.error){
+    $('#historyCompare').innerHTML='<div class="analysis-history-note"><strong>2022 ainda não carregado</strong><p>O endpoint histórico do TSE não está mais disponível nesta rota. A Central não substitui ausência de dados por zero. O comparativo será exibido somente após importação da base oficial do Portal de Dados Abertos do TSE.</p></div>';
+    return;
+  }
   const rows=[
     ['Comparecimento',p22.turnout_pct,p26.turnout_pct,'pres'],
     ['Abstenção',p22.abstention_pct,p26.abstention_pct,'pres'],
