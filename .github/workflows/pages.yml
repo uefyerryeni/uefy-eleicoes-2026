@@ -36,7 +36,7 @@ jobs:
         run: python scripts/qa_static.py
 
       - name: Sintaxe JavaScript
-        run: node --check app.js && node --check rn.js && node --check radar.js
+        run: node --check app.js && node --check rn.js && node --check radar.js && node --check analises.js
 
       - name: Instalar testes de navegador
         run: npm install
@@ -44,7 +44,7 @@ jobs:
       - name: Instalar Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Testar Geral, RN, Radar, cards e responsividade
+      - name: Testar Central, mapas e publicações
         run: npx playwright test
 
       - name: Salvar relatório dos testes

@@ -1,7 +1,7 @@
 const $=s=>document.querySelector(s);
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 let DATA=null,FC=null,pairFilter='',metric='abstention_pct',rankingDirection='desc';
-const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>{if(DATA&&FC){drawCrossCanvas();drawParticipationCanvas()}};
+let logo=null;window.__analysisReady=false;window.__analysisError=null;
 
 function fmtNum(v){return Number(v||0).toLocaleString('pt-BR')}
 function fmtPct(v,d=2){return Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d})+'%'}
@@ -42,7 +42,16 @@ function extent(values){return [Math.min(...values),Math.max(...values)]}
 function lerp(a,b,t){return Math.round(a+(b-a)*t)}
 function metricColor(v,min,max){const t=max<=min?0.5:Math.max(0,Math.min(1,(v-min)/(max-min)));const a=[244,221,25],b=[31,35,38];return 'rgb('+lerp(a[0],b[0],t)+','+lerp(a[1],b[1],t)+','+lerp(a[2],b[2],t)+')'}
 
-async function init(){
+function loadLogo(){
+  try{
+    logo=new Image();
+    logo.crossOrigin='anonymous';
+    logo.onload=()=>{if(DATA&&FC){drawCrossCanvas();drawParticipationCanvas()}};
+    logo.onerror=()=>{};
+    logo.src=LOGO_URL;
+  }catch{logo=null}
+}
+function bindInterface(){
   applySavedTheme();
   $('#themeToggle')?.addEventListener('click',toggleTheme);
   $('#toTop')?.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
@@ -50,20 +59,39 @@ async function init(){
   $('#crossSearch')?.addEventListener('input',e=>renderCrossTable(e.target.value));
   $('#pairFilter')?.addEventListener('change',e=>{pairFilter=e.target.value;renderCrossMap();renderPairList();renderCrossPublication()});
   $('#metricSelect')?.addEventListener('change',e=>{metric=e.target.value;renderParticipationMap();renderParticipationRanking();renderParticipationPublication()});
-  $('#rankingDirection')?.addEventListener('change',e=>{rankingDirection=e.target.value;renderParticipationRanking()});
+  $('#rankingDirection')?.addEventListener('change',e=>{rankingDirection=e.target.value;renderParticipationRanking();renderParticipationPublication()});
   bindPublishers();
+}
+async function init(){
+  window.__analysisReady=false;
+  window.__analysisError=null;
   try{
     const [dr,mr]=await Promise.all([
-      fetch('data/rn-analises.json?ts='+Date.now(),{cache:'no-store'}),
-      fetch('assets/maps/rn-municipios.geojson',{cache:'no-store'})
+      fetch('./data/rn-analises.json?ts='+Date.now(),{cache:'no-store'}),
+      fetch('./assets/maps/rn-municipios.geojson?ts='+Date.now(),{cache:'no-store'})
     ]);
-    if(!dr.ok)throw new Error('Base de análises '+dr.status);
-    if(!mr.ok)throw new Error('Mapa do RN '+mr.status);
-    DATA=await dr.json();FC=await mr.json();
-    if(DATA.status!=='ok')throw new Error(DATA.message||'Base ainda indisponível');
+    if(!dr.ok)throw new Error('Base de análises: HTTP '+dr.status);
+    if(!mr.ok)throw new Error('Mapa do RN: HTTP '+mr.status);
+    const data=await dr.json();
+    const map=await mr.json();
+    if(data?.status!=='ok')throw new Error(data?.message||'Base de análises ainda indisponível');
+    if(!Array.isArray(map?.features)||map.features.length!==167)throw new Error('GeoJSON do RN incompleto: '+(map?.features?.length||0)+'/167 municípios');
+    if(Number(data?.municipalities_read||0)!==167)throw new Error('Base municipal incompleta: '+Number(data?.municipalities_read||0)+'/167 municípios');
+    if((data?.errors||[]).length)throw new Error('A base municipal contém '+data.errors.length+' erro(s) de leitura');
+    DATA=data;FC=map;
+    window.ANALYSIS_DATA=DATA;
+    window.ANALYSIS_MAP=FC;
+    bindInterface();
     renderAll();
+    loadLogo();
+    document.body.dataset.analysisReady='true';
+    window.__analysisReady=true;
   }catch(e){
-    $('#coverage').textContent='Não foi possível carregar a base: '+e.message;
+    const message=e?.message||String(e);
+    window.__analysisError=message;
+    document.body.dataset.analysisReady='error';
+    const coverage=$('#coverage');
+    if(coverage)coverage.textContent='Falha ao carregar a análise: '+message;
     document.querySelectorAll('.analysis-publisher button').forEach(b=>b.disabled=true);
   }
 }
@@ -186,7 +214,7 @@ function renderParticipationPublication(){
 function canvasBase(ctx,kicker,title,subtitle){
   ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f5f6f4';ctx.fillRect(0,0,1080,1080);
   ctx.fillStyle='rgba(244,221,25,.18)';ctx.beginPath();ctx.arc(1020,55,300,0,Math.PI*2);ctx.fill();
-  if(logo.complete)try{ctx.drawImage(logo,64,52,92,92)}catch{}
+  if(logo&&logo.complete&&logo.naturalWidth)try{ctx.drawImage(logo,64,52,92,92)}catch{}
   ctx.fillStyle='#17191c';ctx.font='700 27px Inter,Segoe UI,Arial';ctx.fillText('Central das Eleições UEFY',180,106);
   ctx.fillStyle='#606970';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText(kicker.toUpperCase(),64,190);
   ctx.fillStyle='#17191c';ctx.font='800 50px Inter,Segoe UI,Arial';fitText(ctx,title,64,255,930,50,35);
@@ -228,4 +256,4 @@ async function copyCanvas(canvas,btn){try{const blob=await new Promise(r=>canvas
 function downloadCanvas(canvas,name){const a=document.createElement('a');a.href=canvas.toDataURL('image/png');a.download=name+'.png';a.click()}
 async function shareBundle(canvas,text,name){const blob=await new Promise(r=>canvas.toBlob(r,'image/png')),file=new File([blob],name+'.png',{type:'image/png'});if(navigator.share&&navigator.canShare?.({files:[file]})){try{await navigator.share({text,files:[file]});return}catch{}}await copyText(text,null);downloadCanvas(canvas,name)}
 function flash(btn,label){if(!btn)return;const old=btn.textContent;btn.textContent=label;setTimeout(()=>btn.textContent=old,1300)}
-init();
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();

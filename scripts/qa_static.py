@@ -180,6 +180,42 @@ for num,color in required.items():
         fail(f"Cor fixa ausente/alterada para governador {num}.")
 if len(set(required.values()))!=len(required): fail("Paleta de governador contém cores duplicadas.")
 
+# 6) Análises RN: só publicar com a base municipal completa.
+analises=load("data/rn-analises.json")
+if analises.get("status")!="ok":
+    fail("Análises RN não estão com status ok.")
+analysis_expected=int(analises.get("municipalities_expected",167) or 167)
+analysis_read=int(analises.get("municipalities_read",0) or 0)
+analysis_rows=((analises.get("cross") or {}).get("municipalities") or [])
+analysis_pairs=((analises.get("cross") or {}).get("pairs") or [])
+if analysis_expected!=167 or analysis_read!=167:
+    fail(f"Análises RN incompletas: {analysis_read}/{analysis_expected}.")
+if len(analysis_rows)!=167:
+    fail(f"Análises RN têm {len(analysis_rows)} linhas municipais; esperado 167.")
+if analises.get("errors"):
+    fail(f"Análises RN contêm erros de leitura: {analises.get('errors')}.")
+if sum(int(x.get("municipalities") or 0) for x in analysis_pairs)!=167:
+    fail("Combinações Presidente × Governador não somam os 167 municípios.")
+for row in analysis_rows:
+    if not row.get("name") or not row.get("president") or not row.get("governor"):
+        fail("Análises RN têm município sem liderança de Presidente/Governador.")
+        break
+    part=row.get("participation") or {}
+    for field in ("turnout_pct","abstention_pct"):
+        value=float(part.get(field) or 0)
+        if value<=0 or value>100:
+            fail(f"Indicador {field} inválido em {row.get('name')}: {value}.")
+            break
+analises_html=(ROOT/"analises.html").read_text(encoding="utf-8")
+analises_js=(ROOT/"analises.js").read_text(encoding="utf-8")
+for marker in ("crossCanvas","participationCanvas","crossPostText","participationPostText","crossMap","participationMap"):
+    if marker not in analises_html:
+        fail(f"Análises RN sem elemento obrigatório de publicação: {marker}.")
+for marker in ("crossPostText","participationPostText","drawCrossCanvas","drawParticipationCanvas","__analysisReady"):
+    if marker not in analises_js:
+        fail(f"Análises RN sem lógica obrigatória: {marker}.")
+
+
 if errors:
     print("\n".join("ERRO: "+e for e in errors))
     raise SystemExit(1)

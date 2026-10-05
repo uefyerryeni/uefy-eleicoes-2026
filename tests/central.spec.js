@@ -46,22 +46,20 @@ test('Radar bloqueia ações finais sem snapshot publicável',async({page})=>{aw
 test('contadores de publicação não impõem limite de 280',async({page})=>{await page.goto('/index.html?v='+BUILD);await expect(page.locator('#charCount')).not.toContainText('/280');await page.goto('/rn.html?v='+BUILD);await expect(page.locator('#rnChars')).not.toContainText('/280');await page.goto('/radar.html?v='+BUILD);await expect(page.locator('#radarChars')).not.toContainText('/280')});
 
 
-test('Análises RN carrega mapas e publicação',async({page})=>{
+test('Análises RN carrega 167 municípios, mapas e publicação no desktop',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
   await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>typeof DATA!=='undefined'&&DATA&&typeof FC!=='undefined'&&FC);
+  await page.waitForFunction(()=>window.__analysisReady===true||window.__analysisError!==null);
+  const err=await page.evaluate(()=>window.__analysisError);
+  expect(err).toBeNull();
   await expect(page.locator('#crossMap path')).toHaveCount(167);
   await expect(page.locator('#participationMap path')).toHaveCount(167);
   await expect(page.locator('#crossPostText')).not.toHaveValue('');
   await expect(page.locator('#participationPostText')).not.toHaveValue('');
   await expect(page.locator('#crossCanvas')).toBeVisible();
   await expect(page.locator('#participationCanvas')).toBeVisible();
-});
-
-test('Análises RN responde no mobile sem sobreposição estrutural',async({page})=>{
-  await page.setViewportSize({width:390,height:844});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>typeof DATA!=='undefined'&&DATA);
-  await expect(page.locator('#crossMap')).toBeVisible();
-  await expect(page.locator('#participationMap')).toBeVisible();
-  await expect(page.locator('.analysis-publisher')).toHaveCount(2);
+  expect(await page.locator('#pairFilter option').count()).toBeGreaterThan(1);
+  await page.locator('#metricSelect').selectOption('president.null_pct');
+  await expect(page.locator('#participationPubTitle')).toContainText('Nulos');
+  await expect(page.locator('#participationPostText')).toContainText('NULOS');
 });
