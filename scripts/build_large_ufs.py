@@ -38,6 +38,25 @@ def build(uf):
             "seq":x["SQ_CANDIDATO"],
             "situacao":c.get("DS_SITUACAO_JULGAMENTO_URNA","")
         })
+    # O ZIP do TSE pode trazer o mesmo SQ_CANDIDATO em mais de uma linha.
+    # Descartar somente registros efetivamente idênticos; nunca ignorar conflitos.
+    unique={}
+    for row in cand:
+        seq=str(row["seq"]).strip()
+        if not seq:
+            raise ValueError(f"{uf}: candidatura sem SQ_CANDIDATO: {row}")
+        previous=unique.get(seq)
+        if previous is None:
+            unique[seq]=row
+        elif previous!=row:
+            raise ValueError(
+                f"{uf}: SQ_CANDIDATO {seq} aparece com dados diferentes. "
+                f"Primeiro={previous}; repetido={row}"
+            )
+    duplicates=len(cand)-len(unique)
+    if duplicates:
+        print(f"AVISO {uf}: {duplicates} linha(s) idêntica(s) repetida(s) no TSE foram descartadas.")
+    cand=list(unique.values())
     cand.sort(key=lambda x:(x["cargo"],x["numero"],x["nome"]))
     generated=((main[0].get("DT_GERACAO","")+" "+main[0].get("HH_GERACAO","")).strip() if main else "")
     return {"generated":generated,"candidates":cand}
