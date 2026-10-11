@@ -1,12 +1,7 @@
 name: Atualizar candidaturas oficiais TSE
+# Atualização suspensa: executar manualmente antes do segundo turno, após revisão.
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "20 0,6,12,18 * * *"
-  push:
-    paths:
-      - "scripts/build_large_ufs.py"
-      - ".github/workflows/candidatos-large.yml"
 permissions:
   contents: write
 jobs:
