@@ -275,6 +275,23 @@ for marker in (".contact-panel",".mobile-dock","overflow-x:clip"):
     if marker not in style:
         fail(f"CSS sem guarda pública/móvel obrigatória: {marker}.")
 
+# 8) Integridade do novo espaço Entre Turnos.
+et=load("data/entre-turnos-2t.json")
+if et.get("round")!=2 or et.get("election_ids")!={"gov":"6260","pres":"6258"}:
+    fail("Entre Turnos com identificadores de eleição incorretos.")
+if et.get("publication_ready"):
+    if et.get("municipalities_read")!=167 or len(et.get("municipalities") or [])!=167:
+        fail("Entre Turnos publicou sem 167 municípios.")
+    if not all((et.get("state") or {}).get(o,{}).get("complete") for o in ("gov","pres")):
+        fail("Entre Turnos publicou sem totais estaduais finais.")
+for filename in ("entre-turnos.html","entre-turnos.js","entre-turnos.css"):
+    if not (ROOT/filename).exists():fail(f"Ausente {filename}.")
+for identifier in ("etMap","etMetric","etCity","etTableBody","etFirstValue","etSecondValue","etDeltaValue"):
+    if 'id="'+identifier+'"' not in (ROOT/"entre-turnos.html").read_text(encoding="utf-8"):
+        fail(f"Entre Turnos sem elemento {identifier}.")
+if "publication_ready" not in (ROOT/"entre-turnos.js").read_text(encoding="utf-8"):
+    fail("Entre Turnos sem trava de divulgação dos dados.")
+
 if errors:
     print("\n".join("ERRO: "+e for e in errors))
     raise SystemExit(1)

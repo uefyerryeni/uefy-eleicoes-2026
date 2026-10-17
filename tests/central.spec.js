@@ -137,10 +137,40 @@ test('acervo separado mantém acesso ao primeiro turno e ao Legislativo', async 
   await expect(page.locator('.analysis-hero .rn-badge')).toContainText('1º TURNO');
 });
 
+test('Entre Turnos carrega base histórica de 167 municípios e preserva o segundo turno pendente',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__entreTurnos?.rows===167);
+  await expect(page.locator('#etMap .et-city')).toHaveCount(167);
+  await expect(page.locator('#etFirstValue')).toHaveText('81,61%');
+  await expect(page.locator('#etSecondValue')).toHaveText('—');
+  await expect(page.locator('#etDeltaValue')).toHaveText('—');
+  expect(await page.evaluate(()=>window.__entreTurnos.ready)).toBeFalsy();
+  rejectLeaks(errors);
+});
+test('Entre Turnos filtra município e indicador sem dados do segundo turno',async({page})=>{
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__entreTurnos?.rows===167);
+  await page.locator('#etCity').selectOption({label:'NATAL'});
+  await expect(page.locator('#etScopeTitle')).toContainText('NATAL');
+  await page.locator('#etMetric').selectOption('abstention_pct');
+  await expect(page.locator('#etFirstValue')).not.toHaveText('—');
+  await expect(page.locator('#etSecondValue')).toHaveText('—');
+  await page.locator('#etSearch').fill('Parnamirim');
+  await expect(page.locator('#etTableBody tr')).toHaveCount(1);
+});
+test('Entre Turnos recusa snapshot parcial',async({page})=>{
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__entreTurnos?.rows===167);
+  const snapshot=await page.evaluate(()=>window.__entreTurnos.second);
+  expect(snapshot.round).toBe(2);
+  expect(snapshot.election_ids).toEqual({gov:'6260',pres:'6258'});
+  expect(snapshot.publication_ready).toBeFalsy();
+});
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);
-    for (const pathname of ['index.html','presidencia.html','analises.html','radar.html','primeiro-turno.html']) {
+    for (const pathname of ['index.html','presidencia.html','analises.html','radar.html','primeiro-turno.html','entre-turnos.html']) {
       await page.goto(route(pathname),{waitUntil:'domcontentloaded'});
       await page.waitForLoadState('domcontentloaded');
       const x=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
