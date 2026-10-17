@@ -292,6 +292,19 @@ for identifier in ("etMap","etMetric","etCity","etTableBody","etFirstValue","etS
 if "publication_ready" not in (ROOT/"entre-turnos.js").read_text(encoding="utf-8"):
     fail("Entre Turnos sem trava de divulgação dos dados.")
 
+# 9) Comparação municipal da primeira posição entre os turnos.
+if not (ROOT/"mudancas-rn.js").exists() or not (ROOT/"mudancas-rn.css").exists():
+    fail("Arquivos para o mapa municipal de mudanças ausentes.")
+for marker in ('id="mtMap"','id="mtView"','id="mtFilter"','id="mtRows"','id="mtTransitions"'):
+    if marker not in (ROOT/"entre-turnos.html").read_text(encoding="utf-8"):
+        fail(f"Mapa de mudanças sem controle {marker}.")
+map_first=load("data/rn-governador-mapa.json")
+map_second=load("data/rn-governador-mapa-2t.json")
+first_codes={str(v.get("code")) for v in map_first.get("leaders",{}).values()}
+second_codes={str(v.get("code")) for v in map_second.get("leaders",{}).values()}
+if len(first_codes)!=167 or (second_codes and second_codes!=first_codes):
+    fail("Códigos municipais do governador diferem entre os turnos.")
+
 if errors:
     print("\n".join("ERRO: "+e for e in errors))
     raise SystemExit(1)

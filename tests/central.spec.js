@@ -167,6 +167,28 @@ test('Entre Turnos recusa snapshot parcial',async({page})=>{
   expect(snapshot.election_ids).toEqual({gov:'6260',pres:'6258'});
   expect(snapshot.publication_ready).toBeFalsy();
 });
+test('mapa territorial do governo carrega 167 municipios do primeiro turno com segundo pendente', async({page})=>{
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__mapaMudancas?.count===167);
+  expect(await page.evaluate(()=>window.__mapaMudancas.compared)).toBe(0);
+  await expect(page.locator('#mtMap .mt-municipality')).toHaveCount(167);
+  await expect(page.locator('#mtTotal')).toHaveText('0');
+  await expect(page.locator('#mtMissing')).toHaveText('167');
+  await expect(page.locator('#mtView option[value="changes"]')).toBeDisabled();
+  await expect(page.locator('#mtView option[value="second"]')).toBeDisabled();
+  await page.locator('#mtSearch').fill('Parnamirim');
+  await expect(page.locator('#mtRows tr')).toHaveCount(1);
+  await expect(page.locator('#mtRows tr').first()).toContainText('Aguardando');
+});
+test('mapa de mudancas detalha municipios sem sugerir transferencia individual de votos',async({page})=>{
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__mapaMudancas?.count===167);
+  await page.locator('#mtRows tr').first().click();
+  await expect(page.locator('#mtFirstName')).not.toHaveText('Selecione uma cidade');
+  await expect(page.locator('#mtSecondName')).toHaveText('Aguardando totalização');
+  await expect(page.locator('#mtChangeState')).toHaveText('Sem comparação disponível');
+  await expect(page.locator('#mtDisclaimer')).toContainText('transferência');
+});
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);

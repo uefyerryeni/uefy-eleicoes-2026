@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="style.css?v=20261017" />
 <link rel="stylesheet" href="turno2.css?v=20261017" />
 <link rel="stylesheet" href="entre-turnos.css?v=20261017" />
+<link rel="stylesheet" href="mudancas-rn.css?v=20261017" />
 </head>
 <body class="between-page">
 <header class="topbar">
@@ -61,6 +62,82 @@
     <div class="et-source-action"><button id="etRefresh" type="button">Atualizar dados <span aria-hidden="true">↻</span></button></div>
   </section>
 
+  <section class="mt-module" id="mudancas" aria-labelledby="mtHeading">
+    <div class="mt-head">
+      <div><span class="et-overline">01 / GOVERNADOR · LEITURA TERRITORIAL</span>
+        <h2 id="mtHeading">Mudanças no mapa.</h2>
+        <p>Qual candidatura ficou em primeiro em cada município? Veja onde a primeira posição permaneceu ou mudou entre 4 e 25 de outubro. O mapa usa apenas resultados oficiais do TSE.</p>
+      </div>
+      <button class="mt-refresher" id="mtRefresh" type="button">Atualizar mapa ↻</button>
+    </div>
+    <div class="mt-status" id="mtStatus" role="status" aria-live="polite">Carregando dados oficiais dos municípios…</div>
+    <div class="mt-kpis" aria-label="Situação dos municípios">
+      <div class="mt-kpi"><span>Comparados</span><strong id="mtTotal">—</strong></div>
+      <div class="mt-kpi"><span>Permaneceu</span><strong id="mtStayed">—</strong></div>
+      <div class="mt-kpi"><span>Mudou</span><strong id="mtChanged">—</strong></div>
+      <div class="mt-kpi"><span>Aguardando 2º turno</span><strong id="mtMissing">—</strong></div>
+    </div>
+    <div class="mt-controls">
+      <label>VISUALIZAR MAPA
+        <select id="mtView">
+          <option value="first">Mais votado · 1º turno</option>
+          <option value="second" disabled>Mais votado · 2º turno</option>
+          <option value="changes" disabled>Permaneceu ou mudou</option>
+        </select>
+      </label>
+      <label>FILTRAR MUNICÍPIOS
+        <select id="mtFilter">
+          <option value="all">Todos os municípios</option>
+          <option value="pending">Aguardando totalização</option>
+          <option value="same" disabled>Permaneceu</option>
+          <option value="changed" disabled>Mudou</option>
+          <optgroup label="Combinações entre turnos">
+            <option value="13-13" disabled>Cadu de Lula → Cadu de Lula</option>
+            <option value="44-44" disabled>Allyson Bezerra → Allyson Bezerra</option>
+            <option value="13-44" disabled>Cadu de Lula → Allyson Bezerra</option>
+            <option value="44-13" disabled>Allyson Bezerra → Cadu de Lula</option>
+            <option value="22-13" disabled>Álvaro Dias → Cadu de Lula</option>
+            <option value="22-44" disabled>Álvaro Dias → Allyson Bezerra</option>
+          </optgroup>
+        </select>
+      </label>
+    </div>
+    <div class="mt-body">
+      <div class="mt-map-shell">
+        <span class="mt-map-badge" id="mtMapLabel">MAPA · 1º TURNO</span>
+        <svg id="mtMap" role="img" viewBox="0 0 760 560" aria-label="Mapa do Rio Grande do Norte por candidatura com mais votos para governador"></svg>
+        <div class="mt-legend" id="mtLegend"></div>
+      </div>
+      <aside class="mt-detail" aria-label="Resultado territorial por município">
+        <span class="et-overline">DETALHE / MUNICÍPIO</span>
+        <h3 id="mtChosen">RIO GRANDE DO NORTE</h3>
+        <div class="mt-turn"><span>04.10 · PRIMEIRO TURNO</span><strong id="mtFirstName">Selecione uma cidade</strong><small id="mtFirstValue">—</small></div>
+        <div class="mt-turn"><span>25.10 · SEGUNDO TURNO</span><strong id="mtSecondName">Aguardando totalização</strong><small id="mtSecondValue">—</small></div>
+        <div class="mt-result" id="mtChangeState">Selecione um município</div>
+        <p id="mtDetailNote">Clique no mapa ou na tabela para conferir os dados.</p>
+      </aside>
+    </div>
+    <p class="mt-disclaimer" id="mtDisclaimer">Mudança de primeira posição municipal não significa transferência de votos entre eleitoras e eleitores.</p>
+    <div class="mt-bottom">
+      <div><span class="et-overline">COMBINAÇÕES ENTRE TURNOS</span><h3>De onde para onde mudou a primeira posição?</h3></div>
+      <div class="mt-routes" id="mtTransitions"><p class="mt-await">Aguardando totalização do segundo turno.</p></div>
+      <div class="mt-table-head">
+        <div><span class="et-overline">CONSULTA TERRITORIAL</span><h3>Município por município</h3></div>
+        <input id="mtSearch" class="mt-search" type="search" placeholder="Encontrar município" aria-label="Buscar município no histórico de posições" />
+      </div>
+      <div class="mt-scroll">
+        <table class="mt-table">
+          <thead><tr><th>Município</th><th>1º turno</th><th>2º turno</th><th>Situação</th></tr></thead>
+          <tbody id="mtRows"><tr><td colspan="4">Carregando dados…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="mt-foot">
+        <small id="mtCount">—</small>
+        <button class="mt-export" id="mtExport" type="button">Exportar CSV ↗</button>
+      </div>
+    </div>
+    <span id="mtCadastrados" hidden>—</span>
+  </section>
   <section class="et-intro">
     <div>
       <span class="et-overline">01 / CONTEXTO</span>
@@ -156,5 +233,6 @@
 <nav class="mobile-dock et-mobile-dock" aria-label="Acesso rápido"><a href="index.html">RN ao vivo</a><a href="presidencia.html">Presidência</a><a href="entre-turnos.html" class="active">Entre Turnos</a><a href="#mapa">Mapa</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
 <script src="entre-turnos.js?v=20261017"></script>
+<script src="mudancas-rn.js?v=20261017"></script>
 </body>
 </html>

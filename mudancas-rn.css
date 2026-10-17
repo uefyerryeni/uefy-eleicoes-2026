@@ -1,0 +1,66 @@
+
+/* Governador RN: permanências / mudanças de primeira posição municipal. */
+.mt-module{margin:0 0 36px;padding:25px;border:2px solid #1d2927;background:#fffdf7;box-shadow:6px 6px 0 #d9dfd5;scroll-margin-top:90px}
+.mt-head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:16px}
+.mt-head h2{font:900 clamp(37px,4.6vw,61px)/.93 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;margin:9px 0}
+.mt-head p{font-size:13px;line-height:1.55;color:#55625b;margin:0;max-width:670px}
+.mt-refresher{min-width:136px;background:#f4dd19;border:1px solid #1c2927;padding:12px 17px;color:#19231d;font-weight:800;cursor:pointer}
+.mt-refresher:disabled{opacity:.65;cursor:default}
+.mt-status{font-size:12px;line-height:1.5;padding:12px 14px;background:#e9ede5;border-left:4px solid #677d70;margin:0 0 15px;font-weight:700}
+.mt-status.is-ready{border-left-color:#277e61}
+.mt-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:20px}
+.mt-kpi{border:1px solid #bcc9b9;padding:13px 15px;background:#f7f8f3}
+.mt-kpi>span{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:800;display:block;line-height:1.35}
+.mt-kpi>strong{font:850 clamp(34px,4.8vw,57px)/1 'Barlow Condensed',Impact,sans-serif;display:block;margin:9px 0 0;font-variant-numeric:tabular-nums}
+.mt-kpi:nth-child(2){border-top:5px solid #2d7361}
+.mt-kpi:nth-child(3){border-top:5px solid #d8a227}
+.mt-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#e9eee7;padding:13px;margin-bottom:14px}
+.mt-controls label{display:flex;flex-direction:column;min-width:0;gap:6px;font-size:10px;font-weight:800;letter-spacing:.07em}
+.mt-controls select{width:100%;min-height:43px;border:1px solid #b2c1b5;background:#fffdf7;color:#192a23;padding:10px;font-size:12px;font-weight:700;letter-spacing:0}
+.mt-body{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(255px,.65fr);gap:14px}
+.mt-map-shell{min-width:0;background:#f4f5ee;border:1px solid #ced5c9;padding:12px}
+.mt-map-badge{font-size:10px;letter-spacing:.08em;font-weight:800;color:#53635b}
+#mtMap{display:block;width:100%;height:auto;aspect-ratio:760/560;margin:5px auto 11px}
+.mt-municipality{stroke:#fffdf8;stroke-width:1.25;vector-effect:non-scaling-stroke;cursor:pointer;transition:stroke .13s}
+.mt-municipality:hover,.mt-municipality.selected{stroke:#172720;stroke-width:3.5}
+.mt-legend{display:flex;gap:9px 16px;flex-wrap:wrap}
+.mt-legend span{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700}
+.mt-legend i{width:11px;height:11px;border:1px solid #7c8b7d}
+.mt-detail{background:#1d2927;color:#f5f4e8;padding:23px;display:flex;flex-direction:column;gap:14px}
+.mt-detail .et-overline{color:#c1d0c6}
+.mt-detail h3{font:900 clamp(32px,3.7vw,46px)/.95 'Barlow Condensed',Impact,sans-serif;letter-spacing:.03em;margin:0}
+.mt-turn{border-top:1px solid #56685e;padding-top:12px;display:flex;flex-direction:column;gap:5px}
+.mt-turn span{font-size:10px;font-weight:700;color:#c3d4c9;letter-spacing:.04em}
+.mt-turn strong{font:800 24px/1 'Barlow Condensed',Impact,sans-serif}
+.mt-turn small{font-size:11px;color:#d1dcd3}
+.mt-result{background:#f4dd19;color:#18261f;padding:11px 13px;font-size:12px;font-weight:800;margin-top:auto}
+.mt-detail p{color:#c5d3c8;font-size:11px;line-height:1.6;margin:0}
+.mt-disclaimer{font-size:11px;color:#68756a;line-height:1.65;margin:11px 0 0}
+.mt-bottom{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}
+.mt-bottom h3{font:800 30px 'Barlow Condensed',Impact,sans-serif;margin:0}
+.mt-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.mt-await{font-size:12px;line-height:1.6;border:1px dashed #aab8a9;padding:15px;background:#f7f8f3;grid-column:1/-1}
+.mt-route{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto;align-items:center;gap:9px;text-align:left;background:#f4f6ef;border:1px solid #bfcbbd;min-height:53px;padding:10px;font-size:10px;font-weight:800;color:#26362b;cursor:pointer}
+.mt-route.active{box-shadow:inset 0 0 0 2px #17261f;background:#f4dd19}
+.mt-route b{font-size:15px}.mt-route strong{font-size:21px;font-family:'Barlow Condensed',Impact,sans-serif}
+.mt-table-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:11px}
+.mt-search{padding:11px 12px;border:1px solid #b1bcb0;background:#fffdf7;min-width:190px;max-width:280px;width:100%;font-size:12px}
+.mt-scroll{max-height:360px;overflow:auto;border:1px solid #c5cfc2}
+.mt-table{border-collapse:collapse;width:100%;font-size:12px}
+.mt-table th{position:sticky;top:0;background:#202c27;color:#fff;padding:12px;text-align:left;font-size:10px;letter-spacing:.07em;text-transform:uppercase;z-index:1}
+.mt-table td{padding:11px 12px;border-bottom:1px solid #e4e9e0}
+.mt-table tbody tr{cursor:pointer;background:#fffdf7}
+.mt-table tbody tr:nth-child(even){background:#f4f6ed}
+.mt-table tbody tr:hover,.mt-table tbody tr.selected{background:#f4e9aa}
+.mt-class-same{color:#216849;font-weight:850}.mt-class-changed{color:#8f6018;font-weight:850}.mt-class-pending{color:#777d70}
+.mt-foot{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:11px}
+.mt-foot small{color:#637366;font-size:11px}
+.mt-export{min-height:43px;background:#f4dd19;border:1px solid #1d2927;padding:11px 14px;font-weight:800;cursor:pointer}
+body.dark .mt-module{background:#222d29;border-color:#607066;color:#eef1e8;box-shadow:6px 6px 0 #3d4c40}
+body.dark .mt-status,body.dark .mt-kpi,body.dark .mt-map-shell,body.dark .mt-controls,body.dark .mt-await{background:#2a3931;border-color:#576b5a;color:#f3f6ec}
+body.dark .mt-head p,body.dark .mt-disclaimer,body.dark .mt-foot small{color:#bacbbd}
+body.dark .mt-table tbody tr{background:#29382e;color:#f1f4ea}
+body.dark .mt-table tbody tr:nth-child(even){background:#2c3d32}
+body.dark .mt-table tbody tr:hover,body.dark .mt-table tbody tr.selected{background:#536448}
+@media(max-width:910px){.mt-body{grid-template-columns:1fr}.mt-detail{display:grid;grid-template-columns:1fr 1fr}.mt-detail h3,.mt-detail .et-overline,.mt-detail p{grid-column:1/-1}.mt-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.mt-module{padding:14px;box-shadow:3px 3px 0 #d9dfd5}.mt-head{display:block}.mt-refresher{margin-top:14px;width:100%}.mt-controls{grid-template-columns:1fr}.mt-detail{display:flex}.mt-routes{grid-template-columns:1fr}.mt-table-head{display:block}.mt-search{max-width:none;margin-top:8px}.mt-table{font-size:10px}.mt-table td,.mt-table th{padding:10px 7px}.mt-foot{display:block}.mt-export{display:block;width:100%;margin-top:10px}}
