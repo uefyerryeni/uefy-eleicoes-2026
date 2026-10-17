@@ -72,7 +72,7 @@ function summary(){
  $('#mtStatus').classList.toggle('is-ready',readyAll);
  $('#mtDisclaimer').textContent=readyAll?
   'Resultados oficiais municipalizados. Permanência ou mudança refere-se somente ao candidato com mais votos válidos em cada município.' :
-  'Sem projeções: mudanças só aparecem onde a totalização municipal oficial do segundo turno alcançou 100%. As demais cidades ficam pendentes.';
+  'Sem projeções: mudanças só aparecem onde a totalização municipal oficial do segundo turno alcançou 100%. As demais cidades ficam pendentes. Mudança da primeira posição não demonstra transferência individual de votos.';
  const counts=new Map();
  for(const r of ready){const k=r.from+'-'+r.to;counts.set(k,(counts.get(k)||0)+1)}
  const transitions=['13-13','44-44','13-44','44-13','22-13','22-44'];

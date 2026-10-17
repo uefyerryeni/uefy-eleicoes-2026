@@ -184,8 +184,8 @@ test('mapa territorial do governo carrega 167 municipios do primeiro turno com s
   await expect(page.locator('#mtMap .mt-municipality')).toHaveCount(167);
   await expect(page.locator('#mtTotal')).toHaveText('0');
   await expect(page.locator('#mtMissing')).toHaveText('167');
-  await expect(page.locator('#mtView option[value="changes"]')).toBeDisabled();
-  await expect(page.locator('#mtView option[value="second"]')).toBeDisabled();
+  await expect(page.locator('#mtView option[value="changes"]')).toHaveJSProperty('disabled',true);
+  await expect(page.locator('#mtView option[value="second"]')).toHaveJSProperty('disabled',true);
   await page.locator('#mtSearch').fill('Parnamirim');
   await expect(page.locator('#mtRows tr')).toHaveCount(1);
   await expect(page.locator('#mtRows tr').first()).toContainText('Aguardando');
