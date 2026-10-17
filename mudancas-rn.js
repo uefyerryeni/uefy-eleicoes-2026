@@ -115,13 +115,17 @@ function geometryPath(g,p){
  const ring=polygon=>polygon.map(r=>r.map(([x,y],i)=>{const q=p([x,y]);return (i?'L':'M')+q[0].toFixed(1)+','+q[1].toFixed(1)}).join('')+'Z').join('');
  return g.type==='Polygon'?ring(g.coordinates):g.type==='MultiPolygon'?g.coordinates.map(ring).join(''):'';
 }
+function municipalAlias(name){
+ const key=String(name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ return ({acu:'assu',ares:'arez',januariocicco:'boasaude'})[key]||key;
+}
 function drawMap(){
  const svg=$('#mtMap');svg.replaceChildren();
  const p=project(geometry.features),byCode=new Map(rows.map(r=>[r.code,r]));
  for(const feature of geometry.features){
   const code=String(feature.properties?.codarea||feature.properties?.cdmun||feature.properties?.codigo||'');
   let row=byCode.get(code);
-  if(!row){const name=String(feature.properties?.nome||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();row=rows.find(r=>r.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase()===name)}
+  if(!row){const name=municipalAlias(feature.properties?.nome);row=rows.find(r=>municipalAlias(r.name)===name)}
   const path=document.createElementNS(NS,'path');
   path.setAttribute('d',geometryPath(feature.geometry,p));
   path.setAttribute('class','mt-municipality'+(row?.code===selected?' selected':''));
