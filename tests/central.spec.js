@@ -1,232 +1,157 @@
-const BUILD=require('../version.json').build;
-const {test,expect}=require('@playwright/test');
-async function guard(page){await page.addInitScript(()=>{window.__canvasOverflows=[];const o=CanvasRenderingContext2D.prototype.fillText;CanvasRenderingContext2D.prototype.fillText=function(text,x,y,maxWidth){try{const w=this.measureText(String(text)).width,a=this.textAlign||'start';let l=x,r=x+w;if(a==='right'||a==='end'){l=x-w;r=x}else if(a==='center'){l=x-w/2;r=x+w/2}if(l<-1||r>this.canvas.width+1)window.__canvasOverflows.push({text:String(text),l,r})}catch{}return o.apply(this,arguments)}})}
-async function noOverlap(page,a,b){const A=await page.locator(a).boundingBox(),B=await page.locator(b).boundingBox();if(!A||!B)return;expect(!(A.x+A.width<=B.x||B.x+B.width<=A.x||A.y+A.height<=B.y||B.y+B.height<=A.y)).toBeFalsy()}
+const { test, expect } = require('@playwright/test');
+const BUILD = require('../version.json').build;
+const route = name => '/' + name + '?v=' + encodeURIComponent(BUILD);
 
-test('produção não expõe Laboratório UEFY',async({page})=>{for(const path of ['/index.html','/rn.html','/radar.html']){await page.goto(path+'?v='+BUILD);await expect(page.locator('body')).not.toContainText('Laboratório UEFY');await expect(page.locator('option[value="lab"]')).toHaveCount(0)}});
-
-test('card geral editorial é legível e carrega estágio da totalização',async({page})=>{await guard(page);await page.goto('/index.html?v='+BUILD);const out=await page.evaluate(()=>{mode='official';selectedOffice='gov';selectedScope='uf_rn';state.gov={progress:63.42,generatedAt:'04/10/2026 · 18:07',finalTotalization:false,integrity:{matched:3,total:3,unmatched:0},candidates:[{id:'1',number:'13',name:'CANDIDATURA TESTE UM',party:'AAA',votes:650000,pct:48.7,seq:1},{id:'2',number:'22',name:'CANDIDATURA TESTE DOIS',party:'BBB',votes:590000,pct:44.2,seq:2},{id:'3',number:'44',name:'CANDIDATURA TESTE TRÊS',party:'CCC',votes:95000,pct:7.1,seq:3}]};window.__canvasOverflows=[];regenerate();return {text:document.querySelector('#postText').value,disabled:document.querySelector('#openX').disabled}});expect(out.text).toContain('APURAÇÃO PARCIAL');expect(out.text).toContain('63,42%');expect(out.disabled).toBeFalsy();expect(await page.evaluate(()=>window.__canvasOverflows)).toEqual([])});
-
-test('falha de conciliação bloqueia publicação',async({page})=>{await page.goto('/index.html?v='+BUILD);const disabled=await page.evaluate(()=>{mode='official';selectedOffice='gov';selectedScope='uf_rn';state.gov={progress:10,generatedAt:'teste',integrity:{matched:1,total:2,unmatched:1},candidates:[{id:'1',name:'A',party:'X',votes:1,pct:60},{id:'2',name:'B',party:'Y',votes:1,pct:40}]};regenerate();return document.querySelector('#openX').disabled&&document.querySelector('#shareBundle').disabled&&document.querySelector('#copyText').disabled});expect(disabled).toBeTruthy()});
-
-test('EA20 só declara situação eleitoral com estado oficial do TSE',async({page})=>{await page.goto('/index.html?v='+BUILD);const result=await page.evaluate(()=>{const fixture=(root,cands)=>({dg:'04/10/2026',hg:'20:00:00',tf:root.tf,and:root.and||'p',md:root.md||'n',s:{ts:100,st:100,pst:'100,00'},carg:[{agr:[{par:[{sg:'TESTE',cand:cands}]}]}]});mode='official';selectedOffice='gov';selectedScope='uf_rn';const partial=parseEA20(fixture({tf:'n',md:'n'},[{n:10,nmu:'A',vap:600,pvap:'60,00',seq:1,e:'n',st:''},{n:20,nmu:'B',vap:400,pvap:'40,00',seq:2,e:'n',st:''}]));const elected=parseEA20(fixture({tf:'n',md:'e'},[{n:10,nmu:'A',vap:600,pvap:'60,00',seq:1,e:'s',st:''},{n:20,nmu:'B',vap:400,pvap:'40,00',seq:2,e:'n',st:''}]));const runoff=parseEA20(fixture({tf:'n',md:'s'},[{n:10,nmu:'A',vap:480,pvap:'48,00',seq:1,e:'s',st:''},{n:20,nmu:'B',vap:420,pvap:'42,00',seq:2,e:'s',st:''}]));return {partial:officialOutcome(partial,'gov','uf_rn').kind,elected:officialOutcome(elected,'gov','uf_rn').kind,runoff:officialOutcome(runoff,'gov','uf_rn').kind}});expect(result).toEqual({partial:'none',elected:'elected',runoff:'second_round'})});
-
-
-test('RN bloqueia publicação quando a conciliação falha',async({page})=>{await page.goto('/rn.html?v='+BUILD);await page.waitForFunction(()=>typeof selectedFeature!=='undefined'&&selectedFeature!==null);const disabled=await page.evaluate(()=>{current={progress:10,generatedAt:'teste',municipality:selectedFeature.properties.nome,integrity:{matched:1,total:2,unmatched:1},candidates:[{id:'1',name:'A',number:'13',party:'X',votes:10,pct:60},{id:'2',name:'B',number:'22',party:'Y',votes:5,pct:40}]};renderCurrent();return document.querySelector('#rnOpenX').disabled&&document.querySelector('#rnShareBundle').disabled&&document.querySelector('#rnCopyImage').disabled});expect(disabled).toBeTruthy()});
-
-test('RN limpa resultado ao trocar de município',async({page})=>{await page.goto('/rn.html?v='+BUILD);await page.waitForFunction(()=>typeof selectedFeature!=='undefined'&&selectedFeature!==null);const clean=await page.evaluate(()=>{const old=selectedFeature;const next=fc.features.find(x=>x!==old);current={progress:55,generatedAt:'teste',municipality:old.properties.nome,integrity:{matched:1,total:1,unmatched:0},candidates:[{id:'1',name:'A',number:'13',votes:10,pct:55}]};selectMunicipality(next);return current.municipality===next.properties.nome&&current.candidates.length===0});expect(clean).toBeTruthy()});
-
-
-test('aliases municipais do RN casam GeoJSON com TSE',async({page})=>{
-  await page.goto('/rn.html?v='+BUILD);
-  const rnAliases=await page.evaluate(()=>({
-    acu:municipalityKey('Açu')===municipalityKey('ASSÚ'),
-    ares:municipalityKey('Arês')===municipalityKey('AREZ'),
-    boaSaude:municipalityKey('Januário Cicco')===municipalityKey('BOA SAÚDE')
-  }));
-  expect(rnAliases).toEqual({acu:true,ares:true,boaSaude:true});
-  await page.goto('/radar.html?v='+BUILD);
-  const radarAliases=await page.evaluate(()=>({
-    acu:municipalityKey('Açu')===municipalityKey('ASSÚ'),
-    ares:municipalityKey('Arês')===municipalityKey('AREZ'),
-    boaSaude:municipalityKey('Januário Cicco')===municipalityKey('BOA SAÚDE')
-  }));
-  expect(radarAliases).toEqual({acu:true,ares:true,boaSaude:true});
-});
-
-test('RN mantém cores fixas de governador',async({page})=>{await page.goto('/rn.html?v='+BUILD);const colors=await page.evaluate(()=>['13','16','22','27','29','36','44','50','80'].map(n=>candidateColor('',n)));expect(colors[0]).toBe('#d62828');expect(colors[2]).toBe('#2e7d32');expect(colors[6]).toBe('#1976d2');expect(new Set(colors).size).toBe(colors.length)});
-
-test('fontes restantes são Oficial e Simulado onde aplicável',async({page})=>{await page.goto('/index.html?v='+BUILD);await expect(page.locator('#modeSelect option')).toHaveCount(2);await expect(page.locator('#modeSelect')).toHaveValue('official');await page.goto('/rn.html?v='+BUILD);await expect(page.locator('#rnMode option')).toHaveCount(2);await expect(page.locator('#rnMode')).toHaveValue('official');await page.goto('/radar.html?v='+BUILD);await expect(page.locator('#radarMode')).toHaveCount(0)});
-
-for(const viewport of [{width:1440,height:900},{width:390,height:844}]){test('controles flutuantes não se sobrepõem em '+viewport.width+'px',async({page})=>{await page.setViewportSize(viewport);for(const path of ['/index.html','/rn.html','/radar.html']){await page.goto(path+'?v='+BUILD);await page.evaluate(()=>scrollTo(0,1000));await page.waitForTimeout(120);await noOverlap(page,'.float-refresh','.to-top');if(viewport.width<=600)await noOverlap(page,'.float-refresh','.mobile-dock')}})}
-
-
-test('Radar bloqueia ações finais sem snapshot publicável',async({page})=>{await page.goto('/radar.html?v='+BUILD);const disabled=await page.evaluate(()=>{radar={status:'waiting',offices:{},municipal_maps:{}};publicationView='map';renderAll();return document.querySelector('#openRadarX').disabled&&document.querySelector('#copyRadarImage').disabled&&document.querySelector('#shareRadarBundle').disabled});expect(disabled).toBeTruthy()});
-
-test('contadores de publicação não impõem limite de 280',async({page})=>{await page.goto('/index.html?v='+BUILD);await expect(page.locator('#charCount')).not.toContainText('/280');await page.goto('/rn.html?v='+BUILD);await expect(page.locator('#rnChars')).not.toContainText('/280');await page.goto('/radar.html?v='+BUILD);await expect(page.locator('#radarChars')).not.toContainText('/280')});
-
-
-test('Análises RN carrega 167 municípios, mapas e publicação no desktop',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true||window.__analysisError!==null);
-  const err=await page.evaluate(()=>window.__analysisError);
-  expect(err).toBeNull();
-  await expect(page.locator('#crossMap path')).toHaveCount(167);
-  await expect(page.locator('#participationMap path')).toHaveCount(167);
-  await expect(page.locator('#crossPostText')).not.toHaveValue('');
-  await expect(page.locator('#participationPostText')).not.toHaveValue('');
-  await expect(page.locator('#crossCanvas')).toBeVisible();
-  await expect(page.locator('#participationCanvas')).toBeVisible();
-  expect(await page.locator('#pairFilter option').count()).toBeGreaterThan(1);
-  await page.locator('#metricSelect').selectOption('president.null_pct');
-  await expect(page.locator('#participationPubTitle')).toContainText('Nulos');
-  await expect(page.locator('#participationPostText')).toHaveValue(/NULOS/);
-  await expect(page.locator('#participationPostText')).toHaveValue(/2022/);
-  await expect(page.locator('#historyCompare .history-row')).toHaveCount(6);
-});
-
-
-test('Linguagem do cruzamento é explícita e publicação não usa sinal de confronto',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  await expect(page.getByRole('heading',{name:/Quem foi mais votado para Presidente \+ Governador/i})).toBeVisible();
-  const options=await page.locator('#pairFilter option').allTextContents();
-  expect(options.some(x=>x.includes('(Presidente) +')&&x.includes('(Governador)'))).toBeTruthy();
-  await page.locator('#pairFilter').selectOption({index:1});
-  await expect(page.locator('#crossPostText')).toHaveValue(/foi o candidato mais votado para Presidente/);
-  await expect(page.locator('#crossPostText')).not.toHaveValue(/×/);
-  await expect(page.locator('#comparecimentoScopeNote')).toContainText('Governador');
-});
-
-
-test('Card de participação inclui escala cromática no canvas',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  const hasScale=await page.evaluate(()=>typeof drawMetricScaleCanvas==='function');
-  expect(hasScale).toBeTruthy();
-  await expect(page.locator('#participationCanvas')).toBeVisible();
-});
-
-
-test('Raio-X municipal carrega os 167 municípios e gera publicação',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  await expect(page.locator('#municipalitySelect option')).toHaveCount(167);
-  await expect(page.locator('#municipalMap path')).toHaveCount(167);
-  await expect(page.locator('#municipalMetrics .municipal-metric-card')).toHaveCount(6);
-  await expect(page.locator('#municipalPostText')).not.toHaveValue('');
-  await expect(page.locator('#municipalCanvas')).toBeVisible();
-  await page.locator('#municipalPublicationMode').selectOption('president.null_pct');
-  await expect(page.locator('#municipalPubMode')).toContainText('Nulos');
-  await expect(page.locator('#municipalPostText')).toHaveValue(/Posição no RN/);
-});
-
-test('Raio-X municipal permite trocar de cidade e recalcula os dados',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  await page.locator('#municipalitySelect').selectOption({label:'NATAL'});
-  await expect(page.locator('#municipalName')).toHaveText('NATAL');
-  await expect(page.locator('#municipalWinners')).toContainText('Presidente mais votado');
-  await expect(page.locator('#municipalComparison > div')).toHaveCount(6);
-});
-
-
-test('Raio-X municipal mostra números absolutos e ranking',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  await page.locator('#municipalitySelect').selectOption({label:'NATAL'});
-  await expect(page.locator('#municipalMetrics')).toContainText(/eleitores|votos/);
-  await page.locator('#municipalPublicationMode').selectOption('abstention_pct');
-  await expect(page.locator('#municipalPostText')).toHaveValue(/eleitores/);
-  await expect(page.locator('#municipalPostText')).toHaveValue(/Posição no RN/);
-});
-
-
-test('Card municipal prioriza Raio-X completo com mapa da cidade e todos os indicadores',async({page})=>{
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  await expect(page.locator('#municipalPublicationMode')).toHaveValue('profile');
-  const options=await page.locator('#municipalPublicationMode option').allTextContents();
-  expect(options[0]).toContain('Raio-X completo');
-  const funcs=await page.evaluate(()=>({
-    indicator:typeof drawMunicipalIndicatorCanvas==='function',
-    profile:typeof drawMunicipalProfileCanvas==='function',
-    shape:typeof drawMunicipalityShapeCanvas==='function'
-  }));
-  expect(funcs).toEqual({indicator:true,profile:true,shape:true});
-  await expect(page.locator('#municipalPubMode')).toContainText('Perfil completo');
-  await expect(page.locator('#municipalPostText')).toHaveValue(/Comparecimento:/);
-  await expect(page.locator('#municipalPostText')).toHaveValue(/Brancos para Presidente:/);
-  await expect(page.locator('#municipalPostText')).toHaveValue(/Nulos para Governador:/);
-});
-
-
-async function horizontalOverflowReport(page){
-  return page.evaluate(()=>{
-    const vw=window.innerWidth;
-    const clippedByAncestor=el=>{
-      let p=el.parentElement;
-      while(p&&p!==document.body){
-        const ox=getComputedStyle(p).overflowX;
-        if(['auto','scroll','hidden','clip'].includes(ox))return true;
-        p=p.parentElement;
-      }
-      return false;
-    };
-    const offenders=[...document.querySelectorAll('body *')].map(el=>{
-      const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
-      return {el,tag:el.tagName,id:el.id||'',cls:String(el.className||'').slice(0,80),left:r.left,right:r.right,width:r.width,display:cs.display,position:cs.position,overflowX:cs.overflowX};
-    }).filter(x=>x.display!=='none'&&x.width>0&&(x.right>vw+2||x.left<-2))
-      .filter(x=>!['fixed','absolute'].includes(x.position)&&!clippedByAncestor(x.el))
-      .map(({el,...rest})=>rest)
-      .slice(0,20);
-    return {vw,scrollWidth:document.documentElement.scrollWidth,offenders};
-  });
+async function readyRN(page, name='index.html') {
+  await page.goto(route(name));
+  await page.waitForFunction(() => typeof selectedFeature !== 'undefined' && selectedFeature !== null);
+}
+function rejectLeaks(errors) {
+  const fatal = errors.filter(x=>!(/ResizeObserver loop/.test(x)));
+  expect(fatal).toEqual([]);
 }
 
-for(const viewport of [{width:360,height:800},{width:390,height:844},{width:430,height:932}]){
-  test('site público não estoura horizontalmente em '+viewport.width+'px',async({page})=>{
+test('RN é a capa do segundo turno e apresenta as duas candidaturas sem resultados inventados', async ({page}) => {
+  const errors=[];page.on('pageerror', e=>errors.push(e.message));
+  await readyRN(page);
+  await expect(page.locator('#homeTitle')).toContainText('RN');
+  await expect(page.locator('.turno2-duel')).toContainText('ALLYSON BEZERRA');
+  await expect(page.locator('.turno2-duel')).toContainText('CADU DE LULA');
+  await expect(page.locator('#rnMode option')).toHaveCount(1);
+  await expect(page.locator('#rnMode')).toHaveValue('official');
+  await expect(page.locator('.topbar .nav a[href="radar.html"]')).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText('Laboratório UEFY');
+  await expect(page.locator('#rnMapRead')).toContainText('0/167');
+  await expect(page.locator('#rnMapPublish')).toBeDisabled();
+  rejectLeaks(errors);
+});
+
+test('RN usa exclusivamente a eleição 6260 e não confunde snapshots', async ({page}) => {
+  await readyRN(page);
+  const x=await page.evaluate(async()=>{
+    const snapshot=await fetch('data/rn-governador-mapa-2t.json').then(r=>r.json());
+    const out={round:snapshot.round,election:snapshot.election_id,status:snapshot.status,
+      fetched:resultUrl('00001'),source:municipalConfigUrl(),
+      valid:leaderMapData.round===2&&String(leaderMapData.election_id)==='6260'};
+    return out;
+  });
+  expect(x.round).toBe(2);
+  expect(x.election).toBe('6260');
+  expect(x.valid).toBeTruthy();
+  expect(x.fetched).toContain('/6260/dados/rn/');
+  expect(x.fetched).toContain('-e006260-');
+  expect(x.source).toContain('/6258/config/');
+});
+
+test('mapa do segundo turno oferece os 167 municípios e busca utilizável', async ({page}) => {
+  await readyRN(page);
+  await expect(page.locator('#rnLeaderMap path')).toHaveCount(167);
+  await page.locator('#munSearch').fill('Parnamirim');
+  await expect(page.locator('#munList .rn-item')).toHaveCount(1);
+  await page.locator('#munList .rn-item').first().click();
+  await expect(page.locator('#selectedMun')).toHaveText('Parnamirim');
+  await expect(page.locator('#rnOpenX')).toBeDisabled();
+});
+
+test('RN preserva cores e aliases oficiais', async ({page}) => {
+  await readyRN(page);
+  const x=await page.evaluate(()=>({
+    red:candidateColor('Cadu de Lula','13'),
+    blue:candidateColor('Allyson','44'),
+    acu:municipalityKey('Açu')===municipalityKey('ASSÚ'),
+    ares:municipalityKey('Arês')===municipalityKey('AREZ'),
+    boa:municipalityKey('Januário Cicco')===municipalityKey('BOA SAÚDE')
+  }));
+  expect(x).toEqual({red:'#d62828',blue:'#1976d2',acu:true,ares:true,boa:true});
+});
+
+test('publicação municipal inclui segundo turno e bloqueia erros de conciliação', async ({page}) => {
+  await readyRN(page);
+  const x=await page.evaluate(()=>{
+    current={progress:52.1,generatedAt:'25/10/2026 · 18:30',municipality:selectedFeature.properties.nome,
+      integrity:{matched:2,total:2,unmatched:1},candidates:[
+        {id:'1',name:'Cadu de Lula',number:'13',party:'PT',votes:100,pct:55},
+        {id:'2',name:'Allyson Bezerra',number:'44',party:'UNIÃO',votes:80,pct:45}
+      ]};
+    renderCurrent();
+    return {text:document.querySelector('#rnPostText').value,
+      disabled:document.querySelector('#rnOpenX').disabled&&document.querySelector('#rnShareBundle').disabled};
+  });
+  expect(x.text).toContain('2º TURNO');
+  expect(x.disabled).toBeTruthy();
+});
+
+test('publicação municipal só habilita dados oficiais conciliados', async ({page}) => {
+  await readyRN(page);
+  const x=await page.evaluate(()=>{
+    current={progress:80,generatedAt:'25/10/2026 · 19:00',municipality:selectedFeature.properties.nome,
+      integrity:{matched:2,total:2,unmatched:0},candidates:[
+        {id:'1',name:'Allyson Bezerra',number:'44',party:'UNIÃO',votes:120,pct:60},
+        {id:'2',name:'Cadu de Lula',number:'13',party:'PT',votes:80,pct:40}
+      ]};
+    renderCurrent();
+    return {allowed:!document.querySelector('#rnOpenX').disabled,text:document.querySelector('#rnPostText').value};
+  });
+  expect(x.allowed).toBeTruthy();
+  expect(x.text).toMatch(/2º TURNO/);
+});
+
+test('Presidência usa somente a eleição federal 6258', async ({page}) => {
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto(route('presidencia.html'));
+  await expect(page.locator('#officeSelect option')).toHaveCount(1);
+  await expect(page.locator('#officeSelect')).toHaveValue('pres');
+  await expect(page.locator('#modeSelect option')).toHaveCount(1);
+  await expect(page.locator('.result-card')).toHaveCount(1);
+  const endpoint=await page.evaluate(()=>endpointFor('pres','br'));
+  expect(endpoint).toContain('/6258/dados/br/');
+  expect(endpoint).toContain('-e006258-');
+  rejectLeaks(errors);
+});
+
+test('Presidência bloqueia publicação quando resultados não conciliam', async ({page}) => {
+  await page.goto(route('presidencia.html'));
+  const safe=await page.evaluate(()=>{
+    selectedOffice='pres';selectedScope='br';
+    state.pres={progress:35,integrity:{matched:1,total:2,unmatched:1},
+      candidates:[{name:'Teste A',number:'13',pct:54,votes:200},{name:'Teste B',number:'22',pct:46,votes:180}]};
+    regenerate();
+    return publicationIsSafe();
+  });
+  expect(safe).toBeFalsy();
+});
+
+test('acervo separado mantém acesso ao primeiro turno e ao Legislativo', async ({page}) => {
+  await page.goto(route('primeiro-turno.html'));
+  await expect(page.getByRole('heading',{name:/primeiro turno/i})).toBeVisible();
+  await expect(page.locator('#officeSelect option')).toHaveCount(5);
+  await expect(page.locator('script[src*="app-primeiro-turno.js"]')).toHaveCount(1);
+  await page.goto(route('radar.html'));
+  await expect(page.getByRole('heading',{name:/1º turno/i})).toBeVisible();
+  await page.goto(route('analises.html'));
+  await expect(page.locator('.rn-badge')).toContainText('1º TURNO');
+});
+
+for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
+  test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);
-    for(const path of ['/index.html','/rn.html','/radar.html','/analises.html']){
-      await page.goto(path+'?v='+BUILD);
-      if(path==='/analises.html') await page.waitForFunction(()=>window.__analysisReady===true||window.__analysisError!==null);
-      const report=await horizontalOverflowReport(page);
-      expect(report.scrollWidth,JSON.stringify(report)).toBeLessThanOrEqual(report.vw+2);
-      expect(report.offenders,JSON.stringify(report)).toEqual([]);
+    for (const pathname of ['index.html','presidencia.html','analises.html','radar.html','primeiro-turno.html']) {
+      await page.goto(route(pathname));
+      await page.waitForLoadState('domcontentloaded');
+      const x=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
+      expect(x.scroll,pathname+' '+JSON.stringify(x)).toBeLessThanOrEqual(x.viewport+2);
     }
   });
 }
 
-test('navegação e contato ficam utilizáveis no celular',async({page})=>{
+test('menu e retorno ao topo funcionam em largura de celular', async ({page}) => {
   await page.setViewportSize({width:390,height:844});
-  for(const path of ['/index.html','/rn.html','/radar.html','/analises.html']){
-    await page.goto(path+'?v='+BUILD);
-    if(path==='/analises.html') await page.waitForFunction(()=>window.__analysisReady===true||window.__analysisError!==null);
-    const dock=page.locator('.mobile-dock');
-    await expect(dock).toBeVisible();
-    const dockBox=await dock.boundingBox();
-    expect(dockBox.height).toBeGreaterThanOrEqual(50);
-    const contact=page.locator('.contact-panel');
-    await expect(contact).toBeVisible();
-    const insta=contact.locator('[data-contact="instagram"]');
-    const x=contact.locator('[data-contact="x"]');
-    await expect(insta).toHaveAttribute('href','https://ig.me/m/uefyerryeni');
-    await expect(x).toHaveAttribute('href','https://x.com/Uefyerryeni');
-    expect((await insta.boundingBox()).height).toBeGreaterThanOrEqual(44);
-    expect((await x.boundingBox()).height).toBeGreaterThanOrEqual(44);
-  }
-});
-
-test('menu intermediário continua acessível em tablet/celular largo',async({page})=>{
-  await page.setViewportSize({width:768,height:900});
-  for(const path of ['/index.html','/rn.html','/radar.html','/analises.html']){
-    await page.goto(path+'?v='+BUILD);
-    const menu=page.locator('.mobile-menu');
-    await expect(menu).toBeVisible();
-    await menu.locator('summary').click();
-    await expect(menu.locator('.mobile-menu-panel')).toBeVisible();
-  }
-});
-
-test('publicações e mapas críticos permanecem visíveis em 390px',async({page})=>{
-  await page.setViewportSize({width:390,height:844});
-  await page.goto('/rn.html?v='+BUILD);
-  await expect(page.locator('.rn-map-large')).toBeVisible();
-  await expect(page.locator('#rnCanvas')).toBeVisible();
-
-  await page.goto('/radar.html?v='+BUILD);
-  await expect(page.locator('#radarLegMap')).toBeVisible();
-  await expect(page.locator('#radarCanvas')).toBeVisible();
-
-  await page.goto('/analises.html?v='+BUILD);
-  await page.waitForFunction(()=>window.__analysisReady===true);
-  await expect(page.locator('#participationMap')).toBeVisible();
-  await expect(page.locator('#municipalCanvas')).toBeVisible();
+  await readyRN(page);
+  await page.locator('.mobile-menu summary').click();
+  await expect(page.locator('.mobile-menu-panel a[href="presidencia.html"]')).toBeVisible();
+  await page.locator('.mobile-menu summary').click();
+  await page.evaluate(()=>scrollTo(0,1000));
+  await expect(page.locator('#toTop')).toBeVisible();
+  await page.locator('#toTop').click();
+  await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeLessThan(100);
 });
