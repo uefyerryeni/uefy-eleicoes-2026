@@ -189,6 +189,32 @@ test('mapa de mudancas detalha municipios sem sugerir transferencia individual d
   await expect(page.locator('#mtChangeState')).toHaveText('Sem comparação disponível');
   await expect(page.locator('#mtDisclaimer')).toContainText('transferência');
 });
+test('Viradas e permanencias reconhecem combinacoes com dados simulados apenas dentro do teste',async({page})=>{
+  const historical=require('../data/rn-governador-mapa.json');
+  const fake={round:2,election_id:'6260',publication_ready:true,municipalities_read:167,
+    errors:[],leaders:{}};
+  for(const [name,record] of Object.entries(historical.leaders)){
+    const number=record.candidate_number==='22'?'13':name==='ACARI'?'44':record.candidate_number;
+    const other=number==='13'?'44':'13';
+    fake.leaders[name]={code:record.code,status:'ok',progress:100,
+      candidate_number:number,candidate:number==='13'?'CADU DE LULA':'ALLYSON',
+      votes:100,pct:55.56,top3:[
+       {number,votes:100,pct:55.56},
+       {number:other,votes:80,pct:44.44}
+      ]};
+  }
+  await page.route('**/data/rn-governador-mapa-2t.json*',route=>route.fulfill({json:fake}));
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__mapaMudancas?.compared===167);
+  await expect(page.locator('#mtChanged')).toHaveText('30');
+  await expect(page.locator('#mtStayed')).toHaveText('137');
+  await page.locator('#mtView').selectOption('changes');
+  await page.locator('#mtFilter').selectOption('22-13');
+  await expect(page.locator('#mtRows tr')).toHaveCount(29);
+  await page.locator('#mtFilter').selectOption('13-44');
+  await expect(page.locator('#mtRows tr')).toHaveCount(1);
+  await expect(page.locator('#mtRows tr').first()).toContainText('ACARI');
+});
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);
