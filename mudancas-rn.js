@@ -48,6 +48,11 @@ function buildRows(){
     from:clean(a.candidate_number),to:b?clean(b.candidate_number):null});
  }
  rows.sort((a,b)=>a.name.localeCompare(b.name,'pt-BR'));
+ const municipalityParam=new URLSearchParams(location.search).get('municipio');
+ if(municipalityParam&&!selected){
+  const match=rows.find(r=>municipalAlias(r.name)===municipalAlias(municipalityParam));
+  if(match)selected=match.code;
+ }
  const completed=rows.filter(r=>r.second).length;
  currentStatus=completed===167?'complete':completed>0?'partial':'waiting';
  // Mesmo ao terminar, não classificar 100% dos municípios se o snapshot tiver erros.

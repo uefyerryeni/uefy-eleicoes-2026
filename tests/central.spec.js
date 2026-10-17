@@ -167,6 +167,16 @@ test('Entre Turnos recusa snapshot parcial',async({page})=>{
   expect(snapshot.election_ids).toEqual({gov:'6260',pres:'6258'});
   expect(snapshot.publication_ready).toBeFalsy();
 });
+test('atalho da consulta municipal abre Entre Turnos com o mesmo municipio',async({page})=>{
+ await readyRN(page);
+ await expect(page.locator('#rnCompareCity')).toHaveAttribute('href',/municipio=Natal/);
+ const f=await page.evaluate(()=>fc.features.find(x=>x.properties.nome==='Parnamirim'));
+ await page.evaluate(()=>selectMunicipality(fc.features.find(x=>x.properties.nome==='Parnamirim')));
+ await expect(page.locator('#rnCompareCity')).toHaveAttribute('href',/municipio=Parnamirim/);
+ await page.goto(route('entre-turnos.html')+'&municipio=Parnamirim',{waitUntil:'domcontentloaded'});
+ await page.waitForFunction(()=>window.__mapaMudancas?.count===167);
+ await expect(page.locator('#mtChosen')).toHaveText('PARNAMIRIM');
+});
 test('mapa territorial do governo carrega 167 municipios do primeiro turno com segundo pendente', async({page})=>{
   await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(()=>window.__mapaMudancas?.count===167);

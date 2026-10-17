@@ -57,7 +57,10 @@ function selectMunicipality(feature){
   mapPublicationMode=false;
   selectedFeature=feature;
   if(changingMunicipality)current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};
-  $('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
+  $('#selectedMun').textContent=feature.properties.nome;
+  const compareLink=$('#rnCompareCity');
+  if(compareLink)compareLink.href='entre-turnos.html?municipio='+encodeURIComponent(feature.properties.nome)+'#mudancas';
+  markSelection();renderFocusMap();
   const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
   if(mode==='official'&&!inSecondRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial do 2º turno começa às 17h de 25/10, horário de Brasília.'}else loadRemote();
 }
