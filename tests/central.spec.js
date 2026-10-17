@@ -1,9 +1,13 @@
 const { test, expect } = require('@playwright/test');
 const BUILD = require('../version.json').build;
 const route = name => '/' + name + '?v=' + encodeURIComponent(BUILD);
+// Os testes de interface não dependem de serviços externos nem de resultados antecipados.
+test.beforeEach(async ({page}) => {
+  await page.route(/^https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|uefyerryeni\.github\.io|resultados(?:-sim)?\.tse\.jus\.br)\//, route=>route.abort());
+});
 
 async function readyRN(page, name='index.html') {
-  await page.goto(route(name));
+  await page.goto(route(name),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(() => typeof selectedFeature !== 'undefined' && selectedFeature !== null);
 }
 function rejectLeaks(errors) {
@@ -98,7 +102,7 @@ test('publicação municipal só habilita dados oficiais conciliados', async ({p
 
 test('Presidência usa somente a eleição federal 6258', async ({page}) => {
   const errors=[];page.on('pageerror',e=>errors.push(e.message));
-  await page.goto(route('presidencia.html'));
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
   await expect(page.locator('#officeSelect option')).toHaveCount(1);
   await expect(page.locator('#officeSelect')).toHaveValue('pres');
   await expect(page.locator('#modeSelect option')).toHaveCount(1);
@@ -110,7 +114,7 @@ test('Presidência usa somente a eleição federal 6258', async ({page}) => {
 });
 
 test('Presidência bloqueia publicação quando resultados não conciliam', async ({page}) => {
-  await page.goto(route('presidencia.html'));
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
   const safe=await page.evaluate(()=>{
     selectedOffice='pres';selectedScope='br';
     state.pres={progress:35,integrity:{matched:1,total:2,unmatched:1},
@@ -122,13 +126,13 @@ test('Presidência bloqueia publicação quando resultados não conciliam', asyn
 });
 
 test('acervo separado mantém acesso ao primeiro turno e ao Legislativo', async ({page}) => {
-  await page.goto(route('primeiro-turno.html'));
+  await page.goto(route('primeiro-turno.html'),{waitUntil:'domcontentloaded'});
   await expect(page.getByRole('heading',{name:/primeiro turno/i})).toBeVisible();
   await expect(page.locator('#officeSelect option')).toHaveCount(5);
   await expect(page.locator('script[src*="app-primeiro-turno.js"]')).toHaveCount(1);
-  await page.goto(route('radar.html'));
+  await page.goto(route('radar.html'),{waitUntil:'domcontentloaded'});
   await expect(page.getByRole('heading',{name:/1º turno/i})).toBeVisible();
-  await page.goto(route('analises.html'));
+  await page.goto(route('analises.html'),{waitUntil:'domcontentloaded'});
   await expect(page.locator('.rn-badge')).toContainText('1º TURNO');
 });
 
@@ -136,7 +140,7 @@ for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);
     for (const pathname of ['index.html','presidencia.html','analises.html','radar.html','primeiro-turno.html']) {
-      await page.goto(route(pathname));
+      await page.goto(route(pathname),{waitUntil:'domcontentloaded'});
       await page.waitForLoadState('domcontentloaded');
       const x=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));
       expect(x.scroll,pathname+' '+JSON.stringify(x)).toBeLessThanOrEqual(x.viewport+2);
