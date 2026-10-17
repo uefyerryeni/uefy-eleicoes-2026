@@ -81,6 +81,15 @@ for office in ("sen","depf","depe"):
     if office_progress>0 and int(mm.get("municipalities_read") or 0)==0:
         fail(f"Radar Legislativo {office} tem apuração, mas nenhum município lido no mapa.")
 
+# 4) Não misturar resultados de turnos.
+m2=load("data/rn-governador-mapa-2t.json")
+if m2.get("round")!=2 or str(m2.get("election_id"))!="6260":
+    fail("Snapshot do 2º turno incorreto.")
+if m2.get("publication_ready") and (int(m2.get("municipalities_read",0))!=167 or m2.get("errors")):
+    fail("Mapa do 2º turno liberado sem integridade.")
+if "6258" not in app_js or "6260" not in rn_js:
+    fail("Consultas não apontam para o 2º turno.")
+
 # 4) Mapa de governador: se liberado para publicação, deve estar completo.
 m=load("data/rn-governador-mapa.json")
 if m.get("publication_ready"):

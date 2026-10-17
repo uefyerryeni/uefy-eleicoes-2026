@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   schedule:
     # Dia da eleição em UTC. Mantemos a janela contínua para não depender da virada de faixa horária.
-    - cron: '*/5 * 4 10 *'
-    - cron: '*/5 0-5 5 10 *'
+    - cron: '*/5 20-23 25 10 *'
+    - cron: '*/5 0-8 26 10 *'
   push:
     paths:
       - 'scripts/build_rn_governador_map.py'
@@ -28,19 +28,19 @@ jobs:
       - name: Gerar mapa oficial por município
         run: python scripts/build_rn_governador_map.py
       - name: Validar JSON
-        run: python -m json.tool data/rn-governador-mapa.json > /dev/null
+        run: python -m json.tool data/rn-governador-mapa-2t.json > /dev/null
       - name: Auditoria de integridade antes de publicar
         run: python scripts/qa_static.py
 
       - name: Publicar se mudou
         run: |
-          if git diff --quiet -- data/rn-governador-mapa.json; then
+          if git diff --quiet -- data/rn-governador-mapa-2t.json; then
             echo "Sem alterações."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/rn-governador-mapa.json
+          git add data/rn-governador-mapa-2t.json
           git commit -m "dados: atualizar mapa de governador do RN"
           git pull --rebase origin main
           git push

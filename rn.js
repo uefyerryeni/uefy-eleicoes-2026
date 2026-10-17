@@ -59,7 +59,7 @@ function selectMunicipality(feature){
   if(changingMunicipality)current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};
   $('#selectedMun').textContent=feature.properties.nome;markSelection();renderFocusMap();
   const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
-  if(mode==='official'&&!inFirstRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial deste município começa às 17h, horário de Brasília.'}else loadRemote();
+  if(mode==='official'&&!inSecondRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial do 2º turno começa às 17h de 25/10, horário de Brasília.'}else loadRemote();
 }
 
 const GOVERNOR_COLORS_BY_NUMBER={
@@ -154,9 +154,10 @@ async function loadLeaderMap(){
     renderLeaderMap();return;
   }
   try{
-    const r=await fetch('data/rn-governador-mapa.json?ts='+Date.now(),{cache:'no-store'});
+    const r=await fetch('data/rn-governador-mapa-2t.json?ts='+Date.now(),{cache:'no-store'});
     if(!r.ok)throw new Error('Mapa '+r.status);
     leaderMapData=await r.json();
+    if(leaderMapData.round!==2||String(leaderMapData.election_id)!=='6260')throw new Error('Snapshot de turno incompatível');
   }catch(e){
     leaderMapData={status:'error',leaders:{},summary:[],publication_ready:false,message:'Não foi possível carregar o mapa estadual agora.'};
   }
@@ -268,7 +269,7 @@ function mapPostText(){
   if(filtered){
     const candidate=labeledCandidate(filtered.name,partyByNumber(filtered.number));
     const highlights=majorCityHighlights();
-    const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status+' — FILTRO POR CANDIDATURA','',candidate+' lidera em '+filtered.municipalities+' município(s) neste recorte.'];
+    const lines=['ELEIÇÕES 2026 | 2º TURNO | GOVERNADOR DO RN',status+' — FILTRO POR CANDIDATURA','',candidate+' lidera em '+filtered.municipalities+' município(s) neste recorte.'];
     if(highlights.length){
       const top=highlights.slice(0,5).map(x=>x.name);
       lines.push('','Destaques entre os municípios mais populosos do RN: '+top.join(', ')+'.');
@@ -281,7 +282,7 @@ function mapPostText(){
   }
 
   if(publicationTextMode==='compact'){
-    const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status];
+    const lines=['ELEIÇÕES 2026 | 2º TURNO | GOVERNADOR DO RN',status];
     if(outcome.kind==='elected'&&outcome.candidates?.length){
       const w=outcome.candidates[0];lines.push('',labeledCandidate(w.name,w.party)+' — '+fmtPct(w.pct));
     }else if(outcome.kind==='second_round'&&outcome.candidates?.length){
@@ -293,7 +294,7 @@ function mapPostText(){
     return lines.join('\n');
   }
 
-  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',status+(status==='MAPA PARCIAL'||status==='RESULTADO FINAL'?' — liderança por município':'') ,''];
+  const lines=['ELEIÇÕES 2026 | 2º TURNO | GOVERNADOR DO RN',status+(status==='MAPA PARCIAL'||status==='RESULTADO FINAL'?' — liderança por município':'') ,''];
   if(outcome.kind==='elected'&&outcome.candidates?.length){
     const w=outcome.candidates[0];lines.push(labeledCandidate(w.name,w.party)+' — '+fmtPct(w.pct),'');
   }else if(outcome.kind==='second_round'&&outcome.candidates?.length){
@@ -365,7 +366,7 @@ async function loadRnCandidates(){
 function applyDemo(){return loadRnCandidates();}
 function municipalConfigUrl(){
   if(mode==='sim')return 'https://resultados-sim.tse.jus.br/simulado/simulado2026/ele2026/21270/config/mun-e021270-cm.json';
-  return 'https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json';
+  return 'https://resultados.tse.jus.br/oficial/ele2026/6258/config/mun-e006258-cm.json';
 }
 function extractMunicipalities(data){
   const out=[];
@@ -389,7 +390,11 @@ let municipalityConfigCache={};
 async function municipalityCode(){
   const key=mode==='sim'?'sim':'official';
   if(!municipalityConfigCache[key]){
-    const cfg=await fetch(municipalConfigUrl(),{cache:'no-store'});if(!cfg.ok)throw new Error('Config '+cfg.status);
+    let cfg=await fetch(municipalConfigUrl(),{cache:'no-store'});
+    // Apenas os códigos municipais podem recorrer à configuração do primeiro turno.
+    // Os votos são sempre exclusivos da eleição 6260.
+    if(!cfg.ok&&mode==='official')cfg=await fetch('https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json',{cache:'no-store'});
+    if(!cfg.ok)throw new Error('Config '+cfg.status);
     municipalityConfigCache[key]=extractMunicipalities(await cfg.json());
   }
   const all=municipalityConfigCache[key];
@@ -399,7 +404,7 @@ async function municipalityCode(){
   return found.code;
 }
 function resultUrl(code){
-  const election=mode==='sim'?'21272':'6259',el=String(election).padStart(6,'0'),base=mode==='sim'?'https://resultados-sim.tse.jus.br/simulado/simulado2026/ele2026':'https://resultados.tse.jus.br/oficial/ele2026';
+  const election=mode==='sim'?'21272':'6260',el=String(election).padStart(6,'0'),base=mode==='sim'?'https://resultados-sim.tse.jus.br/simulado/simulado2026/ele2026':'https://resultados.tse.jus.br/oficial/ele2026';
   return base+'/'+election+'/dados/rn/rn'+code+'-c'+OFFICE[office].cargo+'-e'+el+'-u.json';
 }
 function parseEA20(data){
@@ -511,7 +516,7 @@ function makeText(){
   const final=!!current.finalTotalization;
 
   if(publicationTextMode==='compact'){
-    const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
+    const lines=['ELEIÇÕES 2026 | 2º TURNO | GOVERNADOR DO RN',name+' (RN)'];
     if(mode==='demo'){
       lines.push('',current.candidates.length+' candidatura(s) registradas.');
     }else{
@@ -522,7 +527,7 @@ function makeText(){
     return lines.join('\n');
   }
 
-  const lines=['ELEIÇÕES 2026 | GOVERNADOR DO RN',name+' (RN)'];
+  const lines=['ELEIÇÕES 2026 | 2º TURNO | GOVERNADOR DO RN',name+' (RN)'];
   if(mode==='demo'){
     lines.push('',current.candidates.length+' candidatura(s) registradas na base eleitoral.');
     current.candidates.slice(0,6).forEach(x=>lines.push(publicationCandidate(x)+(x.number?' · nº '+x.number:'')));
@@ -684,7 +689,7 @@ async function shareRNImageAndText(openX=false,preopened=null){
   flashRN($('#rnOpenX'),prefilled?'X aberto com o texto':'Texto copiado · cole no X');
 }
 $('#rnMapPublish')?.addEventListener('click',()=>{
-  if(!leaderMapData.publication_ready)return;
+  if(mode!=='official'||!leaderMapData.publication_ready||leaderMapData.round!==2)return;
   mapPublicationMode=true;
   $('#rnPostText').value=mapPostText();
   $('#rnChars').textContent=$('#rnPostText').value.length+' caracteres';
@@ -727,9 +732,9 @@ function syncTheme(){
 }
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
-function inFirstRoundPollingWindow(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const get=t=>p.find(x=>x.type===t)?.value||'';const day=get('year')+'-'+get('month')+'-'+get('day'),hour=Number(get('hour'));return (day==='2026-10-04'&&hour>=17)||(day==='2026-10-05'&&hour<3)}
-rnAutoTimer=setInterval(()=>{if(mode==='official'&&!document.hidden&&!current?.finalTotalization&&inFirstRoundPollingWindow()){loadLeaderMap();loadRemote()}},AUTO_REFRESH_MS);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='official'&&inFirstRoundPollingWindow()){loadLeaderMap();loadRemote()}});
+function inSecondRoundPollingWindow(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const get=t=>p.find(x=>x.type===t)?.value||'';const day=get('year')+'-'+get('month')+'-'+get('day'),hour=Number(get('hour'));return day>'2026-10-25'||(day==='2026-10-25'&&hour>=17)}
+rnAutoTimer=setInterval(()=>{if(mode==='official'&&!document.hidden&&!current?.finalTotalization&&inSecondRoundPollingWindow()){loadLeaderMap();loadRemote()}},AUTO_REFRESH_MS);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='official'&&inSecondRoundPollingWindow()){loadLeaderMap();loadRemote()}});
 init().catch(e=>{$('#rnStatus').textContent='Erro ao carregar o mapa: '+e.message});
 
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn?.classList.toggle('show',scrollY>420),{passive:true});if(topBtn)topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});

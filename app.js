@@ -12,13 +12,7 @@ const REGION_STATES={
 };
 const STATES=[['ac','Acre'],['al','Alagoas'],['ap','Amapá'],['am','Amazonas'],['ba','Bahia'],['ce','Ceará'],['df','Distrito Federal'],['es','Espírito Santo'],['go','Goiás'],['ma','Maranhão'],['mt','Mato Grosso'],['ms','Mato Grosso do Sul'],['mg','Minas Gerais'],['pa','Pará'],['pb','Paraíba'],['pr','Paraná'],['pe','Pernambuco'],['pi','Piauí'],['rj','Rio de Janeiro'],['rn','Rio Grande do Norte'],['rs','Rio Grande do Sul'],['ro','Rondônia'],['rr','Roraima'],['sc','Santa Catarina'],['sp','São Paulo'],['se','Sergipe'],['to','Tocantins']].map(([code,label])=>({value:'uf_'+code,label,code}));
 const REGIONS=[{value:'br',label:'Brasil'},{value:'reg_norte',label:'Região Norte'},{value:'reg_nordeste',label:'Região Nordeste'},{value:'reg_centrooeste',label:'Região Centro-Oeste'},{value:'reg_sudeste',label:'Região Sudeste'},{value:'reg_sul',label:'Região Sul'}];
-const officeMeta={
-  pres:{title:'Presidência',defaultScope:'br',scopes:[...REGIONS,...STATES],cargo:'0001',election:'federal'},
-  gov:{title:'Governador',defaultScope:'uf_rn',scopes:[...STATES],cargo:'0003',election:'state'},
-  sen:{title:'Senado',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0005',election:'state'},
-  depf:{title:'Deputado federal',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0006',election:'state'},
-  depe:{title:'Deputado estadual',defaultScope:'uf_rn',scopes:[STATES.find(s=>s.code==='rn')],cargo:'0007',election:'state'}
-};
+const officeMeta={pres:{title:'Presidência',defaultScope:'br',scopes:[...REGIONS,...STATES],cargo:'0001',election:'federal'}};
 let mode='official',selectedOffice='pres',selectedScope='br',maps={br:null,rn:null};
 let state={pres:{progress:0,candidates:[]},gov:{progress:0,candidates:[]},sen:{progress:0,candidates:[]},depf:{progress:0,candidates:[]},depe:{progress:0,candidates:[]}};
 let publicationTextMode='full';
@@ -100,7 +94,7 @@ function parseEA20(data){
 }
 function endpointFor(office,uf,env=mode){
   const meta=officeMeta[office],base=env==='sim'?'https://resultados-sim.tse.jus.br/simulado/simulado2026/ele2026':'https://resultados.tse.jus.br/oficial/ele2026';
-  const election=meta.election==='federal'?(env==='sim'?'21270':'6257'):(env==='sim'?'21272':'6259');
+  const election=meta.election==='federal'?(env==='sim'?'21270':'6258'):(env==='sim'?'21272':'6260');
   const el=String(election).padStart(6,'0');
   return base+'/'+election+'/dados/'+uf+'/'+uf+'-c'+meta.cargo+'-e'+el+'-u.json';
 }
@@ -261,20 +255,20 @@ function updateAutoRefreshLabel(){
   const d=state[selectedOffice];
   if(mode!=='official'){el.textContent='Atualização automática pausada no Simulado';return}
   if(d?.finalTotalization){el.textContent='Resultado final · atualização automática encerrada';return}
-  if(!inFirstRoundPollingWindow()){el.textContent='Atualização automática preparada para a apuração a partir das 17h';return}
+  if(!inSecondRoundPollingWindow()){el.textContent='2º turno · atualização a partir das 17h de 25/10';return}
   el.textContent=document.hidden?'Atualização automática pausada em segundo plano':'Atualização automática · a cada 60 s';
 }
-function inFirstRoundPollingWindow(){
+function inSecondRoundPollingWindow(){
   const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
   const get=t=>p.find(x=>x.type===t)?.value||'';const day=get('year')+'-'+get('month')+'-'+get('day'),hour=Number(get('hour'));
-  return (day==='2026-10-04'&&hour>=17)||(day==='2026-10-05'&&hour<3);
+  return day>'2026-10-25'||(day==='2026-10-25'&&hour>=17);
 }
 function scheduleAutoRefresh(){
   if(autoRefreshTimer)clearInterval(autoRefreshTimer);
-  autoRefreshTimer=setInterval(()=>{const d=state[selectedOffice];if(mode==='official'&&!document.hidden&&!d?.finalTotalization&&inFirstRoundPollingWindow())loadRemote({silent:true})},AUTO_REFRESH_MS);
+  autoRefreshTimer=setInterval(()=>{const d=state[selectedOffice];if(mode==='official'&&!document.hidden&&!d?.finalTotalization&&inSecondRoundPollingWindow())loadRemote({silent:true})},AUTO_REFRESH_MS);
   updateAutoRefreshLabel();
 }
-document.addEventListener('visibilitychange',()=>{updateAutoRefreshLabel();if(!document.hidden&&mode==='official'&&!state[selectedOffice]?.finalTotalization&&inFirstRoundPollingWindow())loadRemote({silent:true})});
+document.addEventListener('visibilitychange',()=>{updateAutoRefreshLabel();if(!document.hidden&&mode==='official'&&!state[selectedOffice]?.finalTotalization&&inSecondRoundPollingWindow())loadRemote({silent:true})});
 
 function renderRows(k){
   const box=$('#'+k+'Rows'),small=$('#'+k+'Small'),more=$('#'+k+'More');
@@ -303,7 +297,7 @@ function renderRows(k){
   if(more)more.textContent=all.length>items.length?'Mostrando '+items.length+' de '+all.length:(mode==='demo'?'Ordem por número de candidatura':'Ordem por votação');
 }
 function renderAll(){
-  ['pres','gov','sen','depf','depe'].forEach(renderRows);
+  ['pres'].forEach(renderRows);
   const current=Number(state[selectedOffice]?.progress||0);
   const count=state[selectedOffice]?.candidates?.length||0;
   const setText=(id,value)=>{const el=$(id);if(el)el.textContent=value};
@@ -572,7 +566,7 @@ function syncTheme(){
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
-populateScopeSelect();updateCardVisibility();$('#modeSelect').value=mode;if(mode==='official'&&!inFirstRoundPollingWindow()){renderAll();$('#statusTitle').textContent='Pronto para a apuração';$('#statusText').textContent='A consulta automática aos resultados oficiais começa às 17h, horário de Brasília.'}else loadRemote();scheduleAutoRefresh();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
+populateScopeSelect();updateCardVisibility();$('#modeSelect').value=mode;if(mode==='official'&&!inSecondRoundPollingWindow()){renderAll();$('#statusTitle').textContent='Pronto para a apuração';$('#statusText').textContent='A apuração oficial do 2º turno estará disponível a partir das 17h de 25/10 (horário de Brasília).'}else loadRemote();scheduleAutoRefresh();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
 
 /* Favoritos e atualização operacional */

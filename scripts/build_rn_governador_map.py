@@ -5,11 +5,12 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 BASE='https://resultados.tse.jus.br/oficial/ele2026'
-ELECTION='6259'
-EL='006259'
+ELECTION='6260'
+EL='006260'
 CARGO='0003'
-CONFIG_URL='https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json'
-OUT=Path(__file__).resolve().parents[1]/'data'/'rn-governador-mapa.json'
+CONFIG_URL='https://resultados.tse.jus.br/oficial/ele2026/6258/config/mun-e006258-cm.json'
+CONFIG_FALLBACK='https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json'
+OUT=Path(__file__).resolve().parents[1]/'data'/'rn-governador-mapa-2t.json'
 TZ=timezone(timedelta(hours=-3))
 
 def fetch_json(url,timeout=20):
@@ -115,14 +116,15 @@ def write_if_changed(data):
 
 def write_wait(message):
     write_if_changed({
-        'status':'waiting','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
+        'status':'waiting','round':2,'election_id':'6260','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
         'source_generated_at':None,'municipalities_expected':167,'municipalities_read':0,
         'publication_ready':False,'message':message,'leaders':{},'summary':[]
     })
 
 def main():
     try:
-        cfg=fetch_json(CONFIG_URL)
+        try: cfg=fetch_json(CONFIG_URL)
+        except Exception: cfg=fetch_json(CONFIG_FALLBACK)
         mun=[m for m in municipalities(cfg) if m['uf']=='rn']
     except Exception:
         write_wait('A configuração oficial do TSE ainda não está disponível.')
@@ -170,7 +172,7 @@ def main():
     summary=sorted(counts.values(),key=lambda x:(-x['municipalities'],x['name']))
     natal=leaders.get('Natal') or leaders.get('NATAL')
     data={
-        'status':'ok' if read else 'waiting',
+        'status':'ok' if read else 'waiting','round':2,'election_id':'6260',
         'generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
         'source_generated_at':latest or None,
         'municipalities_expected':len(mun),'municipalities_read':read,

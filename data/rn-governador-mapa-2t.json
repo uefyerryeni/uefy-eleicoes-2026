@@ -1,0 +1,21 @@
+{
+  "status": "waiting",
+  "round": 2,
+  "election_id": "6260",
+  "generated_at": "2026-10-17T19:30:00-03:00",
+  "source_generated_at": null,
+  "municipalities_expected": 167,
+  "municipalities_read": 0,
+  "publication_ready": false,
+  "final_result": false,
+  "message": "Segundo turno em 25/10. Mapa disponível após os resultados oficiais do TSE.",
+  "leaders": {},
+  "summary": [],
+  "natal": null,
+  "outcome": {
+    "kind": "none",
+    "final_totalization": false,
+    "progress": 0,
+    "candidates": []
+  }
+}
