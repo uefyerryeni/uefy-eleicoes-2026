@@ -370,7 +370,7 @@ function makePostText(){
   const final=!!d.finalTotalization;
 
   if(publicationTextMode==='compact'){
-    const lines=['ELEIÇÕES 2026 | '+m.title.toUpperCase(),scopeLabel()];
+    const lines=['ELEIÇÕES 2026 | 2º TURNO | '+m.title.toUpperCase(),scopeLabel()];
     if(mode==='demo'){
       lines.push('',d.candidates.length+' candidatura(s) registradas.');
     }else if(outcome.kind==='elected'&&outcome.candidates.length){
@@ -392,7 +392,7 @@ function makePostText(){
     return lines.join('\n');
   }
 
-  const lines=['ELEIÇÕES 2026 | '+m.title.toUpperCase(),scopeLabel()];
+  const lines=['ELEIÇÕES 2026 | 2º TURNO | '+m.title.toUpperCase(),scopeLabel()];
   if(mode==='demo'){
     lines.push('',d.candidates.length+' candidatura(s) registradas na base eleitoral.');
     d.candidates.slice(0,6).forEach(x=>lines.push(candidatePublicationLabel(x)+(x.number?' · nº '+x.number:'')));
