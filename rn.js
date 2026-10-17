@@ -321,7 +321,7 @@ function drawLeaderMapCanvas(){
   const outcome=leaderMapData?.outcome||{};
   const canvasStatus=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
   ctx.font='700 18px DM Sans,Segoe UI,Arial';ctx.fillText(canvasStatus,70,190);
-  ctx.font='900 66px Barlow Condensed,Impact,Arial';ctx.fillText('GOVERNO DO RN',70,260);
+  ctx.font='700 52px Space Grotesk,Segoe UI,Arial';ctx.fillText('GOVERNO DO RN',70,260);
   const filteredSummary=selectedLeaderSummary();
   ctx.fillStyle='#59626b';ctx.font='600 25px DM Sans,Segoe UI,Arial';ctx.fillText(filteredSummary?'Municípios onde '+filteredSummary.name+' lidera':'Quem lidera em cada município',70,305);
   const proj=projector(fc,650,520,8);ctx.save();ctx.translate(40,350);
@@ -581,7 +581,7 @@ function drawCanvas(){
   fitCanvasText(ctx,'Central das Eleições UEFY',190,112,450,34,27,'700','#17191c');
   ctx.font='700 18px DM Sans,Segoe UI,Arial';ctx.fillText(mode==='sim'?'SIMULADO TSE':current.finalTotalization?'2º TURNO · RESULTADO FINAL':'2º TURNO · TSE',690,105);
   drawFocusedMunicipality(ctx,selectedFeature,555,115,470,350);
-  ctx.fillStyle='#17191c';ctx.font='900 78px Barlow Condensed,Impact,Arial';ctx.fillText('2º turno 2026',70,235);
+  ctx.fillStyle='#17191c';ctx.font='700 62px Space Grotesk,Segoe UI,Arial';ctx.fillText('2º turno 2026',70,235);
   fitCanvasText(ctx,OFFICE[office].title,70,300,440,44,32,'700','#17191c');
   fitCanvasText(ctx,name+' · RN',70,344,440,32,23,'600','#4d555d');
 

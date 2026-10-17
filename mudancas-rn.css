@@ -2,7 +2,7 @@
 /* Governador RN: permanências / mudanças de primeira posição municipal. */
 .mt-module{margin:0 0 36px;padding:25px;border:2px solid #1d2927;background:#fffdf7;box-shadow:6px 6px 0 #d9dfd5;scroll-margin-top:90px}
 .mt-head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:16px}
-.mt-head h2{font:900 clamp(37px,4.6vw,61px)/.93 'Barlow Condensed',Impact,sans-serif;letter-spacing:.01em;margin:9px 0}
+.mt-head h2{font:700 clamp(29px,3.3vw,43px)/1.12 'Space Grotesk','Segoe UI',sans-serif;letter-spacing:-.04em;margin:9px 0;text-wrap:balance}
 .mt-head p{font-size:13px;line-height:1.55;color:#55625b;margin:0;max-width:670px}
 .mt-refresher{min-width:136px;background:#f4dd19;border:1px solid #1c2927;padding:12px 17px;color:#19231d;font-weight:800;cursor:pointer}
 .mt-refresher:disabled{opacity:.65;cursor:default}
@@ -11,7 +11,7 @@
 .mt-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:20px}
 .mt-kpi{border:1px solid #bcc9b9;padding:13px 15px;background:#f7f8f3}
 .mt-kpi>span{font-size:10px;text-transform:uppercase;letter-spacing:.07em;font-weight:800;display:block;line-height:1.35}
-.mt-kpi>strong{font:850 clamp(34px,4.8vw,57px)/1 'Barlow Condensed',Impact,sans-serif;display:block;margin:9px 0 0;font-variant-numeric:tabular-nums}
+.mt-kpi>strong{font:700 clamp(31px,4vw,50px)/1.1 'Space Grotesk','Segoe UI',sans-serif;letter-spacing:-.045em;display:block;margin:9px 0 0;font-variant-numeric:tabular-nums}
 .mt-kpi:nth-child(2){border-top:5px solid #2d7361}
 .mt-kpi:nth-child(3){border-top:5px solid #d8a227}
 .mt-controls{display:grid;grid-template-columns:1fr 1fr;gap:12px;background:#e9eee7;padding:13px;margin-bottom:14px}
@@ -28,21 +28,21 @@
 .mt-legend i{width:11px;height:11px;border:1px solid #7c8b7d}
 .mt-detail{background:#1d2927;color:#f5f4e8;padding:23px;display:flex;flex-direction:column;gap:14px}
 .mt-detail .et-overline{color:#c1d0c6}
-.mt-detail h3{font:900 clamp(32px,3.7vw,46px)/.95 'Barlow Condensed',Impact,sans-serif;letter-spacing:.03em;margin:0}
+.mt-detail h3{font:700 clamp(26px,3.1vw,37px)/1.15 'Space Grotesk','Segoe UI',sans-serif;letter-spacing:-.04em;margin:0;overflow-wrap:break-word}
 .mt-turn{border-top:1px solid #56685e;padding-top:12px;display:flex;flex-direction:column;gap:5px}
 .mt-turn span{font-size:10px;font-weight:700;color:#c3d4c9;letter-spacing:.04em}
-.mt-turn strong{font:800 24px/1 'Barlow Condensed',Impact,sans-serif}
+.mt-turn strong{font:700 20px/1.2 'Space Grotesk','Segoe UI',sans-serif;letter-spacing:-.035em}
 .mt-turn small{font-size:11px;color:#d1dcd3}
 .mt-result{background:#f4dd19;color:#18261f;padding:11px 13px;font-size:12px;font-weight:800;margin-top:auto}
 .mt-detail p{color:#c5d3c8;font-size:11px;line-height:1.6;margin:0}
 .mt-disclaimer{font-size:11px;color:#68756a;line-height:1.65;margin:11px 0 0}
 .mt-bottom{display:grid;grid-template-columns:1fr;gap:12px;margin-top:22px}
-.mt-bottom h3{font:800 30px 'Barlow Condensed',Impact,sans-serif;margin:0}
+.mt-bottom h3{font:700 clamp(22px,2.3vw,29px)/1.2 'Space Grotesk','Segoe UI',sans-serif;letter-spacing:-.04em;margin:0;text-wrap:balance}
 .mt-routes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
 .mt-await{font-size:12px;line-height:1.6;border:1px dashed #aab8a9;padding:15px;background:#f7f8f3;grid-column:1/-1}
 .mt-route{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto;align-items:center;gap:9px;text-align:left;background:#f4f6ef;border:1px solid #bfcbbd;min-height:53px;padding:10px;font-size:10px;font-weight:800;color:#26362b;cursor:pointer}
 .mt-route.active{box-shadow:inset 0 0 0 2px #17261f;background:#f4dd19}
-.mt-route b{font-size:15px}.mt-route strong{font-size:21px;font-family:'Barlow Condensed',Impact,sans-serif}
+.mt-route b{font-size:15px}.mt-route strong{font-size:19px;font-family:'Space Grotesk','Segoe UI',sans-serif;font-weight:700;letter-spacing:-.04em}
 .mt-table-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:11px}
 .mt-search{padding:11px 12px;border:1px solid #b1bcb0;background:#fffdf7;min-width:190px;max-width:280px;width:100%;font-size:12px}
 .mt-scroll{max-height:360px;overflow:auto;border:1px solid #c5cfc2}

@@ -225,6 +225,19 @@ test('Viradas e permanencias reconhecem combinacoes com dados simulados apenas d
   await expect(page.locator('#mtRows tr')).toHaveCount(1);
   await expect(page.locator('#mtRows tr').first()).toContainText('ACARI');
 });
+test('titulos editoriais usam familia larga e leitura confortavel',async({page})=>{
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+  const first=await page.locator('.et-intro h2').evaluate(el=>{
+    const cs=getComputedStyle(el);return {font:cs.fontFamily,size:parseFloat(cs.fontSize),lineHeight:parseFloat(cs.lineHeight),scroll:el.scrollWidth,width:el.clientWidth}
+  });
+  expect(first.font).toContain('Space Grotesk');
+  expect(first.lineHeight/first.size).toBeGreaterThan(1.08);
+  expect(first.scroll).toBeLessThanOrEqual(first.width+2);
+  await page.setViewportSize({width:390,height:844});
+  const mobile=await page.locator('.et-intro h2').evaluate(el=>({scroll:el.scrollWidth,width:el.clientWidth}));
+  expect(mobile.scroll).toBeLessThanOrEqual(mobile.width+2);
+});
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);
