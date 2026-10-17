@@ -117,7 +117,7 @@ def write_if_changed(data):
 def write_wait(message):
     write_if_changed({
         'status':'waiting','round':2,'election_id':'6260','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
-        'source_generated_at':None,'municipalities_expected':167,'municipalities_read':0,
+        'source_generated_at':None,'municipalities_expected':167,'municipalities_checked':0,'municipalities_read':0,
         'publication_ready':False,'message':message,'leaders':{},'summary':[]
     })
 
@@ -166,8 +166,11 @@ def main():
             except Exception as e:
                 errors.append({'municipality':m['name'],'error':str(e)[:100]})
 
-    read=sum(1 for x in leaders.values() if x.get('status') in ('ok','no_votes'))
-    complete=read==len(mun) and len(errors)==0
+    # Um arquivo consultado sem votos NÃO é município apurado.
+    checked=sum(1 for x in leaders.values() if x.get('status') in ('ok','no_votes'))
+    read=sum(1 for x in leaders.values() if x.get('status')=='ok' and int(x.get('votes') or 0)>0)
+    release_started=datetime.now(TZ)>=datetime(2026,10,25,17,0,tzinfo=TZ)
+    complete=release_started and read==len(mun) and len(errors)==0
     final_result=bool(statewide_outcome.get('final_totalization'))
     summary=sorted(counts.values(),key=lambda x:(-x['municipalities'],x['name']))
     natal=leaders.get('Natal') or leaders.get('NATAL')
@@ -175,7 +178,7 @@ def main():
         'status':'ok' if read else 'waiting','round':2,'election_id':'6260',
         'generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
         'source_generated_at':latest or None,
-        'municipalities_expected':len(mun),'municipalities_read':read,
+        'municipalities_expected':len(mun),'municipalities_checked':checked,'municipalities_read':read,
         'publication_ready':complete,'final_result':final_result,
         'outcome':statewide_outcome,
         'errors':errors,'leaders':leaders,'summary':summary,'natal':natal,

@@ -25,7 +25,8 @@ test('RN é a capa do segundo turno e apresenta as duas candidaturas sem resulta
   await expect(page.locator('#rnMode')).toHaveValue('official');
   await expect(page.locator('.topbar .nav a[href="radar.html"]')).toHaveCount(0);
   await expect(page.locator('body')).not.toContainText('Laboratório UEFY');
-  await expect(page.locator('#rnMapRead')).toContainText('0/167');
+  const snapshot=await page.evaluate(()=>leaderMapData);
+  await expect(page.locator('#rnMapRead')).toHaveText(snapshot.municipalities_read+'/167');
   await expect(page.locator('#rnMapPublish')).toBeDisabled();
   rejectLeaks(errors);
 });
@@ -133,7 +134,7 @@ test('acervo separado mantém acesso ao primeiro turno e ao Legislativo', async 
   await page.goto(route('radar.html'),{waitUntil:'domcontentloaded'});
   await expect(page.getByRole('heading',{name:/1º turno/i})).toBeVisible();
   await page.goto(route('analises.html'),{waitUntil:'domcontentloaded'});
-  await expect(page.locator('.rn-badge')).toContainText('1º TURNO');
+  await expect(page.locator('.analysis-hero .rn-badge')).toContainText('1º TURNO');
 });
 
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {

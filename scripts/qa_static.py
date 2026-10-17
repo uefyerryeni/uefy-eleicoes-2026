@@ -87,6 +87,12 @@ if m2.get("round")!=2 or str(m2.get("election_id"))!="6260":
     fail("Snapshot do 2º turno incorreto.")
 if m2.get("publication_ready") and (int(m2.get("municipalities_read",0))!=167 or m2.get("errors")):
     fail("Mapa do 2º turno liberado sem integridade.")
+second_leaders=m2.get("leaders") or {}
+valid_leaders=sum(1 for x in second_leaders.values() if x.get("status")=="ok" and int(x.get("votes") or 0)>0)
+if int(m2.get("municipalities_read",0))!=valid_leaders:
+    fail(f"2º turno: {m2.get('municipalities_read')} municípios declarados, {valid_leaders} com votos válidos.")
+if m2.get("publication_ready") and valid_leaders!=167:
+    fail("2º turno liberado sem votos em todos os 167 municípios.")
 if "6258" not in app_js or "6260" not in rn_js:
     fail("Consultas não apontam para o 2º turno.")
 

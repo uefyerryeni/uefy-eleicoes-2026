@@ -231,7 +231,7 @@ function renderLeaderMap(){
     $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>Aguardando apuração oficial</strong><span>'+natalText+'</span>';
   }
   const btn=$('#rnMapPublish'),note=$('#rnMapPublishNote');
-  if(btn)btn.disabled=!leaderMapData.publication_ready;
+  if(btn)btn.disabled=mode!=='official'||!leaderMapData.publication_ready||leaderMapData.round!==2||String(leaderMapData.election_id)!=='6260'||Number(leaderMapData.municipalities_read)!==167;
   if(note)note.textContent=leaderMapData.publication_ready?(leaderMapData.final_result?'Base completa e totalização final.':'Base municipal completa. O card será identificado como resultado parcial.'):(leaderMapData.message||'A publicação será liberada quando a base municipal estiver completa e conferida.');
 }
 
@@ -700,7 +700,7 @@ $('#rnMapPublish')?.addEventListener('click',()=>{
   updateRnPublicationSafety();
   document.querySelector('#publicacao')?.scrollIntoView({behavior:'smooth',block:'start'});
 });
-$('#munSearch').oninput=e=>renderList(e.target.value);
+$('#munSearch').oninput=e=>{renderList(e.target.value);const d=$('.rn-municipality-list');if(d&&e.target.value.trim())d.open=true;};
 
 $('#rnMode').value=mode;
 updateSourceUI();
