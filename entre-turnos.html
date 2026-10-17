@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4dd19">
+<meta name="description" content="Entre Turnos UEFY: participação, abstenção, votos brancos e nulos nos 167 municípios do Rio Grande do Norte, com dados oficiais do TSE.">
+<title>Entre Turnos | Central das Eleições UEFY</title>
+<link rel="stylesheet" href="style.css?v=20261017" />
+<link rel="stylesheet" href="turno2.css?v=20261017" />
+<link rel="stylesheet" href="entre-turnos.css?v=20261017" />
+</head>
+<body class="between-page">
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html" aria-label="Central das Eleições UEFY — início" style="text-decoration:none;color:inherit">
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca UEFY" />
+      <span class="brandtext"><strong>Central das Eleições UEFY</strong><span>Atlas eleitoral · Rio Grande do Norte</span></span>
+    </a>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="index.html">RN ao vivo</a>
+      <a href="presidencia.html">Presidência</a>
+      <a class="active" href="entre-turnos.html" aria-current="page">Entre Turnos</a>
+      <a href="analises.html">Acervo</a>
+      <details class="mobile-menu">
+        <summary aria-label="Abrir menu">Menu</summary>
+        <div class="mobile-menu-panel">
+          <a href="index.html">RN ao vivo</a>
+          <a href="presidencia.html">Presidência</a>
+          <a href="entre-turnos.html">Entre Turnos</a>
+          <a href="analises.html">Análises do 1º turno</a>
+          <a href="primeiro-turno.html">Arquivo completo</a>
+        </div>
+      </details>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+    </nav>
+  </div>
+</header>
+<main class="wrap et-shell">
+  <section class="et-hero" aria-labelledby="etTitle">
+    <div class="et-hero-main">
+      <span class="et-kicker"><span class="et-square"></span> UEFY / ATLAS ELEITORAL / 2026</span>
+      <h1 id="etTitle">ENTRE<br><em>TURNOS.</em></h1>
+      <p>Dois momentos da eleição, uma mesma base territorial. Indicadores de participação nos 167 municípios do Rio Grande do Norte, sem projeções.</p>
+      <div class="et-hero-meta">
+        <span><b>01</b> 04 OUTUBRO · PRIMEIRO TURNO</span>
+        <span><b>02</b> 25 OUTUBRO · SEGUNDO TURNO</span>
+      </div>
+    </div>
+    <aside class="et-hero-aside">
+      <span class="et-aside-label">COBERTURA / RN</span>
+      <strong>167<span>/167</span></strong>
+      <span>MUNICÍPIOS DO RIO GRANDE DO NORTE NA BASE GEOGRÁFICA</span>
+      <div class="et-aside-foot">DADOS DO TRIBUNAL SUPERIOR ELEITORAL · <a href="https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados" target="_blank" rel="noopener noreferrer">CONSULTAR FONTE ↗</a></div>
+    </aside>
+  </section>
+
+  <section class="et-sourcebar" aria-label="Estado das bases oficiais">
+    <div><span>BASE / 01</span><strong id="firstStatus">Carregando dados de 04/10…</strong></div>
+    <div><span>BASE / 02</span><strong id="secondStatus">Aguardando dados oficiais de 25/10</strong></div>
+    <div class="et-source-action"><button id="etRefresh" type="button">Atualizar dados <span aria-hidden="true">↻</span></button></div>
+  </section>
+
+  <section class="et-intro">
+    <div>
+      <span class="et-overline">01 / CONTEXTO</span>
+      <h2>O que mudou no comparecimento?</h2>
+      <p>Escolha um indicador e um município. O primeiro turno já está disponível. O segundo será integrado somente depois da confirmação dos arquivos oficiais completos.</p>
+    </div>
+    <div class="et-completeness" id="etCompleteness" role="status" aria-live="polite">
+      <span class="et-indicator"></span><b>Base do segundo turno aguardada</b>
+      <small>Não há comparações liberadas neste momento.</small>
+    </div>
+  </section>
+
+  <section class="et-toolbar card" aria-label="Filtros da análise">
+    <label><span>INDICADOR</span>
+      <select id="etMetric">
+        <option value="turnout_pct">Comparecimento (%)</option>
+        <option value="abstention_pct">Abstenção (%)</option>
+        <option value="turnout">Eleitores que compareceram</option>
+        <option value="abstention">Eleitores ausentes</option>
+        <option value="gov_blank_pct">Brancos para governador (%)</option>
+        <option value="gov_null_pct">Nulos para governador (%)</option>
+        <option value="pres_blank_pct">Brancos para presidente (%)</option>
+        <option value="pres_null_pct">Nulos para presidente (%)</option>
+      </select>
+    </label>
+    <label><span>MUNICÍPIO</span>
+      <select id="etCity"><option value="">Rio Grande do Norte (total estadual)</option></select>
+    </label>
+    <button type="button" class="et-reset" id="etReset">Limpar filtros</button>
+  </section>
+
+  <section class="et-readout" id="etReadout" aria-label="Valores por turno">
+    <div class="et-readout-heading"><span class="et-overline">02 / LEITURA</span><h2 id="etScopeTitle">Rio Grande do Norte</h2><p id="etMetricLabel">Comparecimento · recorte estadual para Governador</p></div>
+    <div class="et-numbergrid">
+      <article class="et-numbercard first">
+        <span>01 / 04.10.2026</span>
+        <strong id="etFirstValue">—</strong>
+        <small>PRIMEIRO TURNO · FONTE: TSE</small>
+      </article>
+      <article class="et-numbercard second">
+        <span>02 / 25.10.2026</span>
+        <strong id="etSecondValue">—</strong>
+        <small id="etSecondCaption">AGUARDANDO BASE FINAL OFICIAL</small>
+      </article>
+      <article class="et-numbercard delta">
+        <span>VARIAÇÃO ENTRE TURNOS</span>
+        <strong id="etDeltaValue">—</strong>
+        <small id="etDeltaCaption">SERÁ CALCULADA APÓS A TOTALIZAÇÃO</small>
+      </article>
+    </div>
+    <p class="et-method-small" id="etMetricDescription">As taxas de comparecimento e abstenção usam o universo do eleitorado da eleição estadual para governador, evitando misturar votos em trânsito exclusivos para Presidente.</p>
+  </section>
+
+  <section class="et-map-section" id="mapa" aria-labelledby="etMapHeading">
+    <div class="et-section-heading"><div><span class="et-overline">03 / TERRITÓRIO</span><h2 id="etMapHeading">167 municípios. Um mapa.</h2><p id="etMapDescription">Distribuição do indicador no primeiro turno. Selecione uma cidade no mapa para consultar os números.</p></div><div class="et-map-mode" id="etMapMode">MAPA · 1º TURNO</div></div>
+    <div class="et-map-grid">
+      <div class="et-map-stage">
+        <svg id="etMap" viewBox="0 0 760 560" role="img" aria-label="Mapa dos municípios do RN por indicador de participação"></svg>
+        <div class="et-scale"><span>MENOR VALOR</span><div class="et-scale-bar"></div><span>MAIOR VALOR</span></div>
+      </div>
+      <div class="et-map-details">
+        <span class="et-overline">SELEÇÃO ATUAL</span>
+        <h3 id="etFocusName">RIO GRANDE DO NORTE</h3>
+        <p id="etFocusText">Selecione qualquer município no mapa ou no campo de busca.</p>
+        <div class="et-focus-indicator"><span id="etFocusCaption">Comparecimento no 1º turno</span><strong id="etFocusValue">—</strong></div>
+        <button id="etCsv" type="button" class="et-download">Exportar dados em CSV <span aria-hidden="true">↗</span></button>
+        <small>O arquivo identifica o turno, a fonte e os valores ainda indisponíveis.</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="et-table-section" aria-labelledby="etTableHeading">
+    <div class="et-section-heading"><div><span class="et-overline">04 / DADOS ABERTOS</span><h2 id="etTableHeading">Consulta município a município.</h2><p>Ordem alfabética, sem classificação por candidaturas.</p></div></div>
+    <label class="et-table-search"><span>LOCALIZAR CIDADE</span><input type="search" id="etSearch" placeholder="Buscar entre os 167 municípios" /></label>
+    <div class="et-table-wrap">
+      <table class="et-table">
+        <thead><tr><th scope="col">Município</th><th scope="col">1º turno</th><th scope="col">2º turno</th><th scope="col">Variação</th></tr></thead>
+        <tbody id="etTableBody"><tr><td colspan="4">Carregando dados oficiais…</td></tr></tbody>
+      </table>
+    </div>
+    <small id="etTableCount" class="et-table-count">—</small>
+  </section>
+
+  <section class="et-method card" id="metodologia">
+    <span class="et-overline">05 / METODOLOGIA</span>
+    <h2>Critério antes da publicação.</h2>
+    <p>Para o primeiro turno, utilizamos o conjunto de análises municipais de 04/10/2026 já preservado na Central. O segundo utiliza exclusivamente os arquivos oficiais identificados como 6258 (Presidência) e 6260 (Governador), referentes a 25/10/2026. Não usamos simulados ou pesquisas para preencher resultados.</p>
+    <p>A comparação de taxas é expressa em pontos percentuais (p.p.); a de quantidades, em número de eleitores. Valores indisponíveis não são tratados como zero. A liberação exige a base final oficial dos dois cargos nos 167 municípios, além dos totais estaduais. Dados agregados não permitem inferir o comportamento individual do eleitor.</p>
+    <div class="et-links"><a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener noreferrer">Resultados oficiais ↗</a><a href="https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados" target="_blank" rel="noopener noreferrer">Documentação técnica do TSE ↗</a><a href="analises.html">Acervo do primeiro turno ↗</a></div>
+  </section>
+</main>
+<footer class="foot et-footer"><div class="wrap footline"><strong>UEFY / ENTRE TURNOS 2026</strong><span>Informação pública, leitura territorial e transparência · <a href="https://ig.me/m/uefyerryeni" target="_blank" rel="noopener noreferrer">Reportar correção</a></span></div></footer>
+<nav class="mobile-dock et-mobile-dock" aria-label="Acesso rápido"><a href="index.html">RN ao vivo</a><a href="presidencia.html">Presidência</a><a href="entre-turnos.html" class="active">Entre Turnos</a><a href="#mapa">Mapa</a></nav>
+<button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
+<script src="entre-turnos.js?v=20261017"></script>
+</body>
+</html>
