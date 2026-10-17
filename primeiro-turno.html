@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f5c400">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Central das Eleições UEFY — Eleições 2026</title>
+  <link rel="stylesheet" href="style.css?v=20261004-stable">
+  <script>
+(function(){
+  fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
+    if(!x||!x.build)return;
+    const u=new URL(location.href);
+    if(u.searchParams.get('v')!==x.build){
+      u.searchParams.set('v',x.build);
+      location.replace(u.pathname+u.search+u.hash);
+    }
+  }).catch(()=>{});
+})();
+</script>
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
+      <div class="brandtext"><strong>Central das Eleições UEFY</strong><span>Apuração e publicação</span></div>
+    </div>
+    <nav class="nav">
+      <a href="index.html">RN · 2º turno</a><a class="active" href="primeiro-turno.html">Acervo · 1º turno</a>
+      <a href="#publicacao">Publicação</a>
+      <a href="rn.html">Governador RN</a>
+      <a href="radar.html">Legislativo RN</a>
+      <a href="analises.html">Análises RN</a>
+      <a href="#sobre">Sobre</a>
+      <a class="mobile-rn-link" href="rn.html">Governador RN</a>
+      <details class="mobile-menu">
+        <summary aria-label="Abrir menu">Menu</summary>
+        <div class="mobile-menu-panel">
+          <a href="#apuracao">Apuração geral</a>
+          <a href="#publicacao">Publicação</a>
+          <a href="rn.html">Governador RN</a>
+          <a href="radar.html">Legislativo RN</a>
+      <a href="analises.html">Análises RN</a>
+          <a href="#sobre">Sobre</a>
+        </div>
+      </details>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+      <span class="live"><i></i><span id="liveLabel">TSE oficial</span></span>
+    </nav>
+  </div>
+</header>
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow">ACERVO UEFY · PRIMEIRO TURNO · 04.10.2026</div>
+    <h1>O primeiro turno, preservado.</h1>
+    <p>Resultados históricos de 4 de outubro: Presidência, governos, Senado e deputados. Estes dados não representam o segundo turno.</p>
+
+<div class="notice"><b>Arquivo histórico:</b> esta página exibe somente dados do primeiro turno (4 de outubro de 2026). Para a votação de 25/10, consulte <a href="index.html">Governador RN</a> ou <a href="presidencia.html">Presidência</a>.</div>
+    <div class="toolbar card">
+      <label class="field"><span>Cargo</span><select id="officeSelect">
+        <option value="pres">Presidência</option>
+        <option value="gov">Governador</option>
+        <option value="sen">Senado</option>
+        <option value="depf">Deputado federal</option>
+        <option value="depe">Deputado estadual</option>
+      </select></label>
+      <label class="field"><span>Recorte</span><select id="scopeSelect"></select></label>
+      <label class="field"><span>Fonte</span><select id="modeSelect">
+        <option value="official">Oficial TSE</option>
+        <option value="sim">Simulado TSE</option>
+        
+      </select></label>
+      <button class="go" id="refreshBtn">Atualizar dados</button>
+    </div><div class="auto-refresh-state" id="autoRefreshState">Arquivo histórico · consulta de resultados encerrados</div>
+
+    <div class="notice"><b>Abrangência:</b> Presidência por Brasil, regiões e UFs; Governador por UF; e, no RN, também Senado, deputado federal e deputado estadual. A consulta municipal é exclusiva para Governador do RN. Use <b>Oficial TSE</b> para a apuração e <b>Simulado TSE</b> apenas para conferência técnica antes da abertura dos resultados.</div>
+  </div>
+</section>
+
+<section class="wrap main-grid" id="apuracao">
+  <div>
+    <div class="section-head"><h2>Atualização atual</h2><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button><span id="sourceHint">Resultados · oficial TSE</span></div>
+    <section class="card status-card">
+      <div class="status-top">
+        <div><strong id="statusTitle">Consultando o TSE</strong><p id="statusText">Aguarde o carregamento do resultado selecionado.</p></div>
+        <div class="updated">Última atualização<strong id="updatedAt">—</strong></div>
+      </div>
+
+      <div class="map-row">
+        <article class="map-card">
+          <div class="map-title"><div><h3 id="scopeMapTitle">Brasil</h3><p id="scopeMapSubtitle">Unidades da Federação</p></div><span class="map-source">GeoJSON</span></div>
+          <div class="map-body"><svg id="scopeMap" viewBox="0 0 420 300" aria-label="Mapa do recorte selecionado"></svg>
+            <div class="metric"><span id="scopeMetricLabel">Seções totalizadas</span><strong id="scopeProgressText">—</strong><div class="progress"><i id="scopeProgressBar"></i></div></div>
+          </div>
+        </article>
+
+        <article class="map-card rn-map-card" hidden>
+          <div class="map-title"><div><h3>Rio Grande do Norte</h3><p>167 municípios</p></div><span class="map-source">GeoJSON</span></div>
+          <div class="map-body"><svg id="rnMap" viewBox="0 0 420 300" aria-label="Mapa do Rio Grande do Norte por municípios"></svg>
+            <div class="metric"><span>Seções totalizadas</span><strong id="rnProgressText">0,0%</strong><div class="progress"><i id="rnProgressBar"></i></div></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="results">
+        <article class="result-card selected" data-office="pres">
+          <div class="result-head"><div><h3>Presidência</h3><small id="presSmall"></small></div><button class="pick active" data-pick="pres">Usar</button></div>
+          <div id="presRows"></div><div class="more" id="presMore"></div>
+        </article>
+        <article class="result-card" data-office="gov" hidden>
+          <div class="result-head"><div><h3>Governador</h3><small id="govSmall"></small></div><button class="pick" data-pick="gov">Usar</button></div>
+          <div id="govRows"></div><div class="more" id="govMore"></div>
+        </article>
+        <article class="result-card" data-office="sen" hidden>
+          <div class="result-head"><div><h3>Senado</h3><small id="senSmall"></small></div><button class="pick" data-pick="sen">Usar</button></div>
+          <div id="senRows"></div><div class="more" id="senMore"></div>
+        </article>
+        <article class="result-card" data-office="depf" hidden>
+          <div class="result-head"><div><h3>Deputado federal</h3><small id="depfSmall"></small></div><button class="pick" data-pick="depf">Usar</button></div>
+          <div id="depfRows"></div><div class="more" id="depfMore"></div>
+        </article>
+        <article class="result-card" data-office="depe" hidden>
+          <div class="result-head"><div><h3>Deputado estadual</h3><small id="depeSmall"></small></div><button class="pick" data-pick="depe">Usar</button></div>
+          <div id="depeRows"></div><div class="more" id="depeMore"></div>
+        </article>
+      </div>
+
+      <div class="demo-controls" id="demoControls"></div>
+    </section>
+  </div>
+
+  <aside class="card publisher" id="publicacao">
+    <h2>Publicação</h2>
+    <p class="sub">Prévia da arte e do texto gerados para o recorte selecionado.</p>
+    <div class="block-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+    <div class="canvas-box"><canvas id="shareCanvas" width="1080" height="1080"></canvas></div>
+    <div class="block-title text-title"><span>Texto da publicação</span><span id="charCount">0 caracteres</span></div>
+    <div class="text-mode-switch" role="group" aria-label="Tamanho do texto">
+      <button type="button" class="active" data-text-mode="full">Completo</button>
+      <button type="button" data-text-mode="compact">Enxuto</button>
+    </div>
+    <textarea id="postText"></textarea>
+    <div class="actions">
+      <button class="btn" id="copyText">Copiar texto</button>
+      <button class="btn" id="copyImage">Copiar imagem</button>
+      <button class="btn primary" id="openX">Publicar no X</button>
+      <button class="btn" id="downloadImage">Baixar imagem</button>
+      <button class="btn primary full" id="shareBundle">Compartilhar imagem + texto</button>
+    </div><p class="share-note">O modo <b>Completo</b> é o padrão e pode usar textos longos. No computador, “Publicar no X” abre o compositor e prepara o texto; a imagem é copiada para você colar com Ctrl+V. Se o texto for excepcionalmente grande, a Central copia o texto integral e abre o compositor sem truncar.</p>
+  </aside>
+</section>
+
+
+
+<section class="wrap contact-panel" id="fontes-oficiais" aria-labelledby="sourcesTitle"><div class="contact-copy"><span class="contact-kicker">Arquivo histórico</span><h2 id="sourcesTitle">Fontes oficiais consolidadas</h2><p>A Central continua usando a fonte operacional do TSE para os resultados. Para auditoria e conferência final, agora também apontamos para a base consolidada de Resultados 2026 e para a evolução histórica da totalização.</p></div><div class="contact-actions" aria-label="Fontes oficiais do TSE"><a class="contact-btn primary" href="https://dadosabertos.tse.jus.br/dataset/resultados-2026" target="_blank" rel="noopener noreferrer">Dados consolidados 2026</a><a class="contact-btn" href="https://evolucao-totalizacao.tse.jus.br/" target="_blank" rel="noopener noreferrer">Evolução da totalização</a></div></section><section class="wrap contact-panel" id="contato" aria-labelledby="contactTitle">
+  <div class="contact-copy">
+    <span class="contact-kicker">Correções e ajustes</span>
+    <h2 id="contactTitle">Encontrou algo que precisa ser revisto?</h2>
+    <p>Envie uma mensagem para a UEFY com o município, cargo ou dado que merece conferência. Isso ajuda a manter a Central mais confiável.</p>
+  </div>
+  <div class="contact-actions" aria-label="Canais de contato">
+    <a class="contact-btn primary" href="https://ig.me/m/uefyerryeni" target="_blank" rel="noopener noreferrer" data-contact="instagram">Falar no Instagram</a>
+    <a class="contact-btn" href="https://x.com/Uefyerryeni" target="_blank" rel="noopener noreferrer" data-contact="x">Falar no X</a>
+  </div>
+</section>
+
+<footer class="foot" id="sobre"><div class="wrap footline"><strong>Central das Eleições UEFY</strong><span>Mapas territoriais derivados de dados públicos do IBGE · resultados: TSE</span></div></footer>
+</main>
+<nav class="mobile-dock" aria-label="Acesso rápido"><a href="index.html">RN · 2º turno</a><a href="presidencia.html">Presidência · 2º</a><a href="primeiro-turno.html" class="active">1º turno</a><a href="radar.html">Legislativo</a></nav>
+<button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
+<button class="to-top" id="toTop">↑</button>
+<script src="app-primeiro-turno.js?v=20261017-acervo"></script>
+</body>
+</html>
