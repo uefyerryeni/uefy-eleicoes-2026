@@ -497,15 +497,15 @@ function renderCurrent(){
   if(mode==='demo'){
     if(title)title.textContent='Candidaturas a Governador do RN';
     $('#rnProgress').textContent=String(current.candidates?.length||0);
-    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>{
+    $('#rnResults').innerHTML=(current.candidates||[]).length?(current.candidates||[]).map(c=>{
       const meta=[c.number,c.party].filter(Boolean).map(esc).join(' · ');
       const status=c.status?'<span class="status-chip">'+esc(c.status)+'</span>':'';
       return '<div class="rn-result-line registry"><span>'+esc(c.name)+(meta?'<small>'+meta+'</small>':'')+'</span>'+status+'</div>';
     }).join('');
   }else{
     if(title)title.textContent='Resultado do município';
-    $('#rnProgress').textContent=fmtPct(current.progress);
-    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%;background:'+candidateColor(c.name,c.number)+'"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join('');
+    $('#rnProgress').textContent=(current.candidates||[]).length?fmtPct(current.progress):'—';
+    $('#rnResults').innerHTML=(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%;background:'+candidateColor(c.name,c.number)+'"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join(''):'<div class="turno2-empty">Aguardando os resultados oficiais do segundo turno.</div>';
   }
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';drawCanvas();updateRnPublicationSafety();
 }

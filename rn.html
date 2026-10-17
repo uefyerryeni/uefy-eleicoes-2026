@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#f5c400">
+  <meta name="theme-color" content="#f4dd19">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>Central das Eleições UEFY — Rio Grande do Norte</title>
+  <title>Segundo turno no RN | Central das Eleições UEFY</title>
   <link rel="stylesheet" href="style.css?v=20261004-candidate-filter">
   <script>
 (function(){
@@ -21,6 +21,8 @@
   }).catch(()=>{});
 })();
 </script>
+<link rel="stylesheet" href="turno2.css?v=20261017a">
+  <meta name="description" content="Segundo turno 2026: governo do Rio Grande do Norte, mapa dos 167 municípios e publicações com dados oficiais do TSE.">
 </head>
 <body>
 <header class="topbar">
@@ -29,21 +31,17 @@
       <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
       <div class="brandtext"><strong>Central das Eleições UEFY</strong><span>Rio Grande do Norte</span></div>
     </div>
-    <nav class="nav">
-      <a href="index.html">Apuração geral</a>
-      <a class="active" href="rn.html">Governador RN</a>
-      <a href="radar.html">Legislativo RN</a>
-      <a href="analises.html">Análises RN</a>
-      <a href="#publicacao">Publicação</a>
-      <a class="mobile-rn-link" href="index.html">Geral</a>
-      <details class="mobile-menu">
-        <summary aria-label="Abrir menu">Menu</summary>
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="active" href="index.html">RN ao vivo</a>
+      <a  href="presidencia.html">Presidência</a>
+      <a  href="analises.html">Análises do 1º turno</a>
+      <a href="#publicacao">Publicar</a>
+      <a class="mobile-rn-link" href="presidencia.html">Presidência</a>
+      <details class="mobile-menu"><summary aria-label="Abrir menu">Menu</summary>
         <div class="mobile-menu-panel">
-          <a href="index.html">Apuração geral</a>
-          <a href="rn.html">Governador RN</a>
-          <a href="radar.html">Legislativo RN</a>
-      <a href="analises.html">Análises RN</a>
-          <a href="#publicacao">Publicação</a>
+          <a href="index.html">RN ao vivo</a><a href="presidencia.html">Presidência</a>
+          <a href="analises.html">Análises do 1º turno</a><a href="primeiro-turno.html">Arquivo completo</a>
+          <a href="#publicacao">Publicar</a>
         </div>
       </details>
       <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
@@ -51,29 +49,35 @@
     </nav>
   </div>
 </header>
-<div class="live-strip" aria-label="Acompanhamento rápido"><div class="wrap live-strip-inner"><strong>Favoritos</strong><div class="live-strip-items" id="liveStripItems"><span class="strip-empty">Marque municípios para acompanhar aqui.</span></div></div></div>
-
 <main class="wrap rn-shell">
-  <section class="rn-hero">
-    <div>
-      <span class="rn-badge">RN · 167 municípios</span>
-      <h1>Governador do RN por município.</h1>
-      <p>Busque ou selecione um município para consultar o recorte de Governo do Estado e preparar a publicação.</p>
+  <section class="rn-hero turno2-hero" aria-labelledby="homeTitle">
+    <div class="turno2-hero-copy">
+      <span class="turno2-kicker"><span class="pulse-dot"></span> Central das Eleições UEFY <b> / 25.10.2026</b></span>
+      <span class="turno2-eyebrow">ELEIÇÕES 2026 <span>·</span> SEGUNDO TURNO</span>
+      <h1 id="homeTitle">O RN<br><em>decide.</em></h1>
+      <p>Governador do Rio Grande do Norte. Acompanhe a totalização oficial e explore o voto nos 167 municípios, com dados do TSE.</p>
+      <div class="turno2-hero-links"><a class="turno2-hero-link primary" href="#mapa-totalizacao">Explorar mapa <span>↗</span></a><a class="turno2-hero-link" href="#publicacao">Gerar publicação <span>↗</span></a></div>
     </div>
-    <div class="notice"><b>Fonte:</b> resultados do TSE. Use <b>Oficial TSE</b> para a apuração e <b>Simulado TSE</b> apenas para conferência técnica antes da abertura dos resultados. Esta página consulta exclusivamente Governador do RN por município.</div>
+    <aside class="turno2-duel" aria-label="Candidaturas ao segundo turno do governo do RN">
+      <div class="turno2-duel-label"><span>DISPUTA ESTADUAL</span><strong>02 CANDIDATURAS</strong></div>
+      <div class="turno2-duel-candidate allyson"><span class="candidate-number">44</span><span class="candidate-meta"><b>ALLYSON BEZERRA</b><small>União Brasil</small></span><span class="candidate-swatch"></span></div>
+      <div class="turno2-duel-separator">SEGUNDO TURNO</div>
+      <div class="turno2-duel-candidate cadu"><span class="candidate-number">13</span><span class="candidate-meta"><b>CADU DE LULA</b><small>PT</small></span><span class="candidate-swatch"></span></div>
+      <p>Resultados somente após a abertura oficial da divulgação pelo TSE. Sem estimativas nem simulações.</p>
+    </aside>
   </section>
 
   <section class="card rn-source-control" aria-label="Fonte de dados da página do RN">
     <div class="rn-source-copy">
-      <span>Fonte de toda a página</span>
+      <span>Fonte verificada do segundo turno</span>
       <strong id="rnSourceTitle">Oficial TSE</strong>
-      <small id="rnSourceHelp">Mapa, município e publicação usam a mesma fonte.</small>
+      <small id="rnSourceHelp">Resultados oficiais do segundo turno · eleição 6260.</small>
     </div>
     <label class="rn-source-select">
-      <span>Fonte dos dados</span>
+      <span>Ambiente</span>
       <select id="rnMode">
         <option value="official">Oficial TSE</option>
-        <option value="sim">Simulado TSE</option>
+        
         
       </select>
     </label>
@@ -83,9 +87,9 @@
   <section class="card rn-total-map-section" id="mapa-totalizacao">
     <div class="rn-total-map-head">
       <div>
-        <div class="rn-map-titleline"><span class="rn-badge">Totalização estadual</span><span class="rn-source-chip" id="rnSourceBadge">OFICIAL TSE</span></div>
-        <h2>Quem lidera em cada município</h2>
-        <p>Mapa de governador do RN por município. Cada município assume a cor da candidatura que estiver em 1º lugar naquele recorte.</p>
+        <div class="rn-map-titleline"><span class="rn-badge">2º turno · RN</span><span class="rn-source-chip" id="rnSourceBadge">OFICIAL TSE</span></div>
+        <h2>O voto no território.</h2>
+        <p>A cor indica a candidatura com mais votos válidos em cada município, conforme o último dado oficial disponível. Municípios sem votos publicados permanecem neutros.</p>
       </div>
       <div class="rn-map-audit" id="rnMapAudit">
         <span>Municípios lidos</span>
@@ -94,6 +98,7 @@
       </div>
     </div>
     <div class="rn-map-filter" aria-label="Filtro de candidatura no mapa">
+      <label class="turno2-search-label"><span>Encontrar município</span><input class="rn-search" id="munSearch" type="search" placeholder="Digite o nome da cidade" aria-label="Buscar município"></label>
       <label for="rnLeaderFilter">
         <span>Mostrar no mapa</span>
         <select id="rnLeaderFilter">
@@ -128,17 +133,9 @@
   </section>
 
   <section class="rn-layout">
-    <div class="card rn-map-panel">
-      <div class="rn-map-head">
-        <div><h2>Mapa do Rio Grande do Norte</h2><p>Clique diretamente no município ou use a busca.</p></div>
-        <span class="map-source">GeoJSON</span>
-      </div>
-      <input class="rn-search" id="munSearch" type="search" placeholder="Buscar município">
-      <svg id="rnLargeMap" class="rn-map-large" viewBox="0 0 760 560" aria-label="Mapa dos municípios do Rio Grande do Norte"></svg>
-    </div>
-
+    <svg id="rnLargeMap" viewBox="0 0 760 560" aria-hidden="true" style="display:none"></svg>
     <aside class="card rn-side">
-      <div class="rn-selected"><div class="selected-line"><div><small>Município selecionado</small><strong id="selectedMun">Natal</strong></div><button class="favorite-btn" id="favoriteCurrent" type="button" aria-label="Adicionar resultado aos favoritos">☆ Favoritar</button></div>
+      <div class="rn-selected"><div class="selected-line"><div><small>EXPLORAR MUNICÍPIO · 2º TURNO</small><strong id="selectedMun">Natal</strong></div></div>
         <div class="mun-focus-wrap">
           <span class="mun-focus-label">Recorte do município</span>
           <svg id="munFocusMap" class="mun-focus-map" viewBox="0 0 320 220" aria-label="Município selecionado ampliado"></svg>
@@ -146,15 +143,15 @@
       </div>
 
       <div class="rn-toolbar rn-toolbar-simple">
-        <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Resultado por município · <b id="rnMunicipalSource">Oficial TSE</b></span></div>
+        <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Dados oficiais por município · <b id="rnMunicipalSource">Oficial TSE</b></span></div>
       </div>
 
       <details class="rn-municipality-list"><summary>Ver lista de municípios</summary><div class="rn-list" id="munList" aria-label="Lista de municípios"></div></details>
 
       <div class="rn-publisher rn-publisher-priority" id="publicacao">
-        <div class="block-title"><span id="rnResultTitle">Resultado do município</span><span id="rnProgress">—</span></div>
+        <div class="block-title"><span id="rnResultTitle">Resultado oficial do município</span><span id="rnProgress">—</span></div>
         <div class="rn-result-lines" id="rnResults"></div>
-        <div class="rn-note" id="rnStatus">Aguardando consulta ao TSE.</div>
+        <div class="rn-note" id="rnStatus">2º turno · aguardando divulgação oficial do TSE.</div>
 
         <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
         <div class="canvas-box"><canvas id="rnCanvas" width="1080" height="1080"></canvas></div>
@@ -188,10 +185,10 @@
   </div>
 </section>
 
-<footer class="foot rn-foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Rio Grande do Norte</strong><span>Selecione um município, confira os dados e gere a publicação.</span></div></footer>
-<nav class="mobile-dock mobile-dock-five" aria-label="Ações rápidas"><a href="index.html#apuracao">Geral</a><a href="rn.html" class="active">Governador</a><a href="radar.html">Legislativo</a><a href="analises.html">Análises</a><a href="#publicacao">Publicar</a></nav>
+<footer class="foot rn-foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Rio Grande do Norte</strong><span>Segundo turno em 25 de outubro · fonte: Tribunal Superior Eleitoral · <a href="primeiro-turno.html">Arquivo do 1º turno</a> · <a href="radar.html">Legislativo 2026</a></span></div></footer>
+<nav class="mobile-dock" aria-label="Acesso rápido"><a href="index.html" class="active">RN ao vivo</a><a href="presidencia.html">Presidência</a><a href="analises.html">Análises</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="rn.js?v=20261004-major-cities"></script>
+<script src="rn.js?v=20261017-segundo-turno"></script>
 </body>
 </html>
