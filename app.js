@@ -59,7 +59,7 @@ function projector(fc,w,h,pad=12){const b=boundsOf(fc),sx=(w-pad*2)/(b.maxX-b.mi
 function ringPath(ring,proj){return ring.map((p,i)=>{const[x,y]=proj(p);return(i?'L':'M')+x.toFixed(2)+' '+y.toFixed(2)}).join(' ')+' Z'}
 function geometryPath(g,proj){if(g.type==='Polygon')return g.coordinates.map(r=>ringPath(r,proj)).join(' ');if(g.type==='MultiPolygon')return g.coordinates.flatMap(poly=>poly.map(r=>ringPath(r,proj))).join(' ');return''}
 function renderGeoJSON(svg,fc){const proj=projector(fc,420,300,10);svg.innerHTML=fc.features.map(f=>'<path class="map-feature" d="'+geometryPath(f.geometry,proj)+'"></path>').join('')}
-function drawGeoJSON(ctx,fc,x,y,w,h){if(!fc)return;const proj=projector(fc,w,h,5);ctx.save();ctx.translate(x,y);ctx.fillStyle='#f5c400';ctx.strokeStyle='#fff';ctx.lineWidth=1.4;fc.features.forEach(f=>{const g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];polys.forEach(poly=>{ctx.beginPath();poly.forEach(ring=>ring.forEach((p,i)=>{const[px,py]=proj(p);i?ctx.lineTo(px,py):ctx.moveTo(px,py)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()})});ctx.restore()}
+function drawGeoJSON(ctx,fc,x,y,w,h){if(!fc)return;const proj=projector(fc,w,h,5);ctx.save();ctx.translate(x,y);ctx.fillStyle='#f4dd19';ctx.strokeStyle='#fff';ctx.lineWidth=1.4;fc.features.forEach(f=>{const g=f.geometry,polys=g.type==='Polygon'?[g.coordinates]:g.type==='MultiPolygon'?g.coordinates:[];polys.forEach(poly=>{ctx.beginPath();poly.forEach(ring=>ring.forEach((p,i)=>{const[px,py]=proj(p);i?ctx.lineTo(px,py):ctx.moveTo(px,py)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()})});ctx.restore()}
 
 function flattenCandidates(data){
   const out=[];
@@ -427,39 +427,39 @@ function roundRect(ctx,x,y,w,h,r){r=Math.min(r,w/2,h/2);ctx.beginPath();ctx.move
 function fitCanvasText(ctx,text,x,y,maxWidth,startSize,minSize,weight='700',color='#17191c'){
   let size=startSize;
   while(size>minSize){
-    ctx.font=weight+' '+size+'px Inter,Segoe UI,Arial';
+    ctx.font=weight+' '+size+'px DM Sans,Segoe UI,Arial';
     if(ctx.measureText(text).width<=maxWidth)break;
     size-=1;
   }
-  ctx.fillStyle=color;ctx.font=weight+' '+size+'px Inter,Segoe UI,Arial';ctx.fillText(text,x,y);
+  ctx.fillStyle=color;ctx.font=weight+' '+size+'px DM Sans,Segoe UI,Arial';ctx.fillText(text,x,y);
 }
 const logoImg=new Image();logoImg.crossOrigin='anonymous';logoImg.src=LOGO_URL;logoImg.onload=()=>drawCanvas();
 function drawCanvas(){
   const c=$('#shareCanvas'),ctx=c.getContext('2d'),d=state[selectedOffice],m=officeMeta[selectedOffice];
-  ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#F4F0E7';ctx.fillRect(0,0,1080,1080);
-  ctx.fillStyle='#F5C400';ctx.fillRect(70,55,22,22);ctx.fillStyle='#17191C';ctx.font='800 38px Inter,Segoe UI,Arial';ctx.fillText('CENTRAL DAS ELEIÇÕES UEFY',112,81);
-  ctx.fillStyle='#5D646A';ctx.font='700 21px Inter,Segoe UI,Arial';ctx.fillText('ELEIÇÕES 2026 · DADOS DO TSE',70,123);
+  ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#F5F2E9';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='#1B2523';ctx.fillRect(0,0,1080,18);
+  ctx.fillStyle='#F4DD19';ctx.fillRect(70,55,22,22);ctx.fillStyle='#17191C';ctx.font='800 38px DM Sans,Segoe UI,Arial';ctx.fillText('CENTRAL DAS ELEIÇÕES UEFY',112,81);
+  ctx.fillStyle='#5D646A';ctx.font='700 21px DM Sans,Segoe UI,Arial';ctx.fillText('2º TURNO · 25 OUTUBRO 2026 · TSE',70,123);
   const outcome=officialOutcome(d);
   const status=mode==='sim'?'SIMULADO TSE':outcome.kind==='elected'?'ELEITO · TSE':outcome.kind==='second_round'?'2º TURNO CONFIRMADO · TSE':outcome.kind==='elected_multiple'?'ELEITOS DEFINIDOS · TSE':d.finalTotalization?'RESULTADO FINAL · TSE':'APURAÇÃO PARCIAL · TSE';
   fitCanvasText(ctx,m.title,70,205,940,62,40,'800','#17191C');fitCanvasText(ctx,scopeLabel(),70,252,940,32,24,'700','#444B51');
-  ctx.fillStyle=mode==='sim'?'#8A7100':'#17191C';ctx.font='800 22px Inter,Segoe UI,Arial';ctx.fillText(status,70,301);
-  const progress=Number(d.progress||0);ctx.fillStyle='#666D73';ctx.font='700 19px Inter,Segoe UI,Arial';ctx.fillText('SEÇÕES TOTALIZADAS',70,345);
-  ctx.fillStyle='#17191C';ctx.font='800 42px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(progress),70,392);
-  ctx.fillStyle='#D9D5CD';roundRect(ctx,270,362,740,16,8);ctx.fill();ctx.fillStyle='#F5C400';roundRect(ctx,270,362,740*Math.min(100,progress)/100,16,8);ctx.fill();
+  ctx.fillStyle=mode==='sim'?'#8A7100':'#17191C';ctx.font='800 22px DM Sans,Segoe UI,Arial';ctx.fillText(status,70,301);
+  const progress=Number(d.progress||0);ctx.fillStyle='#666D73';ctx.font='700 19px DM Sans,Segoe UI,Arial';ctx.fillText('SEÇÕES TOTALIZADAS',70,345);
+  ctx.fillStyle='#17191C';ctx.font='800 42px DM Sans,Segoe UI,Arial';ctx.fillText(fmtPct(progress),70,392);
+  ctx.fillStyle='#D9D5CD';roundRect(ctx,270,362,740,16,8);ctx.fill();ctx.fillStyle='#F4DD19';roundRect(ctx,270,362,740*Math.min(100,progress)/100,16,8);ctx.fill();
   const rows=(d.candidates||[]).slice(0,3),y0=440;
   rows.forEach((cand,i)=>{const y=y0+i*160,tag=candidateOfficialTag(d,cand);
-    ctx.fillStyle='#FFF';roundRect(ctx,70,y,940,138,22);ctx.fill();ctx.fillStyle=i===0?'#F5C400':'#D6D1C8';roundRect(ctx,70,y,10,138,5);ctx.fill();
-    ctx.fillStyle='#6A7177';ctx.font='800 18px Inter,Segoe UI,Arial';ctx.fillText((i+1)+'º',105,y+37);fitCanvasText(ctx,cand.name,155,y+45,570,34,23,'800','#17191C');
+    ctx.fillStyle='#FFF';roundRect(ctx,70,y,940,138,22);ctx.fill();ctx.fillStyle=i===0?'#F4DD19':'#D6D1C8';roundRect(ctx,70,y,10,138,5);ctx.fill();
+    ctx.fillStyle='#6A7177';ctx.font='800 18px DM Sans,Segoe UI,Arial';ctx.fillText((i+1)+'º',105,y+37);fitCanvasText(ctx,cand.name,155,y+45,570,34,23,'800','#17191C');
     const meta=[cand.party,cand.votes?Number(cand.votes).toLocaleString('pt-BR')+' votos':''].filter(Boolean).join(' · ');fitCanvasText(ctx,meta,155,y+83,590,21,16,'600','#5E656B');
     if(tag)fitCanvasText(ctx,String(tag).toUpperCase(),155,y+113,590,17,13,'800','#7A6500');
-    ctx.textAlign='right';ctx.fillStyle='#17191C';ctx.font='800 42px Inter,Segoe UI,Arial';ctx.fillText(fmtPct(cand.pct),975,y+64);ctx.textAlign='left';
-    ctx.fillStyle='#E4E0D8';roundRect(ctx,760,y+91,215,11,6);ctx.fill();ctx.fillStyle=i===0?'#F5C400':'#9EA6AD';roundRect(ctx,760,y+91,215*Math.min(100,Number(cand.pct||0))/100,11,6);ctx.fill();
+    ctx.textAlign='right';ctx.fillStyle='#17191C';ctx.font='800 42px DM Sans,Segoe UI,Arial';ctx.fillText(fmtPct(cand.pct),975,y+64);ctx.textAlign='left';
+    ctx.fillStyle='#E4E0D8';roundRect(ctx,760,y+91,215,11,6);ctx.fill();ctx.fillStyle=i===0?'#F4DD19':'#9EA6AD';roundRect(ctx,760,y+91,215*Math.min(100,Number(cand.pct||0))/100,11,6);ctx.fill();
   });
-  if(!rows.length){ctx.fillStyle='#FFF';roundRect(ctx,70,440,940,300,22);ctx.fill();ctx.fillStyle='#60676D';ctx.font='700 28px Inter,Segoe UI,Arial';ctx.fillText('Aguardando resultados deste recorte.',110,520)}
-  ctx.fillStyle='#D4CEC3';ctx.fillRect(70,942,940,2);ctx.fillStyle='#17191C';ctx.font='800 21px Inter,Segoe UI,Arial';ctx.fillText(mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral',70,982);
-  ctx.fillStyle='#60676D';ctx.font='600 18px Inter,Segoe UI,Arial';ctx.fillText('Totalização: '+fmtPct(progress)+' · atualização '+(d.generatedAt||'aguardando'),70,1018);
-  if(selectedOffice==='depf'||selectedOffice==='depe'){ctx.fillStyle='#6C7379';ctx.font='600 15px Inter,Segoe UI,Arial';ctx.fillText('Ordem por votação nominal; eleição depende do sistema proporcional e da situação oficial do TSE.',70,1047)}
-  else if(selectedOffice==='sen'){ctx.fillStyle='#6C7379';ctx.font='600 15px Inter,Segoe UI,Arial';ctx.fillText('Duas vagas em disputa; situação de eleitos somente quando informada oficialmente pelo TSE.',70,1047)}
+  if(!rows.length){ctx.fillStyle='#FFF';roundRect(ctx,70,440,940,300,22);ctx.fill();ctx.fillStyle='#60676D';ctx.font='700 28px DM Sans,Segoe UI,Arial';ctx.fillText('Aguardando resultados deste recorte.',110,520)}
+  ctx.fillStyle='#D4CEC3';ctx.fillRect(70,942,940,2);ctx.fillStyle='#17191C';ctx.font='800 21px DM Sans,Segoe UI,Arial';ctx.fillText(mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral',70,982);
+  ctx.fillStyle='#60676D';ctx.font='600 18px DM Sans,Segoe UI,Arial';ctx.fillText('Totalização: '+fmtPct(progress)+' · atualização '+(d.generatedAt||'aguardando'),70,1018);
+  if(selectedOffice==='depf'||selectedOffice==='depe'){ctx.fillStyle='#6C7379';ctx.font='600 15px DM Sans,Segoe UI,Arial';ctx.fillText('Ordem por votação nominal; eleição depende do sistema proporcional e da situação oficial do TSE.',70,1047)}
+  else if(selectedOffice==='sen'){ctx.fillStyle='#6C7379';ctx.font='600 15px DM Sans,Segoe UI,Arial';ctx.fillText('Duas vagas em disputa; situação de eleitos somente quando informada oficialmente pelo TSE.',70,1047)}
 }
 function regenerate(){const t=makePostText();$('#postText').value=t;$('#charCount').textContent=t.length+' caracteres';drawCanvas();const safe=publicationIsSafe();['#copyText','#copyImage','#openX','#downloadImage','#shareBundle'].forEach(id=>{const el=$(id);if(el)el.disabled=!safe})}
 function flash(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
