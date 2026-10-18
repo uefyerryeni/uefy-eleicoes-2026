@@ -125,7 +125,8 @@
         <div><span class="et-overline">CONSULTA TERRITORIAL</span><h3>Município por município</h3></div>
         <input id="mtSearch" class="mt-search" type="search" placeholder="Encontrar município" aria-label="Buscar município no histórico de posições" />
       </div>
-      <div class="mt-scroll">
+      <p class="et-swipe-hint">Deslize a tabela para os lados para consultar as colunas.</p>
+      <div class="mt-scroll" role="region" aria-label="Tabela comparativa de posições municipais" tabindex="0">
         <table class="mt-table">
           <thead><tr><th>Município</th><th>1º turno</th><th>2º turno</th><th>Situação</th></tr></thead>
           <tbody id="mtRows"><tr><td colspan="4">Carregando dados…</td></tr></tbody>
@@ -212,7 +213,8 @@
   <section class="et-table-section" aria-labelledby="etTableHeading">
     <div class="et-section-heading"><div><span class="et-overline">04 / DADOS ABERTOS</span><h2 id="etTableHeading">Consulta município a município.</h2><p>Ordem alfabética, sem classificação por candidaturas.</p></div></div>
     <label class="et-table-search"><span>LOCALIZAR CIDADE</span><input type="search" id="etSearch" placeholder="Buscar entre os 167 municípios" /></label>
-    <div class="et-table-wrap">
+    <p class="et-swipe-hint">Deslize a tabela para os lados para consultar as colunas.</p>
+    <div class="et-table-wrap" role="region" aria-label="Tabela de participação nos municípios" tabindex="0">
       <table class="et-table">
         <thead><tr><th scope="col">Município</th><th scope="col">1º turno</th><th scope="col">2º turno</th><th scope="col">Variação</th></tr></thead>
         <tbody id="etTableBody"><tr><td colspan="4">Carregando dados oficiais…</td></tr></tbody>

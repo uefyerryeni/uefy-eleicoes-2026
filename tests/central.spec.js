@@ -238,6 +238,50 @@ test('titulos editoriais usam familia larga e leitura confortavel',async({page})
   const mobile=await page.locator('.et-intro h2').evaluate(el=>({scroll:el.scrollWidth,width:el.clientWidth}));
   expect(mobile.scroll).toBeLessThanOrEqual(mobile.width+2);
 });
+
+test('auditoria móvel: todas as páginas oferecem menu, campos legíveis e largura estável',async({page})=>{
+ const files=['index.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
+ for(const width of [320,360,390,430,600,768,820]){
+  await page.setViewportSize({width,height:800});
+  for(const path of files){
+   await page.goto(route(path),{waitUntil:'domcontentloaded'});
+   const r=await page.evaluate(()=>{
+    const vis=el=>el&&getComputedStyle(el).display!=='none'&&getComputedStyle(el).visibility!=='hidden'&&el.getClientRects().length>0;
+    const h=document.querySelector('.mobile-menu summary'),brand=document.querySelector('.brandtext strong');
+    const controls=[...document.querySelectorAll('input,select,textarea')].filter(vis);
+    return {
+     excess:Math.max(0,document.documentElement.scrollWidth-document.documentElement.clientWidth),
+     menu:!!vis(h),
+     brandClipped:brand&&brand.scrollWidth>brand.clientWidth+3,
+     smallInputs:controls.filter(el=>parseFloat(getComputedStyle(el).fontSize)<16).map(x=>x.id)
+    };
+   });
+   expect(r.excess,path+' @ '+width+'px').toBeLessThanOrEqual(2);
+   expect(r.menu,path+' @ '+width+'px: menu desapareceu').toBeTruthy();
+   if(width<=600){
+    expect(r.brandClipped,path+' @ '+width+'px: marca cortada').toBeFalsy();
+   }
+   expect(r.smallInputs,path+' @ '+width+'px: zoom no foco').toEqual([]);
+  }
+ }
+});
+test('celular: o título da Presidência cabe na largura de 320 pixels',async({page})=>{
+ await page.setViewportSize({width:320,height:760});
+ await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+ const title=await page.locator('.hero h1').evaluate(el=>({scroll:el.scrollWidth,width:el.clientWidth}));
+ expect(title.scroll).toBeLessThanOrEqual(title.width+2);
+});
+test('tabelas do Entre Turnos deslizam sem criar rolagem horizontal geral',async({page})=>{
+ await page.setViewportSize({width:320,height:760});
+ await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+ const result=await page.evaluate(()=>{
+  const tab=document.querySelector('.et-table-wrap');
+  const other=document.querySelector('.mt-scroll');
+  return {tab:tab.scrollWidth>tab.clientWidth,other:other.scrollWidth>other.clientWidth,body:document.documentElement.scrollWidth-document.documentElement.clientWidth};
+ });
+ expect(result.tab).toBeTruthy();expect(result.other).toBeTruthy();expect(result.body).toBeLessThanOrEqual(2);
+});
+
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);

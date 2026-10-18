@@ -97,3 +97,11 @@ body.dark .turno2-duel-label,body.dark .turno2-duel-separator:before,body.dark .
 .rn-compare-link:hover{background:#354a3f;color:#fff7a6}
 .rn-compare-link span{font-size:17px}
 body.dark .rn-compare-link{background:#f4dd19;color:#162820}
+
+/* Tipografia da Presidência e controles celulares sem cortes. */
+@media(max-width:600px){
+  .hero h1{font-size:clamp(29px,8.4vw,41px);line-height:1.14;letter-spacing:-.046em;max-width:100%;overflow-wrap:break-word}
+  .turno2-hero .turno2-hero-links{gap:9px}
+  .turno2-hero-link{min-height:46px}
+  .rn-actions .btn{min-height:46px}
+}

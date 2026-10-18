@@ -91,3 +91,20 @@ body.dark .et-reset{background:#29372f;color:white}
 @media(max-width:950px){.et-map-grid{grid-template-columns:1fr}.et-map-details{display:block}.et-focus-indicator{margin:20px 0}.et-hero{grid-template-columns:1.3fr .7fr}.et-numbercard{padding:17px}}
 @media(max-width:760px){.et-intro{grid-template-columns:1fr}.et-hero{grid-template-columns:1fr}.et-hero-aside{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}.et-hero-aside>strong{font-size:68px}.et-aside-foot{width:100%;margin-top:5px}.et-sourcebar{grid-template-columns:1fr 1fr}.et-source-action{grid-column:1/-1;border-top:1px solid #c5c9be;border-left:0!important}.et-toolbar{grid-template-columns:1fr}.et-toolbar label+label{border-left:0;border-top:1px solid #d7dacc}.et-reset{justify-self:stretch}.et-numbergrid{grid-template-columns:1fr 1fr}.et-numbercard.delta{grid-column:1/-1;min-height:130px}.et-numbercard{min-height:140px}.et-section-heading{display:block}.et-map-mode{display:inline-block;margin-top:12px}.et-hero h1{font-size:clamp(48px,11vw,68px)}}
 @media(max-width:460px){.et-shell{padding:14px 0}.et-hero-main{padding:27px 20px}.et-hero h1{margin-top:26px}.et-hero-meta{gap:8px}.et-hero-meta span{font-size:9px}.et-numbercard{padding:13px 12px;min-height:135px}.et-numbercard strong{font-size:clamp(25px,7vw,36px)}.et-numbercard>span,.et-numbercard small{font-size:9px}.et-table th,.et-table td{padding:11px 8px;font-size:11px}.et-map-details{padding:18px}.et-map-grid{gap:10px}}
+
+/* Consulta territorial legível: tabela com rolagem lateral própria. */
+.et-table-wrap{min-width:0;max-width:100%;overflow:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+@media(max-width:600px){
+  .et-table{min-width:510px}
+  .et-table th,.et-table td{padding:12px}
+  .et-table-wrap{border-radius:4px}
+  .et-table-search input,.et-toolbar select{min-height:46px}
+  .et-sourcebar>div{padding:13px 10px}
+  .et-sourcebar strong{font-size:12px;overflow-wrap:break-word}
+  .et-hero{box-shadow:4px 4px 0 #f4dd19}
+  .et-aside-foot{overflow-wrap:break-word}
+}
+
+.et-swipe-hint{display:none;font-size:11px;font-weight:700;color:#56645a;margin:5px 0 8px}
+@media(max-width:600px){.et-swipe-hint{display:block}}
+body.dark .et-swipe-hint{color:#c5d2c7}
