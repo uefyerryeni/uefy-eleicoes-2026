@@ -1,4 +1,5 @@
 const { test }=require('@playwright/test');
+const BUILD=require('../version.json').build;
 // Diagnóstico de interface em múltiplos tamanhos. Gera evidências no log,
 // sem classificar como falha até que os números sejam revisados.
 test('auditoria de largura, navegação e controles em telas móveis',async({page})=>{
@@ -10,7 +11,7 @@ test('auditoria de largura, navegação e controles em telas móveis',async({pag
  for(const width of widths){
   await page.setViewportSize({width,height:800});
   for(const file of paths){
-   await page.goto('/'+file,{waitUntil:'domcontentloaded',timeout:10000});
+   await page.goto('/'+file+'?v='+encodeURIComponent(BUILD),{waitUntil:'load',timeout:15000});
    const info=await page.evaluate(()=>{
     const $=s=>document.querySelector(s);
     const style=el=>getComputedStyle(el);
