@@ -1058,3 +1058,22 @@ h1,h2,h3,.brandtext strong{font-family:'Space Grotesk','Segoe UI',Arial,sans-ser
   body .brandtext strong{font-size:12px;letter-spacing:-.04em}
   body .nav .mobile-menu summary{min-width:48px}
 }
+
+
+/* Acabamento de usabilidade: áreas de toque, foco e feedback de navegação. */
+@media(max-width:820px){
+  body .topbar a.brand{min-height:44px}
+  body .favorite-btn{min-height:44px}
+  body .footline a:not(.contact-btn),
+  body .notice a,
+  body .radar-source-card a{
+    display:inline-flex;align-items:center;min-height:44px;vertical-align:middle
+  }
+  body .mobile-dock a:focus-visible,
+  body .nav .mobile-menu summary:focus-visible,
+  body .theme-toggle:focus-visible,
+  body .to-top:focus-visible,
+  body .float-refresh:focus-visible{
+    outline:3px solid #1d6e9c;outline-offset:2px
+  }
+}

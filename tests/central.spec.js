@@ -282,6 +282,28 @@ test('tabelas do Entre Turnos deslizam sem criar rolagem horizontal geral',async
  expect(result.tab).toBeTruthy();expect(result.other).toBeTruthy();expect(result.body).toBeLessThanOrEqual(2);
 });
 
+test('navegação no modo escuro mantém largura e interações em celular',async({page})=>{
+ await page.setViewportSize({width:360,height:780});
+ for(const path of ['index.html','entre-turnos.html']){
+  await page.goto(route(path),{waitUntil:'domcontentloaded'});
+  const t=page.locator('#themeToggle');
+  const before=await page.evaluate(()=>document.body.classList.contains('dark'));
+  await t.click();
+  const after=await page.evaluate(()=>document.body.classList.contains('dark'));
+  expect(after).not.toBe(before);
+  const el=page.locator('.mobile-menu summary');
+  await el.click();
+  await expect(page.locator('.mobile-menu-panel a[href="presidencia.html"]')).toBeVisible();
+  const excess=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+  expect(excess).toBeLessThanOrEqual(2);
+ }
+});
+test('atalhos editoriais e marca possuem área de toque adequada',async({page})=>{
+ await page.setViewportSize({width:320,height:760});
+ await page.goto(route('entre-turnos.html'),{waitUntil:'domcontentloaded'});
+ const els=await page.locator('.topbar a.brand,.et-links a').evaluateAll(nodes=>nodes.map(n=>({name:n.textContent.trim().slice(0,25),height:n.getBoundingClientRect().height})));
+ for(const v of els)expect(v.height,v.name).toBeGreaterThanOrEqual(40);
+});
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);

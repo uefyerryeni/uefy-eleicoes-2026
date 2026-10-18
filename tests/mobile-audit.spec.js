@@ -1,4 +1,6 @@
 const { test }=require('@playwright/test');
+// Diagnóstico detalhado opcional; a homologação padrão usa os testes de regressão móveis.
+test.skip(!process.env.MOBILE_AUDIT_VERBOSE,'Executar sob demanda com MOBILE_AUDIT_VERBOSE=1');
 const BUILD=require('../version.json').build;
 // Diagnóstico de interface em múltiplos tamanhos. Gera evidências no log,
 // sem classificar como falha até que os números sejam revisados.
