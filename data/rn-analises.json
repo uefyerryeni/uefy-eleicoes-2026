@@ -1,16 +1,10 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-20T06:49:53-03:00",
+  "generated_at": "2026-10-21T06:51:13-03:00",
   "source_generated_at": "05/10/2026 · 12:52:21",
   "municipalities_expected": 167,
-  "municipalities_read": 166,
-  "errors": [
-    {
-      "municipality": "MARCELINO VIEIRA",
-      "code": "17450",
-      "error": "<urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1010)>"
-    }
-  ],
+  "municipalities_read": 167,
+  "errors": [],
   "cross": {
     "pairs": [
       {
@@ -24,7 +18,7 @@
           "party": "PT",
           "number": "13"
         },
-        "municipalities": 72,
+        "municipalities": 73,
         "names": [
           "ACARI",
           "AFONSO BEZERRA",
@@ -67,6 +61,7 @@
           "LUCRÉCIA",
           "LUÍS GOMES",
           "MACAU",
+          "MARCELINO VIEIRA",
           "MARTINS",
           "MAXARANGUAPE",
           "OURO BRANCO",
@@ -4684,6 +4679,63 @@
             "valid": 2442,
             "valid_pct": 100.0,
             "total_votes": 2594
+          }
+        }
+      },
+      {
+        "code": "17450",
+        "name": "MARCELINO VIEIRA",
+        "president": {
+          "number": "13",
+          "name": "LULA",
+          "party": "PT",
+          "votes": 4576,
+          "pct": 80.83,
+          "seq": 2,
+          "vote_destination": "válido"
+        },
+        "governor": {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 2509,
+          "pct": 45.68,
+          "seq": 2,
+          "vote_destination": "válido"
+        },
+        "participation": {
+          "electorate": 7027,
+          "turnout": 5911,
+          "turnout_pct": 84.12,
+          "abstention": 1116,
+          "abstention_pct": 15.88,
+          "president": {
+            "electorate": 7032,
+            "turnout": 5916,
+            "turnout_pct": 84.13,
+            "abstention": 1116,
+            "abstention_pct": 15.87,
+            "blank": 64,
+            "blank_pct": 1.08,
+            "null": 191,
+            "null_pct": 3.23,
+            "valid": 5661,
+            "valid_pct": 100.0,
+            "total_votes": 5916
+          },
+          "governor": {
+            "electorate": 7027,
+            "turnout": 5911,
+            "turnout_pct": 84.12,
+            "abstention": 1116,
+            "abstention_pct": 15.88,
+            "blank": 171,
+            "blank_pct": 2.89,
+            "null": 248,
+            "null_pct": 4.2,
+            "valid": 5492,
+            "valid_pct": 100.0,
+            "total_votes": 5911
           }
         }
       },
