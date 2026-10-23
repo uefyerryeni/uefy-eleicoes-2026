@@ -327,3 +327,44 @@ test('menu e retorno ao topo funcionam em largura de celular', async ({page}) =>
   await page.locator('#toTop').click();
   await expect.poll(()=>page.evaluate(()=>window.scrollY)).toBeLessThan(100);
 });
+
+
+test('vídeo para Twitter existe em ambas as páginas, com prévia sem números fictícios', async({page})=>{
+  await readyRN(page);
+  await expect(page.locator('#uefyVideoStudio')).toBeVisible();
+  await expect(page.locator('#uefyVideoCanvas')).toHaveAttribute('width','1080');
+  await expect(page.locator('#uefyVideoCanvas')).toHaveAttribute('height','1080');
+  await expect(page.locator('#uefyVideoOverlay')).toContainText('SEM DADOS');
+  const rnVideo=await page.evaluate(()=>({
+    duration:window.__uefyVideo.duration,
+    officialReady:window.__uefyVideo.officialReady,
+    isRN:window.__uefyVideo.isRN
+  }));
+  expect(rnVideo).toEqual({duration:12000,officialReady:false,isRN:true});
+  await page.locator('#uefyVideoExport').click();
+  await expect(page.locator('#uefyVideoStatus')).toContainText('Exportação bloqueada');
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#uefyVideoStudio')).toBeVisible();
+  expect(await page.evaluate(()=>window.__uefyVideo.isRN)).toBeFalsy();
+  await page.locator('#uefyVideoExport').click();
+  await expect(page.locator('#uefyVideoResult')).toBeHidden();
+});
+test('vídeo do RN só é liberado após horário oficial e conciliação integral',async({page})=>{
+  await readyRN(page);
+  await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
+  const states=await page.evaluate(()=>{
+    const city=selectedFeature.properties.nome;
+    current={progress:55.2,generatedAt:'25/10/2026 · 18:30',municipality:city,
+      integrity:{matched:2,total:2,unmatched:1},candidates:[
+      {id:'13',number:'13',name:'CADU DE LULA',party:'PT',votes:100,pct:40},
+      {id:'44',number:'44',name:'ALLYSON',party:'UNIÃO',votes:150,pct:60}
+    ]};
+    const blocked=window.__uefyVideo.officialReady;
+    current.integrity.unmatched=0;
+    const permitted=window.__uefyVideo.officialReady;
+    current.integrity.error=true;
+    const broken=window.__uefyVideo.officialReady;
+    return {blocked,permitted,broken};
+  });
+  expect(states).toEqual({blocked:false,permitted:true,broken:false});
+});
