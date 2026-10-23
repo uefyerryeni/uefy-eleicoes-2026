@@ -368,3 +368,49 @@ test('vídeo do RN só é liberado após horário oficial e conciliação integr
   });
   expect(states).toEqual({blocked:false,permitted:true,broken:false});
 });
+
+
+test('UEFY Motion v2 apresenta capa editorial preenchida e botão branco do Twitter', async ({page}) => {
+  await readyRN(page);
+  const frame=await page.evaluate(()=>{
+    const c=document.querySelector('#uefyVideoCanvas');
+    const ctx=c.getContext('2d');
+    const sample=(x,y)=>[...ctx.getImageData(x,y,1,1).data].slice(0,3);
+    const button=document.querySelector('#uefyVideoShare');
+    return {
+      cover:sample(5,30),
+      body:sample(30,510),
+      card:sample(84,510),
+      caption:document.querySelector('#uefyVideoStatus').textContent,
+      button:button.textContent,
+      disabled:button.disabled,
+      v2:!!window.__uefyVideo
+    };
+  });
+  expect(frame.cover).toEqual([244,221,25]);
+  expect(frame.body).toEqual([18,23,20]);
+  expect(frame.card).toEqual([246,245,238]);
+  expect(frame.button).toContain('Compartilhar vídeo no Twitter');
+  expect(frame.disabled).toBeTruthy();
+  expect(frame.v2).toBeTruthy();
+});
+
+test('capa do Motion v2 é legível no celular sem rolagem horizontal',async ({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await readyRN(page);
+  const result=await page.evaluate(()=>{
+    const studio=document.querySelector('#uefyVideoStudio');
+    const share=document.querySelector('#uefyVideoShare');
+    return {
+      studioWidth:studio.getBoundingClientRect().width,
+      viewportWidth:document.documentElement.clientWidth,
+      overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
+      whiteButtonBackground:getComputedStyle(share).backgroundColor,
+      text:share.textContent
+    };
+  });
+  expect(result.overflow).toBeLessThanOrEqual(2);
+  expect(result.studioWidth).toBeLessThanOrEqual(result.viewportWidth+2);
+  expect(result.whiteButtonBackground).toBe('rgb(232, 233, 226)');
+  expect(result.text).toContain('Twitter');
+});
