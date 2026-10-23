@@ -60,7 +60,7 @@ body.dark .uefy-video-track i{background:#f4dd19}
   opacity:1!important;
 }
 .uefy-video-share:disabled{
-  color:#70786f!important;background:#e8e9e2!important;
+  color:#6b756a!important;background:#fff!important;
   opacity:1!important;cursor:not-allowed!important;
 }
 .uefy-video-share:not(:disabled):hover{background:#f4dd19!important;box-shadow:3px 3px 0 #171b17}
@@ -73,7 +73,7 @@ body.dark .uefy-video-studio{background:#1b2722;border-color:#f4dd19}
 body.dark .uefy-video-share{
   background:#fff!important;color:#151b16!important;border-color:#101813!important
 }
-body.dark .uefy-video-share:disabled{background:#516157!important;color:#eee!important}
+body.dark .uefy-video-share:disabled{background:#fff!important;color:#67746a!important}
 body.dark .uefy-video-share-note{background:#25382e;color:#e3ebe4}
 @media(max-width:600px){
   .uefy-video-studio{width:100%;max-width:100%;margin:20px 0 7px}
