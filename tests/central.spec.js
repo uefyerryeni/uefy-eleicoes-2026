@@ -411,6 +411,6 @@ test('capa do Motion v2 é legível no celular sem rolagem horizontal',async ({p
   });
   expect(result.overflow).toBeLessThanOrEqual(2);
   expect(result.studioWidth).toBeLessThanOrEqual(result.viewportWidth+2);
-  expect(result.whiteButtonBackground).toBe('rgb(232, 233, 226)');
+  expect(result.whiteButtonBackground).toBe('rgb(255, 255, 255)');
   expect(result.text).toContain('Twitter');
 });
