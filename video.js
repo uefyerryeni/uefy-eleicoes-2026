@@ -88,8 +88,8 @@
   function placeholder() {
     return {demo:true,office:rn?'GOVERNO DO RN':'PRESIDÊNCIA',
       label:rn?'RIO GRANDE DO NORTE':'BRASIL',
-      rows:[{name:'CANDIDATURA 01',pct:0,votes:0,color:rn?'#1976d2':YELLOW},
-        {name:'CANDIDATURA 02',pct:0,votes:0,color:rn?'#d62828':'#e3e6e2'}],
+      rows:[{name:rn?'ALLYSON BEZERRA':'CANDIDATURA 01',pct:0,votes:0,color:rn?'#1976d2':YELLOW},
+        {name:rn?'CADU DE LULA':'CANDIDATURA 02',pct:0,votes:0,color:rn?'#d62828':'#e3e6e2'}],
       progress:0,final:false,elected:false,stamp:'',slug:'previa'};
   }
   function ease(x) {var t=Math.min(1,Math.max(0,x));return 1-Math.pow(1-t,3);}
@@ -114,57 +114,86 @@
   function votes(n) {return Number(n).toLocaleString('pt-BR');}
   function line(x,y,w,h,color) {ctx.fillStyle=color;ctx.fillRect(x,y,w,h);}
   function draw(t,d) {
-    var second=t/1000, intro=ease((second-.3)/1.25), bars=ease((second-3.5)/3.1);
-    var shown=ease((second-2.0)/1.15), footer=ease((second-8.2)/1.0);
-    ctx.fillStyle=INK;ctx.fillRect(0,0,SIZE,SIZE);
-    line(0,0,SIZE,16,YELLOW);
-    line(0,16,14,SIZE-16,YELLOW);
-    line(0,985,SIZE,95,YELLOW);
-    text('UEFY',65,104,65,YELLOW,900);
-    text('CENTRAL DAS ELEIÇÕES  /  2026',300,101,25,WHITE,800,705);
-    line(65,135,950,2,'#52605a');
-    text('25 OUT 2026  /  SEGUNDO TURNO',65,184,25,PALE,800);
-    text(d.office,65,277-24*(1-intro),68,WHITE,900,947);
-    text(ellipsis(d.label.toLocaleUpperCase('pt-BR'),32),65,339-16*(1-intro),42,YELLOW,800,950);
-    line(65,370,950,2,'#52605a');
-    var label=d.demo?'MODELO VISUAL · AGUARDANDO APURAÇÃO':d.elected?'ELEITO · CONFIRMADO PELO TSE':
-      d.final?'TOTALIZAÇÃO FINAL · TSE':'APURAÇÃO OFICIAL · PARCIAL';
-    text(label,65,421,23,d.demo?YELLOW:PALE,800,930);
-    for (var i=0;i<2;i++) {
-      var c=d.rows[i],baseY=470+i*202;
-      var arrival=ease((second-2.2-i*.35)/.8);
-      var shade=lerp(0,1,shown*arrival);
-      ctx.globalAlpha=shade;
-      text(ellipsis(c.name.toLocaleUpperCase('pt-BR'),27),65,baseY+19,41,WHITE,900,680);
-      if (!d.demo) {
-        var p=c.pct*bars;
-        text(pct(p),790,baseY+19,50,WHITE,900,225);
+    // A composição inteira está montada aos 2,2 s; o quadro final
+    // permanece visível até o último frame, sem desaparecer no encerramento.
+    var sec=Math.max(0,t)/1000;
+    var heading=ease((sec-.09)/.42);
+    var place=ease((sec-.31)/.43);
+    var cards=ease((sec-.58)/.48);
+    var bars=ease((sec-1.13)/.92);
+    var footer=ease((sec-1.44)/.5);
+    var isDemo=!!d.demo;
+    var cream='#f6f5ee', black='#121714', subtle='#657269', track='#d4dad0';
+    ctx.globalAlpha=1;
+    ctx.fillStyle=cream;ctx.fillRect(0,0,SIZE,SIZE);
+
+    // Assinatura forte e legível — não é um quadro vazio de carregamento.
+    line(0,0,1080,142,YELLOW);
+    line(0,137,1080,6,black);
+    text('UEFY',54,106,93,black,900,315);
+    line(353,29,4,82,black);
+    text('CENTRAL DAS ELEIÇÕES',385,70,31,black,900,645);
+    text('2026   /   SEGUNDO TURNO',385,111,26,black,700,640);
+
+    // Painel editorial escuro.
+    line(0,143,1080,837,black);
+    line(53,183,8,193,YELLOW);
+    ctx.globalAlpha=Math.max(.05,heading);
+    text('25 OUTUBRO 2026  /  DADOS DO TSE',82,207,26,cream,800,895);
+    text(d.office,82,288-22*(1-heading),82,cream,900,940);
+    ctx.globalAlpha=Math.max(.05,place);
+    text(ellipsis(d.label.toLocaleUpperCase('pt-BR'),35),82,354-14*(1-place),45,YELLOW,850,930);
+    ctx.globalAlpha=1;
+    line(60,382,960,2,'#617064');
+    var category=isDemo?'PRÉVIA DE DESIGN  /  AINDA SEM RESULTADOS':
+      d.elected?'ELEIÇÃO DEFINIDA PELO TSE':
+      d.final?'TOTALIZAÇÃO FINAL  /  TSE':'APURAÇÃO OFICIAL  /  PARCIAL';
+    line(60,404,960,47,YELLOW);
+    text(category,78,436,24,black,900,915);
+
+    for(var i=0;i<2;i++){
+      var c=d.rows[i],y=471+i*201,appear=ease((sec-.58-i*.18)/.5);
+      var alpha=Math.max(.08,Math.min(cards,appear));
+      ctx.globalAlpha=alpha;
+      // Cards off-white densos: nome, porcentagem, barra e fonte.
+      line(60,y+13*(1-alpha),960,185,cream);
+      line(60,y+13*(1-alpha),17,185,c.color||YELLOW);
+      var name=ellipsis(String(c.name||'').toLocaleUpperCase('pt-BR'),27);
+      text(name,100,y+67+13*(1-alpha),44,black,900,650);
+      if(!isDemo) {
+        // Percentuais são sempre os valores oficiais, não números fictícios
+        // intermediários; somente a largura da barra é animada.
+        text(pct(c.pct),791,y+66+13*(1-alpha),51,black,900,200);
+        text(votes(c.votes)+' VOTOS'+(c.party?'  /  '+ellipsis(c.party,20):''),
+          100,y+147+13*(1-alpha),23,subtle,800,825);
       } else {
-        text('—',908,baseY+19,50,PALE,900,85);
+        text('—',920,y+64+13*(1-alpha),52,black,800,60);
+        text('AGUARDANDO VOTOS OFICIAIS',100,y+147+13*(1-alpha),24,subtle,800,790);
       }
-      line(65,baseY+49,950,23,'#37413b');
-      if (!d.demo) line(65,baseY+49,Math.max(1,950*c.pct/100*bars),23,c.color);
-      else line(65,baseY+49,Math.max(1,950*.15*bars),23,c.color);
-      text(d.demo?'SEM VOTOS PUBLICADOS':votes(c.votes)+' votos'+(c.party?'  ·  '+c.party:''),65,baseY+104,24,PALE,650,950);
+      line(100,y+89+13*(1-alpha),882,22,track);
+      if(!isDemo && bars>0) line(100,y+89+13*(1-alpha),
+        Math.max(0,882*Math.min(100,c.pct)/100*bars),22,c.color||YELLOW);
+      // Na prévia sem votos, barras ficam neutras (sem proporções simuladas).
       ctx.globalAlpha=1;
     }
-    line(65,881,950,2,'#52605a');
-    if (d.demo) {
-      text('PRÉVIA · NÃO É RESULTADO ELEITORAL',65,927,29,YELLOW,900,950);
-    } else {
-      text((d.final?'RESULTADO FINAL':'SEÇÕES TOTALIZADAS')+'  '+pct(d.progress),65,927,29,YELLOW,850,930);
-      ctx.globalAlpha=Math.max(.42,footer);
-      text('TSE  ·  '+ellipsis(d.stamp||'ATUALIZAÇÃO OFICIAL',52),65,967,22,WHITE,650,950);
-      ctx.globalAlpha=1;
+    ctx.globalAlpha=Math.max(.55,footer);
+    line(60,891,960,3,'#657267');
+    if(isDemo){
+      text('SEM APURAÇÃO PUBLICADA',60,928,33,YELLOW,900,940);
+      text('O resultado será exibido após a divulgação oficial.',60,968,23,cream,650,945);
+    }else{
+      text((d.final?'RESULTADO FINAL':'SEÇÕES TOTALIZADAS')+'   '+pct(d.progress),
+        60,928,32,YELLOW,900,952);
+      text('TSE  /  '+ellipsis(d.stamp||'HORÁRIO DA FONTE NÃO INFORMADO',60),60,968,23,cream,700,948);
     }
-    text('TWITTER  /  @UEFYERRYENI',65,1045,29,INK,900,780);
-    text('TSE',938,1045,29,INK,900,90);
-    if (d.demo) {
-      ctx.globalAlpha=.97;line(730,383,285,47,YELLOW);ctx.globalAlpha=1;
-      text('SEM DADOS REAIS',744,416,24,INK,900,270);
-    }
-    // Arquivo temporal 12 s, sem alterar em momento algum os dados fotografados.
-    line(65,1071,950*Math.min(1,t/LENGTH),9,INK);
+    ctx.globalAlpha=1;
+
+    // Rodapé fixo: não ocorre sumiço do quadro ao fim do vídeo.
+    line(0,980,1080,100,YELLOW);
+    line(0,980,1080,4,black);
+    text('TWITTER  /  @UEFYERRYENI',55,1045,29,black,900,825);
+    text(isDemo?'PRÉVIA':'TSE',934,1045,27,black,900,110);
+    line(60,1070,960*Math.min(1,t/LENGTH),7,black);
   }
   function setTime(ms) {
     var secs=Math.floor(ms/1000);
@@ -284,5 +313,5 @@
     get duration(){return LENGTH;},
     get isRN(){return rn;}};
   overlay.hidden=false;
-  draw(0,placeholder());setTime(0);
+  draw(2900,safeRecord()||placeholder());setTime(0);
 })();
