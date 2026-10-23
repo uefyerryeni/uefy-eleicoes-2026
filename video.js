@@ -19,8 +19,8 @@
   studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 12 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:12</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
-    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button></div>' +
-    '<p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia visual funciona sem votos. A exportação só será liberada após a divulgação oficial e a conferência dos dados do TSE.</p>' +
+    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
+    '<p class="uefy-video-share-note">No celular: selecione Twitter/X no menu de compartilhamento, se disponível. No computador: o botão abre o Twitter com o texto e baixa o MP4 para anexar.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
   actions.insertAdjacentElement('afterend', studio);
 
@@ -28,6 +28,7 @@
   var ctx = canvas.getContext('2d', {alpha:false});
   var playBtn = studio.querySelector('#uefyVideoPlay');
   var exportBtn = studio.querySelector('#uefyVideoExport');
+  var shareBtn = studio.querySelector('#uefyVideoShare');
   var status = studio.querySelector('#uefyVideoStatus');
   var count = studio.querySelector('#uefyVideoCounter');
   var progress = studio.querySelector('#uefyVideoProgress');
@@ -36,6 +37,7 @@
   var player = studio.querySelector('#uefyVideoPlayer');
   var download = studio.querySelector('#uefyVideoDownload');
   var previewId = 0, busy = false, lastUrl = null;
+  var lastBlob = null, lastRecord = null, lastTweet = '';
 
   function safeRecord() {
     if (typeof mode === 'undefined' || mode !== 'official') return null;
@@ -231,8 +233,11 @@
   }
   function resetOldVideo() {
     if (lastUrl) URL.revokeObjectURL(lastUrl);
-    lastUrl=null;result.hidden=true;player.removeAttribute('src');player.load();
+    lastUrl=null;lastBlob=null;lastRecord=null;lastTweet='';
+    result.hidden=true;player.removeAttribute('src');player.load();
     download.removeAttribute('href');
+    shareBtn.disabled=true;shareBtn.dataset.fallback='';
+    shareBtn.textContent='↗ Compartilhar vídeo no Twitter';
   }
   async function exportVideo() {
     if (busy) return;
@@ -247,6 +252,7 @@
       return;
     }
     busy=true;stopPreview();resetOldVideo();
+    var tweet=makeTwitterText(snapshot);
     exportBtn.disabled=true;playBtn.disabled=true;
     exportBtn.textContent='Gravando 0%…';
     overlay.hidden=true;
@@ -287,6 +293,8 @@
       }, LENGTH+130);
       var blob=await promise;
       lastUrl=URL.createObjectURL(blob);
+      lastBlob=blob;lastRecord=snapshot;lastTweet=tweet;
+      shareBtn.disabled=false;
       player.src=lastUrl;
       download.href=lastUrl;
       download.download='uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
@@ -304,13 +312,96 @@
       exportBtn.textContent='↓ Gerar vídeo MP4';
     }
   }
+
+  function makeTwitterText(snapshot) {
+    var input=document.querySelector(rn?'#rnPostText':'#postText');
+    var edited=String(input && input.value || '').trim();
+    // Preserva textos curtos escritos pelo usuário; para textos extensos,
+    // gera uma versão resumida a partir dos MESMOS dados capturados no vídeo.
+    if(edited && edited.length<=275) return edited;
+    var lines=['ELEIÇÕES 2026 | 2º TURNO | '+snapshot.office,
+      snapshot.label.toLocaleUpperCase('pt-BR'),''];
+    snapshot.rows.forEach(function (row) {
+      lines.push(row.name+' — '+pct(row.pct));
+    });
+    lines.push('',(snapshot.final?'Resultado final':'Apuração parcial')+
+      ' · '+pct(snapshot.progress)+' das seções','Fonte: TSE');
+    var out=lines.join('\n');
+    if(out.length<=275)return out;
+    return 'ELEIÇÕES 2026 | 2º TURNO\n'+snapshot.office+' · '+
+      snapshot.label+'\n'+snapshot.rows.map(function(row){
+        return ellipsis(row.name,17)+': '+pct(row.pct);
+      }).join('\n')+'\nFonte: TSE';
+  }
+  function fallbackTwitter() {
+    if(!lastBlob || !lastUrl || !lastRecord) return;
+    var short=lastTweet.length<=280 ? lastTweet : '';
+    // Abrir a nova guia e baixar enquanto ainda há gesto de clique do usuário.
+    // Intents web NÃO permitem anexar automaticamente mídia local.
+    var target='https://twitter.com/intent/tweet'+
+      (short?'?text='+encodeURIComponent(short):'');
+    var win=window.open(target,'_blank');
+    if(win)try{win.opener=null;}catch(_){}
+    var a=document.createElement('a');
+    a.href=lastUrl;a.download=download.download;
+    document.body.appendChild(a);a.click();a.remove();
+    if(!short && navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(lastTweet).catch(function(){});
+    }
+    setStatus((win?'O Twitter foi aberto e o MP4 foi baixado. ':
+      'O navegador bloqueou a abertura do Twitter; o MP4 foi baixado. ')+
+      'No compositor, escolha Mídia, selecione o vídeo e confira o texto antes de publicar.'+
+      (!short?' O texto completo foi enviado à área de transferência, quando permitido.':''),false);
+  }
+  function shareTwitter() {
+    if(busy || !lastBlob || !lastRecord || !lastUrl) {
+      setStatus('Primeiro gere o MP4 com resultados oficiais conferidos.',true);
+      return;
+    }
+    if(shareBtn.dataset.fallback==='1'){
+      fallbackTwitter();return;
+    }
+    var file=new File([lastBlob],download.download||'uefy-eleicoes.mp4',{type:'video/mp4'});
+    var data={files:[file],text:lastTweet,title:'Central das Eleições UEFY'};
+    var supported=false;
+    try{
+      supported=!!(navigator.share && navigator.canShare && navigator.canShare({files:[file]}));
+    }catch(_){}
+    if(!supported){
+      fallbackTwitter();return;
+    }
+    // Compartilhamento nativo: a escolha do Twitter/X é feita pelo usuário.
+    // É imprescindível invocar navigator.share diretamente no clique.
+    var result;
+    try{result=navigator.share(data);}
+    catch(e){
+      shareBtn.dataset.fallback='1';
+      shareBtn.textContent='↗ Abrir Twitter e baixar MP4';
+      setStatus('O compartilhamento nativo falhou. Use o botão branco novamente para abrir o Twitter e baixar o MP4.',true);
+      return;
+    }
+    Promise.resolve(result).then(function(){
+      setStatus('Vídeo enviado ao menu de compartilhamento. Confira a publicação no Twitter/X; a Central não publica automaticamente.',false);
+    }).catch(function(e){
+      if(e && e.name==='AbortError'){
+        setStatus('Compartilhamento cancelado. O MP4 permanece disponível para baixar ou compartilhar novamente.',false);
+        return;
+      }
+      shareBtn.dataset.fallback='1';
+      shareBtn.textContent='↗ Abrir Twitter e baixar MP4';
+      setStatus('Não foi possível enviar o arquivo ao destino. Clique novamente no botão branco para abrir o Twitter e baixar o vídeo.',true);
+    });
+  }
+
   playBtn.addEventListener('click',preview);
+  shareBtn.addEventListener('click',shareTwitter);
   exportBtn.addEventListener('click',exportVideo);
   window.addEventListener('pagehide',function () {stopPreview();if(lastUrl) URL.revokeObjectURL(lastUrl);});
   window.__uefyVideo={get officialReady(){return !!safeRecord();},
     get supportsMp4(){return !!getMp4Type();},
     get busy(){return busy;},
     get duration(){return LENGTH;},
+    get canShare(){return !!lastBlob;},
     get isRN(){return rn;}};
   overlay.hidden=false;
   draw(2900,safeRecord()||placeholder());setTime(0);
