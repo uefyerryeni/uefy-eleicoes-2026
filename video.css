@@ -1,0 +1,35 @@
+/* Central das Eleições UEFY / Vídeo para Twitter — 2026-10-23 */
+.uefy-video-studio{min-width:0;margin:24px 0 0;padding:18px;background:#f7f6ed;color:#161b19;border:2px solid #1a211d;box-shadow:6px 6px 0 #f4dd19;overflow:hidden}
+.uefy-video-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:15px}
+.uefy-video-kicker{font-size:10px;letter-spacing:.12em;font-weight:900;color:#405e4d;display:block;margin-bottom:6px}
+.uefy-video-heading h3{font-size:clamp(20px,2.5vw,27px);font-family:"Space Grotesk","DM Sans",Arial,sans-serif;line-height:1.12;letter-spacing:-.04em;font-weight:900;margin:0 0 6px}
+.uefy-video-heading p{font-size:12px;line-height:1.45;color:#46554b;margin:0}
+.uefy-video-format{flex:0 0 auto;background:#171f1a;color:#f4dd19;font-size:10px;font-weight:900;padding:9px 10px;letter-spacing:.045em;border:1px solid #171f1a}
+.uefy-video-canvas-wrap{position:relative;max-width:460px;aspect-ratio:1;overflow:hidden;margin-inline:auto;background:#171a18;border:1px solid #171f1a}
+.uefy-video-canvas-wrap canvas{display:block;width:100%;height:100%;object-fit:contain}
+.uefy-video-overlay{position:absolute;top:12px;right:12px;left:12px;width:max-content;max-width:calc(100% - 24px);background:#f4dd19;color:#111;font-weight:900;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;font-size:10px;pointer-events:none}
+.uefy-video-overlay[hidden]{display:none}
+.uefy-video-timeline{display:flex;align-items:center;gap:12px;margin:16px 0}
+.uefy-video-timeline span{flex:0 0 auto;color:#343c37;font:800 11px "DM Sans",Arial,sans-serif;font-variant-numeric:tabular-nums}
+.uefy-video-track{height:7px;min-width:0;flex:1;background:#c9cfc6;overflow:hidden}
+.uefy-video-track i{display:block;height:100%;background:#242a25;width:0}
+.uefy-video-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.uefy-video-actions .btn{margin:0;width:100%;min-height:49px;white-space:normal;line-height:1.2;font-size:13px;border-radius:0;font-weight:850;cursor:pointer}
+.uefy-video-actions .btn:first-child{background:#fff;color:#161b19;border:2px solid #161b19}
+.uefy-video-actions .btn.primary{background:#f4dd19;color:#161b19;border:2px solid #161b19}
+.uefy-video-actions .btn:disabled{opacity:.6;cursor:progress}
+.uefy-video-actions .btn:focus-visible,.uefy-video-download:focus-visible{outline:3px solid #1d6e9c;outline-offset:3px}
+.uefy-video-status{font-size:12px;line-height:1.5;margin:12px 0 0;color:#35453b}
+.uefy-video-status.is-warning{color:#8a3524;font-weight:700}
+.uefy-video-result{margin-top:15px;border-top:1px solid #bcc5bb;padding-top:15px}
+.uefy-video-result[hidden]{display:none}
+.uefy-video-result video{display:block;width:100%;max-width:460px;aspect-ratio:1;margin-inline:auto;background:#111}
+.uefy-video-download{display:flex;align-items:center;justify-content:center;width:100%;margin-top:10px;padding:13px;background:#171f1a;color:#f4dd19!important;text-decoration:none;font-size:13px;font-weight:900;min-height:48px}
+body.dark .uefy-video-studio{background:#1b2722;color:#f7f6ed;border-color:#f4dd19;box-shadow:4px 4px 0 #425c4a}
+body.dark .uefy-video-kicker,body.dark .uefy-video-heading p,body.dark .uefy-video-status,body.dark .uefy-video-timeline span{color:#e4ebe4}
+body.dark .uefy-video-status.is-warning{color:#ffb5a6}
+body.dark .uefy-video-format{background:#f4dd19;color:#171f1a}
+body.dark .uefy-video-track{background:#4a5b51}
+body.dark .uefy-video-track i{background:#f4dd19}
+@media(max-width:600px){.uefy-video-studio{margin:20px 0 4px;padding:12px;box-shadow:3px 3px 0 #f4dd19}.uefy-video-heading{flex-wrap:wrap;gap:8px}.uefy-video-format{padding:7px 8px}.uefy-video-actions{grid-template-columns:1fr 1fr}.uefy-video-actions .btn{font-size:12px;min-height:51px;padding:9px 5px}.uefy-video-canvas-wrap{width:100%}}
+@media(max-width:350px){.uefy-video-studio{padding:10px}.uefy-video-heading h3{font-size:20px}.uefy-video-format{font-size:9px}.uefy-video-actions .btn{font-size:11px}}
