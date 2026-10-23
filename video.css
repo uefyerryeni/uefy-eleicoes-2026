@@ -33,3 +33,51 @@ body.dark .uefy-video-track{background:#4a5b51}
 body.dark .uefy-video-track i{background:#f4dd19}
 @media(max-width:600px){.uefy-video-studio{margin:20px 0 4px;padding:12px;box-shadow:3px 3px 0 #f4dd19}.uefy-video-heading{flex-wrap:wrap;gap:8px}.uefy-video-format{padding:7px 8px}.uefy-video-actions{grid-template-columns:1fr 1fr}.uefy-video-actions .btn{font-size:12px;min-height:51px;padding:9px 5px}.uefy-video-canvas-wrap{width:100%}}
 @media(max-width:350px){.uefy-video-studio{padding:10px}.uefy-video-heading h3{font-size:20px}.uefy-video-format{font-size:9px}.uefy-video-actions .btn{font-size:11px}}
+
+/* Refinamento editorial v2: capa ampliada, mais contraste e CTA branco. */
+.uefy-video-studio{
+  max-width:840px;margin:26px auto 6px;
+  background:#faf9f2;border:2px solid #111b15;
+  box-shadow:6px 6px 0 #f4dd19;
+}
+.uefy-video-canvas-wrap{
+  width:100%;max-width:620px;
+  border:3px solid #121714;
+  box-shadow:7px 7px 0 #f4dd19;
+  margin:8px auto 22px;
+}
+.uefy-video-overlay{display:none!important}
+.uefy-video-share{
+  grid-column:1 / -1!important;
+  display:flex!important;align-items:center;justify-content:center;
+  padding:13px 15px!important;min-height:52px!important;
+  background:#fff!important;
+  color:#171b17!important;
+  border:2px solid #171b17!important;
+  border-radius:0!important;
+  box-shadow:3px 3px 0 #f4dd19;
+  font-size:15px!important;font-weight:900!important;
+  opacity:1!important;
+}
+.uefy-video-share:disabled{
+  color:#70786f!important;background:#e8e9e2!important;
+  opacity:1!important;cursor:not-allowed!important;
+}
+.uefy-video-share:not(:disabled):hover{background:#f4dd19!important;box-shadow:3px 3px 0 #171b17}
+.uefy-video-share-note{
+  font-size:12px;color:#35453b;line-height:1.55;
+  padding:10px 12px;background:#eceee7;
+  border-left:4px solid #f4dd19;margin:14px 0 8px;
+}
+body.dark .uefy-video-studio{background:#1b2722;border-color:#f4dd19}
+body.dark .uefy-video-share{
+  background:#fff!important;color:#151b16!important;border-color:#101813!important
+}
+body.dark .uefy-video-share:disabled{background:#516157!important;color:#eee!important}
+body.dark .uefy-video-share-note{background:#25382e;color:#e3ebe4}
+@media(max-width:600px){
+  .uefy-video-studio{width:100%;max-width:100%;margin:20px 0 7px}
+  .uefy-video-canvas-wrap{max-width:100%;box-shadow:3px 3px 0 #f4dd19}
+  .uefy-video-share{min-height:54px!important;font-size:13px!important}
+  .uefy-video-share-note{font-size:12px}
+}
