@@ -346,7 +346,7 @@ test('vídeo para Twitter existe em ambas as páginas, com prévia sem números 
   expect(await page.evaluate(()=>window.__uefyVideo.revealEnd)).toBe(1450);
   await expect(page.locator('#uefyVideoCounter')).toContainText('00:08');
   await page.locator('#uefyVideoExport').click();
-  await expect(page.locator('#uefyVideoStatus')).toContainText('Exportação oficial bloqueada');
+  await expect(page.locator('#uefyVideoStatus')).toContainText('exportação com votos está bloqueada');
   await expect(page.locator('#uefyVideoResult')).toBeHidden();
   await expect(page.locator('#uefyVideoShare')).toBeDisabled();
   await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
@@ -546,4 +546,83 @@ test('modo fictício removido da Central; publicação continua bloqueada antes 
   await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
   await expect(page.locator('#uefyVideoDemo')).toHaveCount(0);
   await expect(page.locator('#shareBundle')).toBeDisabled();
+});
+
+
+test('prévia operacional mantém a identidade real sem inventar resultados para o X',async({page})=>{
+  await readyRN(page);
+  await expect(page.locator('#uefyVideoRehearsal')).toBeVisible();
+  await expect(page.locator('#uefyVideoExport')).toContainText('oficial');
+  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+  const result=await page.evaluate(()=>({
+    officialReady:window.__uefyVideo.officialReady,
+    previewReady:window.__uefyVideo.preflightAvailable,
+    text:window.__uefyVideo.rehearsalText,
+    realData:document.querySelector('#rnPostText').value
+  }));
+  expect(result.officialReady).toBeFalsy();
+  expect(result.previewReady).toBeTruthy();
+  expect(result.text).toContain('TESTE DE PUBLICAÇÃO');
+  expect(result.text).toContain('SEM RESULTADOS');
+  expect(result.text).not.toContain('Fonte: TSE');
+  expect(result.text.length).toBeLessThanOrEqual(280);
+  expect(result.realData).not.toContain('53,8%');
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#uefyVideoRehearsal')).toBeVisible();
+  const text=await page.evaluate(()=>window.__uefyVideo.rehearsalText);
+  expect(text).toContain('PRESIDÊNCIA');
+  expect(text).toContain('SEM RESULTADOS');
+  expect(text).not.toContain('53,8%');
+});
+
+test('MP4 de ensaio pode ser enviado pelo Brave com legenda, mantendo vídeo oficial bloqueado',async({page})=>{
+  test.setTimeout(30000);
+  await page.setViewportSize({width:390,height:844});
+  await readyRN(page);
+  await page.evaluate(()=>{
+    const RealRecorder=window.MediaRecorder;
+    class Recorder {
+      constructor(){this.state='inactive';}
+      static isTypeSupported(type){return type.startsWith('video/mp4');}
+      start(){this.state='recording';}
+      stop(){
+        if(this.state==='inactive')return;
+        this.state='inactive';
+        this.ondataavailable?.({data:new Blob([new Uint8Array(26000)],{type:'video/mp4'})});
+        this.onstop?.();
+      }
+    }
+    window.MediaRecorder=Recorder;
+    window.__restoreRecorder=()=>{window.MediaRecorder=RealRecorder;};
+    HTMLCanvasElement.prototype.captureStream=function(){return {getTracks:()=>[]};};
+    window.__rehearsalPayload=null;
+    Object.defineProperty(navigator,'canShare',{configurable:true,value:x=>
+      !!x.files?.length&&x.files[0].type==='video/mp4'});
+    Object.defineProperty(navigator,'share',{configurable:true,value:x=>{
+      window.__rehearsalPayload={
+        text:x.text,
+        filename:x.files[0].name,
+        bytes:x.files[0].size,
+        mime:x.files[0].type,
+        gesture:navigator.userActivation?.isActive??true
+      };
+      return Promise.resolve();
+    }});
+  });
+  await page.locator('#uefyVideoExport').click();
+  await expect(page.locator('#uefyVideoStatus')).toContainText('exportação com votos está bloqueada');
+  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+  await page.locator('#uefyVideoRehearsal').click();
+  await expect(page.locator('#uefyVideoShare')).toBeEnabled({timeout:20000});
+  expect(await page.evaluate(()=>window.__uefyVideo.generatedIsRehearsal)).toBeTruthy();
+  await expect(page.locator('#uefyVideoDownload')).toHaveAttribute('download','UEFY-TESTE-ENVIO-SEM-RESULTADOS.mp4');
+  await page.locator('#uefyVideoShare').click();
+  const posted=await page.evaluate(()=>window.__rehearsalPayload);
+  expect(posted.mime).toBe('video/mp4');
+  expect(posted.bytes).toBeGreaterThan(20000);
+  expect(posted.filename).toContain('SEM-RESULTADOS');
+  expect(posted.text).toContain('SEM RESULTADOS');
+  expect(posted.text).not.toContain('53,8%');
+  expect(posted.gesture).toBeTruthy();
+  await expect(page.locator('#uefyVideoStatus')).toContainText('Confira no X');
 });
