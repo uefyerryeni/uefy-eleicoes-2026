@@ -81,3 +81,28 @@ body.dark .uefy-video-share-note{background:#25382e;color:#e3ebe4}
   .uefy-video-share{min-height:54px!important;font-size:13px!important}
   .uefy-video-share-note{font-size:12px}
 }
+
+
+/* Motion 3: leitura editorial, controles e prévia responsivos. */
+.uefy-video-studio{padding:22px;background:#f7f6ef}
+.uefy-video-heading{align-items:center;margin-bottom:18px}
+.uefy-video-heading h3{font-size:clamp(23px,2.8vw,32px);line-height:1.07;letter-spacing:-.055em}
+.uefy-video-kicker{color:#365445;letter-spacing:.15em;font-size:11px}
+.uefy-video-format{font-size:11px;white-space:nowrap}
+.uefy-video-canvas-wrap{background:#151a18;border:3px solid #151a18}
+.uefy-video-timeline{margin:14px 0 18px}
+.uefy-video-timeline span{font-size:12px;font-variant-numeric:tabular-nums}
+.uefy-video-track{height:10px;background:#c3cec4}
+.uefy-video-actions{gap:12px}
+.uefy-video-actions .btn{min-height:52px;font-size:14px;transition:background-color .15s,box-shadow .15s}
+.uefy-video-actions .btn:focus-visible{outline:3px solid #086796;outline-offset:3px}
+body.dark .uefy-video-studio{background:#1b2722}
+body.dark .uefy-video-heading h3{color:#f7f6ef}
+@media(max-width:600px){
+ .uefy-video-studio{padding:13px}
+ .uefy-video-heading{align-items:flex-start;gap:9px}
+ .uefy-video-heading h3{font-size:clamp(21px,6vw,26px)}
+ .uefy-video-heading p{font-size:12px}
+ .uefy-video-actions .btn{font-size:12px;min-height:50px}
+ .uefy-video-canvas-wrap{box-shadow:3px 3px 0 #f4dd19}
+}
