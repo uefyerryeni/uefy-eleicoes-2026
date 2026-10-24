@@ -105,3 +105,44 @@ body.dark .rn-compare-link{background:#f4dd19;color:#162820}
   .turno2-hero-link{min-height:46px}
   .rn-actions .btn{min-height:46px}
 }
+
+
+/* Divulgação 2026: moldura de publicação alinhada ao PNG e ao Motion 3. */
+.rn-publisher-priority,.publisher{
+ border:2px solid #1c2520;
+ box-shadow:5px 5px 0 #f4dd19;
+}
+.rn-publisher-priority .canvas-box,.publisher .canvas-box{
+ background:#e9ece4;
+ border:2px solid #1c2520;
+ padding:12px;
+ overflow:hidden;
+}
+.rn-publisher-priority .canvas-box canvas,
+.publisher .canvas-box canvas{
+ display:block;
+ width:100%;
+ max-width:540px;
+ margin-inline:auto;
+ height:auto;
+ border:1px solid #9da99d;
+}
+.rn-publisher-priority h2,.publisher h2{
+ font-family:'Space Grotesk','Segoe UI',sans-serif;
+ font-weight:800;
+ letter-spacing:-.045em;
+ line-height:1.13;
+}
+.rn-publisher-priority .rn-actions .btn,.publisher .actions .btn{
+ min-height:46px;
+ font-weight:800;
+}
+body.dark .rn-publisher-priority .canvas-box,
+body.dark .publisher .canvas-box{
+ background:#27362e;
+ border-color:#8a9f8f;
+}
+@media(max-width:600px){
+ .rn-publisher-priority,.publisher{box-shadow:3px 3px 0 #f4dd19}
+ .rn-publisher-priority .canvas-box,.publisher .canvas-box{padding:8px}
+}
