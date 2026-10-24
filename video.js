@@ -1,7 +1,6 @@
-/* UEFY / Central das Eleições — vídeo editorial quadrado para Twitter.
- * Exportação exclusivamente com dados oficiais conciliados do TSE.
- * Não há resultados simulados na gravação: a prévia antes da apuração
- * usa apenas rótulos vazios, sem votos ou percentuais inventados.
+/* UEFY / Central das Eleições — vídeo editorial quadrado para Twitter/X.
+ * Exportação oficial somente após conciliação com o TSE.
+ * Teste opt-in separado e persistentemente rotulado como SIMULAÇÃO.
  */
 (function () {
   'use strict';
@@ -21,8 +20,9 @@
   studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
-    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
-    '<p class="uefy-video-share-note">No celular: selecione Twitter/X no menu de compartilhamento, se disponível. No computador: o botão abre o Twitter com o texto e baixa o MP4 para anexar.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
+    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-demo-toggle" id="uefyVideoDemo" type="button" aria-pressed="false">Testar com números fictícios</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
+    '<p class="uefy-video-demo-note" id="uefyVideoDemoNote" hidden>SIMULAÇÃO: candidaturas e números inventados, apenas para testar o vídeo no X. O MP4 e o texto serão identificados como DADOS FICTÍCIOS. Não altera a apuração oficial.</p>' +
+    '<p class="uefy-video-share-note">No celular: selecione Twitter/X no menu de compartilhamento, se disponível. No computador: o botão abre o Twitter com o texto e baixa o MP4 para anexar. A Central não publica automaticamente.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
   actions.insertAdjacentElement('afterend', studio);
 
@@ -31,6 +31,8 @@
   var playBtn = studio.querySelector('#uefyVideoPlay');
   var exportBtn = studio.querySelector('#uefyVideoExport');
   var shareBtn = studio.querySelector('#uefyVideoShare');
+  var demoBtn = studio.querySelector('#uefyVideoDemo');
+  var demoNote = studio.querySelector('#uefyVideoDemoNote');
   var status = studio.querySelector('#uefyVideoStatus');
   var count = studio.querySelector('#uefyVideoCounter');
   var progress = studio.querySelector('#uefyVideoProgress');
@@ -40,6 +42,8 @@
   var download = studio.querySelector('#uefyVideoDownload');
   var previewId = 0, busy = false, lastUrl = null;
   var lastBlob = null, lastRecord = null, lastTweet = '';
+  // Apenas a gravação usa o teste; não toca em mode, current ou state.
+  var simulationMode = false;
 
   function safeRecord() {
     if (typeof mode === 'undefined' || mode !== 'official') return null;
@@ -89,6 +93,23 @@
         .replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')
     };
   }
+  function simulationRecord() {
+    return {
+      demo:false,simulated:true,office:rn?'GOVERNO DO RN':'PRESIDÊNCIA',
+      label:rn?'MUNICÍPIO DE TESTE':'BRASIL / TESTE',
+      rows:[
+        {name:'CANDIDATURA ALFA',party:'PARTIDO FICTÍCIO A',number:'A',
+          votes:53800,pct:53.8,color:rn?'#1976d2':YELLOW},
+        {name:'CANDIDATURA BETA',party:'PARTIDO FICTÍCIO B',number:'B',
+          votes:46200,pct:46.2,color:rn?'#d62828':'#aeb8b0'}
+      ],
+      progress:72.4,final:false,elected:false,stamp:'DADOS FICTÍCIOS',
+      slug:'teste-ficticio'
+    };
+  }
+  function activePreviewRecord() {
+    return simulationMode ? simulationRecord() : (safeRecord() || placeholder());
+  }
   function placeholder() {
     return {demo:true,office:rn?'GOVERNO DO RN':'PRESIDÊNCIA',
       label:rn?'RIO GRANDE DO NORTE':'BRASIL',
@@ -127,7 +148,7 @@
     var cards=ease((t-290)/380);
     var bars=ease((t-MOTION.numberStart)/(MOTION.numberEnd-MOTION.numberStart));
     var footer=ease((t-480)/430);
-    var isDemo=!!d.demo;
+    var isDemo=!!d.demo, isSimulation=!!d.simulated;
     var cream='#f6f5ee', black='#121714', subtle='#657269', track='#d4dad0';
     ctx.globalAlpha=1;
     ctx.fillStyle=cream;ctx.fillRect(0,0,SIZE,SIZE);
@@ -144,13 +165,15 @@
     line(0,143,1080,837,black);
     line(53,183,8,193,YELLOW);
     ctx.globalAlpha=Math.max(.05,heading);
-    text('25 OUTUBRO 2026  /  DADOS DO TSE',82,207,26,cream,800,895);
+    text(isSimulation?'TESTE TÉCNICO  /  DADOS FICTÍCIOS':'25 OUTUBRO 2026  /  DADOS DO TSE',
+      82,207,26,cream,800,895);
     text(d.office,82,288-22*(1-heading),82,cream,900,940);
     ctx.globalAlpha=Math.max(.05,place);
     text(ellipsis(d.label.toLocaleUpperCase('pt-BR'),35),82,354-14*(1-place),45,YELLOW,850,930);
     ctx.globalAlpha=1;
     line(60,382,960,2,'#617064');
-    var category=isDemo?'PRÉVIA DE DESIGN  /  AINDA SEM RESULTADOS':
+    var category=isSimulation?'SIMULAÇÃO  /  NÃO É RESULTADO ELEITORAL':
+      isDemo?'PRÉVIA DE DESIGN  /  AINDA SEM RESULTADOS':
       d.elected?'ELEIÇÃO DEFINIDA PELO TSE':
       d.final?'TOTALIZAÇÃO FINAL  /  TSE':'APURAÇÃO OFICIAL  /  PARCIAL';
     line(60,404,960,47,YELLOW);
@@ -192,18 +215,28 @@
       text('SEM APURAÇÃO PUBLICADA',60,928,33,YELLOW,900,940);
       text('O resultado será exibido após a divulgação oficial.',60,968,23,cream,650,945);
     }else{
-      text((d.final?'RESULTADO FINAL':'SEÇÕES TOTALIZADAS')+'   '+pct(d.progress),
-        60,928,32,YELLOW,900,952);
-      text('TSE  /  '+ellipsis(d.stamp||'HORÁRIO DA FONTE NÃO INFORMADO',60),60,968,23,cream,700,948);
+      text((isSimulation?'SEÇÕES FICTÍCIAS':d.final?'RESULTADO FINAL':'SEÇÕES TOTALIZADAS')+
+        '   '+pct(d.progress),60,928,32,YELLOW,900,952);
+      text(isSimulation?'SIMULAÇÃO  /  NÃO HÁ VOTOS OFICIAIS':
+        'TSE  /  '+ellipsis(d.stamp||'HORÁRIO DA FONTE NÃO INFORMADO',60),
+        60,968,23,cream,700,948);
     }
     ctx.globalAlpha=1;
 
     // Rodapé fixo: não ocorre sumiço do quadro ao fim do vídeo.
     line(0,980,1080,100,YELLOW);
     line(0,980,1080,4,black);
-    text('TWITTER  /  @UEFYERRYENI',55,1045,29,black,900,825);
-    text(isDemo?'PRÉVIA':'TSE',934,1045,27,black,900,110);
+    text(isSimulation?'SIMULAÇÃO  /  DADOS FICTÍCIOS':'TWITTER  /  @UEFYERRYENI',
+      55,1045,29,black,900,825);
+    text(isSimulation?'TESTE':isDemo?'PRÉVIA':'TSE',934,1045,27,black,900,110);
     line(60,1070,960*Math.min(1,t/LENGTH),7,black);
+    if(isSimulation) {
+      // A marca d'água permanece gravada em todos os frames do MP4.
+      ctx.save();ctx.translate(540,660);ctx.rotate(-.18);
+      ctx.globalAlpha=.15;ctx.textAlign='center';
+      text('SIMULAÇÃO',0,0,119,'#a61919',900,900);
+      ctx.restore();
+    }
   }
   function setTime(ms) {
     var secs=Math.floor(ms/1000);
@@ -219,11 +252,13 @@
   function preview() {
     if (busy) return;
     stopPreview();
-    var snapshot=safeRecord()||placeholder();
+    var snapshot=activePreviewRecord();
     overlay.hidden=!snapshot.demo;
     playBtn.disabled=true;
     playBtn.textContent='Reproduzindo…';
-    setStatus(snapshot.demo?'Prévia de identidade visual, sem resultados. A gravação continua bloqueada até a conferência do TSE.':
+    setStatus(snapshot.simulated?
+      'SIMULAÇÃO: candidaturas e votos inventados. A prévia, o MP4 e o texto de publicação indicam claramente que os números são fictícios.':
+      snapshot.demo?'Prévia de identidade visual sem votos. A gravação oficial continua bloqueada até a conferência do TSE.':
       'Prévia com dados oficiais capturados nesta consulta: '+snapshot.stamp+'.',false);
     var start=performance.now();
     function frame(now) {
@@ -247,11 +282,21 @@
     shareBtn.disabled=true;shareBtn.dataset.fallback='';
     shareBtn.textContent='↗ Compartilhar vídeo no Twitter';
   }
+  function toggleSimulation() {
+    if (busy) return;
+    simulationMode=!simulationMode;
+    stopPreview();resetOldVideo();
+    demoBtn.setAttribute('aria-pressed',String(simulationMode));
+    demoBtn.textContent=simulationMode?'Sair do teste fictício':'Testar com números fictícios';
+    studio.classList.toggle('is-simulating',simulationMode);
+    demoNote.hidden=!simulationMode;
+    preview();
+  }
   async function exportVideo() {
     if (busy) return;
-    var snapshot=safeRecord();
+    var snapshot=simulationMode ? simulationRecord() : safeRecord();
     if (!snapshot) {
-      setStatus('Exportação bloqueada: é necessário ter pelo menos duas candidaturas com votos oficiais, turno iniciado e conferência integral das candidaturas. Se estiver vendo o mapa estadual, volte ao resultado de um município.',true);
+      setStatus('Exportação oficial bloqueada até a publicação e conciliação dos dados do TSE. Para conferir a animação agora, use o botão “Testar com números fictícios”.',true);
       return;
     }
     var type=getMp4Type();
@@ -261,7 +306,7 @@
     }
     busy=true;stopPreview();resetOldVideo();
     var tweet=makeTwitterText(snapshot);
-    exportBtn.disabled=true;playBtn.disabled=true;
+    exportBtn.disabled=true;playBtn.disabled=true;demoBtn.disabled=true;
     exportBtn.textContent='Gravando 0%…';
     overlay.hidden=true;
     if (document.fonts && document.fonts.ready) {
@@ -305,9 +350,12 @@
       shareBtn.disabled=false;
       player.src=lastUrl;
       download.href=lastUrl;
-      download.download='uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
+      download.download=snapshot.simulated?'uefy-eleicoes-SIMULACAO-dados-ficticios.mp4':
+        'uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
       result.hidden=false;
-      setStatus('MP4 gerado com dados oficiais de '+snapshot.stamp+'. Confira os números e o vídeo antes de publicar no Twitter.',false);
+      setStatus(snapshot.simulated?
+        'MP4 de SIMULAÇÃO gerado, com avisos permanentes. Confira antes de testar a publicação no X.':
+        'MP4 gerado com dados oficiais de '+snapshot.stamp+'. Confira os números e o vídeo antes de publicar no Twitter.',false);
     } catch(e) {
       setStatus('Não foi possível concluir o MP4: '+String(e&&e.message||e)+'. Tente novamente no Chrome/Edge atualizado.',true);
     } finally {
@@ -316,12 +364,23 @@
       if (timer) clearTimeout(timer);
       if (recorder && recorder.state!=='inactive') {try {recorder.stop();} catch(_) {}}
       if (stream) stream.getTracks().forEach(function(track){track.stop();});
-      busy=false;exportBtn.disabled=false;playBtn.disabled=false;
+      busy=false;exportBtn.disabled=false;playBtn.disabled=false;demoBtn.disabled=false;
       exportBtn.textContent='↓ Gerar vídeo MP4';
     }
   }
 
   function makeTwitterText(snapshot) {
+    if(snapshot.simulated) {
+      return [
+        'TESTE TÉCNICO — SIMULAÇÃO / DADOS FICTÍCIOS',
+        'Este vídeo NÃO apresenta resultados reais das eleições.',
+        '',
+        'Candidatura Alfa: 53,8% (valor inventado)',
+        'Candidatura Beta: 46,2% (valor inventado)',
+        '',
+        'Apenas teste do formato de divulgação UEFY.'
+      ].join('\n');
+    }
     var input=document.querySelector(rn?'#rnPostText':'#postText');
     var edited=String(input && input.value || '').trim();
     // Preserva textos curtos escritos pelo usuário; para textos extensos,
@@ -363,7 +422,7 @@
   }
   function shareTwitter() {
     if(busy || !lastBlob || !lastRecord || !lastUrl) {
-      setStatus('Primeiro gere o MP4 com resultados oficiais conferidos.',true);
+      setStatus('Primeiro gere o MP4. No modo de teste, ele utilizará dados fictícios identificados.',true);
       return;
     }
     if(shareBtn.dataset.fallback==='1'){
@@ -402,6 +461,7 @@
   }
 
   playBtn.addEventListener('click',preview);
+  demoBtn.addEventListener('click',toggleSimulation);
   shareBtn.addEventListener('click',shareTwitter);
   exportBtn.addEventListener('click',exportVideo);
   window.addEventListener('pagehide',function () {stopPreview();if(lastUrl) URL.revokeObjectURL(lastUrl);});
@@ -411,7 +471,9 @@
     get duration(){return LENGTH;},
     get revealEnd(){return MOTION.numberEnd;},
     get canShare(){return !!lastBlob;},
-    get isRN(){return rn;}};
+    get isRN(){return rn;},
+    get simulationMode(){return simulationMode;},
+    get lastVideoIsSimulation(){return !!lastRecord?.simulated;}};
   overlay.hidden=false;
   draw(1650,safeRecord()||placeholder());setTime(0);
 })();
