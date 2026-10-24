@@ -106,3 +106,37 @@ body.dark .uefy-video-heading h3{color:#f7f6ef}
  .uefy-video-actions .btn{font-size:12px;min-height:50px}
  .uefy-video-canvas-wrap{box-shadow:3px 3px 0 #f4dd19}
 }
+
+
+/* Teste técnico independente da apuração: controle e aviso sempre legíveis. */
+.uefy-video-demo-toggle{
+  grid-column:1 / -1;
+  background:#151a18!important;
+  border:2px solid #151a18!important;
+  color:#f4dd19!important;
+  box-shadow:3px 3px 0 #b4c3b8;
+  font-weight:900!important;
+  letter-spacing:.012em;
+}
+.uefy-video-demo-toggle:hover,
+.uefy-video-demo-toggle[aria-pressed="true"]{
+  background:#f4dd19!important;
+  color:#151a18!important;
+  box-shadow:3px 3px 0 #151a18;
+}
+.uefy-video-demo-toggle:disabled{opacity:.65!important;cursor:progress}
+.uefy-video-demo-note{
+  margin:15px 0 0;padding:13px 15px;
+  background:#fff3d1;color:#391f16;
+  border:2px solid #8f421f;border-left:7px solid #b64d22;
+  font-size:13px;line-height:1.55;font-weight:800;
+}
+.uefy-video-demo-note[hidden]{display:none!important}
+.uefy-video-studio.is-simulating .uefy-video-canvas-wrap{border-color:#ad451e;box-shadow:7px 7px 0 #efbc71}
+body.dark .uefy-video-demo-note{background:#3d2b20;color:#fff0d2;border-color:#d18455}
+body.dark .uefy-video-demo-toggle[aria-pressed="true"]{color:#151a18!important;background:#f4dd19!important}
+@media(max-width:600px){
+  .uefy-video-demo-toggle{grid-column:1/-1;font-size:13px!important;min-height:52px!important}
+  .uefy-video-demo-note{font-size:12px;padding:11px}
+  .uefy-video-studio.is-simulating .uefy-video-canvas-wrap{box-shadow:3px 3px 0 #efbc71}
+}
