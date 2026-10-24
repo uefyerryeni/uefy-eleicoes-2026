@@ -10,15 +10,17 @@
   var actions = publisher && publisher.querySelector(rn ? '.rn-actions' : '.actions');
   if (!publisher || !actions) return;
 
-  var SIZE = 1080, LENGTH = 12000;
+  var SIZE = 1080, LENGTH = 8000;
+  // Identidade em menos de meio segundo; números fechados aos 1,45 s.
+  var MOTION = Object.freeze({intro:420, cards:600, numberStart:520, numberEnd:1450, holdEnd:8000});
   var YELLOW = '#f4dd19', INK = '#151a18', WHITE = '#f7f6ef', PALE = '#cdd5cf';
   var studio = document.createElement('section');
   studio.className = 'uefy-video-studio';
   studio.id = 'uefyVideoStudio';
   studio.setAttribute('aria-labelledby', 'uefyVideoTitle');
-  studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 12 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
+  studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
-    '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:12</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
+    '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
     '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
     '<p class="uefy-video-share-note">No celular: selecione Twitter/X no menu de compartilhamento, se disponível. No computador: o botão abre o Twitter com o texto e baixa o MP4 para anexar.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
@@ -116,14 +118,15 @@
   function votes(n) {return Number(n).toLocaleString('pt-BR');}
   function line(x,y,w,h,color) {ctx.fillStyle=color;ctx.fillRect(x,y,w,h);}
   function draw(t,d) {
-    // A composição inteira está montada aos 2,2 s; o quadro final
-    // permanece visível até o último frame, sem desaparecer no encerramento.
+    // Motion 3: chegada aos números até 1,45 s; exposição estável até 8 s.
+    // Os valores intermediários são apenas interpolação visual dos dados TSE
+    // do snapshot capturado. Não representam novos boletins de apuração.
     var sec=Math.max(0,t)/1000;
-    var heading=ease((sec-.09)/.42);
-    var place=ease((sec-.31)/.43);
-    var cards=ease((sec-.58)/.48);
-    var bars=ease((sec-1.13)/.92);
-    var footer=ease((sec-1.44)/.5);
+    var heading=ease((t-50)/260);
+    var place=ease((t-160)/310);
+    var cards=ease((t-290)/380);
+    var bars=ease((t-MOTION.numberStart)/(MOTION.numberEnd-MOTION.numberStart));
+    var footer=ease((t-480)/430);
     var isDemo=!!d.demo;
     var cream='#f6f5ee', black='#121714', subtle='#657269', track='#d4dad0';
     ctx.globalAlpha=1;
@@ -154,7 +157,7 @@
     text(category,78,436,24,black,900,915);
 
     for(var i=0;i<2;i++){
-      var c=d.rows[i],y=471+i*201,appear=ease((sec-.58-i*.18)/.5);
+      var c=d.rows[i],y=471+i*201,appear=ease((t-300-i*105)/300);
       var alpha=Math.max(.08,Math.min(cards,appear));
       ctx.globalAlpha=alpha;
       // Cards off-white densos: nome, porcentagem, barra e fonte.
@@ -163,11 +166,16 @@
       var name=ellipsis(String(c.name||'').toLocaleUpperCase('pt-BR'),27);
       text(name,100,y+67+13*(1-alpha),44,black,900,650);
       if(!isDemo) {
-        // Percentuais são sempre os valores oficiais, não números fictícios
-        // intermediários; somente a largura da barra é animada.
-        text(pct(c.pct),791,y+66+13*(1-alpha),51,black,900,200);
+        // Count-up curto. Valores finais são idênticos ao snapshot oficial.
+        // A animação é completada até 1,45 s, sem espera no número.
+        var numberT=ease((t-MOTION.numberStart-i*90)/
+          (MOTION.numberEnd-MOTION.numberStart-i*90));
+        var animatedPct=numberT>=1 ? c.pct : c.pct*numberT;
+        text(pct(animatedPct),785,y+72+13*(1-alpha),67,black,900,220);
+        ctx.globalAlpha=alpha*Math.max(.18,numberT);
         text(votes(c.votes)+' VOTOS'+(c.party?'  /  '+ellipsis(c.party,20):''),
-          100,y+147+13*(1-alpha),23,subtle,800,825);
+          100,y+149+13*(1-alpha),24,subtle,800,855);
+        ctx.globalAlpha=alpha;
       } else {
         text('—',920,y+64+13*(1-alpha),52,black,800,60);
         text('AGUARDANDO VOTOS OFICIAIS',100,y+147+13*(1-alpha),24,subtle,800,790);
@@ -199,7 +207,7 @@
   }
   function setTime(ms) {
     var secs=Math.floor(ms/1000);
-    count.textContent='00:'+String(secs).padStart(2,'0')+' / 00:12';
+    count.textContent='00:'+String(secs).padStart(2,'0')+' / 00:08';
     progress.style.width=(100*Math.min(1,ms/LENGTH)).toFixed(2)+'%';
   }
   function stopPreview() {
@@ -276,7 +284,7 @@
       });
       var start=performance.now();
       recorder.start(1000);
-      setStatus('Gerando 12 segundos em MP4. Mantenha esta aba aberta e visível até concluir.',false);
+      setStatus('Gerando 8 segundos em MP4. Mantenha esta aba aberta e visível até concluir.',false);
       function render(now) {
         var ms=Math.min(LENGTH,now-start);
         draw(ms,snapshot);setTime(ms);
@@ -401,8 +409,9 @@
     get supportsMp4(){return !!getMp4Type();},
     get busy(){return busy;},
     get duration(){return LENGTH;},
+    get revealEnd(){return MOTION.numberEnd;},
     get canShare(){return !!lastBlob;},
     get isRN(){return rn;}};
   overlay.hidden=false;
-  draw(2900,safeRecord()||placeholder());setTime(0);
+  draw(1650,safeRecord()||placeholder());setTime(0);
 })();
