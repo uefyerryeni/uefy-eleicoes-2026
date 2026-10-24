@@ -533,7 +533,7 @@ test('Brave móvel: Presidência compartilha texto e arquivo de forma síncrona'
   expect(c.type).toBe('image/jpeg');
   expect(c.size).toBeGreaterThan(5000);
   expect(c.gesture).toBeTruthy();
-  expect(c.text).toContain('PRESIDENTE');
+  expect(c.text).toContain('PRESIDÊNCIA');
   await expect(page.locator('#shareStatus')).toContainText('Confira');
   await expect(page.locator('#xManual')).toBeHidden();
 });
