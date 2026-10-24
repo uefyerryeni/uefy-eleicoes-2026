@@ -443,15 +443,17 @@ test('PNG editorial mantém a identidade em RN e Presidência',async({page})=>{
 
 test('Motion permite um ensaio fictício sem alterar ou liberar a apuração oficial',async({page})=>{
   await readyRN(page);
+  await expect(page.locator('#uefyVideoDemo')).toBeHidden();
+  await page.goto(route('index.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>typeof selectedFeature!=='undefined'&&selectedFeature!==null);
   const initial=await page.evaluate(()=>({
     officialReady:window.__uefyVideo.officialReady,
     sim:window.__uefyVideo.simulationMode,
     canShare:window.__uefyVideo.canShare
   }));
-  expect(initial).toEqual({officialReady:false,sim:false,canShare:false});
+  expect(initial).toEqual({officialReady:false,sim:true,canShare:false});
   const demo=page.locator('#uefyVideoDemo');
   await expect(demo).toBeVisible();
-  await demo.click();
   await expect(demo).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#uefyVideoDemoNote')).toBeVisible();
   await expect(page.locator('#uefyVideoStatus')).toContainText('SIMULAÇÃO');
@@ -481,8 +483,8 @@ test('Motion permite um ensaio fictício sem alterar ou liberar a apuração ofi
 });
 
 test('ensaio fictício do Motion funciona também na página da Presidência',async({page})=>{
-  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
-  await page.locator('#uefyVideoDemo').click();
+  await page.goto(route('presidencia.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#uefyVideoDemo')).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#uefyVideoDemoNote')).toContainText('DADOS FICTÍCIOS');
   const state=await page.evaluate(()=>({
     sim:window.__uefyVideo.simulationMode,
