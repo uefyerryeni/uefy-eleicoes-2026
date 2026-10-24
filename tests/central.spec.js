@@ -377,7 +377,7 @@ test('vídeo do RN só é liberado após horário oficial e conciliação integr
 });
 
 
-test('UEFY Motion v2 apresenta capa editorial preenchida e botão branco do Twitter', async ({page}) => {
+test('UEFY Motion apresenta capa editorial e botão de preparo MP4 ativo', async ({page}) => {
   await readyRN(page);
   const frame=await page.evaluate(()=>{
     const c=document.querySelector('#uefyVideoCanvas');
@@ -397,8 +397,8 @@ test('UEFY Motion v2 apresenta capa editorial preenchida e botão branco do Twit
   expect(frame.cover).toEqual([244,221,25]);
   expect(frame.body).toEqual([18,23,20]);
   expect(frame.card).toEqual([246,245,238]);
-  expect(frame.button).toContain('Compartilhar vídeo no Twitter');
-  expect(frame.disabled).toBeTruthy();
+  expect(frame.button).toContain('1/2 · Preparar MP4');
+  expect(frame.disabled).toBeFalsy();
   expect(frame.v2).toBeTruthy();
 });
 
@@ -418,8 +418,8 @@ test('capa do Motion v2 é legível no celular sem rolagem horizontal',async ({p
   });
   expect(result.overflow).toBeLessThanOrEqual(2);
   expect(result.studioWidth).toBeLessThanOrEqual(result.viewportWidth+2);
-  expect(result.whiteButtonBackground).toBe('rgb(255, 255, 255)');
-  expect(result.text).toContain('Twitter');
+  expect(result.whiteButtonBackground).toBe('rgb(244, 221, 25)');
+  expect(result.text).toContain('1/2 · Preparar MP4');
 });
 
 test('PNG editorial mantém a identidade em RN e Presidência',async({page})=>{
