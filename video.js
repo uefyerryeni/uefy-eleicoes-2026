@@ -485,4 +485,7 @@
     get lastVideoIsSimulation(){return !!lastRecord?.simulated;}};
   overlay.hidden=false;
   draw(1650,activePreviewRecord());setTime(0);
+  if(simulationMode) setStatus(
+    'SIMULAÇÃO ATIVADA: 53,8% e 46,2% são valores inventados. Reproduza a animação ou gere o MP4 marcado como dados fictícios.',
+    false);
 })();
