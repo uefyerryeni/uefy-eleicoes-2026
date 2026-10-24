@@ -253,8 +253,10 @@ function publicationIsSafe(){
   const d=state[selectedOffice];
   if(mode!=='official'||!inSecondRoundPollingWindow())return false;
   if(d?.requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return false;
-  if(!(d?.candidates||[]).length)return false;
-  if(d?.integrity?.error||Number(d?.integrity?.unmatched||0)>0)return false;
+  if(!(d?.candidates||[]).length||!(Number(d.progress)>0))return false;
+  if(!d.integrity||d.integrity.error||Number(d.integrity.unmatched)!==0||
+    Number(d.integrity.total)!==d.candidates.length||
+    Number(d.integrity.matched)!==d.candidates.length)return false;
   return true;
 }
 function updateAutoRefreshLabel(){
