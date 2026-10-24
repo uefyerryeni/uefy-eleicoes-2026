@@ -348,7 +348,8 @@ test('vídeo para Twitter existe em ambas as páginas, com prévia sem números 
   await page.locator('#uefyVideoExport').click();
   await expect(page.locator('#uefyVideoStatus')).toContainText('exportação com votos está bloqueada');
   await expect(page.locator('#uefyVideoResult')).toBeHidden();
-  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+  await expect(page.locator('#uefyVideoShare')).toBeEnabled();
+  await expect(page.locator('#uefyVideoShare')).toContainText('1/2 · Preparar MP4');
   await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
   await expect(page.locator('#uefyVideoStudio')).toBeVisible();
   expect(await page.evaluate(()=>window.__uefyVideo.isRN)).toBeFalsy();
@@ -553,7 +554,8 @@ test('prévia operacional mantém a identidade real sem inventar resultados para
   await readyRN(page);
   await expect(page.locator('#uefyVideoRehearsal')).toBeVisible();
   await expect(page.locator('#uefyVideoExport')).toContainText('oficial');
-  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+  await expect(page.locator('#uefyVideoShare')).toBeEnabled();
+  await expect(page.locator('#uefyVideoShare')).toContainText('1/2 · Preparar MP4');
   const result=await page.evaluate(()=>({
     officialReady:window.__uefyVideo.officialReady,
     previewReady:window.__uefyVideo.preflightAvailable,
@@ -588,7 +590,8 @@ test('MP4 de ensaio pode ser enviado pelo Brave com legenda, mantendo vídeo ofi
       stop(){
         if(this.state==='inactive')return;
         this.state='inactive';
-        this.ondataavailable?.({data:new Blob([new Uint8Array(26000)],{type:'video/mp4'})});
+        const bytes=new Uint8Array(26000);bytes.set([0,0,0,24,102,116,121,112,105,115,111,109],0);
+        this.ondataavailable?.({data:new Blob([bytes],{type:'video/mp4'})});
         this.onstop?.();
       }
     }
@@ -611,9 +614,10 @@ test('MP4 de ensaio pode ser enviado pelo Brave com legenda, mantendo vídeo ofi
   });
   await page.locator('#uefyVideoExport').click();
   await expect(page.locator('#uefyVideoStatus')).toContainText('exportação com votos está bloqueada');
-  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
-  await page.locator('#uefyVideoRehearsal').click();
-  await expect(page.locator('#uefyVideoShare')).toBeEnabled({timeout:20000});
+  await expect(page.locator('#uefyVideoShare')).toBeEnabled();
+  await expect(page.locator('#uefyVideoShare')).toContainText('1/2 · Preparar MP4');
+  await page.locator('#uefyVideoShare').click();
+  await expect(page.locator('#uefyVideoShare')).toContainText('2/2 · Compartilhar',{timeout:20000});
   expect(await page.evaluate(()=>window.__uefyVideo.generatedIsRehearsal)).toBeTruthy();
   await expect(page.locator('#uefyVideoDownload')).toHaveAttribute('download','UEFY-TESTE-ENVIO-SEM-RESULTADOS.mp4');
   await page.locator('#uefyVideoShare').click();
@@ -625,4 +629,39 @@ test('MP4 de ensaio pode ser enviado pelo Brave com legenda, mantendo vídeo ofi
   expect(posted.text).not.toContain('53,8%');
   expect(posted.gesture).toBeTruthy();
   await expect(page.locator('#uefyVideoStatus')).toContainText('Confira no X');
+});
+
+test('MP4 real do ensaio: arquivo H264 gerado no Chromium sem gravador falso', async({page})=>{
+  test.setTimeout(40000);
+  await readyRN(page);
+  const supported=await page.evaluate(()=>(
+    !!window.MediaRecorder && !!HTMLCanvasElement.prototype.captureStream &&
+    ['video/mp4;codecs=avc1.42E01E','video/mp4;codecs=avc1','video/mp4']
+      .some(type=>MediaRecorder.isTypeSupported(type))
+  ));
+  test.skip(!supported,'Ambiente de QA sem suporte nativo MP4: fluxo WebCodecs cobre navegadores compatíveis.');
+  await page.locator('#uefyVideoShare').click();
+  await expect(page.locator('#uefyVideoShare')).toContainText('2/2 · Compartilhar',{timeout:25000});
+  await expect(page.locator('#uefyVideoPlayer')).toHaveAttribute('src',/^blob:/);
+  const media=await page.evaluate(async()=>{
+    const url=document.querySelector('#uefyVideoPlayer').src;
+    const blob=await fetch(url).then(r=>r.blob());
+    const buf=await blob.slice(0,32).arrayBuffer();
+    const header=[...new Uint8Array(buf)];
+    const video=document.querySelector('#uefyVideoPlayer');
+    await new Promise((resolve,reject)=>{
+      if(video.readyState>=1){resolve();return;}
+      video.addEventListener('loadedmetadata',resolve,{once:true});
+      video.addEventListener('error',()=>reject(new Error('MP4 não reproduzível')),{once:true});
+      setTimeout(()=>reject(new Error('MP4 sem metadados reproduzíveis')),6000);
+    });
+    return {size:blob.size,type:blob.type,ftyp:String.fromCharCode(...header.slice(4,8)),
+      duration:video.duration,videoWidth:video.videoWidth,videoHeight:video.videoHeight};
+  });
+  expect(media.ftyp).toBe('ftyp');
+  expect(media.type).toBe('video/mp4');
+  expect(media.size).toBeGreaterThan(20000);
+  expect(media.videoWidth).toBeGreaterThanOrEqual(720);
+  expect(media.videoHeight).toBeGreaterThanOrEqual(720);
+  expect(media.duration).toBeGreaterThan(7);
 });
