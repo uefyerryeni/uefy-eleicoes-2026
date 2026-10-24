@@ -443,102 +443,107 @@ test('PNG editorial mantém a identidade em RN e Presidência',async({page})=>{
 });
 
 
-test('Motion permite um ensaio fictício sem alterar ou liberar a apuração oficial',async({page})=>{
-  await readyRN(page);
-  await expect(page.locator('#uefyVideoDemo')).toBeHidden();
-  await page.goto(route('index.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
-  await page.waitForFunction(()=>typeof selectedFeature!=='undefined'&&selectedFeature!==null);
-  const initial=await page.evaluate(()=>({
-    officialReady:window.__uefyVideo.officialReady,
-    sim:window.__uefyVideo.simulationMode,
-    canShare:window.__uefyVideo.canShare
-  }));
-  expect(initial).toEqual({officialReady:false,sim:true,canShare:false});
-  const demo=page.locator('#uefyVideoDemo');
-  await expect(demo).toBeVisible();
-  await expect(demo).toHaveAttribute('aria-pressed','true');
-  await expect(page.locator('#uefyVideoDemoNote')).toBeVisible();
-  await expect(page.locator('#uefyVideoStatus')).toContainText('SIMULAÇÃO');
-  const simulated=await page.evaluate(()=>({
-    officialReady:window.__uefyVideo.officialReady,
-    sim:window.__uefyVideo.simulationMode,
-    numbers:window.__uefyVideo.simulationNumbers,
-    rows:window.__uefyVideo.simulationRows,
-    post:window.__uefyVideo.simulatedPostText,
-    canvas:(()=>{
-      const ctx=document.querySelector('#uefyVideoCanvas').getContext('2d');
-      const rgb=(x,y)=>Array.from(ctx.getImageData(x,y,1,1).data).slice(0,3);
-      return {redLead:rgb(540,560),blueRunnerTrack:rgb(540,761)};
-    })(),
-    canShare:window.__uefyVideo.canShare,
-    selectedMunicipality:selectedFeature.properties.nome,
-    mode
-  }));
-  expect(simulated.officialReady).toBeFalsy();
-  expect(simulated.sim).toBeTruthy();
-  expect(simulated.numbers).toEqual([53.8,46.2]);
-  expect(simulated.rows.map(x=>x.name)).toEqual(['CANDIDATURA BETA','CANDIDATURA ALFA']);
-  expect(simulated.rows.map(x=>x.color)).toEqual(['#d62828','#1976d2']);
-  expect(simulated.rows[0].pct).toBeGreaterThan(simulated.rows[1].pct);
-  expect(simulated.canvas.redLead).toEqual([214,40,40]);
-  expect(simulated.canvas.blueRunnerTrack).toEqual([212,218,208]);
-  expect(simulated.post).toContain('Candidatura Beta (Partido Fictício Vermelho): 53,8%');
-  expect(simulated.post).toContain('Candidatura Alfa (Partido Fictício Azul): 46,2%');
-  expect(simulated.post).toContain('DADOS FICTÍCIOS');
-  expect(simulated.post).toContain('NÃO apresenta resultados reais');
-  expect(simulated.post).not.toContain('Fonte: TSE');
-  expect(simulated.canShare).toBeFalsy();
-  expect(simulated.mode).toBe('official');
-  expect(simulated.selectedMunicipality).toBe('Natal');
-  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
-  await expect(page.locator('#uefyVideoCopy')).toBeVisible();
-  const mux=await page.request.get('/vendor/mp4-muxer.min.mjs');
-  expect(mux.ok()).toBeTruthy();
-  expect((await mux.text())).toContain('ArrayBufferTarget');
-  await demo.click();
-  await expect(demo).toHaveAttribute('aria-pressed','false');
-  await expect(page.locator('#uefyVideoDemoNote')).toBeHidden();
-  expect(await page.evaluate(()=>window.__uefyVideo.simulationMode)).toBeFalsy();
-});
-
-test('ensaio fictício do Motion funciona também na página da Presidência',async({page})=>{
-  await page.goto(route('presidencia.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
-  await expect(page.locator('#uefyVideoDemo')).toHaveAttribute('aria-pressed','true');
-  await expect(page.locator('#uefyVideoDemoNote')).toContainText('DADOS FICTÍCIOS');
-  const state=await page.evaluate(()=>({
-    sim:window.__uefyVideo.simulationMode,
-    officialReady:window.__uefyVideo.officialReady,
-    values:window.__uefyVideo.simulationNumbers,
-    rows:window.__uefyVideo.simulationRows,
-    text:window.__uefyVideo.simulatedPostText
-  }));
-  expect(state.sim).toBeTruthy();
-  expect(state.officialReady).toBeFalsy();
-  expect(state.values).toEqual([53.8,46.2]);
-  expect(state.rows.map(x=>x.color)).toEqual(['#d62828','#1976d2']);
-  expect(state.rows[0].pct).toBeGreaterThan(state.rows[1].pct);
-  expect(state.text).toContain('Candidatura Beta (Partido Fictício Vermelho): 53,8%');
-  expect(state.text).toContain('TESTE TÉCNICO');
-  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
-});
-
-
-test('estúdio de vídeo tem legenda copiável e compatibilidade com o fluxo móvel', async({page})=>{
+// O teste usa candidaturas internas de teste somente no navegador do Playwright;
+// nenhuma votação fictícia é publicada, exportada ou salva no site.
+async function enableMockShare(page) {
+  await page.evaluate(()=>{
+    window.__capturedShare=null;
+    Object.defineProperty(navigator,'canShare',{configurable:true,value:payload=>
+      !!payload.files?.length && payload.files[0].type==='image/jpeg'});
+    Object.defineProperty(navigator,'share',{configurable:true,value:payload=>{
+      const file=payload.files[0];
+      window.__capturedShare={
+        text:payload.text,name:file.name,type:file.type,size:file.size,
+        gesture:navigator.userActivation?.isActive??true
+      };
+      return Promise.resolve();
+    }});
+  });
+}
+test('Brave móvel: RN envia imagem JPEG e texto no mesmo toque, somente com TSE conferido',async({page})=>{
   await page.setViewportSize({width:390,height:844});
-  await page.goto(route('index.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
-  await expect(page.locator('#uefyVideoCopy')).toBeVisible();
-  await expect(page.locator('#uefyVideoShare')).toHaveAttribute('disabled','');
-  await expect(page.locator('.uefy-video-share-note')).toContainText('Copiar texto da publicação');
-  const diag=await page.evaluate(()=>({
-    hasNativeMp4:typeof window.__uefyVideo.hasNativeMp4==='boolean',
-    hasCodecOption:typeof window.__uefyVideo.canEncodeWebCodecs==='boolean',
-    redLead:window.__uefyVideo.simulationRows[0].color==='#d62828',
-    blueSecond:window.__uefyVideo.simulationRows[1].color==='#1976d2'
-  }));
-  expect(diag).toEqual({hasNativeMp4:true,hasCodecOption:true,redLead:true,blueSecond:true});
-  const layout=await page.evaluate(()=>({
-    viewport:document.documentElement.clientWidth,
-    total:document.documentElement.scrollWidth
-  }));
-  expect(layout.total).toBeLessThanOrEqual(layout.viewport+2);
+  await readyRN(page);
+  await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
+  await page.evaluate(()=>{
+    current={progress:70,generatedAt:'25/10/2026 · 18:30',
+      municipality:selectedFeature.properties.nome,
+      integrity:{matched:2,total:2,unmatched:0},candidates:[
+        {id:'13',number:'13',name:'CADU DE LULA',party:'PT',votes:200,pct:55},
+        {id:'44',number:'44',name:'ALLYSON BEZERRA',party:'UNIÃO',votes:150,pct:45}
+      ]};
+    renderCurrent();
+  });
+  await enableMockShare(page);
+  await expect(page.locator('#rnShareBundle')).toBeEnabled();
+  await page.locator('#rnShareBundle').click();
+  const captured=await page.evaluate(()=>window.__capturedShare);
+  expect(captured.text).toContain('GOVERNADOR DO RN');
+  expect(captured.type).toBe('image/jpeg');
+  expect(captured.name).toMatch(/\.jpg$/);
+  expect(captured.size).toBeGreaterThan(5000);
+  expect(captured.gesture).toBeTruthy();
+  await expect(page.locator('#rnShareStatus')).toContainText('Confira');
+  await expect(page.locator('#rnXManual')).toBeHidden();
+  // O botão "Publicar no X" também deve compartilhar o arquivo pelo app no celular.
+  await page.locator('#rnOpenX').click();
+  expect((await page.evaluate(()=>window.__capturedShare)).size).toBeGreaterThan(5000);
+});
+
+test('Brave móvel: fallback RN informa o passo manual sem perder texto nem arte',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await readyRN(page);
+  await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
+  await page.evaluate(()=>{
+    current={progress:70,generatedAt:'25/10/2026 · 18:30',
+      municipality:selectedFeature.properties.nome,
+      integrity:{matched:2,total:2,unmatched:0},candidates:[
+        {id:'13',number:'13',name:'CADU DE LULA',party:'PT',votes:200,pct:55},
+        {id:'44',number:'44',name:'ALLYSON BEZERRA',party:'UNIÃO',votes:150,pct:45}
+      ]};
+    renderCurrent();
+    Object.defineProperty(navigator,'canShare',{configurable:true,value:()=>false});
+    Object.defineProperty(navigator,'share',{configurable:true,value:()=>Promise.reject(new Error('no files'))});
+  });
+  await page.locator('#rnShareBundle').click();
+  await expect(page.locator('#rnShareStatus')).toContainText('Brave não enviou');
+  await expect(page.locator('#rnXManual')).toBeVisible();
+  await expect(page.locator('#rnXManual')).toHaveAttribute('href',/twitter\.com\/intent\/tweet/);
+  await expect(page.locator('#rnCopyText')).toBeEnabled();
+  await expect(page.locator('#rnDownload')).toBeEnabled();
+});
+
+test('Brave móvel: Presidência compartilha texto e arquivo de forma síncrona',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
+  await page.evaluate(()=>{
+    selectedOffice='pres';selectedScope='br';mode='official';
+    state.pres={requestKey:'pres|br|official',progress:78,
+      generatedAt:'25/10/2026 · 18:30',integrity:{matched:2,total:2,unmatched:0},
+      candidates:[
+        {name:'CANDIDATO A',party:'PARTIDO A',number:'13',votes:120,pct:60},
+        {name:'CANDIDATO B',party:'PARTIDO B',number:'22',votes:80,pct:40}
+      ]};
+    regenerate();
+  });
+  await enableMockShare(page);
+  await expect(page.locator('#shareBundle')).toBeEnabled();
+  await page.locator('#shareBundle').click();
+  const c=await page.evaluate(()=>window.__capturedShare);
+  expect(c.type).toBe('image/jpeg');
+  expect(c.size).toBeGreaterThan(5000);
+  expect(c.gesture).toBeTruthy();
+  expect(c.text).toContain('PRESIDENTE');
+  await expect(page.locator('#shareStatus')).toContainText('Confira');
+  await expect(page.locator('#xManual')).toBeHidden();
+});
+
+test('modo fictício removido da Central; publicação continua bloqueada antes da apuração',async({page})=>{
+  await readyRN(page);
+  await expect(page.locator('#uefyVideoDemo')).toHaveCount(0);
+  expect(await page.evaluate(()=>window.__uefyVideo.officialOnly)).toBeTruthy();
+  await expect(page.locator('#rnShareBundle')).toBeDisabled();
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#uefyVideoDemo')).toHaveCount(0);
+  await expect(page.locator('#shareBundle')).toBeDisabled();
 });
