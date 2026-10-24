@@ -346,7 +346,9 @@ test('vídeo para Twitter existe em ambas as páginas, com prévia sem números 
   expect(await page.evaluate(()=>window.__uefyVideo.revealEnd)).toBe(1450);
   await expect(page.locator('#uefyVideoCounter')).toContainText('00:08');
   await page.locator('#uefyVideoExport').click();
-  await expect(page.locator('#uefyVideoStatus')).toContainText('Exportação bloqueada');
+  await expect(page.locator('#uefyVideoStatus')).toContainText('Exportação oficial bloqueada');
+  await expect(page.locator('#uefyVideoResult')).toBeHidden();
+  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
   await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
   await expect(page.locator('#uefyVideoStudio')).toBeVisible();
   expect(await page.evaluate(()=>window.__uefyVideo.isRN)).toBeFalsy();
