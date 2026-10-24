@@ -18,13 +18,19 @@ A atualização automática das bases de candidaturas está temporariamente susp
 ## Compartilhamento
 A arte é gerada em PNG 1080×1080. O site tenta compartilhar texto e arquivo juntos pela Web Share API quando o navegador/sistema oferece suporte. Em navegadores desktop sem compartilhamento de arquivos, o fallback baixa o PNG e abre o compositor do X com o texto.
 
-## Ensaio de vídeo para o X (dados fictícios)
-Para testar o Motion sem depender de apuração oficial, acesse:
-- RN: https://uefyerryeni.github.io/uefy-eleicoes-2026/index.html?teste-video=1
-- Presidência: https://uefyerryeni.github.io/uefy-eleicoes-2026/presidencia.html?teste-video=1
+## Publicação oficial no Brave (celular)
 
-O link habilita uma simulação local no estúdio do vídeo, com **Candidatura Beta (barra vermelha, 53,8%)** na frente da **Candidatura Alfa (barra azul, 46,2%)** e 72,4% de seções fictícias. Clique em **Ver animação** e **Gerar vídeo MP4**. No celular, use **Compartilhar vídeo no Twitter / Threads** para abrir o seletor de aplicativos. Alguns aplicativos móveis recebem só o arquivo: há também **Copiar texto da publicação**, permitindo colar a legenda no editor do X ou Threads. Nada é publicado automaticamente. No computador, o fluxo abre o X com o texto e baixa o MP4 para anexar.
+A Central não inclui mais ensaios animados nem resultados inventados. Imagens, textos e vídeos oficiais continuam bloqueados até o segundo turno, a partir de 17h de 25/10/2026, e só são liberados com conciliação integral dos dados do TSE.
 
-A exportação usa MP4/H.264 nativo quando disponível; em navegadores compatíveis com WebCodecs, há uma alternativa de MP4 a 720×720 por uma biblioteca local (mp4-muxer, licença MIT em `vendor/LICENSE-mp4-muxer.txt`). A compatibilidade real depende do dispositivo e navegador. O MP4 e o texto do teste incluem identificação explícita de **SIMULAÇÃO / DADOS FICTÍCIOS**. O modo de teste não altera os dados oficiais, não desbloqueia o publicador do mapa ou dos cards nem consulta dados inventados ao TSE.
+### Fluxo principal (RN e Presidência)
+- **Compartilhar imagem + texto**: tenta enviar um JPEG 1080×1080 e a legenda juntos pelo seletor nativo do Brave/Android. A chamada a `navigator.share` é feita no mesmo toque, sem conversões assíncronas anteriores. Pode-se selecionar o X se estiver disponível.
+- **Publicar no X**: no celular usa a mesma tentativa de envio de imagem + texto; no computador abre o editor do X com o texto e copia a imagem, quando permitido.
+- **Copiar texto** e **Baixar imagem**: disponíveis quando a publicação é oficial e validada, inclusive se o sistema não aceitar compartilhamento nativo.
+- Se o compartilhamento falhar, o site mostra o link **Abrir o X com o texto (anexar imagem manualmente)** e instruções de contingência. O link é um gesto separado para não ser bloqueado pelo navegador.
+- O aplicativo X pode ignorar a legenda encaminhada pelo sistema operacional. É indispensável conferir imagem e texto no editor antes de publicar.
 
-A opção não aparece no site público sem o parâmetro `teste-video=1`. Para sair, abra o endereço normal da Central sem esse parâmetro.
+### Vídeo oficial
+O Motion continua opcional para dados do TSE, sem demonstrações fictícias. O MP4 pode ser enviado com a folha nativa quando o navegador e o aplicativo permitirem; caso contrário, faça o download do MP4, copie o texto e anexe manualmente no X. Navegadores compatíveis com WebCodecs podem usar a biblioteca local mp4-muxer (licença MIT em `vendor/LICENSE-mp4-muxer.txt`). O site não publica automaticamente no X.
+
+### Teste de segurança e regressão
+O workflow GitHub Pages executa QA de integridade, sintaxe JavaScript e testes Playwright. Os testes do compartilhamento usam dados artificiais apenas dentro do navegador de automação, jamais armazenados ou distribuídos em páginas de produção.
