@@ -491,6 +491,10 @@ test('Motion permite um ensaio fictício sem alterar ou liberar a apuração ofi
   expect(simulated.mode).toBe('official');
   expect(simulated.selectedMunicipality).toBe('Natal');
   await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+  await expect(page.locator('#uefyVideoCopy')).toBeVisible();
+  const mux=await page.request.get('/vendor/mp4-muxer.min.mjs');
+  expect(mux.ok()).toBeTruthy();
+  expect((await mux.text())).toContain('ArrayBufferTarget');
   await demo.click();
   await expect(demo).toHaveAttribute('aria-pressed','false');
   await expect(page.locator('#uefyVideoDemoNote')).toBeHidden();
@@ -516,4 +520,25 @@ test('ensaio fictício do Motion funciona também na página da Presidência',as
   expect(state.text).toContain('Candidatura Beta (Partido Fictício Vermelho): 53,8%');
   expect(state.text).toContain('TESTE TÉCNICO');
   await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+});
+
+
+test('estúdio de vídeo tem legenda copiável e compatibilidade com o fluxo móvel', async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto(route('index.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#uefyVideoCopy')).toBeVisible();
+  await expect(page.locator('#uefyVideoShare')).toHaveAttribute('disabled','');
+  await expect(page.locator('.uefy-video-share-note')).toContainText('copie');
+  const diag=await page.evaluate(()=>({
+    hasNativeMp4:typeof window.__uefyVideo.hasNativeMp4==='boolean',
+    hasCodecOption:typeof window.__uefyVideo.canEncodeWebCodecs==='boolean',
+    redLead:window.__uefyVideo.simulationRows[0].color==='#d62828',
+    blueSecond:window.__uefyVideo.simulationRows[1].color==='#1976d2'
+  }));
+  expect(diag).toEqual({hasNativeMp4:true,hasCodecOption:true,redLead:true,blueSecond:true});
+  const layout=await page.evaluate(()=>({
+    viewport:document.documentElement.clientWidth,
+    total:document.documentElement.scrollWidth
+  }));
+  expect(layout.total).toBeLessThanOrEqual(layout.viewport+2);
 });
