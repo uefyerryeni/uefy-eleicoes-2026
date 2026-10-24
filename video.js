@@ -473,6 +473,8 @@
     get canShare(){return !!lastBlob;},
     get isRN(){return rn;},
     get simulationMode(){return simulationMode;},
+    get simulatedPostText(){return simulationMode ? makeTwitterText(simulationRecord()) : '';},
+    get simulationNumbers(){return simulationMode ? simulationRecord().rows.map(function(row){return row.pct;}) : [];},
     get lastVideoIsSimulation(){return !!lastRecord?.simulated;}};
   overlay.hidden=false;
   draw(1650,safeRecord()||placeholder());setTime(0);
