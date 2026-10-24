@@ -43,7 +43,14 @@
   var previewId = 0, busy = false, lastUrl = null;
   var lastBlob = null, lastRecord = null, lastTweet = '';
   // Apenas a gravação usa o teste; não toca em mode, current ou state.
-  var simulationMode = false;
+  // O ensaio fica fora da navegação pública, habilitado pelo link ?teste-video=1.
+  var simulationAllowed = new URLSearchParams(location.search).get('teste-video')==='1';
+  var simulationMode = simulationAllowed;
+  demoBtn.hidden=!simulationAllowed;
+  demoBtn.setAttribute('aria-pressed',String(simulationMode));
+  demoBtn.textContent=simulationMode?'Sair do teste fictício':'Testar com números fictícios';
+  demoNote.hidden=!simulationMode;
+  studio.classList.toggle('is-simulating',simulationMode);
 
   function safeRecord() {
     if (typeof mode === 'undefined' || mode !== 'official') return null;
@@ -477,5 +484,5 @@
     get simulationNumbers(){return simulationMode ? simulationRecord().rows.map(function(row){return row.pct;}) : [];},
     get lastVideoIsSimulation(){return !!lastRecord?.simulated;}};
   overlay.hidden=false;
-  draw(1650,safeRecord()||placeholder());setTime(0);
+  draw(1650,activePreviewRecord());setTime(0);
 })();
