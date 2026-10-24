@@ -1,6 +1,7 @@
 /* UEFY / Central das Eleições — vídeo editorial quadrado para Twitter/X.
  * Exportação oficial somente após conciliação com o TSE.
- * Sem resultados inventados. Prévia vazia até o TSE liberar votos oficiais.
+ * Ensaio de ENVIO sem votos permitidos: mesmo formato, nunca rotulado como apuração.
+ * Exportação de resultados restrita aos dados do TSE integralmente conciliados.
  */
 (function () {
   'use strict';
@@ -20,8 +21,8 @@
   studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
-    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-copy" id="uefyVideoCopy" type="button">Copiar texto da publicação</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
-    '<p class="uefy-video-share-note">No celular: gere o MP4 e use Compartilhar para escolher X ou Threads, se estiverem disponíveis. Alguns aplicativos recebem somente o vídeo; use “Copiar texto da publicação” e cole a legenda. No computador: o X abre com o texto e o MP4 é baixado para anexar. Nada é publicado automaticamente.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
+    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo oficial MP4</button><button class="btn uefy-video-rehearsal" id="uefyVideoRehearsal" type="button">Testar publicação sem votos (MP4)</button><button class="btn uefy-video-copy" id="uefyVideoCopy" type="button">Copiar texto da publicação</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
+    '<p class="uefy-video-share-note">Hoje: use “Testar publicação sem votos (MP4)” para experimentar o mesmo formato e o envio pelo Brave, sem resultados eleitorais. Amanhã, use “Gerar vídeo oficial MP4” com os dados conferidos do TSE. No celular, escolha X no compartilhamento. Se a legenda não chegar ao aplicativo, use “Copiar texto da publicação”. Nada é publicado automaticamente.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
   actions.insertAdjacentElement('afterend', studio);
 
@@ -29,6 +30,7 @@
   var ctx = canvas.getContext('2d', {alpha:false});
   var playBtn = studio.querySelector('#uefyVideoPlay');
   var exportBtn = studio.querySelector('#uefyVideoExport');
+  var rehearsalBtn = studio.querySelector('#uefyVideoRehearsal');
   var shareBtn = studio.querySelector('#uefyVideoShare');
   var copyBtn = studio.querySelector('#uefyVideoCopy');
   var mobileScreen = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
@@ -92,11 +94,20 @@
     };
   }
   function placeholder() {
+    var place=rn
+      ? (typeof selectedFeature!=='undefined'&&selectedFeature?.properties?.nome)||'RIO GRANDE DO NORTE'
+      : (typeof scopeLabel==='function'?scopeLabel():'BRASIL');
     return {demo:true,office:rn?'GOVERNO DO RN':'PRESIDÊNCIA',
-      label:rn?'RIO GRANDE DO NORTE':'BRASIL',
-      rows:[{name:rn?'ALLYSON BEZERRA':'CANDIDATURA 01',pct:0,votes:0,color:rn?'#1976d2':YELLOW},
-        {name:rn?'CADU DE LULA':'CANDIDATURA 02',pct:0,votes:0,color:rn?'#d62828':'#e3e6e2'}],
+      label:String(place),rows:[
+        {name:rn?'ALLYSON BEZERRA':'CANDIDATURA 01',party:rn?'UNIÃO BRASIL':'',pct:0,votes:0,color:rn?'#1976d2':YELLOW},
+        {name:rn?'CADU DE LULA':'CANDIDATURA 02',party:rn?'PT':'',pct:0,votes:0,color:rn?'#d62828':'#e3e6e2'}],
       progress:0,final:false,elected:false,stamp:'',slug:'previa'};
+  }
+  function rehearsalRecord(){
+    var snapshot=placeholder();
+    snapshot.rehearsal=true; // Nunca recebe votos, porcentagens ou seções.
+    snapshot.slug='PREVIA-SEM-RESULTADOS';
+    return snapshot;
   }
   function ease(x) {var t=Math.min(1,Math.max(0,x));return 1-Math.pow(1-t,3);}
   function lerp(a,b,t) {return a+(b-a)*t;}
@@ -146,13 +157,14 @@
     line(0,143,1080,837,black);
     line(53,183,8,193,YELLOW);
     ctx.globalAlpha=Math.max(.05,heading);
-    text('25 OUTUBRO 2026  /  DADOS DO TSE',82,207,26,cream,800,895);
+    text(d.rehearsal?'MODELO DE PUBLICAÇÃO  /  SEM APURAÇÃO':'25 OUTUBRO 2026  /  DADOS DO TSE',82,207,26,cream,800,895);
     text(d.office,82,288-22*(1-heading),82,cream,900,940);
     ctx.globalAlpha=Math.max(.05,place);
     text(ellipsis(d.label.toLocaleUpperCase('pt-BR'),35),82,354-14*(1-place),45,YELLOW,850,930);
     ctx.globalAlpha=1;
     line(60,382,960,2,'#617064');
-    var category=isDemo?'PRÉVIA DE DESIGN  /  AINDA SEM RESULTADOS':
+    var category=d.rehearsal?'TESTE DE ENVIO  /  NÃO É RESULTADO ELEITORAL':
+      isDemo?'PRÉVIA DE DESIGN  /  AINDA SEM RESULTADOS':
       d.elected?'ELEIÇÃO DEFINIDA PELO TSE':
       d.final?'TOTALIZAÇÃO FINAL  /  TSE':'APURAÇÃO OFICIAL  /  PARCIAL';
     line(60,404,960,47,YELLOW);
@@ -180,7 +192,8 @@
         ctx.globalAlpha=alpha;
       } else {
         text('—',920,y+64+13*(1-alpha),52,black,800,60);
-        text('AGUARDANDO VOTOS OFICIAIS',100,y+147+13*(1-alpha),24,subtle,800,790);
+        text(d.rehearsal?'SEM RESULTADOS / FORMATO DE PUBLICAÇÃO':'AGUARDANDO VOTOS OFICIAIS',
+          100,y+147+13*(1-alpha),24,subtle,800,790);
       }
       line(100,y+89+13*(1-alpha),882,22,track);
       if(!isDemo && bars>0) line(100,y+89+13*(1-alpha),
@@ -191,8 +204,11 @@
     ctx.globalAlpha=Math.max(.55,footer);
     line(60,891,960,3,'#657267');
     if(isDemo){
-      text('SEM APURAÇÃO PUBLICADA',60,928,33,YELLOW,900,940);
-      text('O resultado será exibido após a divulgação oficial.',60,968,23,cream,650,945);
+      text(d.rehearsal?'TESTE DE PUBLICAÇÃO / SEM VOTOS':'SEM APURAÇÃO PUBLICADA',
+        60,928,33,YELLOW,900,940);
+      text(d.rehearsal?'Amanhã: dados oficiais do TSE neste mesmo formato.':
+        'O resultado será exibido após a divulgação oficial.',
+        60,968,23,cream,650,945);
     }else{
       text((d.final?'RESULTADO FINAL':'SEÇÕES TOTALIZADAS')+
         '   '+pct(d.progress),60,928,32,YELLOW,900,952);
@@ -205,7 +221,7 @@
     line(0,980,1080,100,YELLOW);
     line(0,980,1080,4,black);
     text('TWITTER  /  @UEFYERRYENI',55,1045,29,black,900,825);
-    text(isDemo?'PRÉVIA':'TSE',934,1045,27,black,900,110);
+    text(d.rehearsal?'TESTE':isDemo?'PRÉVIA':'TSE',934,1045,27,black,900,110);
     line(60,1070,960*Math.min(1,t/LENGTH),7,black);
   }
   function setTime(ms) {
@@ -276,7 +292,7 @@
         encoder.encode(frame,{keyFrame:i%48===0});
         frame.close();
         setTime(ms);
-        exportBtn.textContent='Gerando MP4 '+Math.floor(i/totalFrames*100)+'%…';
+        (snapshot.rehearsal?rehearsalBtn:exportBtn).textContent='Gerando MP4 '+Math.floor(i/totalFrames*100)+'%…';
         if(encoder.encodeQueueSize>6) await encoder.flush();
         if(i%4===0) await new Promise(function(resolve){setTimeout(resolve,0);});
       }
@@ -297,9 +313,12 @@
     shareBtn.disabled=false;
     player.src=lastUrl;
     download.href=lastUrl;
-    download.download='uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
+    download.download=snapshot.rehearsal?'UEFY-TESTE-ENVIO-SEM-RESULTADOS.mp4':
+      'uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
     result.hidden=false;
-    setStatus('MP4 oficial concluído. Confira o vídeo e o texto antes de publicar.',false);
+    setStatus(snapshot.rehearsal?
+      'MP4 de teste pronto, marcado SEM RESULTADOS em todos os quadros. Use Compartilhar vídeo no Twitter para testar vídeo + legenda no Brave.':
+      'MP4 oficial concluído. Confira o vídeo e o texto antes de publicar.',false);
   }
   function resetOldVideo() {
     if (lastUrl) URL.revokeObjectURL(lastUrl);
@@ -307,13 +326,15 @@
     result.hidden=true;player.removeAttribute('src');player.load();
     download.removeAttribute('href');
     shareBtn.disabled=true;shareBtn.dataset.fallback='';
-    shareBtn.textContent='↗ Compartilhar vídeo no Twitter';
+    shareBtn.textContent=mobileScreen?'↗ Compartilhar vídeo no Twitter / Threads':
+      '↗ Compartilhar vídeo no Twitter';
   }
-  async function exportVideo() {
+  async function exportVideo(rehearsal) {
     if (busy) return;
-    var snapshot=safeRecord();
+    // Ensaio é só o formato, sem votos. Resultados oficiais continuam estritamente bloqueados.
+    var snapshot=rehearsal===true?rehearsalRecord():safeRecord();
     if (!snapshot) {
-      setStatus('Exportação oficial bloqueada até a publicação e conciliação dos dados do TSE. O vídeo não usa resultados inventados.',true);
+      setStatus('A exportação com votos está bloqueada até a publicação e a conciliação do TSE. Para verificar o compartilhamento no Brave, use “Testar publicação sem votos”.',true);
       return;
     }
     var type=getMp4Type();
@@ -325,8 +346,8 @@
     }
     busy=true;stopPreview();resetOldVideo();
     var tweet=makeTwitterText(snapshot);
-    exportBtn.disabled=true;playBtn.disabled=true;
-    exportBtn.textContent='Gravando 0%…';
+    exportBtn.disabled=true;rehearsalBtn.disabled=true;playBtn.disabled=true;
+    (snapshot.rehearsal?rehearsalBtn:exportBtn).textContent='Gravando 0%…';
     overlay.hidden=true;
     if (document.fonts && document.fonts.ready) {
       try {await document.fonts.ready;} catch (_) {}
@@ -358,7 +379,7 @@
       function render(now) {
         var ms=Math.min(LENGTH,now-start);
         draw(ms,snapshot);setTime(ms);
-        exportBtn.textContent='Gravando '+Math.floor(ms/LENGTH*100)+'%…';
+        (snapshot.rehearsal?rehearsalBtn:exportBtn).textContent='Gravando '+Math.floor(ms/LENGTH*100)+'%…';
         if(ms<LENGTH) raf=requestAnimationFrame(render);
       }
       raf=requestAnimationFrame(render);
@@ -394,12 +415,20 @@
       if (timer) clearTimeout(timer);
       if (recorder && recorder.state!=='inactive') {try {recorder.stop();} catch(_) {}}
       if (stream) stream.getTracks().forEach(function(track){track.stop();});
-      busy=false;exportBtn.disabled=false;playBtn.disabled=false;
-      exportBtn.textContent='↓ Gerar vídeo MP4';
+      busy=false;exportBtn.disabled=false;rehearsalBtn.disabled=false;playBtn.disabled=false;
+      exportBtn.textContent='↓ Gerar vídeo oficial MP4';
+      rehearsalBtn.textContent='Testar publicação sem votos (MP4)';
     }
   }
 
   function makeTwitterText(snapshot) {
+    if(snapshot.rehearsal) return [
+      'TESTE DE PUBLICAÇÃO | UEFY ELEIÇÕES 2026',
+      '2º turno · '+snapshot.office+' · '+snapshot.label,
+      'Vídeo para conferir o formato e o compartilhamento no X.',
+      'SEM RESULTADOS: nenhum voto ou percentual foi divulgado neste vídeo.',
+      'A cobertura oficial usará os dados conferidos do TSE.'
+    ].join('\n');
     var input=document.querySelector(rn?'#rnPostText':'#postText');
     var edited=String(input && input.value || '').trim();
     // Preserva textos curtos escritos pelo usuário; para textos extensos,
@@ -465,7 +494,7 @@
   }
   function shareTwitter() {
     if(busy || !lastBlob || !lastRecord || !lastUrl) {
-      setStatus('Primeiro gere o MP4 com dados oficiais conferidos pelo TSE.',true);
+      setStatus('Primeiro gere o MP4, pelo teste de envio sem votos ou pelos resultados oficiais conferidos.',true);
       return;
     }
     if(shareBtn.dataset.fallback==='1'){
@@ -491,7 +520,7 @@
       return;
     }
     Promise.resolve(result).then(function(){
-      setStatus('O arquivo foi entregue ao menu de compartilhamento. Confira se o X ou Threads recebeu também a legenda; se não, use “Copiar texto da publicação” antes de postar.',false);
+      setStatus('Vídeo enviado ao menu do celular. Confira no X se vídeo e legenda chegaram juntos. Se o aplicativo ignorar o texto, use “Copiar texto da publicação” e cole no post.',false);
     }).catch(function(e){
       if(e && e.name==='AbortError'){
         setStatus('Compartilhamento cancelado. O MP4 permanece disponível para baixar ou compartilhar novamente.',false);
@@ -506,7 +535,8 @@
   playBtn.addEventListener('click',preview);
   shareBtn.addEventListener('click',shareTwitter);
   copyBtn.addEventListener('click',copyPostText);
-  exportBtn.addEventListener('click',exportVideo);
+  exportBtn.addEventListener('click',function(){exportVideo(false);});
+  rehearsalBtn.addEventListener('click',function(){exportVideo(true);});
   window.addEventListener('pagehide',function () {stopPreview();if(lastUrl) URL.revokeObjectURL(lastUrl);});
   window.__uefyVideo={get officialReady(){return !!safeRecord();},
     get supportsMp4(){return !!getMp4Type();},
@@ -517,7 +547,11 @@
     get canEncodeWebCodecs(){return typeof VideoEncoder!=='undefined'&&typeof VideoFrame!=='undefined';},
     get hasNativeMp4(){return !!getMp4Type();},
     get isRN(){return rn;},
-    get officialOnly(){return true;}};
+    get officialOnly(){return true;},
+    get preflightAvailable(){return true;},
+    get generatedIsRehearsal(){return !!lastRecord?.rehearsal;},
+    get generatedText(){return lastTweet;},
+    get rehearsalText(){return makeTwitterText(rehearsalRecord());}};
   overlay.hidden=false;
   draw(1650,safeRecord()||placeholder());setTime(0);
 })();
