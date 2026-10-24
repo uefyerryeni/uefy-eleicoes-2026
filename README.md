@@ -20,7 +20,7 @@ A arte é gerada em PNG 1080×1080. O site tenta compartilhar texto e arquivo ju
 
 ## Publicação oficial no Brave (celular)
 
-A Central não inclui mais ensaios animados nem resultados inventados. Imagens, textos e vídeos oficiais continuam bloqueados até o segundo turno, a partir de 17h de 25/10/2026, e só são liberados com conciliação integral dos dados do TSE.
+A Central não gera resultados inventados. Imagens, textos e vídeos **com votos** só são liberados com dados oficiais integralmente conciliados do TSE, a partir de 17h de 25/10/2026. Antes da apuração, o vídeo permite apenas um **teste operacional de envio sem votos**, com o mesmo layout e avisos visíveis em todos os quadros.
 
 ### Fluxo principal (RN e Presidência)
 - **Compartilhar imagem + texto**: tenta enviar um JPEG 1080×1080 e a legenda juntos pelo seletor nativo do Brave/Android. A chamada a `navigator.share` é feita no mesmo toque, sem conversões assíncronas anteriores. Pode-se selecionar o X se estiver disponível.
@@ -29,8 +29,12 @@ A Central não inclui mais ensaios animados nem resultados inventados. Imagens, 
 - Se o compartilhamento falhar, o site mostra o link **Abrir o X com o texto (anexar imagem manualmente)** e instruções de contingência. O link é um gesto separado para não ser bloqueado pelo navegador.
 - O aplicativo X pode ignorar a legenda encaminhada pelo sistema operacional. É indispensável conferir imagem e texto no editor antes de publicar.
 
-### Vídeo oficial
-O Motion continua opcional para dados do TSE, sem demonstrações fictícias. O MP4 pode ser enviado com a folha nativa quando o navegador e o aplicativo permitirem; caso contrário, faça o download do MP4, copie o texto e anexe manualmente no X. Navegadores compatíveis com WebCodecs podem usar a biblioteca local mp4-muxer (licença MIT em `vendor/LICENSE-mp4-muxer.txt`). O site não publica automaticamente no X.
+### Vídeo no Brave: teste hoje, resultados amanhã
+- **Testar publicação sem votos (MP4)** cria um vídeo de oito segundos, 1080×1080 quando houver suporte MP4 nativo ou 720×720 via WebCodecs. Usa a mesma identidade, animações, nomes de candidaturas conhecidos, tipografia e disposição dos cards. O vídeo NÃO contém votos nem porcentagens; mostra avisos **TESTE DE ENVIO / NÃO É RESULTADO ELEITORAL** e o nome do arquivo **UEFY-TESTE-ENVIO-SEM-RESULTADOS.mp4**.
+- **Compartilhar vídeo no Twitter** abre o seletor do Brave/Android com o vídeo e a legenda de teste, se suportado pelo aparelho e pelo aplicativo. No X, confira se a legenda entrou; se não, use **Copiar texto da publicação** e cole no editor. Não há publicação automática.
+- **Gerar vídeo oficial MP4** exige os dados oficiais TSE conciliados, e então exibe as porcentagens e os votos verdadeiros no mesmo layout. Antes da apuração, essa exportação segue bloqueada.
+- Se o navegador não permitir gravar ou compartilhar vídeo, use o MP4 baixado e anexe manualmente no X. A codificação alternativa usa WebCodecs e a biblioteca local mp4-muxer (licença MIT em `vendor/LICENSE-mp4-muxer.txt`).
+
 
 ### Teste de segurança e regressão
 O workflow GitHub Pages executa QA de integridade, sintaxe JavaScript e testes Playwright. Os testes do compartilhamento usam dados artificiais apenas dentro do navegador de automação, jamais armazenados ou distribuídos em páginas de produção.
