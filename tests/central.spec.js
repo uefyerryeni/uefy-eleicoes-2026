@@ -528,7 +528,7 @@ test('estúdio de vídeo tem legenda copiável e compatibilidade com o fluxo mó
   await page.goto(route('index.html')+'&teste-video=1',{waitUntil:'domcontentloaded'});
   await expect(page.locator('#uefyVideoCopy')).toBeVisible();
   await expect(page.locator('#uefyVideoShare')).toHaveAttribute('disabled','');
-  await expect(page.locator('.uefy-video-share-note')).toContainText('copie');
+  await expect(page.locator('.uefy-video-share-note')).toContainText('Copiar texto da publicação');
   const diag=await page.evaluate(()=>({
     hasNativeMp4:typeof window.__uefyVideo.hasNativeMp4==='boolean',
     hasCodecOption:typeof window.__uefyVideo.canEncodeWebCodecs==='boolean',
