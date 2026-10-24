@@ -105,10 +105,10 @@
       demo:false,simulated:true,office:rn?'GOVERNO DO RN':'PRESIDÊNCIA',
       label:rn?'MUNICÍPIO DE TESTE':'BRASIL / TESTE',
       rows:[
-        {name:'CANDIDATURA ALFA',party:'PARTIDO FICTÍCIO A',number:'A',
-          votes:53800,pct:53.8,color:rn?'#1976d2':YELLOW},
-        {name:'CANDIDATURA BETA',party:'PARTIDO FICTÍCIO B',number:'B',
-          votes:46200,pct:46.2,color:rn?'#d62828':'#aeb8b0'}
+        {name:'CANDIDATURA BETA',party:'PARTIDO FICTÍCIO VERMELHO',number:'B',
+          votes:53800,pct:53.8,color:'#d62828'},
+        {name:'CANDIDATURA ALFA',party:'PARTIDO FICTÍCIO AZUL',number:'A',
+          votes:46200,pct:46.2,color:'#1976d2'}
       ],
       progress:72.4,final:false,elected:false,stamp:'DADOS FICTÍCIOS',
       slug:'teste-ficticio'
@@ -382,8 +382,8 @@
         'TESTE TÉCNICO — SIMULAÇÃO / DADOS FICTÍCIOS',
         'Este vídeo NÃO apresenta resultados reais das eleições.',
         '',
-        'Candidatura Alfa: 53,8% (valor inventado)',
-        'Candidatura Beta: 46,2% (valor inventado)',
+        'Candidatura Beta (Partido Fictício Vermelho): 53,8%',
+        'Candidatura Alfa (Partido Fictício Azul): 46,2%',
         '',
         'Apenas teste do formato de divulgação UEFY.'
       ].join('\n');
@@ -482,6 +482,9 @@
     get simulationMode(){return simulationMode;},
     get simulatedPostText(){return simulationMode ? makeTwitterText(simulationRecord()) : '';},
     get simulationNumbers(){return simulationMode ? simulationRecord().rows.map(function(row){return row.pct;}) : [];},
+    get simulationRows(){return simulationMode ? simulationRecord().rows.map(function(row){
+      return {name:row.name,party:row.party,pct:row.pct,color:row.color,votes:row.votes};
+    }) : [];},
     get lastVideoIsSimulation(){return !!lastRecord?.simulated;}};
   overlay.hidden=false;
   draw(1650,activePreviewRecord());setTime(0);
