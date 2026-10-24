@@ -146,3 +146,25 @@ body.dark .publisher .canvas-box{
  .rn-publisher-priority,.publisher{box-shadow:3px 3px 0 #f4dd19}
  .rn-publisher-priority .canvas-box,.publisher .canvas-box{padding:8px}
 }
+
+
+/* Confirmação do fluxo real Brave: a mensagem não desaparece como o flash dos botões. */
+.share-status{
+  display:block;margin:12px 0 0;padding:13px 14px;line-height:1.6;
+  background:#eff4eb;color:#18352a;border-left:5px solid #197e55;
+  font-size:13px;font-weight:700;overflow-wrap:anywhere;
+}
+.share-status.is-warning{background:#fff0e4;color:#6d251f;border-left-color:#b8442d}
+.share-manual-link{
+  display:block;width:100%;margin:11px 0 0;padding:14px 12px;
+  text-align:center;font-size:14px;font-weight:900;
+  color:#181d19!important;background:#f4dd19;
+  border:2px solid #181d19;text-decoration:none;
+}
+.share-manual-link[hidden]{display:none!important}
+body.dark .share-status{background:#213e32;color:#f1fff6}
+body.dark .share-status.is-warning{background:#49302a;color:#ffe6d8}
+@media(max-width:600px){
+ .share-status{font-size:13px;padding:12px}
+ .share-manual-link{min-height:52px;display:flex;align-items:center;justify-content:center}
+}
