@@ -490,12 +490,17 @@ async function loadRemote(){
   finally{rnLoading=false;$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar';$('#publicacao')?.classList.remove('loading-municipality')}
 }
 function rnPublicationIsSafe(){
-  if(mode==='official'&&!inSecondRoundPollingWindow())return false;
-  if(mapPublicationMode)return mode==='official'&&!!leaderMapData?.publication_ready&&leaderMapData.round===2&&String(leaderMapData.election_id)==='6260'&&Number(leaderMapData.municipalities_read)===167;
+  if(mode!=='official'||!inSecondRoundPollingWindow())return false;
+  if(mapPublicationMode)return !!leaderMapData?.publication_ready&&leaderMapData.round===2&&
+    String(leaderMapData.election_id)==='6260'&&Number(leaderMapData.municipalities_read)===167&&
+    !(leaderMapData.errors||[]).length;
   const selected=selectedFeature?.properties?.nome||'';
-  const sameMunicipality=norm(current?.municipality)===norm(selected);
-  if(!sameMunicipality||!(current?.candidates||[]).length)return false;
-  if(mode==='official'&&(current?.integrity?.error||Number(current?.integrity?.unmatched||0)>0))return false;
+  if(norm(current?.municipality)!==norm(selected)||!(current?.candidates||[]).length||
+    !(Number(current?.progress)>0))return false;
+  const integrity=current?.integrity;
+  if(!integrity||integrity.error||Number(integrity.unmatched)!==0||
+    Number(integrity.total)!==current.candidates.length||
+    Number(integrity.matched)!==current.candidates.length)return false;
   return true;
 }
 function updateRnPublicationSafety(){
