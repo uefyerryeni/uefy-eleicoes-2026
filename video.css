@@ -125,3 +125,20 @@ body.dark .uefy-video-heading h3{color:#f7f6ef}
  .uefy-video-share-note{font-size:13px;line-height:1.6}
 }
 body.dark .uefy-video-copy{background:#faf9ef!important;color:#151a18!important}
+
+
+/* Prévia do envio — mesmo layout do MP4 real, nunca números inventados. */
+.uefy-video-rehearsal{
+  grid-column:1/-1;
+  min-height:54px!important;
+  background:#17221c!important;
+  color:#f8f8ef!important;
+  border:2px solid #17221c!important;
+  font-size:14px!important;
+  font-weight:900!important;
+}
+.uefy-video-rehearsal:hover{background:#315141!important}
+.uefy-video-rehearsal:disabled{opacity:.55!important}
+.uefy-video-rehearsal:focus-visible{outline:3px solid #2479af;outline-offset:3px}
+body.dark .uefy-video-rehearsal{background:#f4dd19!important;color:#151a18!important;border-color:#f4dd19!important}
+@media(max-width:600px){.uefy-video-rehearsal{min-height:58px!important;font-size:14px!important}}
