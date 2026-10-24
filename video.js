@@ -20,9 +20,9 @@
   studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
-    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-demo-toggle" id="uefyVideoDemo" type="button" aria-pressed="false">Testar com números fictícios</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
+    '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo MP4</button><button class="btn uefy-video-demo-toggle" id="uefyVideoDemo" type="button" aria-pressed="false">Testar com números fictícios</button><button class="btn uefy-video-copy" id="uefyVideoCopy" type="button">Copiar texto da publicação</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button" disabled>↗ Compartilhar vídeo no Twitter</button></div>' +
     '<p class="uefy-video-demo-note" id="uefyVideoDemoNote" hidden>SIMULAÇÃO: candidaturas e números inventados, apenas para testar o vídeo no X. O MP4 e o texto serão identificados como DADOS FICTÍCIOS. Não altera a apuração oficial.</p>' +
-    '<p class="uefy-video-share-note">No celular: selecione Twitter/X no menu de compartilhamento, se disponível. No computador: o botão abre o Twitter com o texto e baixa o MP4 para anexar. A Central não publica automaticamente.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
+    '<p class="uefy-video-share-note">No celular: gere o MP4 e use Compartilhar para escolher X ou Threads, se estiverem disponíveis. Alguns aplicativos recebem somente o vídeo; use “Copiar texto da publicação” e cole a legenda. No computador: o X abre com o texto e o MP4 é baixado para anexar. Nada é publicado automaticamente.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">A prévia funciona sem votos. O vídeo e seu compartilhamento só serão liberados após a conferência dos dados oficiais do TSE.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
   actions.insertAdjacentElement('afterend', studio);
 
@@ -31,6 +31,9 @@
   var playBtn = studio.querySelector('#uefyVideoPlay');
   var exportBtn = studio.querySelector('#uefyVideoExport');
   var shareBtn = studio.querySelector('#uefyVideoShare');
+  var copyBtn = studio.querySelector('#uefyVideoCopy');
+  var mobileScreen = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  if(mobileScreen) shareBtn.textContent='↗ Compartilhar vídeo no Twitter / Threads';
   var demoBtn = studio.querySelector('#uefyVideoDemo');
   var demoNote = studio.querySelector('#uefyVideoDemoNote');
   var status = studio.querySelector('#uefyVideoStatus');
@@ -281,6 +284,68 @@
     var options=['video/mp4;codecs=avc1.42E01E','video/mp4;codecs=avc1','video/mp4'];
     return options.find(function (type) {return MediaRecorder.isTypeSupported(type);})||null;
   }
+  // Para celulares que não gravam MP4 por MediaRecorder, usa H.264 via WebCodecs.
+  // A biblioteca de mux local evita conversão WebM→MP4 e arquivos com extensão falsa.
+  async function webCodecsMp4(snapshot) {
+    if(typeof VideoEncoder==='undefined' || typeof VideoFrame==='undefined')
+      throw new Error('O navegador não disponibiliza o codificador H.264 via WebCodecs.');
+    var fps=24, size=720, totalFrames=Math.round(LENGTH/1000*fps);
+    var config={codec:'avc1.42E01E',width:size,height:size,
+      bitrate:2800000,framerate:fps,avc:{format:'avc'}};
+    var supported=await VideoEncoder.isConfigSupported(config);
+    if(!supported.supported) throw new Error('O aparelho não oferece codificação H.264 neste navegador.');
+    var module=await import('./vendor/mp4-muxer.min.mjs');
+    var target=new module.ArrayBufferTarget();
+    var muxer=new module.Muxer({target:target,video:{codec:'avc',
+      width:size,height:size,frameRate:fps},fastStart:'in-memory'});
+    var scaled=document.createElement('canvas');
+    scaled.width=size;scaled.height=size;
+    var scaledContext=scaled.getContext('2d',{alpha:false});
+    if(!scaledContext) throw new Error('Não foi possível preparar o canvas para o MP4.');
+    var encodeError=null;
+    var encoder=new VideoEncoder({
+      output:function(chunk,metadata){muxer.addVideoChunk(chunk,metadata);},
+      error:function(err){encodeError=err;}
+    });
+    try {
+      encoder.configure(config);
+      for(var i=0;i<=totalFrames;i++){
+        if(encodeError) throw encodeError;
+        var ms=Math.min(LENGTH,i*1000/fps);
+        draw(ms,snapshot);
+        scaledContext.drawImage(canvas,0,0,size,size);
+        var frame=new VideoFrame(scaled,{timestamp:Math.round(i*1000000/fps)});
+        encoder.encode(frame,{keyFrame:i%48===0});
+        frame.close();
+        setTime(ms);
+        exportBtn.textContent='Gerando MP4 '+Math.floor(i/totalFrames*100)+'%…';
+        if(encoder.encodeQueueSize>6) await encoder.flush();
+        if(i%4===0) await new Promise(function(resolve){setTimeout(resolve,0);});
+      }
+      await encoder.flush();
+      if(encodeError) throw encodeError;
+      muxer.finalize();
+      var blob=new Blob([target.buffer],{type:'video/mp4'});
+      if(blob.size<20000) throw new Error('O MP4 foi gerado vazio ou incompleto.');
+      return blob;
+    }finally{
+      if(encoder.state!=='closed')encoder.close();
+      draw(LENGTH,snapshot);setTime(LENGTH);
+    }
+  }
+  function finishVideo(blob,snapshot,tweet) {
+    lastUrl=URL.createObjectURL(blob);
+    lastBlob=blob;lastRecord=snapshot;lastTweet=tweet;
+    shareBtn.disabled=false;
+    player.src=lastUrl;
+    download.href=lastUrl;
+    download.download=snapshot.simulated?'uefy-eleicoes-SIMULACAO-dados-ficticios.mp4':
+      'uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
+    result.hidden=false;
+    setStatus(snapshot.simulated?
+      'MP4 de SIMULAÇÃO concluído. Compartilhe pelo aplicativo do celular ou copie o texto e anexe o vídeo manualmente.':
+      'MP4 oficial concluído. Confira o vídeo e o texto antes de publicar.',false);
+  }
   function resetOldVideo() {
     if (lastUrl) URL.revokeObjectURL(lastUrl);
     lastUrl=null;lastBlob=null;lastRecord=null;lastTweet='';
@@ -307,8 +372,10 @@
       return;
     }
     var type=getMp4Type();
-    if (!type || typeof canvas.captureStream !== 'function') {
-      setStatus('Este navegador não oferece gravação MP4/H.264. Abra a Central no Chrome ou Edge atualizado no computador. Não geraremos um WebM com extensão MP4.',true);
+    var nativeMp4=!!type && typeof canvas.captureStream==='function';
+    var webCodecs=typeof VideoEncoder!=='undefined' && typeof VideoFrame!=='undefined';
+    if(!nativeMp4 && !webCodecs) {
+      setStatus('Seu navegador não permite gerar um MP4 H.264 neste aparelho. Abra o link no Chrome ou Samsung Internet atualizado, fora do navegador interno de outro aplicativo.',true);
       return;
     }
     busy=true;stopPreview();resetOldVideo();
@@ -321,6 +388,12 @@
     }
     var stream=null,recorder=null,timer=null,raf=null,finished=false;
     try {
+      if(!nativeMp4){
+        setStatus('Gerando MP4 em H.264 para o celular. Mantenha esta página aberta até a prévia aparecer.',false);
+        var webBlob=await webCodecsMp4(snapshot);
+        finishVideo(webBlob,snapshot,tweet);
+        return;
+      }
       draw(0,snapshot);
       stream=canvas.captureStream(30);
       recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:4500000});
@@ -352,19 +425,9 @@
         if (recorder.state!=='inactive') recorder.stop();
       }, LENGTH+130);
       var blob=await promise;
-      lastUrl=URL.createObjectURL(blob);
-      lastBlob=blob;lastRecord=snapshot;lastTweet=tweet;
-      shareBtn.disabled=false;
-      player.src=lastUrl;
-      download.href=lastUrl;
-      download.download=snapshot.simulated?'uefy-eleicoes-SIMULACAO-dados-ficticios.mp4':
-        'uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
-      result.hidden=false;
-      setStatus(snapshot.simulated?
-        'MP4 de SIMULAÇÃO gerado, com avisos permanentes. Confira antes de testar a publicação no X.':
-        'MP4 gerado com dados oficiais de '+snapshot.stamp+'. Confira os números e o vídeo antes de publicar no Twitter.',false);
+      finishVideo(blob,snapshot,tweet);
     } catch(e) {
-      setStatus('Não foi possível concluir o MP4: '+String(e&&e.message||e)+'. Tente novamente no Chrome/Edge atualizado.',true);
+      setStatus('Não foi possível gerar o MP4 neste aparelho: '+String(e&&e.message||e)+'. Abra o link diretamente no Chrome ou Samsung Internet atualizado e tente novamente.',true);
     } finally {
       finished=true;
       if (raf) cancelAnimationFrame(raf);
@@ -406,6 +469,30 @@
       snapshot.label+'\n'+snapshot.rows.map(function(row){
         return ellipsis(row.name,17)+': '+pct(row.pct);
       }).join('\n')+'\nFonte: TSE';
+  }
+  async function copyPostText() {
+    var snapshot=lastRecord || (simulationMode ? simulationRecord() : safeRecord());
+    if(!snapshot) {
+      setStatus('O texto oficial só fica disponível após a apuração e a conferência dos dados do TSE. Para testar, use o link de simulação.',true);
+      return;
+    }
+    var value=lastRecord?lastTweet:makeTwitterText(snapshot);
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        await navigator.clipboard.writeText(value);
+      }else{
+        var node=document.createElement('textarea');
+        node.value=value;node.setAttribute('readonly','');
+        node.style.position='fixed';node.style.opacity='0';
+        document.body.appendChild(node);node.select();
+        var copied=document.execCommand('copy');
+        node.remove();
+        if(!copied) throw new Error('A cópia não foi permitida neste navegador');
+      }
+      setStatus('Texto copiado. Abra o X ou Threads, anexe o MP4 e cole a legenda no post antes de publicar.',false);
+    }catch(e){
+      setStatus('O navegador bloqueou a cópia automática. Use o navegador principal do celular ou selecione o texto da publicação manualmente.',true);
+    }
   }
   function fallbackTwitter() {
     if(!lastBlob || !lastUrl || !lastRecord) return;
@@ -455,7 +542,7 @@
       return;
     }
     Promise.resolve(result).then(function(){
-      setStatus('Vídeo enviado ao menu de compartilhamento. Confira a publicação no Twitter/X; a Central não publica automaticamente.',false);
+      setStatus('O arquivo foi entregue ao menu de compartilhamento. Confira se o X ou Threads recebeu também a legenda; se não, use “Copiar texto da publicação” antes de postar.',false);
     }).catch(function(e){
       if(e && e.name==='AbortError'){
         setStatus('Compartilhamento cancelado. O MP4 permanece disponível para baixar ou compartilhar novamente.',false);
@@ -463,13 +550,14 @@
       }
       shareBtn.dataset.fallback='1';
       shareBtn.textContent='↗ Abrir Twitter e baixar MP4';
-      setStatus('Não foi possível enviar o arquivo ao destino. Clique novamente no botão branco para abrir o Twitter e baixar o vídeo.',true);
+      setStatus('O aplicativo não recebeu o vídeo pelo compartilhamento nativo. Baixe o MP4, copie o texto e anexe ambos na publicação.',true);
     });
   }
 
   playBtn.addEventListener('click',preview);
   demoBtn.addEventListener('click',toggleSimulation);
   shareBtn.addEventListener('click',shareTwitter);
+  copyBtn.addEventListener('click',copyPostText);
   exportBtn.addEventListener('click',exportVideo);
   window.addEventListener('pagehide',function () {stopPreview();if(lastUrl) URL.revokeObjectURL(lastUrl);});
   window.__uefyVideo={get officialReady(){return !!safeRecord();},
@@ -478,6 +566,8 @@
     get duration(){return LENGTH;},
     get revealEnd(){return MOTION.numberEnd;},
     get canShare(){return !!lastBlob;},
+    get canEncodeWebCodecs(){return typeof VideoEncoder!=='undefined'&&typeof VideoFrame!=='undefined';},
+    get hasNativeMp4(){return !!getMp4Type();},
     get isRN(){return rn;},
     get simulationMode(){return simulationMode;},
     get simulatedPostText(){return simulationMode ? makeTwitterText(simulationRecord()) : '';},
