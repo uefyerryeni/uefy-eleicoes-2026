@@ -439,3 +439,60 @@ test('PNG editorial mantém a identidade em RN e Presidência',async({page})=>{
   expect(pres.top).toEqual([244,221,25]);
   expect(pres.masthead).toEqual([21,26,24]);
 });
+
+
+test('Motion permite um ensaio fictício sem alterar ou liberar a apuração oficial',async({page})=>{
+  await readyRN(page);
+  const initial=await page.evaluate(()=>({
+    officialReady:window.__uefyVideo.officialReady,
+    sim:window.__uefyVideo.simulationMode,
+    canShare:window.__uefyVideo.canShare
+  }));
+  expect(initial).toEqual({officialReady:false,sim:false,canShare:false});
+  const demo=page.locator('#uefyVideoDemo');
+  await expect(demo).toBeVisible();
+  await demo.click();
+  await expect(demo).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('#uefyVideoDemoNote')).toBeVisible();
+  await expect(page.locator('#uefyVideoStatus')).toContainText('SIMULAÇÃO');
+  const simulated=await page.evaluate(()=>({
+    officialReady:window.__uefyVideo.officialReady,
+    sim:window.__uefyVideo.simulationMode,
+    numbers:window.__uefyVideo.simulationNumbers,
+    post:window.__uefyVideo.simulatedPostText,
+    canShare:window.__uefyVideo.canShare,
+    selectedMunicipality:selectedFeature.properties.nome,
+    mode
+  }));
+  expect(simulated.officialReady).toBeFalsy();
+  expect(simulated.sim).toBeTruthy();
+  expect(simulated.numbers).toEqual([53.8,46.2]);
+  expect(simulated.post).toContain('DADOS FICTÍCIOS');
+  expect(simulated.post).toContain('NÃO apresenta resultados reais');
+  expect(simulated.post).not.toContain('Fonte: TSE');
+  expect(simulated.canShare).toBeFalsy();
+  expect(simulated.mode).toBe('official');
+  expect(simulated.selectedMunicipality).toBe('Natal');
+  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+  await demo.click();
+  await expect(demo).toHaveAttribute('aria-pressed','false');
+  await expect(page.locator('#uefyVideoDemoNote')).toBeHidden();
+  expect(await page.evaluate(()=>window.__uefyVideo.simulationMode)).toBeFalsy();
+});
+
+test('ensaio fictício do Motion funciona também na página da Presidência',async({page})=>{
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await page.locator('#uefyVideoDemo').click();
+  await expect(page.locator('#uefyVideoDemoNote')).toContainText('DADOS FICTÍCIOS');
+  const state=await page.evaluate(()=>({
+    sim:window.__uefyVideo.simulationMode,
+    officialReady:window.__uefyVideo.officialReady,
+    values:window.__uefyVideo.simulationNumbers,
+    text:window.__uefyVideo.simulatedPostText
+  }));
+  expect(state.sim).toBeTruthy();
+  expect(state.officialReady).toBeFalsy();
+  expect(state.values).toEqual([53.8,46.2]);
+  expect(state.text).toContain('TESTE TÉCNICO');
+  await expect(page.locator('#uefyVideoShare')).toBeDisabled();
+});
