@@ -88,6 +88,8 @@ test('publicação municipal inclui segundo turno e bloqueia erros de conciliaç
 
 test('publicação municipal só habilita dados oficiais conciliados', async ({page}) => {
   await readyRN(page);
+  // Simula o horário permitido pelo TSE; jamais desativa o bloqueio real.
+  await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
   const x=await page.evaluate(()=>{
     current={progress:80,generatedAt:'25/10/2026 · 19:00',municipality:selectedFeature.properties.nome,
       integrity:{matched:2,total:2,unmatched:0},candidates:[
