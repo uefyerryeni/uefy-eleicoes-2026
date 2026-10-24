@@ -141,3 +141,22 @@ body.dark .uefy-video-demo-toggle[aria-pressed="true"]{color:#151a18!important;b
   .uefy-video-demo-note{font-size:12px;padding:11px}
   .uefy-video-studio.is-simulating .uefy-video-canvas-wrap{box-shadow:3px 3px 0 #efbc71}
 }
+
+
+/* Fluxo de publicação móvel: legenda copiável mesmo quando o app ignora texto no share. */
+.uefy-video-copy{
+  grid-column:1 / -1;
+  min-height:50px!important;
+  background:#fffdf3!important;
+  color:#151a18!important;
+  border:2px solid #151a18!important;
+  font-weight:900!important;
+}
+.uefy-video-copy:hover{background:#f4dd19!important}
+.uefy-video-copy:focus-visible{outline:3px solid #2479af;outline-offset:3px}
+@media(max-width:600px){
+ .uefy-video-copy{grid-column:1/-1;min-height:54px!important;font-size:14px!important}
+ .uefy-video-share{min-height:60px!important;padding:13px 10px!important}
+ .uefy-video-share-note{font-size:13px;line-height:1.6}
+}
+body.dark .uefy-video-copy{background:#faf9ef!important;color:#151a18!important}
