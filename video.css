@@ -142,3 +142,28 @@ body.dark .uefy-video-copy{background:#faf9ef!important;color:#151a18!important}
 .uefy-video-rehearsal:focus-visible{outline:3px solid #2479af;outline-offset:3px}
 body.dark .uefy-video-rehearsal{background:#f4dd19!important;color:#151a18!important;border-color:#f4dd19!important}
 @media(max-width:600px){.uefy-video-rehearsal{min-height:58px!important;font-size:14px!important}}
+
+
+/* O controle principal nunca deve parecer bloqueado antes do preparo do MP4. */
+.uefy-video-actions .uefy-video-share:not(:disabled){
+  background:#f4dd19!important;color:#151a18!important;
+  border:3px solid #151a18!important;min-height:58px!important;
+  box-shadow:4px 4px 0 #151a18!important;
+  font-weight:950!important;
+}
+.uefy-video-actions .uefy-video-share:not(:disabled):hover{background:#fff!important}
+.uefy-video-status{
+  display:block;margin:16px 0 12px;padding:13px 14px;
+  font-size:13px;line-height:1.6;font-weight:800;
+  background:#eaf0e6;color:#1a3527;border-left:5px solid #247846;
+  overflow-wrap:anywhere;
+}
+.uefy-video-status.is-warning{
+  color:#7e281d;background:#fff0e9;border-left-color:#ba4631;
+}
+body.dark .uefy-video-status{background:#273e32;color:#f5faef}
+body.dark .uefy-video-status.is-warning{background:#472d2a;color:#ffe3d9}
+@media(max-width:600px){
+ .uefy-video-actions .uefy-video-share:not(:disabled){min-height:62px!important;font-size:14px!important}
+ .uefy-video-status{font-size:13px;padding:12px}
+}
