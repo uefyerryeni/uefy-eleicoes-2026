@@ -133,7 +133,10 @@
       <button class="btn primary" id="openX">Publicar no X</button>
       <button class="btn" id="downloadImage">Baixar imagem</button>
       <button class="btn primary full" id="shareBundle">Compartilhar imagem + texto</button>
-    </div><p class="share-note">O modo <b>Completo</b> é o padrão e pode usar textos longos. No computador, “Publicar no X” abre o compositor e prepara o texto; a imagem é copiada para você colar com Ctrl+V. Se o texto for excepcionalmente grande, a Central copia o texto integral e abre o compositor sem truncar.</p>
+    </div>
+      <p class="share-status" id="shareStatus" role="status" aria-live="polite">No Brave: use “Compartilhar imagem + texto” para abrir o menu de aplicativos. Confira imagem e legenda antes de publicar.</p>
+      <a id="xManual" class="share-manual-link" href="https://x.com/compose/post" target="_blank" rel="noopener noreferrer" hidden>Abrir o X com o texto (anexar imagem manualmente)</a>
+      <p class="share-note">O modo <b>Completo</b> é o padrão e pode usar textos longos. No computador, “Publicar no X” abre o compositor e prepara o texto; a imagem é copiada para você colar com Ctrl+V. Se o texto for excepcionalmente grande, a Central copia o texto integral e abre o compositor sem truncar.</p>
   </aside>
 </section>
 
@@ -156,7 +159,8 @@
 <nav class="mobile-dock" aria-label="Acesso rápido"><a href="index.html">RN ao vivo</a><a href="presidencia.html" class="active">Presidência</a><a href="entre-turnos.html">Entre Turnos</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop">↑</button>
-<script src="app.js?v=20261024-motion6-video-mobile"></script>
+<script src="share-mobile.js?v=20261024-brave-publicacao" defer></script>
+ <script src="app.js?v=20261024-motion6-video-mobile"></script>
 <script src="video.js?v=20261024-motion6-video-mobile"></script>
 </body>
 </html>
