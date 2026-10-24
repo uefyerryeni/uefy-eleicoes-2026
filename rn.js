@@ -576,47 +576,75 @@ function drawCanvas(){
   if(mapPublicationMode){drawLeaderMapCanvas();return}
   if(!selectedFeature)return;
   const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=selectedFeature.properties.nome;
-  ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f5f2e9';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='#1b2523';ctx.fillRect(0,0,1080,18);
-  ctx.fillStyle='rgba(244,221,25,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
-  if(logo.complete)try{ctx.drawImage(logo,70,54,100,100)}catch{}
-  fitCanvasText(ctx,'Central das Eleições UEFY',190,112,450,34,27,'700','#17191c');
-  ctx.font='700 18px DM Sans,Segoe UI,Arial';ctx.fillText(mode==='sim'?'SIMULADO TSE':current.finalTotalization?'2º TURNO · RESULTADO FINAL':'2º TURNO · TSE',690,105);
-  drawFocusedMunicipality(ctx,selectedFeature,555,115,470,350);
-  ctx.fillStyle='#17191c';ctx.font='700 62px Space Grotesk,Segoe UI,Arial';ctx.fillText('2º turno 2026',70,235);
-  fitCanvasText(ctx,OFFICE[office].title,70,300,440,44,32,'700','#17191c');
-  fitCanvasText(ctx,name+' · RN',70,344,440,32,23,'600','#4d555d');
+  const INK='#151a18',CREAM='#f7f6ef',YELLOW='#f4dd19',MUTED='#515b56';
+  const waiting=mode==='demo', simulated=mode==='sim',final=!!current.finalTotalization;
+  const pctValue=Math.min(100,Math.max(0,Number(current.progress)||0));
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.globalAlpha=1;
+  ctx.clearRect(0,0,1080,1080);ctx.fillStyle=CREAM;ctx.fillRect(0,0,1080,1080);
 
-  if(mode==='demo'){
-    ctx.fillStyle='#58616a';ctx.font='600 24px DM Sans,Segoe UI,Arial';ctx.fillText('Candidaturas na base oficial',70,470);
-    ctx.fillStyle='#17191c';ctx.font='800 60px DM Sans,Segoe UI,Arial';ctx.fillText(String(current.candidates.length),70,535);
-    let yy=625;
-    current.candidates.slice(0,4).forEach(cand=>{
-      ctx.fillStyle='#25292e';ctx.font='700 29px DM Sans,Segoe UI,Arial';
-      ctx.fillText(cand.name.length>27?cand.name.slice(0,26)+'…':cand.name,70,yy);
-      const meta=[cand.number,cand.party].filter(Boolean).join(' · ');
-      ctx.fillStyle='#667079';ctx.font='600 20px DM Sans,Segoe UI,Arial';ctx.fillText(meta,70,yy+31);
-      yy+=82;
-    });
+  // Cabeçalho de identidade: mesma linguagem editorial da peça animada.
+  ctx.fillStyle=INK;ctx.fillRect(0,0,1080,155);
+  ctx.fillStyle=YELLOW;ctx.fillRect(0,0,1080,13);
+  fitCanvasText(ctx,'UEFY',60,112,305,96,78,'900',YELLOW);
+  ctx.fillStyle=YELLOW;ctx.fillRect(358,37,4,91);
+  fitCanvasText(ctx,'CENTRAL DAS ELEIÇÕES',390,82,620,34,28,'900',CREAM);
+  fitCanvasText(ctx,'2026  /  SEGUNDO TURNO',390,121,620,27,21,'700',YELLOW);
+
+  // Manchete e município, sem competir com os percentuais.
+  fitCanvasText(ctx,'GOVERNO DO RN',60,247,710,73,52,'900',INK);
+  fitCanvasText(ctx,String(name).toLocaleUpperCase('pt-BR')+'  /  RN',60,309,690,43,28,'800',MUTED);
+  drawFocusedMunicipality(ctx,selectedFeature,770,184,235,150);
+  const status=waiting?'CADASTRO / SEM APURAÇÃO':simulated?'SIMULADO / NÃO OFICIAL':final?'RESULTADO FINAL / TSE':'APURAÇÃO PARCIAL / TSE';
+  ctx.fillStyle=INK;ctx.fillRect(60,340,960,42);
+  fitCanvasText(ctx,status,80,369,910,23,18,'900',YELLOW);
+
+  // Faixa de apuração, separada da votação dos candidatos.
+  ctx.fillStyle=YELLOW;ctx.fillRect(60,403,960,104);
+  fitCanvasText(ctx,waiting?'CANDIDATURAS REGISTRADAS':'SEÇÕES TOTALIZADAS',83,438,520,25,20,'900',INK);
+  if(waiting){
+    fitCanvasText(ctx,String((current.candidates||[]).length),84,489,400,51,40,'900',INK);
+    fitCanvasText(ctx,'SEM VOTOS',680,473,285,30,24,'900',INK);
   }else{
-    ctx.fillStyle='#58616a';ctx.font='600 24px DM Sans,Segoe UI,Arial';ctx.fillText('Seções totalizadas',70,470);
-    ctx.fillStyle='#17191c';ctx.font='800 60px DM Sans,Segoe UI,Arial';ctx.fillText(fmtPct(current.progress),70,535);
-    ctx.fillStyle='#e0e5e9';roundRect(ctx,285,492,690,22,11);ctx.fill();
-    ctx.fillStyle='#f4dd19';roundRect(ctx,285,492,690*Math.min(100,current.progress)/100,22,11);ctx.fill();
-    let yy=620;
-    current.candidates.slice(0,4).forEach((cand,i)=>{
-      ctx.fillStyle='#25292e';ctx.font='700 29px DM Sans,Segoe UI,Arial';
-      ctx.fillText(cand.name.length>27?cand.name.slice(0,26)+'…':cand.name,70,yy);
-      ctx.fillStyle='#e3e7ea';roundRect(ctx,70,yy+23,700,21,11);ctx.fill();
-      ctx.fillStyle=candidateColor(cand.name,cand.number);roundRect(ctx,70,yy+23,700*Math.min(100,cand.pct)/100,21,11);ctx.fill();
-      ctx.fillStyle='#17191c';ctx.font='800 33px DM Sans,Segoe UI,Arial';ctx.textAlign='right';ctx.fillText(fmtPct(cand.pct),980,yy+6);ctx.textAlign='left';
-      yy+=82;
+    fitCanvasText(ctx,fmtPct(pctValue),83,489,400,61,46,'900',INK);
+    ctx.fillStyle='rgba(21,26,24,.18)';ctx.fillRect(520,460,450,15);
+    ctx.fillStyle=INK;ctx.fillRect(520,460,450*pctValue/100,15);
+  }
+
+  // Duelo central. Números grandes, nomes claros e barras por candidatura.
+  const rows=(current.candidates||[]).slice(0,2);
+  if(!rows.length){
+    ctx.fillStyle='#fff';ctx.fillRect(60,530,960,365);
+    ctx.strokeStyle='#c7ccc4';ctx.lineWidth=2;ctx.strokeRect(60,530,960,365);
+    fitCanvasText(ctx,'AGUARDANDO RESULTADOS DO TSE',95,660,885,47,30,'900',INK);
+    fitCanvasText(ctx,'Nenhum voto divulgado para este município.',95,719,870,27,21,'600',MUTED);
+  }else{
+    rows.forEach((cand,i)=>{
+      const y=530+i*192,color=candidateColor(cand.name,cand.number),value=Math.max(0,Math.min(100,Number(cand.pct)||0));
+      ctx.fillStyle='#fff';ctx.fillRect(60,y,960,176);
+      ctx.strokeStyle='#c4cbc4';ctx.lineWidth=2;ctx.strokeRect(60,y,960,176);
+      ctx.fillStyle=color;ctx.fillRect(60,y,16,176);
+      fitCanvasText(ctx,String(cand.name||'').toLocaleUpperCase('pt-BR'),105,y+63,600,43,30,'900',INK);
+      const info=[cand.number?'Nº '+cand.number:'',cand.party||''].filter(Boolean).join('  /  ');
+      fitCanvasText(ctx,info,107,y+102,585,23,17,'700',MUTED);
+      if(waiting){
+        fitCanvasText(ctx,'—',904,y+88,70,71,58,'900',INK);
+        fitCanvasText(ctx,'SEM RESULTADO',108,y+147,650,24,19,'800',MUTED);
+      }else{
+        ctx.textAlign='right';
+        fitCanvasText(ctx,fmtPct(value),975,y+97,270,74,54,'900',INK);
+        ctx.textAlign='left';
+        fitCanvasText(ctx,(Number(cand.votes)||0).toLocaleString('pt-BR')+' VOTOS',107,y+136,700,23,18,'800',MUTED);
+        ctx.fillStyle='#e0e5df';ctx.fillRect(107,y+151,868,12);
+        ctx.fillStyle=color;ctx.fillRect(107,y+151,868*value/100,12);
+      }
     });
   }
 
-  ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(70,965);ctx.lineTo(1010,965);ctx.stroke();
-  ctx.fillStyle='#58616a';ctx.font='600 20px DM Sans,Segoe UI,Arial';
-  ctx.fillText(mode==='demo'?'Base de candidaturas: Tribunal Superior Eleitoral':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral',70,1008);
-  ctx.textAlign='right';ctx.fillText(current.generatedAt||nowStamp(),1010,1008);ctx.textAlign='left';
+  // Rodapé compacto: procedência e carimbo de leitura.
+  ctx.fillStyle=INK;ctx.fillRect(60,943,960,3);
+  fitCanvasText(ctx,waiting?'CADASTRO OFICIAL DO TSE':simulated?'FONTE: SIMULADO TSE':'FONTE: TRIBUNAL SUPERIOR ELEITORAL',60,989,945,25,19,'900',INK);
+  fitCanvasText(ctx,(waiting?'SEM APURAÇÃO  /  ':final?'RESULTADO FINAL  /  ':'DADOS PARCIAIS  /  ')+
+    String(current.generatedAt||'HORÁRIO DA FONTE INDISPONÍVEL'),60,1029,950,23,17,'700',MUTED);
 }
 function flashRN(btn,t){if(!btn)return;const old=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=old,1800)}
 async function rnCanvasBlob(){
