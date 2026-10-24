@@ -501,6 +501,7 @@ function rnPublicationIsSafe(){
 function updateRnPublicationSafety(){
   const safe=rnPublicationIsSafe();
   ['#rnCopyText','#rnCopyImage','#rnOpenX','#rnDownload','#rnShareBundle'].forEach(sel=>{const el=$(sel);if(el)el.disabled=!safe});
+   if(!safe&&$('#rnXManual'))$('#rnXManual').hidden=true;
 }
 function renderCurrent(){
   const title=$('#rnResultTitle');
@@ -680,53 +681,54 @@ async function openRnXIntent(text,preopened=null){
   if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
   return useIntent;
 }
-async function shareRNImageAndText(openX=false,preopened=null){
-  if(!rnPublicationIsSafe()){if(preopened)preopened.close();flashRN(openX?$('#rnOpenX'):$('#rnShareBundle'),'Verificação necessária');return}
-  const text=$('#rnPostText').value,name=selectedFeature?.properties?.nome||'rn';
-  let blob;
-  try{blob=await rnCanvasBlob()}catch{if(preopened)preopened.close();flashRN(openX?$('#rnOpenX'):$('#rnShareBundle'),'Falha ao gerar imagem');return}
-  const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
-  let shareBlob=blob;
-  if(!desktop){
-    try{shareBlob=await rnShareJpegBlob()}catch{}
-  }
-  const file=new File([shareBlob],`uefy-eleicoes-rn-${norm(name)}.${shareBlob.type==='image/jpeg'?'jpg':'png'}`,{type:shareBlob.type||'image/png'});
-
-  if(openX&&desktop){
-    let copied=false;
-    try{
-      if(window.isSecureContext&&navigator.clipboard&&window.ClipboardItem){
-        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
-        copied=true;
-      }
-    }catch{}
-    const prefilled=await openRnXIntent(text,preopened);
-    flashRN($('#rnOpenX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”'):'Texto copiado · cole no X');
-    return;
-  }
-
-  if(!openX){
-    try{
-      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-        await navigator.share({title:'UEFY Eleições · Rio Grande do Norte',text,files:[file]});
-        if(preopened)preopened.close();
-        return;
-      }
-    }catch(err){if(err?.name==='AbortError'){if(preopened)preopened.close();return}}
-    try{
-      await copyRnImage();
-      flashRN($('#rnShareBundle'),'Imagem copiada · texto acima');
-    }catch{
-      flashRN($('#rnShareBundle'),'Use Copiar texto / Copiar imagem');
-    }
-    if(preopened)preopened.close();
-    return;
-  }
-
-  const prefilled=await openRnXIntent(text,preopened);
-  flashRN($('#rnOpenX'),prefilled?'X aberto com o texto':'Texto copiado · cole no X');
-}
-$('#rnMapPublish')?.addEventListener('click',()=>{
+function rnShareStatus(message,bad){
+   UEFYShare.notice('#rnShareStatus',message,bad);
+ }
+ function rnShareFallback(text){
+   const link=$('#rnXManual');
+   const encoded=encodeURIComponent(text);
+   link.href=encoded.length<6000?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';
+   link.hidden=false;
+   rnShareStatus('O Brave não enviou imagem e legenda juntas ao aplicativo. Use “Baixar imagem”, “Copiar texto” e, depois, “Abrir o X com o texto”. Confira tudo antes de publicar.',true);
+ }
+ function shareRNImageAndText(openX=false,preopened=null){
+   const btn=openX?$('#rnOpenX'):$('#rnShareBundle');
+   if(!rnPublicationIsSafe()){
+     if(preopened)preopened.close();flashRN(btn,'Verificação necessária');
+     rnShareStatus('Publicação bloqueada até os resultados oficiais do TSE serem conferidos.',true);
+     return Promise.resolve();
+   }
+   const text=$('#rnPostText').value;
+   const canvas=$('#rnCanvas');
+   const name=selectedFeature?.properties?.nome||'rn';
+   const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
+   $('#rnXManual').hidden=true;
+   // No Brave/Android e no compartilhamento geral a chamada é feita durante
+   // o clique. Nenhum await/toBlob antecede navigator.share.
+   if(!openX||!desktop){
+     const task=UEFYShare.send({canvas,text,
+       filename:'uefy-eleicoes-rn-'+norm(name)+'.jpg',
+       title:'Central das Eleições UEFY | RN'});
+     return task.then(out=>{
+       if(preopened)preopened.close();
+       if(out.status==='shared')rnShareStatus('Arquivo enviado ao menu do celular. Confira se a imagem e a legenda chegaram ao X; se só a imagem apareceu, toque em “Copiar texto” e cole no post.',false);
+       else if(out.status==='cancelled')rnShareStatus('Compartilhamento cancelado. A imagem e o texto seguem disponíveis aqui.',false);
+       else rnShareFallback(text);
+     });
+   }
+   // Desktop: mantém a abertura com texto e a cópia da imagem quando disponível.
+   return (async()=>{
+     try{
+       if(window.isSecureContext&&navigator.clipboard&&window.ClipboardItem){
+         const blob=await rnCanvasBlob();
+         await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+       }
+     }catch{}
+     const prefilled=await openRnXIntent(text,preopened);
+     rnShareStatus(prefilled?'O X abriu com texto; cole a imagem com Ctrl+V. Caso não funcione, baixe a imagem e anexe pelo editor.':'O X foi aberto. Copie o texto e anexe a imagem manualmente.',false);
+   })();
+ }
+ $('#rnMapPublish')?.addEventListener('click',()=>{
   if(mode!=='official'||!leaderMapData.publication_ready||leaderMapData.round!==2)return;
   mapPublicationMode=true;
   $('#rnPostText').value=mapPostText();
@@ -755,7 +757,12 @@ document.querySelectorAll('.text-mode-switch [data-text-mode]').forEach(b=>b.onc
 syncRnTextModeButtons();
 
 $('#rnPostText').oninput=e=>$('#rnChars').textContent=e.target.value.length+' caracteres';
-$('#rnCopyText').onclick=async()=>{if(!rnPublicationIsSafe())return flashRN($('#rnCopyText'),'Verificação necessária');try{await navigator.clipboard.writeText($('#rnPostText').value);flashRN($('#rnCopyText'),'Texto copiado!')}catch{flashRN($('#rnCopyText'),'Cópia bloqueada')}};
+$('#rnCopyText').onclick=async()=>{
+   if(!rnPublicationIsSafe())return flashRN($('#rnCopyText'),'Verificação necessária');
+   const ok=await UEFYShare.copyText($('#rnPostText').value,$('#rnPostText'));
+   flashRN($('#rnCopyText'),ok?'Texto copiado!':'Selecione e copie');
+   rnShareStatus(ok?'Texto copiado. Cole no editor do X após anexar a imagem.':'O Brave não liberou a cópia automática. O texto foi selecionado; use Copiar no menu do celular.',!ok);
+ };
 $('#rnCopyImage').onclick=async()=>{if(!rnPublicationIsSafe())return flashRN($('#rnCopyImage'),'Verificação necessária');try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
 $('#rnDownload').onclick=()=>{if(!rnPublicationIsSafe())return flashRN($('#rnDownload'),'Verificação necessária');const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
 $('#rnOpenX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareRNImageAndText(true,w)};
