@@ -427,7 +427,22 @@
       var blob=await promise;
       finishVideo(blob,snapshot,tweet);
     } catch(e) {
-      setStatus('Não foi possível gerar o MP4 neste aparelho: '+String(e&&e.message||e)+'. Abra o link diretamente no Chrome ou Samsung Internet atualizado e tente novamente.',true);
+      if(nativeMp4 && webCodecs){
+        // Alguns celulares declaram MP4 nativo, mas a gravação falha. Tenta H.264 WebCodecs.
+        try{
+          if(raf){cancelAnimationFrame(raf);raf=null;}
+          if(timer){clearTimeout(timer);timer=null;}
+          if(recorder && recorder.state!=='inactive')try{recorder.stop();}catch(_){}
+          if(stream)stream.getTracks().forEach(function(track){track.stop();});
+          setStatus('A gravação MP4 nativa falhou. Testando a codificação H.264 alternativa do celular.',false);
+          var alternate=await webCodecsMp4(snapshot);
+          finishVideo(alternate,snapshot,tweet);
+        }catch(second){
+          setStatus('Não foi possível gerar MP4 neste celular: '+String(second&&second.message||second)+'. Tente Chrome ou Samsung Internet atualizado, fora do navegador interno de outro aplicativo.',true);
+        }
+      }else{
+        setStatus('Não foi possível gerar MP4 neste aparelho: '+String(e&&e.message||e)+'. Tente Chrome ou Samsung Internet atualizado, fora do navegador interno de outro aplicativo.',true);
+      }
     } finally {
       finished=true;
       if (raf) cancelAnimationFrame(raf);
