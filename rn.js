@@ -484,7 +484,8 @@ async function loadRemote(){
   finally{rnLoading=false;$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar';$('#publicacao')?.classList.remove('loading-municipality')}
 }
 function rnPublicationIsSafe(){
-  if(mapPublicationMode)return mode==='official'&&!!leaderMapData?.publication_ready;
+  if(mode==='official'&&!inSecondRoundPollingWindow())return false;
+  if(mapPublicationMode)return mode==='official'&&!!leaderMapData?.publication_ready&&leaderMapData.round===2&&String(leaderMapData.election_id)==='6260'&&Number(leaderMapData.municipalities_read)===167;
   const selected=selectedFeature?.properties?.nome||'';
   const sameMunicipality=norm(current?.municipality)===norm(selected);
   if(!sameMunicipality||!(current?.candidates||[]).length)return false;
