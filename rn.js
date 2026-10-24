@@ -314,14 +314,20 @@ function mapPostText(){
   return lines.join('\n');
 }
 function drawLeaderMapCanvas(){
-  const c=$('#rnCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f5f2e9';ctx.fillRect(0,0,1080,1080);ctx.fillStyle='#1b2523';ctx.fillRect(0,0,1080,18);
-  ctx.fillStyle='rgba(244,221,25,.13)';ctx.beginPath();ctx.arc(1010,80,330,0,Math.PI*2);ctx.fill();
-  if(logo.complete)try{ctx.drawImage(logo,70,54,100,100)}catch{}
-  fitCanvasText(ctx,'Central das Eleições UEFY',190,112,520,34,27,'700','#17191c');
+  const c=$('#rnCanvas'),ctx=c.getContext('2d');
+  ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.globalAlpha=1;
+  ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f7f6ef';ctx.fillRect(0,0,1080,1080);
+  ctx.fillStyle='#151a18';ctx.fillRect(0,0,1080,155);
+  ctx.fillStyle='#f4dd19';ctx.fillRect(0,0,1080,13);
+  fitCanvasText(ctx,'UEFY',60,112,305,96,78,'900','#f4dd19');
+  ctx.fillStyle='#f4dd19';ctx.fillRect(358,37,4,91);
+  fitCanvasText(ctx,'CENTRAL DAS ELEIÇÕES',390,82,620,34,28,'900','#f7f6ef');
+  fitCanvasText(ctx,'2026  /  SEGUNDO TURNO',390,121,620,27,21,'700','#f4dd19');
   const outcome=leaderMapData?.outcome||{};
   const canvasStatus=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
-  ctx.font='700 18px DM Sans,Segoe UI,Arial';ctx.fillText(canvasStatus,70,190);
-  ctx.font='700 52px Space Grotesk,Segoe UI,Arial';ctx.fillText('GOVERNO DO RN',70,260);
+  ctx.fillStyle='#151a18';ctx.fillRect(70,165,435,43);
+  fitCanvasText(ctx,canvasStatus,87,194,402,24,17,'900','#f4dd19');
+  fitCanvasText(ctx,'GOVERNO DO RN',70,271,900,63,48,'900','#151a18');
   const filteredSummary=selectedLeaderSummary();
   ctx.fillStyle='#59626b';ctx.font='600 25px DM Sans,Segoe UI,Arial';ctx.fillText(filteredSummary?'Municípios onde '+filteredSummary.name+' lidera':'Quem lidera em cada município',70,305);
   const proj=projector(fc,650,520,8);ctx.save();ctx.translate(40,350);
