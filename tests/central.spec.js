@@ -340,7 +340,9 @@ test('vídeo para Twitter existe em ambas as páginas, com prévia sem números 
     officialReady:window.__uefyVideo.officialReady,
     isRN:window.__uefyVideo.isRN
   }));
-  expect(rnVideo).toEqual({duration:12000,officialReady:false,isRN:true});
+  expect(rnVideo).toEqual({duration:8000,officialReady:false,isRN:true});
+  expect(await page.evaluate(()=>window.__uefyVideo.revealEnd)).toBe(1450);
+  await expect(page.locator('#uefyVideoCounter')).toContainText('00:08');
   await page.locator('#uefyVideoExport').click();
   await expect(page.locator('#uefyVideoStatus')).toContainText('Exportação bloqueada');
   await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
@@ -413,4 +415,25 @@ test('capa do Motion v2 é legível no celular sem rolagem horizontal',async ({p
   expect(result.studioWidth).toBeLessThanOrEqual(result.viewportWidth+2);
   expect(result.whiteButtonBackground).toBe('rgb(255, 255, 255)');
   expect(result.text).toContain('Twitter');
+});
+
+test('PNG editorial mantém a identidade em RN e Presidência',async({page})=>{
+  await readyRN(page);
+  const rnColors=await page.evaluate(()=>{
+    const ctx=document.querySelector('#rnCanvas').getContext('2d');
+    return {top:[...ctx.getImageData(9,7,1,1).data].slice(0,3),
+      masthead:[...ctx.getImageData(10,80,1,1).data].slice(0,3),
+      tally:[...ctx.getImageData(61,408,1,1).data].slice(0,3)};
+  });
+  expect(rnColors.top).toEqual([244,221,25]);
+  expect(rnColors.masthead).toEqual([21,26,24]);
+  expect(rnColors.tally).toEqual([244,221,25]);
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  const pres=await page.evaluate(()=>{
+    const ctx=document.querySelector('#shareCanvas').getContext('2d');
+    return {top:[...ctx.getImageData(9,7,1,1).data].slice(0,3),
+      masthead:[...ctx.getImageData(10,80,1,1).data].slice(0,3)};
+  });
+  expect(pres.top).toEqual([244,221,25]);
+  expect(pres.masthead).toEqual([21,26,24]);
 });
