@@ -202,7 +202,8 @@ async function reconcileResult(result,office){
 async function loadRemote({silent=false}={}){
   if(remoteLoading)return;
   remoteLoading=true;
-  const previous=state[selectedOffice];
+  const requestKey=selectedOffice+'|'+selectedScope+'|'+mode;
+  const previous=state[selectedOffice]?.requestKey===requestKey?state[selectedOffice]:null;
   if(!silent){$('#statusTitle').textContent='Consultando o TSE…';$('#statusText').textContent='Carregando '+MODE_LABELS[mode]+' para '+scopeLabel()+'.'}
   $('#refreshBtn').textContent='Carregando…';$('#refreshBtn').disabled=true;
   try{
@@ -214,6 +215,8 @@ async function loadRemote({silent=false}={}){
       const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store'});if(!r.ok)throw new Error(r.status);result=parseEA20(await r.json());
     }
     if(mode==='official')result=await reconcileResult(result,selectedOffice);
+    if(requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return;
+    result.requestKey=requestKey;
     state[selectedOffice]=result;lastSuccessfulFetch=new Date();
     if(mode==='sim'){
       $('#statusTitle').textContent='Simulado TSE carregado';
@@ -231,9 +234,10 @@ async function loadRemote({silent=false}={}){
     }
     renderAll();
   }catch(e){
+    if(requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return;
     const notPublished=mode==='official'&&String(e?.message||e).includes('404');
     const hasPrevious=previous?.candidates?.length;
-    if(hasPrevious)state[selectedOffice]=previous;
+    state[selectedOffice]=hasPrevious?previous:{progress:0,candidates:[],requestKey};
     $('#statusTitle').textContent=notPublished?'Resultado oficial ainda não disponível':'Consulta ao TSE indisponível';
     $('#statusText').textContent=hasPrevious
       ?'Mantendo o último resultado válido ('+(previous.generatedAt||'horário anterior')+'). A nova consulta falhou; nenhum dado foi zerado ou substituído.'
@@ -241,11 +245,14 @@ async function loadRemote({silent=false}={}){
     renderAll();
   }finally{
     remoteLoading=false;$('#refreshBtn').textContent='Atualizar dados';$('#refreshBtn').disabled=false;
+    if(requestKey!==selectedOffice+'|'+selectedScope+'|'+mode){loadRemote();return;}
     updateAutoRefreshLabel();
   }
 }
 function publicationIsSafe(){
   const d=state[selectedOffice];
+  if(d?.requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return false;
+  if(mode==='official'&&!inSecondRoundPollingWindow())return false;
   if(!(d?.candidates||[]).length)return false;
   if(mode==='official'&&(d?.integrity?.error||Number(d?.integrity?.unmatched||0)>0))return false;
   return true;
