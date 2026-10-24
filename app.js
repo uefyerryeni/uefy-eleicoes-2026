@@ -251,10 +251,10 @@ async function loadRemote({silent=false}={}){
 }
 function publicationIsSafe(){
   const d=state[selectedOffice];
+  if(mode!=='official'||!inSecondRoundPollingWindow())return false;
   if(d?.requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return false;
-  if(mode==='official'&&!inSecondRoundPollingWindow())return false;
   if(!(d?.candidates||[]).length)return false;
-  if(mode==='official'&&(d?.integrity?.error||Number(d?.integrity?.unmatched||0)>0))return false;
+  if(d?.integrity?.error||Number(d?.integrity?.unmatched||0)>0)return false;
   return true;
 }
 function updateAutoRefreshLabel(){
@@ -544,52 +544,50 @@ async function openXIntent(text,preopened=null){
   if(preopened){preopened.opener=null;preopened.location.href=url}else window.open(url,'_blank','noopener,noreferrer');
   return useIntent;
 }
-async function shareImageAndText(openX=false,preopened=null){
-  if(!publicationIsSafe()){if(preopened)preopened.close();flash(openX?$('#openX'):$('#shareBundle'),'Verificação necessária');return}
-  const canvas=$('#shareCanvas'),text=$('#postText').value;
-  let blob;
-  try{blob=await canvasPngBlob(canvas)}catch{if(preopened)preopened.close();flash(openX?$('#openX'):$('#shareBundle'),'Falha ao gerar imagem');return}
-  const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
-  let shareBlob=blob;
-  if(!desktop){
-    try{shareBlob=await canvasShareJpegBlob(canvas)}catch{}
-  }
-  const file=new File([shareBlob],`uefy-eleicoes-2026-${selectedOffice}.${shareBlob.type==='image/jpeg'?'jpg':'png'}`,{type:shareBlob.type||'image/png'});
-
-  if(openX&&desktop){
-    let copied=false;
-    try{
-      if(window.isSecureContext&&navigator.clipboard&&window.ClipboardItem){
-        await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
-        copied=true;
-      }
-    }catch{}
-    const prefilled=await openXIntent(text,preopened);
-    flash($('#openX'),prefilled?(copied?'Imagem copiada · cole com Ctrl+V':'X aberto · use “Copiar imagem”'):'Texto copiado · cole no X');
-    return;
-  }
-
-  if(!openX){
-    try{
-      if(navigator.share&&navigator.canShare&&navigator.canShare({files:[file]})){
-        await navigator.share({title:'UEFY Eleições',text,files:[file]});
-        if(preopened)preopened.close();
-        return;
-      }
-    }catch(err){if(err?.name==='AbortError'){if(preopened)preopened.close();return}}
-    try{
-      await copyCanvasImage(canvas);
-      flash($('#shareBundle'),'Imagem copiada · texto acima');
-    }catch{
-      flash($('#shareBundle'),'Use Copiar texto / Copiar imagem');
-    }
-    if(preopened)preopened.close();
-    return;
-  }
-
-  const prefilled=await openXIntent(text,preopened);
-  flash($('#openX'),prefilled?'X aberto com o texto':'Texto copiado · cole no X');
-}$('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();loadRemote()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
+function publicationShareStatus(message,bad){
+   UEFYShare.notice('#shareStatus',message,bad);
+ }
+ function publicationShareFallback(text){
+   const link=$('#xManual');
+   const encoded=encodeURIComponent(text);
+   link.href=encoded.length<6000?'https://twitter.com/intent/tweet?text='+encoded:'https://x.com/compose/post';
+   link.hidden=false;
+   publicationShareStatus('O Brave não enviou imagem e legenda juntas ao aplicativo. Use “Baixar imagem”, “Copiar texto” e “Abrir o X com o texto”. Confira ambos antes de publicar.',true);
+ }
+ function shareImageAndText(openX=false,preopened=null){
+   const btn=openX?$('#openX'):$('#shareBundle');
+   if(!publicationIsSafe()){
+     if(preopened)preopened.close();flash(btn,'Verificação necessária');
+     publicationShareStatus('Publicação bloqueada até o TSE disponibilizar dados conferidos para este recorte.',true);
+     return Promise.resolve();
+   }
+   const canvas=$('#shareCanvas'),text=$('#postText').value;
+   const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
+   $('#xManual').hidden=true;
+   if(!openX||!desktop){
+     // Web Share API deve ocorrer no gesto original; não usar await/toBlob antes.
+     const task=UEFYShare.send({canvas,text,
+       filename:'uefy-eleicoes-2026-'+selectedOffice+'.jpg',
+       title:'Central das Eleições UEFY'});
+     return task.then(out=>{
+       if(preopened)preopened.close();
+       if(out.status==='shared')publicationShareStatus('Arquivo entregue ao menu do celular. Confira se a imagem e o texto chegaram ao X. Se só a imagem foi recebida, toque em “Copiar texto” e cole a legenda.',false);
+       else if(out.status==='cancelled')publicationShareStatus('Compartilhamento cancelado. Você pode tentar novamente.',false);
+       else publicationShareFallback(text);
+     });
+   }
+   return (async()=>{
+     try{
+       if(window.isSecureContext&&navigator.clipboard&&window.ClipboardItem){
+         const blob=await canvasPngBlob(canvas);
+         await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);
+       }
+     }catch{}
+     const prefilled=await openXIntent(text,preopened);
+     publicationShareStatus(prefilled?'O X abriu com o texto. Cole a imagem com Ctrl+V ou baixe a arte e anexe manualmente.':'O X abriu; copie o texto e anexe a imagem pelo editor.',false);
+   })();
+ }
+ $('#officeSelect').onchange=e=>selectOffice(e.target.value);$('#scopeSelect').onchange=e=>{selectedScope=e.target.value;updateScopeMap();updateCardVisibility();loadRemote()};$$('[data-pick]').forEach(b=>b.onclick=()=>selectOffice(b.dataset.pick));
 $('#modeSelect').value=mode;$('#modeSelect').onchange=e=>{mode=e.target.value;loadRemote();updateAutoRefreshLabel()};$('#refreshBtn').onclick=()=>loadRemote();
 
 function syncTextModeButtons(){
@@ -603,7 +601,12 @@ $$('.text-mode-switch [data-text-mode]').forEach(b=>b.onclick=()=>{
 syncTextModeButtons();
 
 $('#postText').oninput=e=>$('#charCount').textContent=e.target.value.length+' caracteres';
-$('#copyText').onclick=async()=>{if(!publicationIsSafe())return flash($('#copyText'),'Verificação necessária');try{await navigator.clipboard.writeText($('#postText').value);flash($('#copyText'),'Texto copiado!')}catch{flash($('#copyText'),'Cópia bloqueada')}};
+$('#copyText').onclick=async()=>{
+   if(!publicationIsSafe())return flash($('#copyText'),'Verificação necessária');
+   const ok=await UEFYShare.copyText($('#postText').value,$('#postText'));
+   flash($('#copyText'),ok?'Texto copiado!':'Selecione e copie');
+   publicationShareStatus(ok?'Texto copiado. Cole a legenda após anexar a imagem no X.':'O Brave não autorizou a cópia automática. O texto foi selecionado para você copiar manualmente.',!ok);
+ };
 $('#copyImage').onclick=async()=>{try{await copyCanvasImage($('#shareCanvas'));flash($('#copyImage'),'Imagem copiada!')}catch{flash($('#copyImage'),'Cópia bloqueada')}};
 $('#downloadImage').onclick=()=>{const a=document.createElement('a');a.download='uefy-eleicoes-2026-'+selectedOffice+'.png';a.href=$('#shareCanvas').toDataURL('image/png');a.click()};
 $('#openX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareImageAndText(true,w)};
