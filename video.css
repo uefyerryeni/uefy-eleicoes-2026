@@ -118,6 +118,7 @@ body.dark .uefy-video-heading h3{color:#f7f6ef}
   font-weight:900!important;
   letter-spacing:.012em;
 }
+.uefy-video-demo-toggle[hidden]{display:none!important}
 .uefy-video-demo-toggle:hover,
 .uefy-video-demo-toggle[aria-pressed="true"]{
   background:#f4dd19!important;
