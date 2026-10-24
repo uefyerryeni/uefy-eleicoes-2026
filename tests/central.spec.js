@@ -463,7 +463,13 @@ test('Motion permite um ensaio fictício sem alterar ou liberar a apuração ofi
     officialReady:window.__uefyVideo.officialReady,
     sim:window.__uefyVideo.simulationMode,
     numbers:window.__uefyVideo.simulationNumbers,
+    rows:window.__uefyVideo.simulationRows,
     post:window.__uefyVideo.simulatedPostText,
+    canvas:(()=>{
+      const ctx=document.querySelector('#uefyVideoCanvas').getContext('2d');
+      const rgb=(x,y)=>Array.from(ctx.getImageData(x,y,1,1).data).slice(0,3);
+      return {redLead:rgb(540,560),blueRunnerTrack:rgb(540,761)};
+    })(),
     canShare:window.__uefyVideo.canShare,
     selectedMunicipality:selectedFeature.properties.nome,
     mode
@@ -471,6 +477,13 @@ test('Motion permite um ensaio fictício sem alterar ou liberar a apuração ofi
   expect(simulated.officialReady).toBeFalsy();
   expect(simulated.sim).toBeTruthy();
   expect(simulated.numbers).toEqual([53.8,46.2]);
+  expect(simulated.rows.map(x=>x.name)).toEqual(['CANDIDATURA BETA','CANDIDATURA ALFA']);
+  expect(simulated.rows.map(x=>x.color)).toEqual(['#d62828','#1976d2']);
+  expect(simulated.rows[0].pct).toBeGreaterThan(simulated.rows[1].pct);
+  expect(simulated.canvas.redLead).toEqual([214,40,40]);
+  expect(simulated.canvas.blueRunnerTrack).toEqual([212,218,208]);
+  expect(simulated.post).toContain('Candidatura Beta (Partido Fictício Vermelho): 53,8%');
+  expect(simulated.post).toContain('Candidatura Alfa (Partido Fictício Azul): 46,2%');
   expect(simulated.post).toContain('DADOS FICTÍCIOS');
   expect(simulated.post).toContain('NÃO apresenta resultados reais');
   expect(simulated.post).not.toContain('Fonte: TSE');
@@ -492,11 +505,15 @@ test('ensaio fictício do Motion funciona também na página da Presidência',as
     sim:window.__uefyVideo.simulationMode,
     officialReady:window.__uefyVideo.officialReady,
     values:window.__uefyVideo.simulationNumbers,
+    rows:window.__uefyVideo.simulationRows,
     text:window.__uefyVideo.simulatedPostText
   }));
   expect(state.sim).toBeTruthy();
   expect(state.officialReady).toBeFalsy();
   expect(state.values).toEqual([53.8,46.2]);
+  expect(state.rows.map(x=>x.color)).toEqual(['#d62828','#1976d2']);
+  expect(state.rows[0].pct).toBeGreaterThan(state.rows[1].pct);
+  expect(state.text).toContain('Candidatura Beta (Partido Fictício Vermelho): 53,8%');
   expect(state.text).toContain('TESTE TÉCNICO');
   await expect(page.locator('#uefyVideoShare')).toBeDisabled();
 });
