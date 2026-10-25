@@ -2,6 +2,9 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const LOGO_URL='https://uefyerryeni.github.io/uefyerryeni-logo.png';
 const MODE_LABELS={sim:'simulado TSE',official:'oficial TSE'};
 const AUTO_REFRESH_MS=60000;
+// Identidade cromática presidencial estável por número, nunca por colocação.
+const PRESIDENT_COLORS=Object.freeze({'13':'#d62828','22':'#86bce8'});
+function presidentialCandidateColor(number){return PRESIDENT_COLORS[String(number)]||'#b4bfb7'}
 let remoteLoading=false,autoRefreshTimer=null,lastSuccessfulFetch=null;
 const REGION_STATES={
   reg_norte:['ac','ap','am','pa','ro','rr','to'],
@@ -324,7 +327,7 @@ function renderRows(k){
       const meta=[c.number,c.party].filter(Boolean).map(esc).join(' · ');
       const tag=k===selectedOffice?candidateOfficialTag(state[k],c,k,selectedScope):'';
       const chip=tag?'<span class="status-chip outcome">'+esc(tag)+'</span>':'';
-      return '<div class="candidate-row'+(tag?' outcome-row':'')+'"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(meta?' <small>'+meta+'</small>':'')+chip+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct||0)+'%"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>';
+      return '<div class="candidate-row'+(tag?' outcome-row':'')+'"><span class="name" title="'+esc(c.name)+'">'+esc(c.name)+(meta?' <small>'+meta+'</small>':'')+chip+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct||0)+'%;background:'+presidentialCandidateColor(c.number)+'"></i></span><span class="pct">'+fmtPct(c.pct)+'</span></div>';
     }).join(''):'<div class="empty-state">Nenhum resultado disponível para este recorte.</div>';
   }
   if(small){
@@ -523,7 +526,7 @@ function drawCanvas(){
     fitCanvasText(ctx,'Os números serão apresentados após a divulgação oficial.',95,719,870,27,20,'600',MUTED);
   }else{
     rows.forEach((cand,i)=>{
-      const y=530+i*192,color=i===0?YELLOW:'#b4bfb7';
+      const y=530+i*192,color=presidentialCandidateColor(cand.number);
       const value=Math.max(0,Math.min(100,Number(cand.pct)||0));
       ctx.fillStyle='#fff';ctx.fillRect(60,y,960,176);
       ctx.strokeStyle='#c4cbc4';ctx.lineWidth=2;ctx.strokeRect(60,y,960,176);
