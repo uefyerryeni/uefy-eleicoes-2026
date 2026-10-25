@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, sys, urllib.request
+import json, sys, urllib.request, time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -11,10 +11,17 @@ CONFIG26=f'{BASE26}/{FED26}/config/mun-e{FED26_PAD}-cm.json'
 OUT=Path(__file__).resolve().parents[1]/'data'/'rn-analises.json'
 TZ=timezone(timedelta(hours=-3))
 
-def fetch_json(url,timeout=25):
+def fetch_json(url,timeout=30,retries=4):
+    """Tentativas limitadas para erros transitórios de rede/TLS do TSE."""
     req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 UEFY-Eleicoes/1.0'})
-    with urllib.request.urlopen(req,timeout=timeout) as r:
-        return json.loads(r.read().decode('utf-8-sig'))
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(req,timeout=timeout) as r:
+                return json.loads(r.read().decode('utf-8-sig'))
+        except (OSError, TimeoutError, urllib.error.URLError):
+            if attempt==retries-1:
+                raise
+            time.sleep(2*(attempt+1))
 
 def num(v):
     try:return int(float(str(v or '0').replace('.','').replace(',','.')))
@@ -116,6 +123,13 @@ def write_if_changed(data):
     def comparable(obj):
         if not isinstance(obj,dict): return obj
         return {k:v for k,v in obj.items() if k!='generated_at'}
+    # Nunca trocar uma coleta de 167 municípios por uma coleta parcial quando
+    # o TSE falhar temporariamente em algum município.
+    if old and old.get('municipalities_read')==167 and not old.get('errors') and (
+        data.get('municipalities_read')!=167 or data.get('errors')
+    ):
+        print('Coleta parcial: preservando último snapshot completo de 167 municípios.')
+        return False
     if old is not None and comparable(old)==comparable(data):
         print('Sem mudança material nas análises; snapshot preservado.')
         return False
@@ -150,7 +164,7 @@ def main():
         g=fetch_json(url26(m['code'],'gov'))
         return m,p,g
 
-    with ThreadPoolExecutor(max_workers=8) as ex:
+    with ThreadPoolExecutor(max_workers=4) as ex:
         futs={ex.submit(one,m):m for m in mun}
         for f in as_completed(futs):
             m=futs[f]
