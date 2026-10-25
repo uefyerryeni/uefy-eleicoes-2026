@@ -290,7 +290,10 @@
     overlay.hidden=!snapshot.demo;
     playBtn.disabled=true;
     playBtn.textContent='Reproduzindo…';
-    setStatus(snapshot.demo?'Prévia de identidade visual sem votos. O MP4 oficial fica bloqueado até o TSE divulgar resultados conferidos.':
+    setStatus(snapshot.demo?
+      ((!rn&&presidentialBallot)?'Prévia com candidaturas do segundo turno conferidas na base oficial TSE. Sem votos ou percentuais. ':
+       'Prévia de identidade visual sem votos. ')+
+      'O MP4 com resultados continua bloqueado até a divulgação oficial.':
       'Prévia com dados oficiais capturados nesta consulta: '+snapshot.stamp+'.',false);
     var start=performance.now();
     function frame(now) {
