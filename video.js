@@ -156,7 +156,7 @@
       // A definição estadual só vale para o vídeo do estado, nunca é
       // propagada indevidamente à publicação de um município específico.
       if(rnVideoScope==='state') {
-        var marked=rows.filter(function(c){return c.elected==='s'||/^eleito(?:\\b|\\s|$)/i.test(String(c.totalizationStatus||'').trim());});
+        var marked=rows.filter(function(c){return c.elected==='s'||/^eleito\b/i.test(String(c.totalizationStatus||'').trim());});
         var mathDefined=String(source.mathematicallyDefined||'').toLowerCase()==='e';
         var selected=marked.length===1?marked[0]:(mathDefined?rows[0]:null);
         officialWinner=!!selected&&marked.length<=1&&(mathDefined||source.finalTotalization===true)&&

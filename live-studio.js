@@ -54,7 +54,7 @@ function colorOf(number,key){
 function officialElectedCandidate(data,candidates,final){
  const mathematicallyDefined=String(data.md||'').trim().toLowerCase()==='e';
  if(!mathematicallyDefined&&!final)return null;
- const marked=candidates.filter(c=>c.elected==='s'||/^eleito(?:\\b|\\s|$)/i.test(c.totalizationStatus.trim()));
+ const marked=candidates.filter(c=>c.elected==='s'||/^eleito\b/i.test(c.totalizationStatus.trim()));
  if(marked.length>1)return null;
  const selected=marked.length===1?marked[0]:(mathematicallyDefined?candidates[0]:null);
  if(!selected||Number(selected.votes)<=0||Number(selected.votes)<Number(candidates[0].votes))return null;
