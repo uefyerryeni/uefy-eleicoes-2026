@@ -36,7 +36,7 @@ jobs:
         run: python scripts/qa_static.py
 
       - name: Sintaxe JavaScript
-        run: node --check video.js && node --check share-mobile.js && node --check election-integrity.js && node --check app-primeiro-turno.js && node --check app.js && node --check rn.js && node --check radar.js && node --check analises.js && node --check entre-turnos.js && node --check mudancas-rn.js
+        run: node --check live-studio.js && node --check video.js && node --check share-mobile.js && node --check election-integrity.js && node --check app-primeiro-turno.js && node --check app.js && node --check rn.js && node --check radar.js && node --check analises.js && node --check entre-turnos.js && node --check mudancas-rn.js
 
       - name: Instalar testes de navegador
         run: npm install
