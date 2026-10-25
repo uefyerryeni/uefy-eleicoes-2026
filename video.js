@@ -19,6 +19,7 @@
   studio.id = 'uefyVideoStudio';
   studio.setAttribute('aria-labelledby', 'uefyVideoTitle');
   studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
+    (rn?'<div class="uefy-video-scope-row"><label for="uefyVideoScope">Abrangência do vídeo</label><select id="uefyVideoScope"><option value="state">Rio Grande do Norte inteiro (padrão)</option><option value="municipal">Município selecionado</option></select><p id="uefyVideoScopeHelp">A publicação inicial usa a totalização oficial de todo o RN, não apenas Natal.</p></div>':'') +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
     '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo oficial MP4</button><button class="btn uefy-video-rehearsal" id="uefyVideoRehearsal" type="button">Testar publicação sem votos (MP4)</button><button class="btn uefy-video-copy" id="uefyVideoCopy" type="button">Copiar texto da publicação</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button">1/2 · Preparar MP4 para compartilhar</button></div>' +
@@ -38,12 +39,40 @@
   var count = studio.querySelector('#uefyVideoCounter');
   var progress = studio.querySelector('#uefyVideoProgress');
   var overlay = studio.querySelector('#uefyVideoOverlay');
+  var rnScopeSelect=studio.querySelector('#uefyVideoScope');
   var result = studio.querySelector('#uefyVideoResult');
   var player = studio.querySelector('#uefyVideoPlayer');
   var download = studio.querySelector('#uefyVideoDownload');
   studio.querySelector('.uefy-video-actions').before(status);
   var previewId = 0, busy = false, lastUrl = null;
   var lastBlob = null, lastRecord = null, lastTweet = '';
+  var rnVideoScope='state',rnStateResult=null,rnStateFetching=null,rnStateError='';
+  var RN_TOTAL_URL='https://resultados.tse.jus.br/oficial/ele2026/6260/dados/rn/rn-c0003-e006260-u.json';
+  async function refreshRnState(){
+    if(!rn||rnVideoScope!=='state'||!inSecondRoundPollingWindow())return false;
+    if(rnStateFetching)return rnStateFetching;
+    rnStateFetching=(async function(){
+      rnStateResult=null;
+      const response=await fetch(RN_TOTAL_URL,{cache:'no-store'});
+      if(!response.ok)throw new Error('EA20 estadual indisponível (HTTP '+response.status+').');
+      const body=await response.json();
+      if(!body||!Array.isArray(body.carg))throw new Error('Arquivo EA20 estadual inválido.');
+      const d=await reconcileRnResult(parseEA20(body));
+      if((d.candidates||[]).length!==2||
+         !['13','44'].every(n=>d.candidates.some(c=>String(c.number)===n))||
+         !d.integrity||d.integrity.error||d.integrity.unmatched!==0||
+         d.integrity.total!==d.candidates.length||d.integrity.matched!==d.candidates.length||
+         !(Number(d.progress)>0)||!d.candidates.every(c=>c.matched&&Number(c.votes)>0))
+        throw new Error('O total estadual ainda não possui dois resultados conciliados com a base do TSE.');
+      rnStateResult=d;rnStateError='';
+      return true;
+    })().catch(function(e){
+      rnStateResult=null;rnStateError=String(e?.message||e);
+      setStatus('RN estadual: '+rnStateError+' A Central não substituirá os dados estaduais por Natal.',true);
+      return false;
+    }).finally(function(){rnStateFetching=null;});
+    return rnStateFetching;
+  }
   // Conferência TSE 2º turno presidencial, 05/10 e propostas para 25/10:
   // https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026-segundo-turno/planos-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026-2-turno
   // Os nomes vêm da base local do TSE, não são criados pelo Motion.
@@ -90,11 +119,15 @@
   function safeRecord() {
     if (typeof mode === 'undefined' || mode !== 'official') return null;
     if (typeof inSecondRoundPollingWindow !== 'function' || !inSecondRoundPollingWindow()) return null;
-    if (rn && typeof mapPublicationMode !== 'undefined' && mapPublicationMode) return null;
-    var source = rn ? (typeof current === 'undefined' ? null : current)
+    if (rn && rnVideoScope==='municipal' && typeof mapPublicationMode !== 'undefined' && mapPublicationMode)return null;
+    var source = rn ? (rnVideoScope==='state'?rnStateResult:
+      (typeof current === 'undefined' ? null : current))
       : (typeof state === 'undefined' || typeof selectedOffice === 'undefined' ? null : state[selectedOffice]);
     if (!source || !Array.isArray(source.candidates) || source.candidates.length < 2) return null;
-    var valid = rn ? (typeof rnPublicationIsSafe === 'function' && rnPublicationIsSafe())
+    var valid = rn ? (rnVideoScope==='state'
+      ? !!rnStateResult&&rnStateResult===source&&
+        ['13','44'].every(n=>source.candidates.some(c=>String(c.number)===n))
+      : (typeof rnPublicationIsSafe === 'function' && rnPublicationIsSafe()))
       : (typeof publicationIsSafe === 'function' && publicationIsSafe());
     if (!valid || !source.integrity || source.integrity.error ||
         Number(source.integrity.unmatched) !== 0 ||
@@ -107,7 +140,8 @@
         (!x.voteDestination || /^(válido|valido)$/i.test(String(x.voteDestination).trim()));
     }).slice().sort(function (a,b) {return Number(b.votes)-Number(a.votes);});
     if (rows.length < 2 || rows[0].number === rows[1].number) return null;
-    var label = rn ? (selectedFeature && selectedFeature.properties ? selectedFeature.properties.nome : '')
+    var label = rn ? (rnVideoScope==='state'?'RIO GRANDE DO NORTE':
+      (selectedFeature && selectedFeature.properties ? selectedFeature.properties.nome : ''))
       : (typeof scopeLabel === 'function' ? scopeLabel() : 'Brasil');
     if (!label) return null;
     var officialWinner = false;
@@ -131,13 +165,14 @@
       final:!!source.finalTotalization,
       elected:!!officialWinner,
       stamp:String(source.generatedAt||''),
-      slug:(rn ? 'rn-' : 'pres-') + String(label).normalize('NFD')
+      slug:(rn ? (rnVideoScope==='state'?'governador-rn-estado-':'rn-municipio-') : 'pres-') + String(label).normalize('NFD')
         .replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')
     };
   }
   function placeholder() {
     var place=rn
-      ? (typeof selectedFeature!=='undefined'&&selectedFeature?.properties?.nome)||'RIO GRANDE DO NORTE'
+      ? (rnVideoScope==='state'?'RIO GRANDE DO NORTE':
+        (typeof selectedFeature!=='undefined'&&selectedFeature?.properties?.nome)||'RIO GRANDE DO NORTE')
       : (typeof scopeLabel==='function'?scopeLabel():'BRASIL');
     var rows=rn?[
       {name:'ALLYSON BEZERRA',party:'UNIÃO BRASIL',pct:0,votes:0,color:'#1976d2'},
@@ -399,6 +434,10 @@
   }
   async function exportVideo(rehearsal) {
     if (busy) return;
+    if(rehearsal!==true&&rn&&rnVideoScope==='state'){
+      setStatus('Consultando a apuração estadual do RN no TSE; conferindo votos e registros…',false);
+      if(!(await refreshRnState()))return;
+    }
     // A prévia presidencial somente é exportada depois da base oficial de
     // candidaturas ser conferida; nenhuma votação é usada nesse ensaio.
     if(rehearsal===true&&!rn){
@@ -611,6 +650,19 @@
     });
   }
 
+  if(rnScopeSelect)rnScopeSelect.addEventListener('change',function(){
+    rnVideoScope=rnScopeSelect.value==='municipal'?'municipal':'state';
+    stopPreview();resetOldVideo();
+    const help=studio.querySelector('#uefyVideoScopeHelp');
+    if(help)help.textContent=rnVideoScope==='state'
+      ? 'Total de todo o RN a partir do EA20 estadual do TSE. Nunca é substituído por Natal.'
+      : 'Vídeo somente do município selecionado no mapa.';
+    overlay.hidden=!(!safeRecord());
+    draw(1650,safeRecord()||placeholder());setTime(0);
+    setStatus(rnVideoScope==='state'
+      ? 'Publicação estadual selecionada: Rio Grande do Norte inteiro.'
+      : 'Publicação municipal selecionada: '+(selectedFeature?.properties?.nome||'município atual')+'.',false);
+  });
   playBtn.addEventListener('click',preview);
   shareBtn.addEventListener('click',shareTwitter);
   copyBtn.addEventListener('click',copyPostText);
@@ -627,6 +679,10 @@
     get hasNativeMp4(){return !!getMp4Type();},
     get isRN(){return rn;},
     get officialOnly(){return true;},
+    get rnVideoScope(){return rn?rnVideoScope:null;},
+    get rnStateReady(){return !!rnStateResult;},
+    get rnStateError(){return rnStateError;},
+    get rnTotalUrl(){return rn?RN_TOTAL_URL:null;},
     get preflightAvailable(){return true;},
     get generatedIsRehearsal(){return !!lastRecord?.rehearsal;},
     get generatedText(){return lastTweet;},
