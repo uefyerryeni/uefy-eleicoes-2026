@@ -18,6 +18,19 @@ A atualização automática das bases de candidaturas está temporariamente susp
 ## Compartilhamento
 A arte é gerada em PNG 1080×1080. O site tenta compartilhar texto e arquivo juntos pela Web Share API quando o navegador/sistema oferece suporte. Em navegadores desktop sem compartilhamento de arquivos, o fallback baixa o PNG e abre o compositor do X com o texto.
 
+## Conferência das candidaturas do segundo turno
+
+Em 24/10/2026, foi checado o quadro publicado pelo TSE para o 2º turno de 25/10:
+- Presidência: **Flávio Bolsonaro (PL, 22)** e **Lula (PT, 13)**. Referências TSE:
+  - https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/flavio-bolsonaro-e-lula-vao-disputar-o-2o-turno-para-a-presidencia-da-republica
+  - https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026-segundo-turno/planos-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026-2-turno
+- Governo do RN: **Allyson Bezerra (União, 44)** e **Cadu de Lula (PT, 13)**. Referência TSE:
+  - https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/allyson-bezerra-uniao-e-cadu-de-lula-pt-seguem-na-disputa-no-rio-grande-do-norte
+
+A prévia presidencial consulta `data/candidatos-2026.json` (base TSE/AGEL, gerada em 10/10/2026), seleciona somente as candidaturas oficialmente classificadas no segundo turno e valida nome, número, partido e situação do registro. Se a base não puder ser verificada, a exportação da prévia é bloqueada em vez de apresentar candidatos genéricos.
+
+**Candidatura não é resultado:** antes da totalização oficial, a Central exibe nomes, partidos e números, sem atribuir votos, porcentagens ou posições de vitória. O vídeo com resultados exige separadamente conciliação com EA20 do TSE e janela de divulgação permitida.
+
 ## Publicação oficial no Brave (celular)
 
 A Central não gera resultados inventados. Imagens, textos e vídeos **com votos** só são liberados com dados oficiais integralmente conciliados do TSE, a partir de 17h de 25/10/2026. Antes da apuração, o vídeo permite apenas um **teste operacional de envio sem votos**, com o mesmo layout e avisos visíveis em todos os quadros.
