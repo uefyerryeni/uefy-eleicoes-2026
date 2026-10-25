@@ -2,11 +2,11 @@
   "status": "ok",
   "round": 2,
   "election_id": "6260",
-  "generated_at": "2026-10-25T19:06:56-03:00",
-  "source_generated_at": "25/10/2026 · 19:05:12",
+  "generated_at": "2026-10-25T19:35:24-03:00",
+  "source_generated_at": "25/10/2026 · 19:34:29",
   "municipalities_expected": 167,
   "municipalities_checked": 167,
-  "municipalities_read": 12,
+  "municipalities_read": 77,
   "publication_ready": false,
   "final_result": false,
   "outcome": {
@@ -14,39 +14,14 @@
     "mathematically_defined": "n",
     "final_totalization": false,
     "tally_phase": "p",
-    "progress": 0.9,
-    "source_generated_at": "25/10/2026 · 19:05:44",
+    "progress": 8.17,
+    "source_generated_at": "25/10/2026 · 19:34:15",
     "candidates": []
   },
   "errors": [],
   "leaders": {
-    "ALTO DO RODRIGUES": {
-      "code": "16136",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "AFONSO BEZERRA": {
-      "code": "16055",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "APODI": {
-      "code": "16195",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ASSÚ": {
-      "code": "16039",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ANTÔNIO MARTINS": {
-      "code": "16179",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "AREIA BRANCA": {
-      "code": "16217",
+    "ACARI": {
+      "code": "16012",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -55,26 +30,31 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "BARAÚNA": {
-      "code": "30031",
+    "ANGICOS": {
+      "code": "16152",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "AREIA BRANCA": {
+      "code": "16217",
       "status": "no_votes",
       "progress": 0.0
     },
     "ALMINO AFONSO": {
       "code": "16110",
       "status": "ok",
-      "progress": 4.76,
+      "progress": 42.86,
       "candidate_number": "13",
       "candidate": "CADU DE LULA",
-      "votes": 130,
-      "pct": 71.04,
+      "votes": 1064,
+      "pct": 66.46,
       "top3": [
         {
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 130,
-          "pct": 71.04,
+          "votes": 1064,
+          "pct": 66.46,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -84,8 +64,8 @@
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 53,
-          "pct": 28.96,
+          "votes": 537,
+          "pct": 33.54,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -93,41 +73,178 @@
         }
       ]
     },
-    "ACARI": {
-      "code": "16012",
+    "AFONSO BEZERRA": {
+      "code": "16055",
       "status": "no_votes",
       "progress": 0.0
+    },
+    "ASSÚ": {
+      "code": "16039",
+      "status": "ok",
+      "progress": 2.26,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 345,
+      "pct": 62.16,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 345,
+          "pct": 62.16,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 210,
+          "pct": 37.84,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "AREZ": {
       "code": "16233",
+      "status": "ok",
+      "progress": 16.67,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 747,
+      "pct": 52.35,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 747,
+          "pct": 52.35,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 680,
+          "pct": 47.65,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "APODI": {
+      "code": "16195",
+      "status": "ok",
+      "progress": 24.18,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 4155,
+      "pct": 64.68,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 4155,
+          "pct": 64.68,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 2269,
+          "pct": 35.32,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "ANTÔNIO MARTINS": {
+      "code": "16179",
       "status": "no_votes",
       "progress": 0.0
     },
-    "ANGICOS": {
-      "code": "16152",
+    "ALTO DO RODRIGUES": {
+      "code": "16136",
+      "status": "ok",
+      "progress": 15.38,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 933,
+      "pct": 58.17,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 933,
+          "pct": 58.17,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 671,
+          "pct": 41.83,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "BAÍA FORMOSA": {
+      "code": "16276",
       "status": "no_votes",
       "progress": 0.0
     },
-    "BODÓ": {
-      "code": "16101",
+    "BENTO FERNANDES": {
+      "code": "16314",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BARCELONA": {
+      "code": "16292",
       "status": "no_votes",
       "progress": 0.0
     },
     "BOA SAÚDE": {
       "code": "17035",
       "status": "ok",
-      "progress": 24.0,
+      "progress": 60.0,
       "candidate_number": "44",
       "candidate": "ALLYSON",
-      "votes": 862,
-      "pct": 59.04,
+      "votes": 2239,
+      "pct": 60.03,
       "top3": [
         {
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 862,
-          "pct": 59.04,
+          "votes": 2239,
+          "pct": 60.03,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -137,14 +254,128 @@
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 598,
-          "pct": 40.96,
+          "votes": 1491,
+          "pct": 39.97,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
           "vote_destination": "Válido"
         }
       ]
+    },
+    "BARAÚNA": {
+      "code": "30031",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAICÓ": {
+      "code": "16390",
+      "status": "ok",
+      "progress": 13.14,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 2307,
+      "pct": 52.55,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 2307,
+          "pct": 52.55,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 2083,
+          "pct": 47.45,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "CAMPO REDONDO": {
+      "code": "16411",
+      "status": "ok",
+      "progress": 7.69,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 315,
+      "pct": 73.77,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 315,
+          "pct": 73.77,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 112,
+          "pct": 26.23,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "BODÓ": {
+      "code": "16101",
+      "status": "ok",
+      "progress": 9.09,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 146,
+      "pct": 63.2,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 146,
+          "pct": 63.2,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 85,
+          "pct": 36.8,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "CAIÇARA DO NORTE": {
+      "code": "16047",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAMPO GRANDE": {
+      "code": "16250",
+      "status": "no_votes",
+      "progress": 0.0
     },
     "BREJINHO": {
       "code": "16357",
@@ -179,36 +410,21 @@
         }
       ]
     },
-    "CAICÓ": {
-      "code": "16390",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BENTO FERNANDES": {
-      "code": "16314",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BARCELONA": {
-      "code": "16292",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "CAIÇARA DO RIO DO VENTO": {
       "code": "16373",
       "status": "ok",
-      "progress": 7.69,
+      "progress": 15.38,
       "candidate_number": "44",
       "candidate": "ALLYSON",
-      "votes": 193,
-      "pct": 63.07,
+      "votes": 372,
+      "pct": 61.59,
       "top3": [
         {
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 193,
-          "pct": 63.07,
+          "votes": 372,
+          "pct": 61.59,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -218,8 +434,8 @@
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 113,
-          "pct": 36.93,
+          "votes": 232,
+          "pct": 38.41,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -227,38 +443,8 @@
         }
       ]
     },
-    "CAMPO GRANDE": {
-      "code": "16250",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "BOM JESUS": {
       "code": "16330",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BAÍA FORMOSA": {
-      "code": "16276",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CAIÇARA DO NORTE": {
-      "code": "16047",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CEARÁ-MIRIM": {
-      "code": "16519",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CARNAUBAIS": {
-      "code": "16497",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CERRO CORÁ": {
-      "code": "16535",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -267,66 +453,21 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "CARAÚBAS": {
-      "code": "16454",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CARNAÚBA DOS DANTAS": {
-      "code": "16470",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CORONEL JOÃO PESSOA": {
-      "code": "16578",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CRUZETA": {
-      "code": "16594",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CURRAIS NOVOS": {
-      "code": "16616",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "DOUTOR SEVERIANO": {
-      "code": "16632",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "EQUADOR": {
-      "code": "16675",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CORONEL EZEQUIEL": {
-      "code": "16551",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FELIPE GUERRA": {
-      "code": "16730",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ENCANTO": {
-      "code": "16659",
+    "CEARÁ-MIRIM": {
+      "code": "16519",
       "status": "ok",
-      "progress": 20.0,
+      "progress": 5.47,
       "candidate_number": "13",
       "candidate": "CADU DE LULA",
-      "votes": 605,
-      "pct": 62.89,
+      "votes": 1696,
+      "pct": 61.21,
       "top3": [
         {
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 605,
-          "pct": 62.89,
+          "votes": 1696,
+          "pct": 61.21,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -336,8 +477,8 @@
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 357,
-          "pct": 37.11,
+          "votes": 1075,
+          "pct": 38.79,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -345,58 +486,160 @@
         }
       ]
     },
-    "FERNANDO PEDROZA": {
-      "code": "16144",
+    "CARNAÚBA DOS DANTAS": {
+      "code": "16470",
+      "status": "ok",
+      "progress": 23.53,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 649,
+      "pct": 56.78,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 649,
+          "pct": 56.78,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 494,
+          "pct": 43.22,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "CERRO CORÁ": {
+      "code": "16535",
       "status": "no_votes",
       "progress": 0.0
     },
-    "EXTREMOZ": {
-      "code": "16713",
+    "CARAÚBAS": {
+      "code": "16454",
       "status": "no_votes",
       "progress": 0.0
     },
-    "FRANCISCO DANTAS": {
-      "code": "16772",
+    "DOUTOR SEVERIANO": {
+      "code": "16632",
+      "status": "ok",
+      "progress": 83.33,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 3355,
+      "pct": 75.22,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 3355,
+          "pct": 75.22,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1105,
+          "pct": 24.78,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "ENCANTO": {
+      "code": "16659",
+      "status": "ok",
+      "progress": 40.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1237,
+      "pct": 63.86,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1237,
+          "pct": 63.86,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 700,
+          "pct": 36.14,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "CORONEL EZEQUIEL": {
+      "code": "16551",
       "status": "no_votes",
       "progress": 0.0
     },
-    "ESPÍRITO SANTO": {
-      "code": "16691",
+    "CARNAUBAIS": {
+      "code": "16497",
       "status": "no_votes",
       "progress": 0.0
     },
-    "GOIANINHA": {
-      "code": "16810",
-      "status": "no_votes",
-      "progress": 0.0
+    "CURRAIS NOVOS": {
+      "code": "16616",
+      "status": "ok",
+      "progress": 13.76,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 2190,
+      "pct": 58.56,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 2190,
+          "pct": 58.56,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1550,
+          "pct": 41.44,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
-    "FLORÂNIA": {
-      "code": "16756",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "GOVERNADOR DIX-SEPT ROSADO": {
-      "code": "16837",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "GALINHOS": {
-      "code": "16799",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "GUAMARÉ": {
-      "code": "16870",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "IELMO MARINHO": {
-      "code": "16896",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "IPANGUAÇU": {
-      "code": "16918",
+    "CRUZETA": {
+      "code": "16594",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -405,13 +648,325 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "GROSSOS": {
-      "code": "16853",
+    "FELIPE GUERRA": {
+      "code": "16730",
+      "status": "ok",
+      "progress": 5.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 155,
+      "pct": 56.36,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 155,
+          "pct": 56.36,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 120,
+          "pct": 43.64,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "ESPÍRITO SANTO": {
+      "code": "16691",
       "status": "no_votes",
       "progress": 0.0
     },
+    "EXTREMOZ": {
+      "code": "16713",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CORONEL JOÃO PESSOA": {
+      "code": "16578",
+      "status": "ok",
+      "progress": 13.33,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 289,
+      "pct": 65.24,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 289,
+          "pct": 65.24,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 154,
+          "pct": 34.76,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "GOVERNADOR DIX-SEPT ROSADO": {
+      "code": "16837",
+      "status": "ok",
+      "progress": 30.77,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1932,
+      "pct": 56.61,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1932,
+          "pct": 56.61,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1481,
+          "pct": 43.39,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "EQUADOR": {
+      "code": "16675",
+      "status": "ok",
+      "progress": 18.75,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 482,
+      "pct": 58.57,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 482,
+          "pct": 58.57,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 341,
+          "pct": 41.43,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "GOIANINHA": {
+      "code": "16810",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "FERNANDO PEDROZA": {
+      "code": "16144",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "GALINHOS": {
+      "code": "16799",
+      "status": "ok",
+      "progress": 60.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 796,
+      "pct": 66.0,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 796,
+          "pct": 66.0,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 410,
+          "pct": 34.0,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "FLORÂNIA": {
+      "code": "16756",
+      "status": "ok",
+      "progress": 13.79,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 482,
+      "pct": 51.22,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 482,
+          "pct": 51.22,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 459,
+          "pct": 48.78,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "GUAMARÉ": {
+      "code": "16870",
+      "status": "ok",
+      "progress": 11.11,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 766,
+      "pct": 56.32,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 766,
+          "pct": 56.32,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 594,
+          "pct": 43.68,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "GROSSOS": {
+      "code": "16853",
+      "status": "ok",
+      "progress": 22.58,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1410,
+      "pct": 72.72,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1410,
+          "pct": 72.72,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 529,
+          "pct": 27.28,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
     "IPUEIRA": {
       "code": "16934",
+      "status": "ok",
+      "progress": 42.86,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 344,
+      "pct": 50.89,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 344,
+          "pct": 50.89,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 332,
+          "pct": 49.11,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "IPANGUAÇU": {
+      "code": "16918",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -420,15 +975,71 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "IELMO MARINHO": {
+      "code": "16896",
+      "status": "ok",
+      "progress": 5.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 246,
+      "pct": 51.68,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 246,
+          "pct": 51.68,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 230,
+          "pct": 48.32,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
     "JAPI": {
       "code": "17051",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JANDUÍS": {
-      "code": "17019",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 35.29,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 834,
+      "pct": 59.91,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 834,
+          "pct": 59.91,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 558,
+          "pct": 40.09,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "JANDAÍRA": {
       "code": "16993",
@@ -440,36 +1051,26 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "JARDIM DO SERIDÓ": {
-      "code": "17116",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JARDIM DE ANGICOS": {
-      "code": "17078",
+    "JANDUÍS": {
+      "code": "17019",
       "status": "no_votes",
       "progress": 0.0
     },
     "ITAJÁ": {
       "code": "16080",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JAÇANÃ": {
-      "code": "16977",
       "status": "ok",
-      "progress": 15.0,
+      "progress": 4.76,
       "candidate_number": "13",
       "candidate": "CADU DE LULA",
-      "votes": 479,
-      "pct": 59.65,
+      "votes": 183,
+      "pct": 61.0,
       "top3": [
         {
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 479,
-          "pct": 59.65,
+          "votes": 183,
+          "pct": 61.0,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -479,8 +1080,46 @@
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 324,
-          "pct": 40.35,
+          "votes": 117,
+          "pct": 39.0,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "JARDIM DE ANGICOS": {
+      "code": "17078",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JAÇANÃ": {
+      "code": "16977",
+      "status": "ok",
+      "progress": 30.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 939,
+      "pct": 58.5,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 939,
+          "pct": 58.5,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 666,
+          "pct": 41.5,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -493,40 +1132,208 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "JOÃO DIAS": {
-      "code": "17159",
-      "status": "no_votes",
-      "progress": 0.0
+    "FRANCISCO DANTAS": {
+      "code": "16772",
+      "status": "ok",
+      "progress": 76.92,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1275,
+      "pct": 69.6,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1275,
+          "pct": 69.6,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 557,
+          "pct": 30.4,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "JARDIM DO SERIDÓ": {
+      "code": "17116",
+      "status": "ok",
+      "progress": 26.47,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1227,
+      "pct": 55.1,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1227,
+          "pct": 55.1,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1000,
+          "pct": 44.9,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "JOSÉ DA PENHA": {
       "code": "17175",
       "status": "no_votes",
       "progress": 0.0
     },
-    "LAGOA D'ANTA": {
-      "code": "17230",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JUNDIÁ": {
-      "code": "16306",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "JUCURUTU": {
       "code": "17191",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CAMPO REDONDO": {
-      "code": "16411",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 10.17,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 889,
+      "pct": 67.09,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 889,
+          "pct": 67.09,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 436,
+          "pct": 32.91,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "LAGOA DE PEDRAS": {
       "code": "17256",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 4.35,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 157,
+      "pct": 53.22,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 157,
+          "pct": 53.22,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 138,
+          "pct": 46.78,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "JUNDIÁ": {
+      "code": "16306",
+      "status": "ok",
+      "progress": 33.33,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 737,
+      "pct": 56.26,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 737,
+          "pct": 56.26,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 573,
+          "pct": 43.74,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "LAGOA D'ANTA": {
+      "code": "17230",
+      "status": "ok",
+      "progress": 31.58,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 987,
+      "pct": 64.51,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 987,
+          "pct": 64.51,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 543,
+          "pct": 35.49,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "LAGOA DE VELHOS": {
       "code": "17272",
@@ -535,11 +1342,87 @@
     },
     "LAGOA SALGADA": {
       "code": "17310",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 10.34,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 354,
+      "pct": 56.73,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 354,
+          "pct": 56.73,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 270,
+          "pct": 43.27,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "LAJES PINTADAS": {
+      "code": "17353",
+      "status": "ok",
+      "progress": 5.26,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 143,
+      "pct": 53.96,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 143,
+          "pct": 53.96,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 122,
+          "pct": 46.04,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "LAJES": {
       "code": "17337",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JOÃO DIAS": {
+      "code": "17159",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "LUCRÉCIA": {
+      "code": "17370",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "MACAÍBA": {
+      "code": "17418",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -558,8 +1441,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MACAÍBA": {
-      "code": "17418",
+    "MARCELINO VIEIRA": {
+      "code": "17450",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -568,56 +1451,130 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MARCELINO VIEIRA": {
-      "code": "17450",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "LUCRÉCIA": {
-      "code": "17370",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "LAJES PINTADAS": {
-      "code": "17353",
-      "status": "no_votes",
-      "progress": 0.0
+    "MARTINS": {
+      "code": "17477",
+      "status": "ok",
+      "progress": 4.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 182,
+      "pct": 68.94,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 182,
+          "pct": 68.94,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 82,
+          "pct": 31.06,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "MAXARANGUAPE": {
       "code": "17493",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "MARTINS": {
-      "code": "17477",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 9.38,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 304,
+      "pct": 50.84,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 304,
+          "pct": 50.84,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 294,
+          "pct": 49.16,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "MONTANHAS": {
       "code": "17531",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 25.71,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1217,
+      "pct": 62.12,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1217,
+          "pct": 62.12,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 742,
+          "pct": 37.88,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "MESSIAS TARGINO": {
       "code": "17213",
       "status": "no_votes",
       "progress": 0.0
     },
-    "MONTE ALEGRE": {
-      "code": "17558",
+    "MONTE DAS GAMELEIRAS": {
+      "code": "17574",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "MOSSORÓ": {
+      "code": "17590",
       "status": "ok",
-      "progress": 6.9,
+      "progress": 0.89,
       "candidate_number": "44",
       "candidate": "ALLYSON",
-      "votes": 586,
-      "pct": 58.19,
+      "votes": 731,
+      "pct": 60.21,
       "top3": [
         {
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 586,
-          "pct": 58.19,
+          "votes": 731,
+          "pct": 60.21,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -627,8 +1584,8 @@
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 421,
-          "pct": 41.81,
+          "votes": 483,
+          "pct": 39.79,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -636,48 +1593,150 @@
         }
       ]
     },
-    "MONTE DAS GAMELEIRAS": {
-      "code": "17574",
+    "OLHO D'ÁGUA DO BORGES": {
+      "code": "17671",
       "status": "no_votes",
       "progress": 0.0
     },
-    "MOSSORÓ": {
-      "code": "17590",
-      "status": "no_votes",
-      "progress": 0.0
+    "MONTE ALEGRE": {
+      "code": "17558",
+      "status": "ok",
+      "progress": 15.52,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1389,
+      "pct": 60.03,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1389,
+          "pct": 60.03,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 925,
+          "pct": 39.97,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "NATAL": {
+      "code": "17612",
+      "status": "ok",
+      "progress": 4.6,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 11066,
+      "pct": 52.52,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 11066,
+          "pct": 52.52,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 10006,
+          "pct": 47.48,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "PARANÁ": {
+      "code": "17710",
+      "status": "ok",
+      "progress": 7.14,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 136,
+      "pct": 50.0,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 136,
+          "pct": 50.0,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 136,
+          "pct": 50.0,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "NOVA CRUZ": {
       "code": "17655",
       "status": "no_votes",
       "progress": 0.0
     },
-    "NATAL": {
-      "code": "17612",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARANÁ": {
-      "code": "17710",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "OLHO D'ÁGUA DO BORGES": {
-      "code": "17671",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARAZINHO": {
-      "code": "17752",
-      "status": "no_votes",
-      "progress": 0.0
+    "OURO BRANCO": {
+      "code": "17698",
+      "status": "ok",
+      "progress": 42.86,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 959,
+      "pct": 59.68,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 959,
+          "pct": 59.68,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 648,
+          "pct": 40.32,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "PARELHAS": {
       "code": "17779",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "NÍSIA FLORESTA": {
-      "code": "17639",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -686,33 +1745,46 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "NÍSIA FLORESTA": {
+      "code": "17639",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PARAZINHO": {
+      "code": "17752",
+      "status": "ok",
+      "progress": 23.53,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 608,
+      "pct": 52.73,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 608,
+          "pct": 52.73,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 545,
+          "pct": 47.27,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
     "PARNAMIRIM": {
       "code": "17795",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PASSAGEM": {
-      "code": "17833",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PEDRA GRANDE": {
-      "code": "17892",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PEDRA PRETA": {
-      "code": "17914",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "OURO BRANCO": {
-      "code": "17698",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PATU": {
-      "code": "17850",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -721,28 +1793,155 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "PASSAGEM": {
+      "code": "17833",
+      "status": "ok",
+      "progress": 46.15,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1054,
+      "pct": 67.52,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1054,
+          "pct": 67.52,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 507,
+          "pct": 32.48,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "PEDRA GRANDE": {
+      "code": "17892",
+      "status": "ok",
+      "progress": 60.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1104,
+      "pct": 66.35,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1104,
+          "pct": 66.35,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 560,
+          "pct": 33.65,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "PEDRO VELHO": {
+      "code": "17957",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "PAU DOS FERROS": {
       "code": "17876",
       "status": "no_votes",
       "progress": 0.0
     },
-    "PEDRO AVELINO": {
-      "code": "17930",
-      "status": "no_votes",
-      "progress": 0.0
+    "PEDRA PRETA": {
+      "code": "17914",
+      "status": "ok",
+      "progress": 70.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1007,
+      "pct": 61.25,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1007,
+          "pct": 61.25,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 637,
+          "pct": 38.75,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
-    "PENDÊNCIAS": {
-      "code": "17973",
+    "PATU": {
+      "code": "17850",
       "status": "no_votes",
       "progress": 0.0
     },
     "PORTALEGRE": {
       "code": "18031",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 60.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1758,
+      "pct": 51.13,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1758,
+          "pct": 51.13,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1680,
+          "pct": 48.87,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
-    "PEDRO VELHO": {
-      "code": "17957",
+    "PEDRO AVELINO": {
+      "code": "17930",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -751,23 +1950,140 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PUREZA": {
-      "code": "18074",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RAFAEL FERNANDES": {
-      "code": "18090",
-      "status": "no_votes",
-      "progress": 0.0
+    "PORTO DO MANGUE": {
+      "code": "16284",
+      "status": "ok",
+      "progress": 18.75,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 400,
+      "pct": 57.72,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 400,
+          "pct": 57.72,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 293,
+          "pct": 42.28,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "PILÕES": {
       "code": "17990",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 33.33,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 676,
+      "pct": 80.48,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 676,
+          "pct": 80.48,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 164,
+          "pct": 19.52,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
-    "PORTO DO MANGUE": {
-      "code": "16284",
+    "PUREZA": {
+      "code": "18074",
+      "status": "ok",
+      "progress": 23.33,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1053,
+      "pct": 54.53,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1053,
+          "pct": 54.53,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 878,
+          "pct": 45.47,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "PENDÊNCIAS": {
+      "code": "17973",
+      "status": "ok",
+      "progress": 2.63,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 109,
+      "pct": 61.58,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 109,
+          "pct": 61.58,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 68,
+          "pct": 38.42,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "RIACHO DA CRUZ": {
+      "code": "18112",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -776,43 +2092,46 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "RIACHO DA CRUZ": {
-      "code": "18112",
+    "RAFAEL FERNANDES": {
+      "code": "18090",
       "status": "no_votes",
       "progress": 0.0
     },
     "RIACHO DE SANTANA": {
       "code": "18139",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 45.45,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 776,
+      "pct": 56.4,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 776,
+          "pct": 56.4,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 600,
+          "pct": 43.6,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "RIACHUELO": {
       "code": "18155",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RODOLFO FERNANDES": {
-      "code": "18171",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTA CRUZ": {
-      "code": "18236",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RUY BARBOSA": {
-      "code": "18198",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTANA DO MATOS": {
-      "code": "18279",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTANA DO SERIDÓ": {
-      "code": "18252",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -826,21 +2145,41 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SERRA DE SÃO BENTO": {
-      "code": "18635",
+    "RUY BARBOSA": {
+      "code": "18198",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "RODOLFO FERNANDES": {
+      "code": "18171",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SENADOR GEORGINO AVELINO": {
+      "code": "18619",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SANTA MARIA": {
+      "code": "16241",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SANTA CRUZ": {
+      "code": "18236",
       "status": "ok",
-      "progress": 5.56,
+      "progress": 3.45,
       "candidate_number": "13",
       "candidate": "CADU DE LULA",
-      "votes": 134,
-      "pct": 52.14,
+      "votes": 528,
+      "pct": 60.41,
       "top3": [
         {
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 134,
-          "pct": 52.14,
+          "votes": 528,
+          "pct": 60.41,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -850,9 +2189,42 @@
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 123,
-          "pct": 47.86,
+          "votes": 346,
+          "pct": 39.59,
           "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SERRA CAIADA": {
+      "code": "18058",
+      "status": "ok",
+      "progress": 40.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1464,
+      "pct": 52.21,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1464,
+          "pct": 52.21,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1340,
+          "pct": 47.79,
+          "seq": 1,
           "elected": "n",
           "totalization_status": "",
           "vote_destination": "Válido"
@@ -864,51 +2236,21 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SENADOR GEORGINO AVELINO": {
-      "code": "18619",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRA CAIADA": {
-      "code": "18058",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRA NEGRA DO NORTE": {
-      "code": "18651",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO BENTO DO NORTE": {
-      "code": "18317",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO BENTO DO TRAIRÍ": {
-      "code": "18333",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SEVERIANO MELO": {
-      "code": "18694",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRINHA DOS PINTOS": {
-      "code": "16209",
+    "SERRA DE SÃO BENTO": {
+      "code": "18635",
       "status": "ok",
-      "progress": 6.67,
+      "progress": 61.11,
       "candidate_number": "13",
       "candidate": "CADU DE LULA",
-      "votes": 159,
-      "pct": 59.11,
+      "votes": 1698,
+      "pct": 57.15,
       "top3": [
         {
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 159,
-          "pct": 59.11,
+          "votes": 1698,
+          "pct": 57.15,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -918,8 +2260,8 @@
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 110,
-          "pct": 40.89,
+          "votes": 1273,
+          "pct": 42.85,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -927,28 +2269,8 @@
         }
       ]
     },
-    "SANTA MARIA": {
-      "code": "16241",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO FRANCISCO DO OESTE": {
-      "code": "18210",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRA DO MEL": {
-      "code": "16020",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO GONÇALO DO AMARANTE": {
-      "code": "18376",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO JOSÉ DE MIPIBU": {
-      "code": "18414",
+    "SANTANA DO MATOS": {
+      "code": "18279",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -957,26 +2279,140 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO FERNANDO": {
-      "code": "18350",
+    "SERRA DO MEL": {
+      "code": "16020",
+      "status": "ok",
+      "progress": 8.89,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 851,
+      "pct": 66.8,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 851,
+          "pct": 66.8,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 423,
+          "pct": 33.2,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SERRA NEGRA DO NORTE": {
+      "code": "18651",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO JOSÉ DO SERIDÓ": {
-      "code": "18457",
+    "SANTANA DO SERIDÓ": {
+      "code": "18252",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO JOSÉ DO CAMPESTRE": {
+      "code": "18430",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO GONÇALO DO AMARANTE": {
+      "code": "18376",
       "status": "ok",
-      "progress": 7.69,
+      "progress": 15.9,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 5125,
+      "pct": 52.69,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 5125,
+          "pct": 52.69,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 4602,
+          "pct": 47.31,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SEVERIANO MELO": {
+      "code": "18694",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO BENTO DO TRAIRÍ": {
+      "code": "18333",
+      "status": "ok",
+      "progress": 41.67,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 780,
+      "pct": 52.77,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 780,
+          "pct": 52.77,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 698,
+          "pct": 47.23,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SERRINHA DOS PINTOS": {
+      "code": "16209",
+      "status": "ok",
+      "progress": 60.0,
       "candidate_number": "13",
       "candidate": "CADU DE LULA",
-      "votes": 174,
-      "pct": 59.59,
+      "votes": 1281,
+      "pct": 55.24,
       "top3": [
         {
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 174,
-          "pct": 59.59,
+          "votes": 1281,
+          "pct": 55.24,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -986,8 +2422,8 @@
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 118,
-          "pct": 40.41,
+          "votes": 1038,
+          "pct": 44.76,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -995,8 +2431,79 @@
         }
       ]
     },
-    "SÃO JOSÉ DO CAMPESTRE": {
-      "code": "18430",
+    "SÃO FRANCISCO DO OESTE": {
+      "code": "18210",
+      "status": "ok",
+      "progress": 41.67,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 923,
+      "pct": 68.27,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 923,
+          "pct": 68.27,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 429,
+          "pct": 31.73,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO FERNANDO": {
+      "code": "18350",
+      "status": "ok",
+      "progress": 25.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 518,
+      "pct": 64.83,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 518,
+          "pct": 64.83,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 281,
+          "pct": 35.17,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO JOSÉ DE MIPIBU": {
+      "code": "18414",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO BENTO DO NORTE": {
+      "code": "18317",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -1005,41 +2512,21 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO PEDRO": {
-      "code": "18511",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO VICENTE": {
-      "code": "18570",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO TOMÉ": {
-      "code": "18554",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO RAFAEL": {
-      "code": "18538",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÍTIO NOVO": {
-      "code": "18716",
+    "TABOLEIRO GRANDE": {
+      "code": "18732",
       "status": "ok",
-      "progress": 25.0,
+      "progress": 100.0,
       "candidate_number": "44",
       "candidate": "ALLYSON",
-      "votes": 615,
-      "pct": 58.07,
+      "votes": 1316,
+      "pct": 59.82,
       "top3": [
         {
           "number": "44",
           "name": "ALLYSON",
           "party": "UNIÃO",
-          "votes": 615,
-          "pct": 58.07,
+          "votes": 1316,
+          "pct": 59.82,
           "seq": 2,
           "elected": "n",
           "totalization_status": "",
@@ -1049,8 +2536,84 @@
           "number": "13",
           "name": "CADU DE LULA",
           "party": "PT",
-          "votes": 444,
-          "pct": 41.93,
+          "votes": 884,
+          "pct": 40.18,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO RAFAEL": {
+      "code": "18538",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO PEDRO": {
+      "code": "18511",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÃO JOSÉ DO SERIDÓ": {
+      "code": "18457",
+      "status": "ok",
+      "progress": 100.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 2330,
+      "pct": 61.67,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 2330,
+          "pct": 61.67,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1448,
+          "pct": 38.33,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÍTIO NOVO": {
+      "code": "18716",
+      "status": "ok",
+      "progress": 75.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1773,
+      "pct": 57.42,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1773,
+          "pct": 57.42,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1315,
+          "pct": 42.58,
           "seq": 1,
           "elected": "n",
           "totalization_status": "",
@@ -1063,8 +2626,79 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "TABOLEIRO GRANDE": {
-      "code": "18732",
+    "SÃO TOMÉ": {
+      "code": "18554",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TANGARÁ": {
+      "code": "18775",
+      "status": "ok",
+      "progress": 51.28,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 2340,
+      "pct": 56.29,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 2340,
+          "pct": 56.29,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1817,
+          "pct": 43.71,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO VICENTE": {
+      "code": "18570",
+      "status": "ok",
+      "progress": 5.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 206,
+      "pct": 63.0,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 206,
+          "pct": 63.0,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 121,
+          "pct": 37.0,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO PAULO DO POTENGI": {
+      "code": "18490",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -1072,6 +2706,82 @@
       "code": "18759",
       "status": "no_votes",
       "progress": 0.0
+    },
+    "TENENTE ANANIAS": {
+      "code": "18791",
+      "status": "ok",
+      "progress": 14.81,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 501,
+      "pct": 54.4,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 501,
+          "pct": 54.4,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 420,
+          "pct": 45.6,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "TOUROS": {
+      "code": "18856",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TIBAU": {
+      "code": "16225",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TIMBAÚBA DOS BATISTAS": {
+      "code": "18830",
+      "status": "ok",
+      "progress": 100.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1577,
+      "pct": 67.94,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1577,
+          "pct": 67.94,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 744,
+          "pct": 32.06,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "SÃO MIGUEL": {
       "code": "18473",
@@ -1106,78 +2816,117 @@
         }
       ]
     },
-    "SÃO PAULO DO POTENGI": {
-      "code": "18490",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TANGARÁ": {
-      "code": "18775",
+    "UMARIZAL": {
+      "code": "18872",
       "status": "no_votes",
       "progress": 0.0
     },
     "TENENTE LAURENTINO CRUZ": {
       "code": "16004",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TENENTE ANANIAS": {
-      "code": "18791",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TIMBAÚBA DOS BATISTAS": {
-      "code": "18830",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TOUROS": {
-      "code": "18856",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TIBAU DO SUL": {
-      "code": "18813",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 50.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 1192,
+      "pct": 53.33,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1192,
+          "pct": 53.33,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1043,
+          "pct": 46.67,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "TRIUNFO POTIGUAR": {
       "code": "16128",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "VENHA-VER": {
-      "code": "16187",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "VERA CRUZ": {
-      "code": "18953",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "UMARIZAL": {
-      "code": "18872",
-      "status": "no_votes",
-      "progress": 0.0
+      "status": "ok",
+      "progress": 64.71,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 1052,
+      "pct": 50.5,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 1052,
+          "pct": 50.5,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 1031,
+          "pct": 49.5,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
     "UPANEMA": {
       "code": "18899",
       "status": "no_votes",
       "progress": 0.0
     },
-    "VILA FLOR": {
-      "code": "18996",
-      "status": "no_votes",
-      "progress": 0.0
+    "VENHA-VER": {
+      "code": "16187",
+      "status": "ok",
+      "progress": 41.67,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 645,
+      "pct": 50.83,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 645,
+          "pct": 50.83,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 624,
+          "pct": 49.17,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
-    "VÁRZEA": {
-      "code": "18910",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TIBAU": {
-      "code": "16225",
+    "TIBAU DO SUL": {
+      "code": "18813",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -1186,28 +2935,127 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "ÁGUA NOVA": {
-      "code": "16071",
+    "VERA CRUZ": {
+      "code": "18953",
       "status": "no_votes",
       "progress": 0.0
+    },
+    "VÁRZEA": {
+      "code": "18910",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "ÁGUA NOVA": {
+      "code": "16071",
+      "status": "ok",
+      "progress": 27.27,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 372,
+      "pct": 53.76,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 372,
+          "pct": 53.76,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 320,
+          "pct": 46.24,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "VILA FLOR": {
+      "code": "18996",
+      "status": "ok",
+      "progress": 60.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 992,
+      "pct": 63.75,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 992,
+          "pct": 63.75,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 564,
+          "pct": 36.25,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     }
   },
   "summary": [
     {
       "number": "13",
       "name": "CADU DE LULA",
-      "municipalities": 8
+      "municipalities": 51
     },
     {
       "number": "44",
       "name": "ALLYSON",
-      "municipalities": 4
+      "municipalities": 26
     }
   ],
   "natal": {
     "code": "17612",
-    "status": "no_votes",
-    "progress": 0.0
+    "status": "ok",
+    "progress": 4.6,
+    "candidate_number": "44",
+    "candidate": "ALLYSON",
+    "votes": 11066,
+    "pct": 52.52,
+    "top3": [
+      {
+        "number": "44",
+        "name": "ALLYSON",
+        "party": "UNIÃO",
+        "votes": 11066,
+        "pct": 52.52,
+        "seq": 2,
+        "elected": "n",
+        "totalization_status": "",
+        "vote_destination": "Válido"
+      },
+      {
+        "number": "13",
+        "name": "CADU DE LULA",
+        "party": "PT",
+        "votes": 10006,
+        "pct": 47.48,
+        "seq": 1,
+        "elected": "n",
+        "totalization_status": "",
+        "vote_destination": "Válido"
+      }
+    ]
   },
-  "message": "Mapa parcial: 12/167 municípios lidos. Publicação bloqueada até completar a base."
+  "message": "Mapa parcial: 77/167 municípios lidos. Publicação bloqueada até completar a base."
 }
