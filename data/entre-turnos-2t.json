@@ -6,11 +6,40 @@
   },
   "status": "waiting",
   "publication_ready": false,
-  "generated_at": "2026-10-17T00:00:00-03:00",
-  "source_generated_at": null,
+  "generated_at": "2026-10-25T17:18:24-03:00",
+  "source_generated_at": "13/10/2026 · 17:48:57",
   "municipalities_expected": 167,
   "municipalities_read": 0,
-  "state": {},
+  "state": {
+    "gov": {
+      "electorate": 2656286,
+      "turnout": 0,
+      "turnout_pct": 0.0,
+      "abstention": 0,
+      "abstention_pct": 0.0,
+      "total_votes": 0,
+      "blank": 0,
+      "blank_pct": 0.0,
+      "null": 0,
+      "null_pct": 0.0,
+      "complete": false,
+      "source_generated_at": "13/10/2026 · 17:48:57"
+    },
+    "pres": {
+      "electorate": 2659867,
+      "turnout": 0,
+      "turnout_pct": 0.0,
+      "abstention": 0,
+      "abstention_pct": 0.0,
+      "total_votes": 0,
+      "blank": 0,
+      "blank_pct": 0.0,
+      "null": 0,
+      "null_pct": 0.0,
+      "complete": false,
+      "source_generated_at": "13/10/2026 · 17:48:57"
+    }
+  },
   "municipalities": [],
   "errors": [],
   "message": "Aguardando os resultados oficiais completos de 25/10. Comparações indisponíveis."
