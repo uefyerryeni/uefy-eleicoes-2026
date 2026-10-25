@@ -197,3 +197,8 @@ body.dark .uefy-video-caption{background:#28392e;border-color:#dfe8d7}
 body.dark .uefy-video-caption summary{color:#fffdf2}
 body.dark .uefy-video-caption[open] summary{color:#151a18}
 @media(max-width:600px){.uefy-video-caption summary{min-height:48px;display:flex;align-items:center}}
+
+/* Vinheta sonora discreta, opcional e com alvo de toque confortável. */
+.uefy-intro-audio{display:flex;align-items:center;gap:10px;margin:12px 0;padding:12px 14px;min-height:48px;border:1px solid #a6b0a5;background:#edf1eb;color:#1b2620;font:800 12px "DM Sans",Arial,sans-serif;cursor:pointer}
+.uefy-intro-audio input{width:19px;height:19px;accent-color:#1d6d50;flex:0 0 auto;cursor:pointer}
+body.dark .uefy-intro-audio{background:#293832;color:#f3f7ef;border-color:#66746b}
