@@ -320,6 +320,8 @@
   async function preview() {
     if (busy) return;
     stopPreview();
+    if(rn&&rnVideoScope==='state'&&inSecondRoundPollingWindow())
+      await refreshRnState();
     if(!rn && !(await loadPresidentialBallot()))return;
     var snapshot=safeRecord()||placeholder();
     overlay.hidden=!snapshot.demo;
@@ -625,6 +627,12 @@
       exportVideo(!safeRecord());
       return;
     }
+    if(rn&&rnVideoScope==='municipal'&&!lastRecord.rehearsal &&
+      String(lastRecord.label)!==String(selectedFeature?.properties?.nome)){
+      resetOldVideo();
+      setStatus('Você alterou o município. Gere novamente o MP4 deste recorte antes de compartilhar.',true);
+      return;
+    }
     if(shareBtn.dataset.fallback==='1'){
       fallbackTwitter();return;
     }
@@ -672,6 +680,12 @@
     setStatus(rnVideoScope==='state'
       ? 'Publicação estadual selecionada: Rio Grande do Norte inteiro.'
       : 'Publicação municipal selecionada: '+(selectedFeature?.properties?.nome||'município atual')+'.',false);
+  });
+  window.addEventListener('uefy:municipality-changed',function(){
+    if(!rn||rnVideoScope!=='municipal'||busy)return;
+    stopPreview();resetOldVideo();
+    draw(1650,placeholder());setTime(0);
+    setStatus('Município alterado. Para evitar compartilhar um vídeo antigo, gere um novo MP4 com o recorte atual.',false);
   });
   playBtn.addEventListener('click',preview);
   shareBtn.addEventListener('click',shareTwitter);
