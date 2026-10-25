@@ -665,3 +665,63 @@ test('MP4 real do ensaio: arquivo H264 gerado no Chromium sem gravador falso', a
   expect(media.videoHeight).toBeGreaterThanOrEqual(720);
   expect(media.duration).toBeGreaterThan(7);
 });
+
+
+test('Presidência segundo turno: TSE confirma Flávio 22 e Lula 13 no painel e no Motion',async({page})=>{
+  const errors=[];page.on('pageerror',err=>errors.push(err.message));
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await page.waitForFunction(()=>window.__uefyVideo?.presidentialBallotVerified===true &&
+    state.pres?.previewOnly===true);
+  await expect(page.locator('#presRows')).toContainText('FLAVIO BOLSONARO');
+  await expect(page.locator('#presRows')).toContainText('LULA');
+  await expect(page.locator('#presRows')).toContainText('22 · PL');
+  await expect(page.locator('#presRows')).toContainText('13 · PT');
+  await expect(page.locator('#presRows')).not.toContainText('0,0%');
+  const checked=await page.evaluate(()=>{
+    const names=window.__uefyVideo.previewCandidates;
+    const text=document.querySelector('#postText').value;
+    const cache=state.pres;
+    return {names,text,integrity:cache.integrity,official:window.__uefyVideo.officialReady,
+      verified:window.__uefyVideo.presidentialBallotVerified};
+  });
+  expect(checked.names).toEqual([
+    {name:'FLAVIO BOLSONARO',party:'PL',number:'22',pct:0,votes:0},
+    {name:'LULA',party:'PT',number:'13',pct:0,votes:0}
+  ]);
+  expect(checked.text).toContain('FLAVIO BOLSONARO');
+  expect(checked.text).toContain('LULA');
+  expect(checked.text).toContain('SEM APURAÇÃO');
+  expect(checked.text).not.toContain('0,0%');
+  expect(checked.integrity).toBeNull();
+  expect(checked.verified).toBeTruthy();
+  expect(checked.official).toBeFalsy();
+  await expect(page.locator('#shareBundle')).toBeDisabled();
+  await page.locator('#uefyVideoPlay').click();
+  await expect(page.locator('#uefyVideoStatus')).toContainText('base oficial',{timeout:7000});
+  rejectLeaks(errors);
+});
+
+test('Presidência recusa prévia exportável se candidaturas não puderem ser conferidas no TSE',async({page})=>{
+  await page.route('**/data/candidatos-2026.json',route=>
+    route.fulfill({status:404,contentType:'application/json',body:'{}'}));
+  await page.goto(route('presidencia.html'),{waitUntil:'domcontentloaded'});
+  await expect(page.locator('#statusTitle')).toContainText('Conferência de candidaturas indisponível');
+  expect(await page.evaluate(()=>window.__uefyVideo.presidentialBallotVerified)).toBeFalsy();
+  await page.locator('#uefyVideoRehearsal').click();
+  await expect(page.locator('#uefyVideoStatus')).toContainText('não será gerado');
+  await expect(page.locator('#uefyVideoShare')).toContainText('1/2 · Preparar MP4');
+  await expect(page.locator('#uefyVideoResult')).toBeHidden();
+});
+
+test('base local de candidaturas coincide com os dois nomes e partidos publicados pelo TSE',async({request})=>{
+  const res=await request.get('/data/candidatos-2026.json');
+  expect(res.ok()).toBeTruthy();
+  const data=await res.json();
+  expect(data.source).toBe('TSE/AGEL - Candidatos 2026');
+  expect(data.source_url).toContain('consulta_cand_2026.zip');
+  const candidates=['22','13'].map(n=>data.pres.find(c=>String(c.numero)===n));
+  expect(candidates.map(c=>({name:c.nome,party:c.partido,status:c.situacao}))).toEqual([
+    {name:'FLAVIO BOLSONARO',party:'PL',status:'DEFERIDO'},
+    {name:'LULA',party:'PT',status:'DEFERIDO'}
+  ]);
+});
