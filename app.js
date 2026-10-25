@@ -176,6 +176,32 @@ async function ensurePresidentBase(){
   candidateBase=await r.json();
   return candidateBase;
 }
+async function showSecondRoundPresidentialCandidates(){
+  // 2º turno confirmado pelo TSE para 25/10/2026: PL nº 22 e PT nº 13.
+  // Extração nominal: consulta_cand_2026.zip / data/candidatos-2026.json
+  try{
+    const base=await ensurePresidentBase();
+    if(base.source!=='TSE/AGEL - Candidatos 2026')throw new Error('Fonte TSE divergente');
+    const rows=['22','13'].map(n=>(base.pres||[]).find(c=>String(c.numero)===n));
+    const valid=rows.every((r,i)=>r&&r.situacao==='DEFERIDO'&&
+      r.partido===(i===0?'PL':'PT')&&String(r.nome)
+        .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase()===(i===0?'FLAVIO BOLSONARO':'LULA'));
+    if(!valid)throw new Error('As candidaturas não correspondem ao segundo turno confirmado pelo TSE');
+    if(mode!=='official'||inSecondRoundPollingWindow())return;
+    state.pres={previewOnly:true,requestKey:'pres|br|official',progress:0,
+      integrity:null,generatedAt:base.generatedBR||'Base de candidaturas TSE',
+      candidates:rows.map((r,i)=>({id:String(r.seq),name:r.nome,number:String(r.numero),
+        party:r.partido,status:r.situacao,pct:0,votes:0,seq:i+1}))};
+    renderAll();
+    $('#statusTitle').textContent='Segundo turno presidencial · candidaturas oficiais';
+    $('#statusText').textContent=rows.map(r=>r.nome+' ('+r.partido+' · '+r.numero+')').join(' e ')+
+      ' · confirmadas pelo TSE · sem apuração do 2º turno.';
+  }catch(e){
+    if(mode!=='official'||inSecondRoundPollingWindow())return;
+    $('#statusTitle').textContent='Conferência de candidaturas indisponível';
+    $('#statusText').textContent='O segundo turno não pôde ser conferido na base do TSE: '+e.message;
+  }
+}
 async function registryForResult(office){
   if(office==='pres')return (await ensurePresidentBase()).pres||[];
   const uf=scopeCode()||'rn',data=await getUfCandidates(uf);
@@ -285,7 +311,8 @@ function renderRows(k){
   const all=state[k]?.candidates||[];
   const limit=mode==='demo'?(k==='depf'||k==='depe'?16:20):8;
   const items=all.slice(0,limit);
-  if(mode==='demo'){
+  if(mode==='demo'||!!state[k]?.previewOnly||
+     (mode==='official'&&!inSecondRoundPollingWindow())){
     box.innerHTML=items.length?items.map(c=>{
       const meta=[c.number,c.party].filter(Boolean).map(esc).join(' · ');
       const status=c.status?'<span class="status-chip">'+esc(c.status)+'</span>':'';
@@ -301,9 +328,12 @@ function renderRows(k){
   }
   if(small){
     const outcome=k===selectedOffice?officialOutcome(state[k],k,selectedScope):{kind:'none'};
-    small.textContent=mode==='demo'?(all.length+' candidatura(s) na base oficial'):(outcome.kind!=='none'?outcome.label+' · '+fmtPct(state[k]?.progress)+' das seções':fmtPct(state[k]?.progress)+' das seções totalizadas');
+    const waiting=mode==='demo'||!!state[k]?.previewOnly||
+      (mode==='official'&&!inSecondRoundPollingWindow());
+    small.textContent=waiting?(all.length+' candidaturas · sem apuração'):
+      (outcome.kind!=='none'?outcome.label+' · '+fmtPct(state[k]?.progress)+' das seções':fmtPct(state[k]?.progress)+' das seções totalizadas');
   }
-  if(more)more.textContent=all.length>items.length?'Mostrando '+items.length+' de '+all.length:(mode==='demo'?'Ordem por número de candidatura':'Ordem por votação');
+  if(more)more.textContent=all.length>items.length?'Mostrando '+items.length+' de '+all.length:(mode==='demo'||!!state[k]?.previewOnly?'Candidaturas confirmadas · segundo turno':'Ordem por votação');
 }
 function renderAll(){
   ['pres'].forEach(renderRows);
@@ -311,8 +341,9 @@ function renderAll(){
   const count=state[selectedOffice]?.candidates?.length||0;
   const setText=(id,value)=>{const el=$(id);if(el)el.textContent=value};
   const setWidth=(id,value)=>{const el=$(id);if(el)el.style.width=value};
-  if(mode==='demo'){
-    setText('#scopeMetricLabel','Candidaturas na base');
+  if(mode==='demo'||!!state[selectedOffice]?.previewOnly||
+     (mode==='official'&&!inSecondRoundPollingWindow())){
+    setText('#scopeMetricLabel','Candidaturas confirmadas · 2º turno');
     setText('#scopeProgressText',String(count));
     setWidth('#scopeProgressBar',count?'100%':'0%');
   }else{
@@ -374,14 +405,17 @@ function candidateOfficialTag(d,c,office=selectedOffice,scope=selectedScope){
 }
 function makePostText(){
   const d=state[selectedOffice],m=officeMeta[selectedOffice];
-  const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
-  const outcome=mode==='demo'?{kind:'none',candidates:[]}:officialOutcome(d);
+  const waiting=mode==='demo'||!!d.previewOnly||(mode==='official'&&!inSecondRoundPollingWindow());
+  const source=waiting?'Base oficial de candidaturas TSE · sem votos':
+    mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
+  const outcome=waiting?{kind:'none',candidates:[]}:officialOutcome(d);
   const final=!!d.finalTotalization;
 
   if(publicationTextMode==='compact'){
     const lines=['ELEIÇÕES 2026 | 2º TURNO | '+m.title.toUpperCase(),scopeLabel()];
-    if(mode==='demo'){
-      lines.push('',d.candidates.length+' candidatura(s) registradas.');
+    if(waiting){
+      lines.push('','CANDIDATURAS CONFIRMADAS · SEM APURAÇÃO');
+      d.candidates.slice(0,2).forEach(x=>lines.push(candidatePublicationLabel(x)));
     }else if(outcome.kind==='elected'&&outcome.candidates.length){
       const winner=outcome.candidates[0];
       lines.push('','ELEITO · '+candidatePublicationLabel(winner)+' — '+fmtPct(winner.pct));
@@ -402,10 +436,10 @@ function makePostText(){
   }
 
   const lines=['ELEIÇÕES 2026 | 2º TURNO | '+m.title.toUpperCase(),scopeLabel()];
-  if(mode==='demo'){
-    lines.push('',d.candidates.length+' candidatura(s) registradas na base eleitoral.');
-    d.candidates.slice(0,6).forEach(x=>lines.push(candidatePublicationLabel(x)+(x.number?' · nº '+x.number:'')));
-    lines.push('','A lista acima corresponde ao cadastro eleitoral disponível para este recorte.');
+  if(waiting){
+    lines.push('','CANDIDATURAS DO SEGUNDO TURNO · SEM APURAÇÃO');
+    d.candidates.slice(0,2).forEach(x=>lines.push(candidatePublicationLabel(x)+(x.number?' · nº '+x.number:'')));
+    lines.push('','Os votos e percentuais só serão apresentados após a divulgação oficial.');
   }else if(outcome.kind==='elected'&&outcome.candidates.length){
     const winner=outcome.candidates[0];
     lines.push('','ELEITO · '+candidatePublicationLabel(winner)+' — '+fmtPct(winner.pct));
@@ -447,7 +481,8 @@ function drawCanvas(){
   const c=$('#shareCanvas'),ctx=c.getContext('2d'),d=state[selectedOffice],m=officeMeta[selectedOffice];
   const INK='#151a18',CREAM='#f7f6ef',YELLOW='#f4dd19',MUTED='#515b56';
   const outcome=officialOutcome(d);
-  const waiting=mode==='demo',simulated=mode==='sim',final=!!d.finalTotalization;
+  const waiting=mode==='demo'||!!d.previewOnly||(mode==='official'&&!inSecondRoundPollingWindow()),
+    simulated=mode==='sim',final=!!d.finalTotalization;
   const progress=Math.max(0,Math.min(100,Number(d.progress)||0));
   const status=waiting?'CADASTRO / SEM APURAÇÃO':simulated?'SIMULADO / NÃO OFICIAL':
     outcome.kind==='elected'?'ELEITO DEFINIDO PELO TSE':
@@ -624,7 +659,7 @@ function syncTheme(){
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn.classList.toggle('show',scrollY>420),{passive:true});topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
-populateScopeSelect();updateCardVisibility();$('#modeSelect').value=mode;if(mode==='official'&&!inSecondRoundPollingWindow()){renderAll();$('#statusTitle').textContent='Pronto para a apuração';$('#statusText').textContent='A apuração oficial do 2º turno estará disponível a partir das 17h de 25/10 (horário de Brasília).'}else loadRemote();scheduleAutoRefresh();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
+populateScopeSelect();updateCardVisibility();$('#modeSelect').value=mode;if(mode==='official'&&!inSecondRoundPollingWindow()){renderAll();$('#statusTitle').textContent='Conferindo candidaturas';$('#statusText').textContent='Verificando as candidaturas do 2º turno na base TSE; votos a partir das 17h.';showSecondRoundPresidentialCandidates();}else loadRemote();scheduleAutoRefresh();loadMaps().catch(()=>{$('#statusText').textContent='Os mapas não puderam ser carregados.'});
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
 
 /* Favoritos e atualização operacional */
