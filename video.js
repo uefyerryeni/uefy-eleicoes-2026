@@ -20,8 +20,9 @@
   studio.className = 'uefy-video-studio';
   studio.id = 'uefyVideoStudio';
   studio.setAttribute('aria-labelledby', 'uefyVideoTitle');
-  studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 720 ou 1080 px · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
+  studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 720 ou 1080 px · 8 segundos · vinheta opcional</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     (rn?'<div class="uefy-video-scope-row"><label for="uefyVideoScope">Abrangência do vídeo</label><select id="uefyVideoScope"><option value="state">Rio Grande do Norte inteiro (padrão)</option><option value="municipal">Município selecionado</option></select><p id="uefyVideoScopeHelp">A publicação inicial usa a totalização oficial de todo o RN, não apenas Natal.</p></div>':'') +
+    '<label class="uefy-intro-audio"><input id="uefyVideoIntroSound" type="checkbox" checked><span>Vinheta sonora na abertura (aprox. 1 segundo)</span></label>' +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
     '<details class="uefy-video-caption" id="uefyVideoCaptionDetails"><summary>Ver legenda exata deste vídeo para o X</summary><textarea id="uefyVideoCaption" rows="6" readonly aria-label="Legenda correspondente ao recorte do vídeo"></textarea></details>' +
@@ -30,6 +31,44 @@
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
   actions.insertAdjacentElement('afterend', studio);
 
+  var introCheck = studio.querySelector('#uefyVideoIntroSound');
+  var introAssetUrl='assets/uefy-intro-audio.b64';
+  var introBytesTask=null,previewIntroCtx=null,previewIntroSource=null;
+  function introEnabled(){return !!introCheck.checked;}
+  function AudioContextClass(){return window.AudioContext||window.webkitAudioContext;}
+  async function introBytes(){
+    if(!introBytesTask)introBytesTask=fetch(introAssetUrl,{cache:'force-cache'}).then(function(r){
+      if(!r.ok)throw new Error('Vinheta indisponível (HTTP '+r.status+').');
+      return r.text();
+    }).then(function(base64){
+      const bin=atob(base64.trim());
+      if(bin.length<1000)throw new Error('O arquivo da vinheta está incompleto.');
+      const bytes=new Uint8Array(bin.length);
+      for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+      return bytes.buffer;
+    }).catch(function(e){introBytesTask=null;throw e;});
+    return introBytesTask;
+  }
+  async function decodedIntro(ctx){return ctx.decodeAudioData((await introBytes()).slice(0));}
+  function stopIntroPreview(){
+    if(previewIntroSource){try{previewIntroSource.stop();}catch(_){}previewIntroSource=null;}
+    if(previewIntroCtx){const ctx=previewIntroCtx;previewIntroCtx=null;ctx.close().catch(function(){});}
+  }
+  async function playIntroPreview(){
+    if(!introEnabled())return;
+    const AC=AudioContextClass();
+    if(!AC)throw new Error('Seu navegador não permite reproduzir a vinheta.');
+    const audioCtx=new AC(),source=audioCtx.createBufferSource(),gain=audioCtx.createGain();
+    previewIntroCtx=audioCtx;previewIntroSource=source;
+    try{
+      await audioCtx.resume();
+      source.buffer=await decodedIntro(audioCtx);
+      gain.gain.value=0.85;
+      source.connect(gain);gain.connect(audioCtx.destination);
+      source.onended=function(){if(previewIntroCtx===audioCtx)stopIntroPreview();};
+      source.start(audioCtx.currentTime+0.08);
+    }catch(e){stopIntroPreview();throw e;}
+  }
   var canvas = studio.querySelector('#uefyVideoCanvas');
   var ctx = canvas.getContext('2d', {alpha:false});
   var playBtn = studio.querySelector('#uefyVideoPlay');
@@ -316,6 +355,7 @@
     progress.style.width=(100*Math.min(1,ms/LENGTH)).toFixed(2)+'%';
   }
   function stopPreview() {
+    stopIntroPreview();
     if (previewId) cancelAnimationFrame(previewId);
     previewId=0;
     playBtn.disabled=false;
@@ -336,6 +376,10 @@
        'Prévia de identidade visual sem votos. ')+
       'O MP4 com resultados continua bloqueado até a divulgação oficial.':
       'Prévia com dados oficiais capturados nesta consulta: '+snapshot.stamp+'.',false);
+    if(introEnabled()){
+      try{await playIntroPreview();}
+      catch(error){setStatus('A prévia visual funciona, mas a vinheta não tocou: '+String(error.message||error),true);}
+    }
     var start=performance.now();
     function frame(now) {
       var ms=Math.min(LENGTH,now-start);
@@ -360,15 +404,36 @@
       bitrate:2800000,framerate:fps,avc:{format:'avc'}};
     var supported=await VideoEncoder.isConfigSupported(config);
     if(!supported.supported) throw new Error('O aparelho não oferece codificação H.264 neste navegador.');
+    var withAudio=introEnabled();
+    var audioConfig=null,audioBuffer=null,sampleRate=48000;
+    if(withAudio){
+      if(typeof AudioEncoder==='undefined'||typeof AudioData==='undefined'||
+         typeof AudioEncoder.isConfigSupported!=='function'||typeof OfflineAudioContext==='undefined')
+        throw new Error('Este navegador não oferece codificação de áudio AAC para MP4.');
+      audioConfig={codec:'mp4a.40.2',sampleRate:sampleRate,numberOfChannels:1,bitrate:96000};
+      const support=await AudioEncoder.isConfigSupported(audioConfig);
+      if(!support.supported)throw new Error('Codificação AAC indisponível neste aparelho.');
+      // O próprio áudio enviado é lido, sem sintetizar ou substituir a vinheta.
+      const offline=new OfflineAudioContext(1,sampleRate,sampleRate);
+      audioBuffer=await decodedIntro(offline);
+    }
     var module=await import('./vendor/mp4-muxer.min.mjs');
     var target=new module.ArrayBufferTarget();
-    var muxer=new module.Muxer({target:target,video:{codec:'avc',
-      width:size,height:size,frameRate:fps},fastStart:'in-memory'});
+    var muxOptions={target:target,video:{codec:'avc',width:size,height:size,frameRate:fps},fastStart:'in-memory'};
+    if(withAudio)muxOptions.audio={codec:'aac',sampleRate:sampleRate,numberOfChannels:1};
+    var muxer=new module.Muxer(muxOptions);
     var scaled=document.createElement('canvas');
     scaled.width=size;scaled.height=size;
     var scaledContext=scaled.getContext('2d',{alpha:false});
     if(!scaledContext) throw new Error('Não foi possível preparar o canvas para o MP4.');
-    var encodeError=null;
+    var encodeError=null, audioEncoder=null;
+    if(withAudio){
+      audioEncoder=new AudioEncoder({
+        output:function(chunk,metadata){muxer.addAudioChunk(chunk,metadata);},
+        error:function(err){encodeError=err;}
+      });
+      audioEncoder.configure(audioConfig);
+    }
     var encoder=new VideoEncoder({
       output:function(chunk,metadata){muxer.addVideoChunk(chunk,metadata);},
       error:function(err){encodeError=err;}
@@ -390,12 +455,31 @@
       }
       await encoder.flush();
       if(encodeError) throw encodeError;
+      if(withAudio){
+        // AAC mono a 48 kHz, alinhado ao mesmo relógio de 8 segundos do vídeo.
+        const samples=audioBuffer.getChannelData(0),delay=Math.round(sampleRate*0.08);
+        const length=Math.round(sampleRate*LENGTH/1000),frameSize=1024;
+        for(let offset=0;offset<length;offset+=frameSize){
+          const frames=Math.min(frameSize,length-offset),data=new Float32Array(frames);
+          for(let j=0;j<frames;j++){
+            const pos=offset+j-delay;
+            if(pos>=0&&pos<samples.length)data[j]=samples[pos]*0.85;
+          }
+          const audioFrame=new AudioData({format:'f32-planar',sampleRate:sampleRate,
+            numberOfFrames:frames,numberOfChannels:1,timestamp:Math.round(offset*1000000/sampleRate),data:data});
+          audioEncoder.encode(audioFrame);audioFrame.close();
+          if(audioEncoder.encodeQueueSize>12)await audioEncoder.flush();
+        }
+        await audioEncoder.flush();
+        if(encodeError)throw encodeError;
+      }
       muxer.finalize();
       var blob=new Blob([target.buffer],{type:'video/mp4'});
       if(blob.size<20000) throw new Error('O MP4 foi gerado vazio ou incompleto.');
       return blob;
     }finally{
       if(encoder.state!=='closed')encoder.close();
+      if(audioEncoder&&audioEncoder.state!=='closed')audioEncoder.close();
       draw(LENGTH,snapshot);setTime(LENGTH);
     }
   }
@@ -429,7 +513,7 @@
       'uefy-eleicoes-'+snapshot.slug+'-2t.mp4';
     result.hidden=false;
     setStatus(snapshot.rehearsal?
-      'Etapa 1/2 concluída: MP4 de teste gerado sem votos. Agora toque em “2/2 · Compartilhar vídeo e texto no X” e confira o rascunho.':
+      'Etapa 1/2 concluída: MP4 de teste gerado sem votos, '+(introEnabled()?'com vinheta de abertura. ':'sem áudio. ')+'Agora toque em “2/2 · Compartilhar vídeo e texto no X” e confira o rascunho.':
       'Etapa 1/2 concluída: MP4 oficial com dados conferidos. Agora toque em “2/2 · Compartilhar vídeo e texto no X”.',false);
   }
   function resetOldVideo() {
@@ -471,7 +555,7 @@
       setStatus('Seu navegador não permite gerar um MP4 H.264 neste aparelho. Abra o link no Chrome ou Samsung Internet atualizado, fora do navegador interno de outro aplicativo.',true);
       return;
     }
-    busy=true;activeRevision=generationRevision;stopPreview();resetOldVideo();
+    busy=true;activeRevision=generationRevision;stopPreview();resetOldVideo();introCheck.disabled=true;
     var tweet=makeTwitterText(snapshot);
     exportBtn.disabled=true;rehearsalBtn.disabled=true;playBtn.disabled=true;
     updateShareButton();
@@ -480,7 +564,7 @@
     if (document.fonts && document.fonts.ready) {
       try {await Promise.race([document.fonts.ready,new Promise(resolve=>setTimeout(resolve,3000))]);} catch (_) {}
     }
-    var stream=null,recorder=null,timer=null,raf=null,finished=false;
+    var stream=null,recorder=null,timer=null,raf=null,finished=false,audioCtx=null,audioSource=null;
     try {
       // WebCodecs produz quadros H.264 com timestamps de 24 fps fixos.
       // A captura nativa MediaRecorder do Brave exibiu um buraco de 400 ms
@@ -499,7 +583,22 @@
       }
       draw(0,snapshot);
       stream=canvas.captureStream(30);
-      recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:4500000});
+      if(introEnabled()){
+        const AC=AudioContextClass();
+        if(!AC)throw new Error('O navegador não tem recursos para gravar áudio.');
+        audioCtx=new AC({sampleRate:48000});
+        await audioCtx.resume();
+        if(audioCtx.state!=='running')throw new Error('Ative o áudio no navegador para gravar a vinheta.');
+        const buffer=await decodedIntro(audioCtx);
+        const destination=audioCtx.createMediaStreamDestination(),volume=audioCtx.createGain();
+        volume.gain.value=0.85;
+        volume.connect(destination);
+        audioSource=audioCtx.createBufferSource();
+        audioSource.buffer=buffer;
+        audioSource.connect(volume);
+        stream=new MediaStream(stream.getVideoTracks().concat(destination.stream.getAudioTracks()));
+      }
+      recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:4500000,audioBitsPerSecond:96000});
       var chunks=[];
       var promise=new Promise(function (resolve,reject) {
         recorder.ondataavailable=function (e) {if(e.data&&e.data.size)chunks.push(e.data);};
@@ -512,7 +611,8 @@
       });
       var start=performance.now();
       recorder.start(1000);
-      setStatus('Capturando vídeo em tempo real pelo navegador (modo alternativo). Confira a fluidez antes de publicar.',false);
+      if(audioSource)audioSource.start(audioCtx.currentTime+0.08);
+      setStatus('Capturando vídeo em tempo real pelo navegador (modo alternativo). Confira a fluidez e o áudio antes de publicar.',false);
       function render(now) {
         var ms=Math.min(LENGTH,now-start);
         draw(ms,snapshot);setTime(ms);
@@ -552,7 +652,9 @@
       if (timer) clearTimeout(timer);
       if (recorder && recorder.state!=='inactive') {try {recorder.stop();} catch(_) {}}
       if (stream) stream.getTracks().forEach(function(track){track.stop();});
-      busy=false;exportBtn.disabled=false;rehearsalBtn.disabled=false;playBtn.disabled=false;
+      if(audioSource){try{audioSource.stop();}catch(_){}}
+      if(audioCtx)try{await audioCtx.close();}catch(_){}
+      busy=false;exportBtn.disabled=false;rehearsalBtn.disabled=false;playBtn.disabled=false;introCheck.disabled=false;
       exportBtn.textContent='↓ Gerar vídeo oficial MP4';
       rehearsalBtn.textContent='Testar publicação sem votos (MP4)';
       updateShareButton();
@@ -711,6 +813,12 @@
     if(!busy){draw(1650,placeholder());setTime(0);}
     setStatus('Abrangência alterada. Gere um novo vídeo para este recorte.',false);
   });
+  introCheck.addEventListener('change',function(){
+    stopPreview();generationRevision++;resetOldVideo();
+    setStatus(introEnabled()?
+      'Vinheta ativada. Os próximos vídeos terão o sinal sonoro na abertura.':
+      'Vinheta desativada. Os próximos vídeos serão exportados sem áudio.',false);
+  });
   playBtn.addEventListener('click',preview);
   shareBtn.addEventListener('click',shareTwitter);
   copyBtn.addEventListener('click',copyPostText);
@@ -719,6 +827,8 @@
   window.addEventListener('pagehide',function () {stopPreview();if(lastUrl) URL.revokeObjectURL(lastUrl);});
   window.__uefyVideo={get officialReady(){return !!safeRecord();},
     get supportsMp4(){return !!getMp4Type();},
+    get introSoundEnabled(){return introEnabled();},
+    get introAudioUrl(){return introAssetUrl;},
     get busy(){return busy;},
     get duration(){return LENGTH;},
     get revealEnd(){return MOTION.numberEnd;},
