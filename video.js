@@ -452,7 +452,8 @@
     }
     var type=getMp4Type();
     var nativeMp4=!!type && typeof canvas.captureStream==='function';
-    var webCodecs=typeof VideoEncoder!=='undefined' && typeof VideoFrame!=='undefined';
+    var webCodecs=typeof VideoEncoder!=='undefined' && typeof VideoFrame!=='undefined' &&
+      typeof VideoEncoder.isConfigSupported==='function';
     if(!nativeMp4 && !webCodecs) {
       setStatus('Seu navegador não permite gerar um MP4 H.264 neste aparelho. Abra o link no Chrome ou Samsung Internet atualizado, fora do navegador interno de outro aplicativo.',true);
       return;
@@ -468,11 +469,20 @@
     }
     var stream=null,recorder=null,timer=null,raf=null,finished=false;
     try {
-      if(!nativeMp4){
-        setStatus('Gerando MP4 em H.264 para o celular. Mantenha esta página aberta até a prévia aparecer.',false);
-        var webBlob=await checkMp4Signature(await webCodecsMp4(snapshot));
-        finishVideo(webBlob,snapshot,tweet);
-        return;
+      // WebCodecs produz quadros H.264 com timestamps de 24 fps fixos.
+      // A captura nativa MediaRecorder do Brave exibiu um buraco de 400 ms
+      // entre 0,336 s e 0,736 s no MP4 enviado pelo usuário.
+      if(webCodecs){
+        setStatus('Gerando MP4 com 24 quadros por segundo e intervalos regulares. A exportação não depende do relógio de renderização da tela.',false);
+        try{
+          var webBlob=await checkMp4Signature(await webCodecsMp4(snapshot));
+          finishVideo(webBlob,snapshot,tweet);
+          return;
+        }catch(codecError){
+          if(!nativeMp4)throw codecError;
+          setStatus('Codificação por tempo fixo indisponível ('+String(codecError?.message||codecError)+
+            '). Usando captura nativa; confira os primeiros segundos antes de publicar.',true);
+        }
       }
       draw(0,snapshot);
       stream=canvas.captureStream(30);
@@ -489,7 +499,7 @@
       });
       var start=performance.now();
       recorder.start(1000);
-      setStatus('Gerando 8 segundos em MP4. Mantenha esta aba aberta e visível até concluir.',false);
+      setStatus('Capturando vídeo em tempo real pelo navegador (modo alternativo). Confira a fluidez antes de publicar.',false);
       function render(now) {
         var ms=Math.min(LENGTH,now-start);
         draw(ms,snapshot);setTime(ms);
@@ -677,6 +687,7 @@
     get canShare(){return !!lastBlob;},
     get canEncodeWebCodecs(){return typeof VideoEncoder!=='undefined'&&typeof VideoFrame!=='undefined';},
     get hasNativeMp4(){return !!getMp4Type();},
+    get fixedFrameEncodingAvailable(){return typeof VideoEncoder!=='undefined' && typeof VideoFrame!=='undefined';},
     get isRN(){return rn;},
     get officialOnly(){return true;},
     get rnVideoScope(){return rn?rnVideoScope:null;},
