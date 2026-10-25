@@ -152,10 +152,20 @@
       : (typeof scopeLabel === 'function' ? scopeLabel() : 'Brasil');
     if (!label) return null;
     var officialWinner = false;
-    if (!rn && typeof officialOutcome === 'function') {
-      var outcome = officialOutcome(source);
-      officialWinner = outcome && outcome.kind === 'elected' &&
-        Array.isArray(outcome.candidates) && outcome.candidates.length > 0;
+    if (rn) {
+      // A definição estadual só vale para o vídeo do estado, nunca é
+      // propagada indevidamente à publicação de um município específico.
+      if(rnVideoScope==='state') {
+        var marked=rows.filter(function(c){return c.elected==='s'||/^eleito(?:\\b|\\s|$)/i.test(String(c.totalizationStatus||'').trim());});
+        var mathDefined=String(source.mathematicallyDefined||'').toLowerCase()==='e';
+        var selected=marked.length===1?marked[0]:(mathDefined?rows[0]:null);
+        officialWinner=!!selected&&marked.length<=1&&(mathDefined||source.finalTotalization===true)&&
+          Number(selected.votes)>0&&Number(selected.votes)===Number(rows[0].votes)&&Number(rows[0].votes)>Number(rows[1].votes);
+      }
+    }else if(typeof officialOutcome === 'function') {
+      var outcome=officialOutcome(source);
+      officialWinner=outcome&&outcome.kind==='elected'&&
+        Array.isArray(outcome.candidates)&&outcome.candidates.length>0;
     }
     return {
       demo:false,

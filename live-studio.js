@@ -48,25 +48,44 @@ function colorOf(number,key){
  if(key==='br'&&number==='22')return '#3ea991';
  return '#f4dd19';
 }
+// Somente a indicação oficial de definição matemática (md=e), ou uma
+// totalização final acompanhada de candidatura declarada eleita, habilita o anúncio.
+// Em hipótese alguma estimamos a definição pela diferença entre os votos.
+function officialElectedCandidate(data,candidates,final){
+ const mathematicallyDefined=String(data.md||'').trim().toLowerCase()==='e';
+ if(!mathematicallyDefined&&!final)return null;
+ const marked=candidates.filter(c=>c.elected==='s'||/^eleito(?:\\b|\\s|$)/i.test(c.totalizationStatus.trim()));
+ if(marked.length>1)return null;
+ const selected=marked.length===1?marked[0]:(mathematicallyDefined?candidates[0]:null);
+ if(!selected||Number(selected.votes)<=0||Number(selected.votes)<Number(candidates[0].votes))return null;
+ if(mathematicallyDefined&&Number(candidates[0].votes)===Number(candidates[1].votes))return null;
+ return {number:selected.number,name:selected.name,party:selected.party,mathematicallyDefined};
+}
 function render(){
  const c=config[scope],s=store[scope],valid=s.state==='ready'&&!!s.result;
  const result=valid?s.result:null;
  const candidates=result?result.candidates:c.waiting.map(x=>Object.assign({votes:0,pct:0},x));
  const final=result?.finalTotalization===true;
- const statusTitle=valid?(final?'Totalização concluída':'Apuração em andamento'):
+ const elected=valid?result.officialElected:null;
+ const defined=!!elected;
+ const statusTitle=valid?(final?'Totalização concluída':defined?'Eleição matematicamente definida':'Apuração em andamento'):
    s.state==='blocked'?'Consulta indisponível':eligibleNow()?'Aguardando boletim':'Aguardando o TSE';
- const stateLabel=valid?(final?'RESULTADO FINAL / TSE':'APURAÇÃO PARCIAL / TSE'):
+ const stateLabel=valid?(final?'RESULTADO FINAL / TSE':defined?'ELEITO DEFINIDO / TSE':'APURAÇÃO PARCIAL / TSE'):
    s.state==='blocked'?'DADOS NÃO CONFIRMADOS':eligibleNow()?'AGUARDANDO RESULTADO VALIDADO':'AGUARDANDO DIVULGAÇÃO OFICIAL';
  $('#broadcast').dataset.state=s.state;
  $('#broadcast').dataset.scene=scene;
+ $('#broadcast').dataset.decision=defined?'elected':'none';
  $('#screenLocation').textContent=c.place;
  $('#screenTitle').textContent=c.title;const dot=document.createElement('span');dot.textContent='.';$('#screenTitle').append(dot);
  $('#screenSubtitle').textContent=c.subtitle;
- $('#screenEdition').textContent=valid?(final?'RESULTADO FINAL · TSE':'DADOS PARCIAIS · TSE'):'BOLETIM OFICIAL · TSE';
+ $('#screenEdition').textContent=valid?(final?'RESULTADO FINAL · TSE':defined?'ELEIÇÃO DEFINIDA · TSE':'DADOS PARCIAIS · TSE'):'BOLETIM OFICIAL · TSE';
  $('#screenResultState').textContent=stateLabel;
  $('#footerState').textContent=stateLabel;
  $('#bulletinTitle').textContent=statusTitle;
- $('#bulletinText').textContent=valid?(final?'A totalização foi identificada como concluída pelo boletim oficial.':'Os números refletem o último boletim validado e podem mudar.'):
+ $('#bulletinText').textContent=valid?(
+   defined?elected.name+' ('+elected.party+') · eleição definida pelo TSE. A totalização segue em '+fmtPct(result.progress)+' das seções.':
+   final?'A totalização foi identificada como concluída pelo boletim oficial.':
+   'Os números refletem o último boletim validado e podem mudar.'):
    s.state==='blocked'?'Uma verificação falhou. Os números foram ocultados; novas tentativas seguem automáticas.':
    eligibleNow()?'Consulta ativa. Aguardando um boletim oficial íntegro e com votos.':'A exibição dos votos começa somente após as 17h, horário de Brasília.';
  $('#sourceTime').textContent=valid?result.generatedAt:'—';
@@ -82,14 +101,16 @@ function render(){
    $('#pct'+index).textContent=valid?fmtPct(item.pct):'—';
    $('#votes'+index).textContent=valid?fmtVotes(item.votes)+' VOTOS':'AGUARDANDO VOTOS';
    $('#bar'+index).style.width=valid?Math.max(0,Math.min(100,item.pct))+'%':'0%';
+   const isElected=defined&&elected.number===item.number;
    $('#candidate'+index).style.setProperty('--candidate-color',colorOf(item.number,scope));
-   $('#candidate'+index+' .candidate-kicker').textContent='CANDIDATURA '+String(index+1).padStart(2,'0');
+   $('#candidate'+index).dataset.elected=isElected?'true':'false';
+   $('#candidate'+index+' .candidate-kicker').textContent=isElected?'ELEITO · CONFIRMADO PELO TSE':'CANDIDATURA '+String(index+1).padStart(2,'0');
  });
  const total=valid?list.reduce((n,x)=>n+x.votes,0):0;
  const gap=valid?Math.abs(list[0].pct-list[1].pct):0;
- $('#overviewHeadline').textContent=valid?(final?'O resultado oficial':'A apuração avança'):'O voto em movimento';
+ $('#overviewHeadline').textContent=valid?(defined?'Eleição definida':final?'O resultado oficial':'A apuração avança'):'O voto em movimento';
  const dot2=document.createElement('span');dot2.textContent='.';$('#overviewHeadline').append(dot2);
- $('#overviewCopy').textContent=valid?(final?'Totalização concluída segundo o TSE. Veja os resultados detalhados no placar.':'Dados parciais e atualizados a partir da divulgação oficial. A disputa ainda pode mudar.'):
+ $('#overviewCopy').textContent=valid?(defined?elected.name+' ('+elected.party+') · eleito confirmado pelo TSE. '+fmtPct(result.progress)+' das seções totalizadas.':final?'Totalização concluída segundo o TSE. Veja os resultados detalhados no placar.':'Dados parciais e atualizados a partir da divulgação oficial. A disputa ainda pode mudar.'):
     s.state==='blocked'?'Sem números na tela até a próxima conferência bem-sucedida.':'Acompanhamento do resultado oficial do TSE, sem projeções e sem votos estimados.';
  $('#overviewProgress').textContent=valid?fmtPct(result.progress):'—';
  $('#overviewVotes').textContent=valid?fmtVotes(total):'—';
@@ -134,10 +155,12 @@ function parseResult(data,key,registry){
    candidates,
    generatedAt:[data.dg,data.hg].filter(Boolean).join(' · '),
    finalTotalization:String(data.tf||'').toLowerCase()==='s'&&Number(String(data.s.pst).replace(',','.'))>=100,
+   mathematicallyDefined:String(data.md||'').trim().toLowerCase(),
    stale:false
  };
  if(!window.UEFYElection||!window.UEFYElection.publishable(result,config[key].expect))throw Error('Resultado sem condições de exibição.');
  if(new Set(candidates.map(x=>x.number)).size!==2)throw Error('Número de candidaturas incompatível.');
+ result.officialElected=officialElectedCandidate(data,candidates,result.finalTotalization);
  return result;
 }
 async function registryFor(key){

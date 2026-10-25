@@ -69,3 +69,54 @@ test('saída OBS captura arte sem controles na resolução Full HD',async({page}
  await expect(page.locator('#broadcastViewport')).toHaveCSS('height','1080px');
  await expect(page.locator('#broadcast')).toBeVisible();
 });
+
+test('TSE define matematicamente o eleito antes de 100%: placar, panorama e captura OBS',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-25T23:30:00Z')});
+ await page.route('**/data/candidatos-ufs-c.json',route=>route.fulfill({json:rnRegistry}));
+ await page.route('**/data/candidatos-2026.json',route=>route.fulfill({json:brRegistry}));
+ await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>{
+   const data=ea20('rn');data.md='e';data.s.pst='92,50';data.carg[0].agr[0].par[0].cand[0].e='s';
+   return route.fulfill({json:data,headers:{'access-control-allow-origin':'*'}});
+ });
+ await page.route('**/6258/dados/br/br-c0001-e006258-u.json',route=>route.fulfill({json:ea20('br'),headers:{'access-control-allow-origin':'*'}}));
+ await page.goto('/estudio-live.html?capture=1&auto=0');
+ await expect(page.locator('#screenResultState')).toHaveText('ELEITO DEFINIDO / TSE');
+ await expect(page.locator('#bulletinTitle')).toHaveText('Eleição matematicamente definida');
+ await expect(page.locator('#bulletinText')).toContainText('ALLYSON BEZERRA');
+ await expect(page.locator('#candidate0 .candidate-kicker')).toHaveText('ELEITO · CONFIRMADO PELO TSE');
+ await expect(page.locator('#candidate1 .candidate-kicker')).toHaveText('CANDIDATURA 02');
+ await expect(page.locator('#progressValue')).toHaveText('92,50%');
+ await expect(page.locator('#screenEdition')).toHaveText('ELEIÇÃO DEFINIDA · TSE');
+ await page.evaluate(()=>document.querySelector('[data-scene="panorama"]').click());
+ await expect(page.locator('#overviewHeadline')).toContainText('Eleição definida');
+ await expect(page.locator('#overviewCopy')).toContainText('ALLYSON BEZERRA');
+ await expect(page.locator('#broadcast')).toHaveAttribute('data-decision','elected');
+});
+test('marcação de candidato sem md=e ou totalização final não anuncia eleito',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-25T23:30:00Z')});
+ await page.route('**/data/candidatos-ufs-c.json',route=>route.fulfill({json:rnRegistry}));
+ await page.route('**/data/candidatos-2026.json',route=>route.fulfill({json:brRegistry}));
+ await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>{
+   const data=ea20('rn');data.md='n';data.carg[0].agr[0].par[0].cand[0].e='s';
+   return route.fulfill({json:data,headers:{'access-control-allow-origin':'*'}});
+ });
+ await page.route('**/6258/dados/br/br-c0001-e006258-u.json',route=>route.fulfill({json:ea20('br'),headers:{'access-control-allow-origin':'*'}}));
+ await page.goto('/estudio-live.html?capture=1&auto=0');
+ await expect(page.locator('#screenResultState')).toHaveText('APURAÇÃO PARCIAL / TSE');
+ await expect(page.locator('#candidate0 .candidate-kicker')).not.toContainText('ELEITO');
+});
+test('EA20 com eleição concluída mantém resultado final e identifica eleito confirmado',async({page})=>{
+ await page.clock.install({time:new Date('2026-10-25T23:30:00Z')});
+ await page.route('**/data/candidatos-ufs-c.json',route=>route.fulfill({json:rnRegistry}));
+ await page.route('**/data/candidatos-2026.json',route=>route.fulfill({json:brRegistry}));
+ await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>{
+   const data=ea20('rn');data.md='e';data.tf='s';data.s.pst='100,00';data.s.st=1000;
+   data.carg[0].agr[0].par[0].cand[0].e='s';
+   return route.fulfill({json:data,headers:{'access-control-allow-origin':'*'}});
+ });
+ await page.route('**/6258/dados/br/br-c0001-e006258-u.json',route=>route.fulfill({json:ea20('br'),headers:{'access-control-allow-origin':'*'}}));
+ await page.goto('/estudio-live.html?capture=1&auto=0');
+ await expect(page.locator('#screenResultState')).toHaveText('RESULTADO FINAL / TSE');
+ await expect(page.locator('#candidate0 .candidate-kicker')).toContainText('ELEITO');
+ await expect(page.locator('#progressValue')).toHaveText('100,00%');
+});
