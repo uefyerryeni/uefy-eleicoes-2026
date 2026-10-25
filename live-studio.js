@@ -126,7 +126,8 @@ function parseResult(data,key,registry){
  const candidates=rows.map(row=>{
    const registered=byNumber.get(row.number);
    if(!registered)throw Error('Identidade da candidatura não coincide com o registro TSE.');
-   return Object.assign({},row,{name:registered.nome,number:String(registered.numero),party:registered.partido});
+   const editorial=config[key].waiting.find(x=>x.number===row.number);
+   return Object.assign({},row,{name:editorial?.name||registered.nome,number:String(registered.numero),party:editorial?.party||registered.partido});
  }).sort((a,b)=>b.votes-a.votes||Number(a.number)-Number(b.number));
  const result={
    progress:Number(String(data.s.pst).replace(',','.')),
