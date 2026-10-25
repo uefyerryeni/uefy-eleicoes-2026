@@ -14,6 +14,8 @@
   // Identidade em menos de meio segundo; números fechados aos 1,45 s.
   var MOTION = Object.freeze({intro:420, cards:600, numberStart:520, numberEnd:1450, holdEnd:8000});
   var YELLOW = '#f4dd19', INK = '#151a18', WHITE = '#f7f6ef', PALE = '#cdd5cf';
+  // Cores por número da candidatura, independentemente da ordem de votação.
+  var FLAVIO_BLUE = '#86bce8', LULA_RED = '#d62828';
   var studio = document.createElement('section');
   studio.className = 'uefy-video-studio';
   studio.id = 'uefyVideoStudio';
@@ -104,8 +106,8 @@
          !isVerifiedPresident(second,'13','PT','LULA'))
         throw new Error('As candidaturas do segundo turno não coincidem com os registros oficiais do TSE.');
       presidentialBallot=[
-        {name:first.nome,number:String(first.numero),party:first.partido,color:'#1976d2',pct:0,votes:0},
-        {name:second.nome,number:String(second.numero),party:second.partido,color:'#d62828',pct:0,votes:0}
+        {name:first.nome,number:String(first.numero),party:first.partido,color:FLAVIO_BLUE,pct:0,votes:0},
+        {name:second.nome,number:String(second.numero),party:second.partido,color:LULA_RED,pct:0,votes:0}
       ];
       presidentialBallotError=null;
       refreshVideoCaption();
@@ -164,7 +166,7 @@
         return {name:String(c.name||'').trim(),party:String(c.party||'').trim(),
           number:String(c.number||''),votes:Number(c.votes),pct:Number(c.pct),
           color:rn ? (String(c.number)==='13'?'#d62828':String(c.number)==='44'?'#1976d2':PALE)
-            : (i===0 ? YELLOW : '#e3e6e2')};
+            : (String(c.number)==='13' ? LULA_RED : String(c.number)==='22' ? FLAVIO_BLUE : PALE)};
       }),
       progress:Number(source.progress),
       final:!!source.finalTotalization,
