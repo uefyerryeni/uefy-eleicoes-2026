@@ -132,7 +132,7 @@ function parseResult(data,key,registry){
    progress:Number(String(data.s.pst).replace(',','.')),
    candidates,
    generatedAt:[data.dg,data.hg].filter(Boolean).join(' · '),
-   finalTotalization:String(data.tf||'').toLowerCase()==='s',
+   finalTotalization:String(data.tf||'').toLowerCase()==='s'&&Number(String(data.s.pst).replace(',','.'))>=100,
    stale:false
  };
  if(!window.UEFYElection||!window.UEFYElection.publishable(result,config[key].expect))throw Error('Resultado sem condições de exibição.');
@@ -152,7 +152,6 @@ async function registryFor(key){
  const matched=numbers.map(n=>registry.find(row=>String(row.numero)===n));
  if(matched.some(x=>!x))throw Error('Registro de candidato ausente do cadastro.');
  if(matched.some(x=>!x.nome||!x.partido))throw Error('Registro de candidato incompleto.');
- const expected=key==='rn'?['UNIÃO','PT']:['PL','PT'];
  if(matched.some((x,i)=>i===0?(key==='rn'?!/UNIÃO/i.test(String(x.partido)) :String(x.partido)!=='PL'):String(x.partido)!=='PT'))throw Error('Partidos divergentes do segundo turno.');
  s.registry=matched;return matched;
 }
@@ -169,7 +168,8 @@ async function loadScope(key){
    const result=parseResult(body,key,registry);
    s.result=result;s.state='ready';s.reason='Boletim validado.';s.checkedAt=Date.now();
  }catch(err){
-   s.result=null;s.state='blocked';s.reason=String(err?.message||err);
+   s.result=null;s.reason=String(err?.message||err);
+   s.state=s.reason.includes('404')?'waiting':'blocked';
    if(s.reason.includes('404'))s.reason='Boletim oficial ainda não publicado.';
    console.warn('UEFY Live / '+key+': '+s.reason);
  }
