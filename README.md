@@ -51,3 +51,13 @@ A Central não gera resultados inventados. Imagens, textos e vídeos **com votos
 
 ### Teste de segurança e regressão
 O workflow GitHub Pages executa QA de integridade, sintaxe JavaScript e testes Playwright. Os testes do compartilhamento usam dados artificiais apenas dentro do navegador de automação, jamais armazenados ou distribuídos em páginas de produção.
+
+
+### Ordem editorial do vídeo do governador e fluidez do MP4
+A **primeira publicação de governador é de todo o Rio Grande do Norte**, e não de Natal. O estúdio de vídeo abre por padrão com **Rio Grande do Norte inteiro**. Somente quando o usuário seleciona **Município selecionado** o vídeo e o texto passam a retratar o município destacado no mapa.
+
+No momento da apuração, o total estadual do RN é obtido no EA20 oficial por:
+`https://resultados.tse.jus.br/oficial/ele2026/6260/dados/rn/rn-c0003-e006260-u.json`.
+A Central só exporta o vídeo estadual após conciliar a apuração estadual com o registro das candidaturas e com progresso maior que zero. Nunca usa o resultado municipal de Natal em seu lugar. Selecionar outro município invalida o arquivo municipal gerado anteriormente.
+
+**Diagnóstico do MP4 no Brave:** o arquivo de teste enviado em 24/10/2026 tinha pausa de 400 ms entre 0,336 s e 0,736 s, em uma gravação MediaRecorder 1080×1080/30 fps. O gerador agora **prefere WebCodecs H.264 com timestamps fixos de 24 fps**, sem depender da frequência de captura da tela. Se WebCodecs não for suportado, a captura nativa permanece como alternativa, com aviso para revisar a fluidez do vídeo. Na alternativa WebCodecs o arquivo é gerado a 720×720 para reduzir o custo de codificação em celulares.
