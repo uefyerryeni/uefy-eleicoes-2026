@@ -185,6 +185,69 @@ async function loadLeaderMap(){
     leaderMapData={status:'error',leaders:{},summary:[],publication_ready:false,message:'Não foi possível carregar o mapa estadual agora.'};
   }
   renderLeaderMap();
+  // A publicação aberta acompanha a atualização do snapshot, sem reutilizar
+  // imagem/legenda de um boletim anterior.
+  if(mapPublicationMode){
+    const checked=rnMapPublicationCheck();
+    if(checked.ok){
+      const text=mapPostText();
+      $('#rnPostText').value=text;$('#rnChars').textContent=text.length+' caracteres';
+      $('#rnProgress').textContent=checked.final?'Final':'Parcial · '+checked.read+'/'+checked.expected;
+      drawCanvas();updateRnPublicationSafety();
+    }else{
+      mapPublicationMode=false;
+      renderCurrent();
+      rnShareStatus('A publicação do mapa foi suspensa: '+checked.reason,true);
+    }
+  }
+}
+// Autoriza publicar mapa parcial somente com dados TSE consistentes, atuais
+// e devidamente identificados. publication_ready no JSON permanece reservado
+// à base completa: o site audita o recorte parcial separadamente.
+function rnMapPublicationCheck(d=leaderMapData){
+  const blocked=reason=>({ok:false,reason});
+  if(mode!=='official'||!inSecondRoundPollingWindow())return blocked('Aguardando a janela oficial de apuração do TSE.');
+  if(!d||d.status!=='ok'||Number(d.round)!==2||String(d.election_id)!=='6260')
+    return blocked('O mapa não possui um snapshot oficial do segundo turno validado.');
+  const read=Number(d.municipalities_read),expected=Number(d.municipalities_expected);
+  if(expected!==167||!Number.isInteger(read)||read<1||read>expected)
+    return blocked('Aguardando municípios com votos oficiais confirmados.');
+  if(!Array.isArray(d.errors)||d.errors.length)
+    return blocked('Há erros na coleta; publicação suspensa até a próxima atualização.');
+  const timestamp=Date.parse(d.generated_at),age=Date.now()-timestamp;
+  if(!Number.isFinite(timestamp)||age < -300000||age>3600000)
+    return blocked('Snapshot desatualizado. Atualize o mapa para publicar dados recentes.');
+  if(!String(d.source_generated_at||'').startsWith('25/10/2026'))
+    return blocked('O boletim não corresponde à apuração oficial de 25/10/2026.');
+  const leaders=Object.values(d.leaders||{});
+  if(leaders.length!==expected)return blocked('A malha municipal ainda não está íntegra.');
+  const counts={'13':0,'44':0};
+  for(const city of leaders){
+    if(city.status!=='ok'){
+      if(city.status!=='no_votes')return blocked('Há município com leitura inválida; aguarde nova coleta.');
+      continue;
+    }
+    const number=String(city.candidate_number||''),top=city.top3||[];
+    if(!(number in counts)||!Number.isSafeInteger(Number(city.votes))||Number(city.votes)<=0||
+       !Number.isFinite(Number(city.pct))||Number(city.pct)<0||Number(city.pct)>100||
+       !Number.isFinite(Number(city.progress))||Number(city.progress)<=0||Number(city.progress)>100||
+       !Array.isArray(top)||top.length!==2||
+       String(top[0].number)!==number||Number(top[0].votes)!==Number(city.votes)||
+       Number(top[0].votes)<Number(top[1].votes))
+      return blocked('Um ou mais resultados municipais não passaram na conferência.');
+    counts[number]++;
+  }
+  if(counts['13']+counts['44']!==read)return blocked('Quantidade de municípios diverge dos resultados lidos.');
+  const summary=d.summary||[];
+  if(!Array.isArray(summary)||summary.length!==2||
+     summary.some(s=>!(String(s.number) in counts)||Number(s.municipalities)!==counts[String(s.number)]))
+    return blocked('O resumo de municípios não confere com o mapa.');
+  if(d.final_result&&read!==expected)
+    return blocked('Resultado final informado com municípios ainda sem dados.');
+  return {ok:true,read,expected,missing:expected-read,final:read===expected&&d.final_result===true};
+}
+function mapPublicationStatus(){
+  return rnMapPublicationCheck().final?'RESULTADO FINAL':'MAPA PARCIAL';
 }
 function renderElectionOutcome(){
   const box=$('#rnElectionOutcome');if(!box)return;
@@ -213,6 +276,7 @@ function renderLeaderMap(){
         leaderFilter=filter.value;
         mapPublicationMode=false;
         renderLeaderMap();
+        renderCurrent();
       });
       filter.dataset.bound='1';
     }
@@ -242,7 +306,9 @@ function renderLeaderMap(){
   renderElectionOutcome();
   const emptyMapMessage=mode==='sim'?'Mapa estadual indisponível no Simulado TSE. Use a consulta municipal abaixo.':'Aguardando a apuração oficial.';
   $('#rnLeaderSummary').innerHTML=summary.length?summary.map(x=>'<div class="rn-leader-row'+(leaderFilterValue(x.name,x.number)===leaderFilter?' active':'')+'"><i style="background:'+candidateColor(x.name,x.number)+'"></i><span><strong>'+esc(x.name)+'</strong><small>'+x.municipalities+' município(s)</small></span></div>').join(''):'<div class="rn-map-empty">'+emptyMapMessage+'</div>';
-  $('#rnLeaderLegend').innerHTML=summary.length?summary.map(x=>'<span'+(leaderFilterValue(x.name,x.number)===leaderFilter?' class="active"':'')+'><i style="background:'+candidateColor(x.name,x.number)+'"></i>'+esc(x.name)+'</span>').join(''):'<span><i style="background:#d9dee2"></i>Aguardando resultado</span>';
+  const unread=Math.max(0,167-Number(leaderMapData.municipalities_read||0));
+  const pendingLegend=unread?'<span><i style="background:#d9dee2"></i>Sem dados: '+unread+'</span>':'';
+  $('#rnLeaderLegend').innerHTML=(summary.length?summary.map(x=>'<span'+(leaderFilterValue(x.name,x.number)===leaderFilter?' class="active"':'')+'><i style="background:'+candidateColor(x.name,x.number)+'"></i>'+esc(x.name)+'</span>').join(''):'')+pendingLegend;
   const read=Number(leaderMapData.municipalities_read||0),expected=Number(leaderMapData.municipalities_expected||167);
   $('#rnMapRead').textContent=read+'/'+expected;
   $('#rnMapBase').textContent=leaderMapData.source_generated_at||leaderMapData.message||'Aguardando TSE';
@@ -254,8 +320,15 @@ function renderLeaderMap(){
     $('#rnNatalHighlight').innerHTML='<small>Natal</small><strong>Aguardando apuração oficial</strong><span>'+natalText+'</span>';
   }
   const btn=$('#rnMapPublish'),note=$('#rnMapPublishNote');
-  if(btn)btn.disabled=mode!=='official'||!leaderMapData.publication_ready||leaderMapData.round!==2||String(leaderMapData.election_id)!=='6260'||Number(leaderMapData.municipalities_read)!==167;
-  if(note)note.textContent=leaderMapData.publication_ready?(leaderMapData.final_result?'Base completa e totalização final.':'Base municipal completa. O card será identificado como resultado parcial.'):(leaderMapData.message||'A publicação será liberada quando a base municipal estiver completa e conferida.');
+  const checked=rnMapPublicationCheck();
+  if(btn){
+    btn.disabled=!checked.ok;
+    btn.textContent=checked.ok?(checked.final?'Gerar publicação do mapa final':'Gerar publicação do mapa parcial'):'Gerar publicação do mapa';
+  }
+  if(note)note.textContent=checked.ok
+    ?(checked.final?'Base completa e resultado final validado.':
+      'Mapa parcial publicável: '+checked.read+'/'+checked.expected+' municípios com votos. Os outros '+checked.missing+' seguem cinza, sem resultado. Boletim TSE: '+leaderMapData.source_generated_at+'.')
+    :checked.reason;
 }
 
 function sourceMeta(){
@@ -286,8 +359,8 @@ function partyByNumber(number){
 function labeledCandidate(name,party=''){return name+(party?' ('+party+')':'')}
 function publicationCandidate(candidate){return labeledCandidate(candidate?.name||'Candidatura',candidate?.party||'')}
 function mapPostText(){
-  const final=leaderMapData.final_result,outcome=leaderMapData?.outcome||{},filtered=selectedLeaderSummary();
-  const status=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':final?'RESULTADO FINAL':'MAPA PARCIAL';
+  const final=rnMapPublicationCheck().final===true,outcome=leaderMapData?.outcome||{},filtered=selectedLeaderSummary();
+  const status=mapPublicationStatus();
 
   if(filtered){
     const candidate=labeledCandidate(filtered.name,partyByNumber(filtered.number));
@@ -300,6 +373,7 @@ function mapPostText(){
     if(!final)lines.push('','O mapa representa o snapshot atual da apuração e pode mudar conforme novas seções forem totalizadas.');
     lines.push('Base municipal: '+Number(leaderMapData.municipalities_read||0)+'/'+Number(leaderMapData.municipalities_expected||167)+' municípios lidos.');
     if(leaderMapData.source_generated_at)lines.push('','Atualização: '+leaderMapData.source_generated_at);
+    if(!final)lines.push('Cinza: municípios sem resultados; as lideranças podem mudar.');
     lines.push('','Fontes: Tribunal Superior Eleitoral · população: IBGE, estimativas 2026');
     return lines.join('\n');
   }
@@ -313,6 +387,9 @@ function mapPostText(){
     }else{
       (leaderMapData.summary||[]).slice(0,3).forEach(x=>lines.push(labeledCandidate(x.name,partyByNumber(x.number))+' — '+x.municipalities+' município(s)'));
     }
+    lines.push('','Cobertura: '+Number(leaderMapData.municipalities_read||0)+'/'+Number(leaderMapData.municipalities_expected||167)+' municípios com votos.');
+    if(!final)lines.push('Cinza: sem dados. Lideranças parciais, sujeitas a mudança.');
+    if(leaderMapData.source_generated_at)lines.push('Boletim do TSE: '+leaderMapData.source_generated_at);
     lines.push('','Fonte: Tribunal Superior Eleitoral');
     return lines.join('\n');
   }
@@ -344,7 +421,7 @@ function drawLeaderMapCanvas(){
   fitCanvasText(ctx,'CENTRAL DAS ELEIÇÕES',390,82,620,34,28,'900','#f7f6ef');
   fitCanvasText(ctx,'2026  /  SEGUNDO TURNO',390,121,620,27,21,'700','#f4dd19');
   const outcome=leaderMapData?.outcome||{};
-  const canvasStatus=outcome.kind==='elected'?'ELEITO':outcome.kind==='second_round'?'2º TURNO CONFIRMADO':leaderMapData.final_result?'RESULTADO FINAL':'MAPA PARCIAL';
+  const canvasStatus=mapPublicationStatus();
   ctx.fillStyle='#151a18';ctx.fillRect(70,165,435,43);
   fitCanvasText(ctx,canvasStatus,87,194,402,24,17,'900','#f4dd19');
   fitCanvasText(ctx,'GOVERNO DO RN',70,271,900,63,48,'900','#151a18');
@@ -363,6 +440,12 @@ function drawLeaderMapCanvas(){
     ctx.fillStyle='#17191c';ctx.font='700 22px DM Sans,Segoe UI,Arial';ctx.fillText((x.name||'').slice(0,20),785,yy);
     ctx.fillStyle='#59626b';ctx.font='600 17px DM Sans,Segoe UI,Arial';ctx.fillText(x.municipalities+' município(s)',785,yy+25);yy+=68;
   });
+  const missing=Math.max(0,167-Number(leaderMapData.municipalities_read||0));
+  if(missing){
+    ctx.fillStyle='#d9dee2';ctx.beginPath();ctx.arc(760,yy-8,9,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#505b5b';ctx.font='700 19px DM Sans,Segoe UI,Arial';
+    ctx.fillText('SEM DADOS: '+missing+' MUNICÍPIOS',785,yy);
+  }
   if(leaderMapData.natal?.status==='ok'){
     ctx.fillStyle='#fff';roundRect(ctx,720,825,300,90,14);ctx.fill();ctx.strokeStyle='#d7dce0';ctx.stroke();
     ctx.fillStyle='#6b737b';ctx.font='700 14px DM Sans,Segoe UI,Arial';ctx.fillText('NATAL',745,855);
@@ -521,9 +604,7 @@ async function loadRemote(){
 function rnPublicationIsSafe(result=publicationResult(),scope=rnPublicationScope){
   const current=result;
   if(mode!=='official'||!inSecondRoundPollingWindow())return false;
-  if(mapPublicationMode)return !!leaderMapData?.publication_ready&&leaderMapData.round===2&&
-    String(leaderMapData.election_id)==='6260'&&Number(leaderMapData.municipalities_read)===167&&
-    !(leaderMapData.errors||[]).length;
+  if(mapPublicationMode)return rnMapPublicationCheck().ok;
   const selected=selectedFeature?.properties?.nome||'';
   if((scope==='municipal'&&norm(current?.municipality)!==norm(selected))||!(current?.candidates||[]).length||
     !(Number(current?.progress)>0))return false;
@@ -540,6 +621,14 @@ function updateRnPublicationSafety(){
    if(!safe&&$('#rnXManual'))$('#rnXManual').hidden=true;
 }
 function renderCurrent(){
+  if(mapPublicationMode){
+    const checked=rnMapPublicationCheck();
+    $('#rnResultTitle').textContent='Mapa de liderança municipal';
+    $('#rnProgress').textContent=checked.final?'Final':'Parcial · '+Number(leaderMapData.municipalities_read||0)+'/167';
+    $('#rnResults').innerHTML='<div class="turno2-empty">Mapa por município: cinza indica ausência de votos publicados. Não representa o resultado final enquanto a totalização estiver em andamento.</div>';
+    const txt=mapPostText();$('#rnPostText').value=txt;$('#rnChars').textContent=txt.length+' caracteres';
+    drawCanvas();updateRnPublicationSafety();return;
+  }
   const current=publicationResult();
   const title=$('#rnResultTitle');
   if(mode==='demo'){
@@ -770,15 +859,12 @@ function rnShareStatus(message,bad){
    })();
  }
  $('#rnMapPublish')?.addEventListener('click',()=>{
-  if(mode!=='official'||!leaderMapData.publication_ready||leaderMapData.round!==2)return;
+  const checked=rnMapPublicationCheck();
+  if(!checked.ok){rnShareStatus('Mapa não liberado: '+checked.reason,true);return;}
   mapPublicationMode=true;
-  $('#rnPostText').value=mapPostText();
-  $('#rnChars').textContent=$('#rnPostText').value.length+' caracteres';
-  drawCanvas();
-  $('#rnResultTitle').textContent='Mapa de liderança municipal';
-  $('#rnProgress').textContent=leaderMapData.final_result?'Final':'Parcial';
-  $('#rnStatus').textContent=leaderMapData.final_result?'Mapa final com base municipal completa.':'Mapa parcial com base municipal completa no snapshot; as lideranças podem mudar até 100% da totalização.';
-  updateRnPublicationSafety();
+  renderCurrent();
+  $('#rnStatus').textContent=checked.final?'Mapa final com base municipal completa.':
+    'MAPA PARCIAL · '+checked.read+'/'+checked.expected+' municípios lidos, '+checked.missing+' sem dados. As lideranças podem mudar. TSE: '+leaderMapData.source_generated_at;
   document.querySelector('#publicacao')?.scrollIntoView({behavior:'smooth',block:'start'});
 });
 $('#munSearch').oninput=e=>{renderList(e.target.value);const d=$('.rn-municipality-list');if(d&&e.target.value.trim())d.open=true;};
