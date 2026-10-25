@@ -25,8 +25,8 @@ function ea20(key,invalid=false){
 async function mockOfficial(page,invalidRN=false){
  await page.route('**/data/candidatos-ufs-c.json',route=>route.fulfill({json:rnRegistry}));
  await page.route('**/data/candidatos-2026.json',route=>route.fulfill({json:brRegistry}));
- await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>route.fulfill({json:ea20('rn',invalidRN)}));
- await page.route('**/6258/dados/br/br-c0001-e006258-u.json',route=>route.fulfill({json:ea20('br')}));
+ await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>route.fulfill({json:ea20('rn',invalidRN),headers:{'access-control-allow-origin':'*'}}));
+ await page.route('**/6258/dados/br/br-c0001-e006258-u.json',route=>route.fulfill({json:ea20('br'),headers:{'access-control-allow-origin':'*'}}));
 }
 test('antes das 17h mostra candidaturas e nenhum voto',async({page})=>{
  await page.clock.install({time:new Date('2026-10-25T19:30:00Z')});
