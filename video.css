@@ -181,3 +181,19 @@ body.dark .uefy-video-status.is-warning{background:#472d2a;color:#ffe3d9}
 body.dark .uefy-video-scope-row{background:#24372c;border-color:#e4e9db}
 body.dark .uefy-video-scope-row label,body.dark .uefy-video-scope-row p{color:#fbf9ec}
 @media(max-width:600px){.uefy-video-scope-row{padding:12px}.uefy-video-scope-row select{font-size:13px;min-height:54px}}
+
+
+/* Legenda corresponde ao recorte do vídeo; não herda a caixa municipal. */
+.uefy-video-caption{border:2px solid #151a18;background:#f7f6ef;margin:12px 0}
+.uefy-video-caption summary{cursor:pointer;padding:13px 14px;font-size:13px;
+  font-weight:900;color:#151a18;list-style-position:inside}
+.uefy-video-caption summary::marker{color:#151a18}
+.uefy-video-caption[open] summary{background:#f4dd19}
+.uefy-video-caption textarea{box-sizing:border-box;width:calc(100% - 24px);
+  margin:12px;border:1px solid #626b61;padding:12px;background:#fff;
+  color:#151a18;resize:vertical;min-height:130px;line-height:1.5;
+  font:700 13px 'DM Sans',Arial,sans-serif}
+body.dark .uefy-video-caption{background:#28392e;border-color:#dfe8d7}
+body.dark .uefy-video-caption summary{color:#fffdf2}
+body.dark .uefy-video-caption[open] summary{color:#151a18}
+@media(max-width:600px){.uefy-video-caption summary{min-height:48px;display:flex;align-items:center}}
