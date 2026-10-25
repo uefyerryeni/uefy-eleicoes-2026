@@ -79,3 +79,19 @@ test('total estadual não recebe votos da seleção municipal',async({page})=>{
  await page.locator('#munSearch').fill('Parnamirim');await page.locator('#munList .rn-item').click();
  expect(await page.evaluate(()=>({name:publicationName(),votes:publicationResult().candidates.find(c=>String(c.number)==='13').votes,safe:rnPublicationIsSafe()}))).toEqual({name:'Rio Grande do Norte',votes:60,safe:true});
 });
+
+test('animação mostra somente percentuais exatos do snapshot, sem contagem intermediária',async({page})=>{
+ await page.clock.setFixedTime(new Date('2026-10-25T21:30:00Z'));
+ await page.locator('#uefyVideoScope').selectOption('municipal');
+ await page.evaluate(()=>{
+  current={municipality:'Natal',progress:50,integrity:{matched:2,total:2,unmatched:0},candidates:[{number:'13',name:'CADU DE LULA',party:'PT',votes:60,pct:60},{number:'44',name:'ALLYSON',party:'UNIÃO',votes:40,pct:40}]};
+  window.__pctSeen=[];const original=CanvasRenderingContext2D.prototype.fillText;
+  CanvasRenderingContext2D.prototype.fillText=function(value,...args){
+   if(this.canvas.id==='uefyVideoCanvas'&&/^\d+[,.]\d+%$/.test(String(value)))window.__pctSeen.push(Number(String(value).replace(',','.').replace('%','')));
+   return original.call(this,value,...args);
+  };
+ });
+ await page.locator('#uefyVideoPlay').click();
+ await page.waitForFunction(()=>window.__pctSeen.includes(60)&&window.__pctSeen.includes(40));
+ expect(await page.evaluate(()=>window.__pctSeen.every(n=>[60,40,50].includes(n)))).toBeTruthy();
+});

@@ -219,7 +219,7 @@
   function line(x,y,w,h,color) {ctx.fillStyle=color;ctx.fillRect(x,y,w,h);}
   function draw(t,d) {
     // Motion 3: chegada aos números até 1,45 s; exposição estável até 8 s.
-    // Os valores intermediários são apenas interpolação visual dos dados TSE
+    // Os rótulos numéricos mantêm os valores exatos do snapshot TSE
     // do snapshot capturado. Não representam novos boletins de apuração.
     var sec=Math.max(0,t)/1000;
     var heading=ease((t-50)/260);
@@ -267,13 +267,10 @@
       var name=ellipsis(String(c.name||'').toLocaleUpperCase('pt-BR'),27);
       text(name,100,y+67+13*(1-alpha),44,black,900,650);
       if(!isDemo) {
-        // Count-up curto. Valores finais são idênticos ao snapshot oficial.
-        // A animação é completada até 1,45 s, sem espera no número.
-        var numberT=ease((t-MOTION.numberStart-i*90)/
-          (MOTION.numberEnd-MOTION.numberStart-i*90));
-        var animatedPct=numberT>=1 ? c.pct : c.pct*numberT;
-        text(pct(animatedPct),785,y+72+13*(1-alpha),67,black,900,220);
-        ctx.globalAlpha=alpha*Math.max(.18,numberT);
+        // O percentual é sempre o publicado pelo TSE, desde o primeiro quadro.
+        // A animação altera apenas a entrada dos cards, sem inventar valores intermediários.
+        text(pct(c.pct),785,y+72+13*(1-alpha),67,black,900,220);
+        ctx.globalAlpha=alpha;
         text(votes(c.votes)+' VOTOS'+(c.party?'  /  '+ellipsis(c.party,20):''),
           100,y+149+13*(1-alpha),24,subtle,800,855);
         ctx.globalAlpha=alpha;

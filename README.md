@@ -83,3 +83,5 @@ A Central só exporta o vídeo estadual após conciliar a apuração estadual co
 5. Não publique o MP4 com `TESTE` ou `SEM RESULTADOS` como apuração. A conferência final do Brave/Android ou Brave/iOS e do aplicativo X deve ser feita no aparelho real, sem enviar uma postagem de teste sem autorização.
 
 Os cenários automatizados de espera usam relógio fixo e snapshots de teste sem resultados. Isso evita que a homologação falhe apenas porque o dia da eleição chegou ou os snapshots reais foram atualizados; os cenários de liberação avançam explicitamente o relógio e isolam as respostas dentro do navegador de teste.
+
+A animação oficial revela desde o primeiro quadro somente os percentuais exatos do snapshot TSE. Não há contagem numérica de zero até o resultado, para impedir que valores intermediários sejam confundidos com apurações oficiais.
