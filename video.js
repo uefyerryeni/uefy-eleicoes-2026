@@ -706,6 +706,8 @@
     get officialOnly(){return true;},
     get rnVideoScope(){return rn?rnVideoScope:null;},
     get rnStateReady(){return !!rnStateResult;},
+    get officialLabel(){return safeRecord()?.label||null;},
+    get officialRows(){return safeRecord()?.rows.map(c=>({number:c.number,votes:c.votes,pct:c.pct}))||[];},
     get rnStateError(){return rnStateError;},
     get rnTotalUrl(){return rn?RN_TOTAL_URL:null;},
     get preflightAvailable(){return true;},
