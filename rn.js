@@ -63,6 +63,7 @@ function selectMunicipality(feature){
   markSelection();renderFocusMap();
   const pub=$('#publicacao');if(pub){pub.classList.add('loading-municipality');$('#rnResultTitle').textContent='Carregando '+feature.properties.nome+'…';$('#rnResults').innerHTML='';$('#rnProgress').textContent='—';}
   if(mode==='official'&&!inSecondRoundPollingWindow()){current={progress:0,candidates:[],generatedAt:null,municipality:feature.properties.nome,integrity:null};renderCurrent();$('#rnStatus').textContent='Pronto para a apuração. A consulta oficial do 2º turno começa às 17h de 25/10, horário de Brasília.'}else loadRemote();
+  if(changingMunicipality)window.dispatchEvent(new CustomEvent('uefy:municipality-changed',{detail:{name:feature.properties.nome}}));
 }
 
 const GOVERNOR_COLORS_BY_NUMBER={
