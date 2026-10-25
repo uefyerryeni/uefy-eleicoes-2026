@@ -1,1 +1,68 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UEFY Live | Estúdio Eleitoral</title><style>:root{font-family:Arial,sans-serif;color:#f7f7f3;background:#101113}*{box-sizing:border-box}body{margin:0}.controls{padding:14px 24px;background:#202125;display:flex;gap:12px;align-items:center;flex-wrap:wrap}.controls button,.controls a{background:#f4dd19;color:#111;border:0;padding:12px 18px;font-weight:800;text-decoration:none;cursor:pointer}.controls button[aria-pressed=true]{background:#fff}.stage{width:min(100%,160vh);aspect-ratio:16/9;margin:24px auto;border:3px solid #f4dd19;background:linear-gradient(130deg,#17191b,#080909);display:flex;flex-direction:column;padding:4%;overflow:hidden}.top{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #f4dd19;padding-bottom:2%;font-size:clamp(12px,1.7vw,28px);font-weight:800}.logo{color:#f4dd19}.eyebrow{color:#f4dd19;letter-spacing:.18em;font-size:clamp(12px,1.6vw,25px);margin-top:5%}h1{font-size:clamp(36px,6vw,94px);margin:1% 0 2%}.panel{border-left:8px solid #f4dd19;padding:2% 3%;background:#242629;max-width:85%}.panel strong{font-size:clamp(20px,3.2vw,52px)}.panel p{font-size:clamp(13px,1.8vw,30px);color:#ccc}.bottom{margin-top:auto;display:flex;justify-content:space-between;border-top:1px solid #666;padding-top:2%;font-size:clamp(11px,1.3vw,22px)}.hint{max-width:1000px;margin:15px auto;padding:0 16px;color:#bbb}body.capture .controls,body.capture .hint{display:none}body.capture .stage{width:100vw;height:100vh;margin:0;border:0}body.capture{overflow:hidden}@media(max-width:700px){.stage{margin:12px auto}.panel{max-width:100%}}</style></head><body><div class="controls"><strong>UEFY LIVE · ESTÚDIO</strong><button data-mode="rn" aria-pressed="true">Governo do RN</button><button data-mode="br" aria-pressed="false">Presidência</button><button id="auto" aria-pressed="false">Alternância automática: desligada</button><a href="?capture=1">Abrir tela limpa para OBS</a><a href="index.html">Voltar ao site</a></div><main class="stage"><div class="top"><span class="logo">UEFY / ELEIÇÕES 2026</span><span>SEGUNDO TURNO · 25 OUT 2026</span></div><div class="eyebrow" id="tag">RIO GRANDE DO NORTE</div><h1 id="heading">Governo do RN</h1><div class="panel"><strong>Preparando a cobertura</strong><p id="description">Aguardando integração e validação dos resultados oficiais do TSE. Nenhum voto é exibido sem confirmação da fonte.</p></div><div class="bottom"><span>FONTE PREVISTA: TSE · DADOS NÃO CONECTADOS</span><span id="status">ESTÚDIO EM TESTE · NÃO É UMA LIVE ATIVA</span></div></main><p class="hint">Área inicial de produção. Esta página não inicia transmissões nem simula resultados. Para o OBS, abra “tela limpa” e use a URL como fonte de navegador. Para manter a mesma seleção nos dois modos, use o parâmetro mode=rn ou mode=br.</p><script>const modes={rn:['RIO GRANDE DO NORTE','Governo do RN'],br:['BRASIL','Presidência da República']};let current=new URLSearchParams(location.search).get('mode')==='br'?'br':'rn';let timer;function setMode(mode){current=mode;document.getElementById('tag').textContent=modes[mode][0];document.getElementById('heading').textContent=modes[mode][1];document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===mode)));history.replaceState(null,'',location.pathname+'?'+(document.body.classList.contains('capture')?'capture=1&':'')+'mode='+mode)}document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));document.getElementById('auto').onclick=function(){if(timer){clearInterval(timer);timer=null}else{timer=setInterval(()=>setMode(current==='rn'?'br':'rn'),20000)}this.setAttribute('aria-pressed',String(!!timer));this.textContent='Alternância automática: '+(timer?'ligada':'desligada')};if(new URLSearchParams(location.search).has('capture'))document.body.classList.add('capture');setMode(current);</script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#121513">
+  <meta name="description" content="UEFY Live: estúdio de exibição 16:9 para a cobertura do segundo turno das Eleições 2026, com dados oficiais validados do TSE.">
+  <title>UEFY LIVE — Estúdio Eleitoral 2026</title>
+  <link rel="stylesheet" href="live-studio.css?v=20261025-studio-v2">
+  <script src="election-integrity.js?v=20261024-homologacao-final-v2" defer></script>
+  <script src="live-studio.js?v=20261025-studio-v2" defer></script>
+</head>
+<body>
+  <header class="studio-top">
+    <div class="studio-brand"><div class="studio-monogram">U<span>·</span></div><div><strong>UEFY <em>LIVE</em></strong><small>ESTÚDIO ELEITORAL / 2026</small></div></div>
+    <nav class="studio-links" aria-label="Navegação"><a href="index.html">Central RN</a><a href="presidencia.html">Presidência</a><a class="back-link" href="index.html">← Voltar à Central</a></nav>
+  </header>
+  <main class="workbench">
+    <section class="intro">
+      <div><div class="intro-kicker"><span class="tag-square"></span> CENTRAL DAS ELEIÇÕES / SEGUNDO TURNO</div><h1>O resultado <i>em cena.</i></h1><p>Uma tela editorial pensada para transmissão em 1920 × 1080. Consulta os arquivos oficiais do TSE a cada 60 segundos, com checagem dos resultados antes da exibição.</p></div>
+      <div class="studio-meta"><span>FORMATO NATIVO</span><strong>16:9</strong><small>FULL HD · 1920 × 1080</small></div>
+    </section>
+    <section class="control-desk" aria-label="Controles do estúdio">
+      <div class="control-group"><span class="control-label">01 / DISPUTA</span><div class="segmented" role="group" aria-label="Disputa exibida"><button id="scopeRn" data-scope="rn" type="button" aria-pressed="true">Governo do RN</button><button id="scopeBr" data-scope="br" type="button" aria-pressed="false">Presidência</button></div></div>
+      <div class="control-group"><span class="control-label">02 / CENA</span><div class="segmented" role="group" aria-label="Cena exibida"><button id="sceneScore" data-scene="placar" type="button" aria-pressed="true">Placar</button><button id="sceneOverview" data-scene="panorama" type="button" aria-pressed="false">Panorama</button></div></div>
+      <div class="control-group auto-group"><span class="control-label">03 / AUTOMAÇÃO</span><button id="autoToggle" class="auto-toggle" type="button" aria-pressed="false"><span class="auto-symbol">↻</span> Giro automático <span class="auto-state">DESLIGADO</span></button></div>
+      <div class="control-group action-group"><span class="control-label">04 / SAÍDA</span><a class="launch-btn" id="captureLink" href="estudio-live.html?capture=1&auto=1" target="_blank" rel="noopener noreferrer">Abrir tela para OBS <span>↗</span></a></div>
+    </section>
+    <section class="preview-area" aria-label="Prévia do sinal de vídeo">
+      <div class="preview-top"><div><span class="preview-led"></span> PRÉVIA DO SINAL <span class="separator">/</span> SEM ÁUDIO</div><div id="previewHint">Fonte de navegador · 1920 × 1080</div></div>
+      <div id="broadcastViewport" class="broadcast-viewport"><div id="broadcast" class="broadcast" data-scene="placar" data-state="waiting" aria-label="Arte para a transmissão eleitoral">
+        <div class="screen-texture" aria-hidden="true"></div><div class="screen-grid" aria-hidden="true"></div>
+        <header class="screen-head">
+          <div class="screen-identity"><span class="screen-logo">UEFY<span>·</span></span><span class="screen-brand-word">LIVE<span class="screen-brand-sub">ELEIÇÕES 2026</span></span></div>
+          <div class="screen-head-right"><span>COBERTURA ELEITORAL</span><span class="head-divider"></span><strong>2º TURNO / 25 OUT 2026</strong></div>
+        </header>
+        <div class="screen-inner">
+          <div class="screen-eyebrow"><span class="eyebrow-rule"></span><span id="screenLocation">RIO GRANDE DO NORTE</span><span class="eyebrow-break">/</span> APURAÇÃO 2026</div>
+          <div class="screen-heading"><h2 id="screenTitle">O RN decide<span>.</span></h2><div class="screen-clock"><span>HORÁRIO DE BRASÍLIA</span><strong id="screenClock">--:--:--</strong></div></div>
+          <div class="screen-subheading"><span id="screenSubtitle">GOVERNADOR DO RIO GRANDE DO NORTE</span><span id="screenEdition" class="edition">BOLETIM OFICIAL · TSE</span></div>
+          <div class="score-layout">
+            <section class="scorecards" aria-label="Resultados das candidaturas">
+              <div class="candidate candidate-one" id="candidate0">
+                <div class="candidate-main"><span class="number-badge" id="number0">44</span><div class="candidate-id"><span class="candidate-kicker">CANDIDATURA 01</span><strong id="name0">ALLYSON BEZERRA</strong><small id="party0">UNIÃO BRASIL</small></div><div class="candidate-figures"><strong id="pct0">—</strong><span id="votes0">AGUARDANDO VOTOS</span></div></div>
+                <div class="track"><div id="bar0" class="track-fill"></div></div>
+              </div>
+              <div class="candidate candidate-two" id="candidate1">
+                <div class="candidate-main"><span class="number-badge" id="number1">13</span><div class="candidate-id"><span class="candidate-kicker">CANDIDATURA 02</span><strong id="name1">CADU DE LULA</strong><small id="party1">PT</small></div><div class="candidate-figures"><strong id="pct1">—</strong><span id="votes1">AGUARDANDO VOTOS</span></div></div>
+                <div class="track"><div id="bar1" class="track-fill"></div></div>
+              </div>
+              <div class="score-footnote"><span><i class="status-square"></i><span id="screenResultState">AGUARDANDO DIVULGAÇÃO OFICIAL</span></span><span id="countType">VOTOS VÁLIDOS</span></div>
+            </section>
+            <aside class="signal-panel" aria-label="Andamento e fonte dos resultados"><div class="signal-top">TOTALIZAÇÃO <span id="signalNumber">01 / 02</span></div><div class="signal-progress"><span id="progressValue">—</span><span class="signal-unit">DAS SEÇÕES</span></div><div class="progress-track"><div id="progressFill"></div></div><div class="signal-rule"></div><span class="signal-label">SITUAÇÃO DO BOLETIM</span><strong id="bulletinTitle" class="bulletin-title">Aguardando o TSE</strong><p id="bulletinText">Os percentuais serão exibidos somente após a conferência dos dados oficiais.</p><div class="signal-stamp"><span>ÚLTIMO BOLETIM DA FONTE</span><strong id="sourceTime">—</strong></div></aside>
+          </div>
+          <section class="overview-layout" aria-label="Panorama da totalização">
+            <div class="overview-lead"><span>PAINEL DA APURAÇÃO</span><h3 id="overviewHeadline">O voto em movimento<span>.</span></h3><p id="overviewCopy">Acompanhamento dos resultados oficiais do TSE, sem projeções ou estimativas de votos.</p><div class="overview-stripe">BRASIL · RIO GRANDE DO NORTE <span>/</span> 2026</div></div>
+            <div class="overview-metrics"><div class="overview-stat"><span>SEÇÕES TOTALIZADAS</span><strong id="overviewProgress">—</strong><small>Percentual informado pelo TSE</small></div><div class="overview-stat"><span>VOTOS VÁLIDOS CONTABILIZADOS</span><strong id="overviewVotes">—</strong><small id="overviewVotesHint">Aguardando resultados</small></div><div class="overview-stat"><span>DIFERENÇA ENTRE CANDIDATURAS</span><strong id="overviewGap">—</strong><small>Em pontos percentuais</small></div></div>
+          </section>
+        </div>
+        <footer class="screen-footer"><div class="footer-label"><span class="footer-notch">U</span><strong>UEFY ELEIÇÕES</strong><span>/</span><span id="footerState">AGUARDANDO RESULTADOS</span></div><div class="footer-source"><span>FONTE: TSE · EA20</span><span class="footer-sep">◆</span><span id="footerUpdated">ATUALIZAÇÃO A CADA 60 S</span></div></footer>
+      </div></div>
+      <div class="preview-bottom"><span id="deskStatus">Preparando consultas à fonte oficial…</span><button id="refreshNow" type="button">↻ Atualizar agora</button></div>
+    </section>
+    <section class="studio-guidance"><div class="guidance-title"><span>CONEXÃO COM O OBS</span><strong>Uma URL. Uma fonte. Nenhuma sobreposição.</strong></div><div class="guidance-copy"><p>Use <b>Fonte de navegador</b> no OBS, com largura <b>1920</b> e altura <b>1080</b>. A saída limpa remove os controles e mantém apenas o gráfico. Para alternância automática entre RN e Brasil, abra o link abaixo.</p><div class="url-line"><code id="captureUrl">estudio-live.html?capture=1&amp;auto=1</code><button type="button" id="copyUrl">Copiar URL</button></div><p class="footnote">O estúdio não transmite sozinho e não representa uma live ativa no X. Os votos só aparecem após validação do boletim do TSE; se a consulta falhar, o placar é ocultado até uma nova conferência.</p></div></section>
+    <footer class="studio-page-foot"><span>UEFY · CENTRAL DAS ELEIÇÕES</span><span>Iniciativa independente · Fonte dos resultados: Tribunal Superior Eleitoral</span></footer>
+  </main>
+</body>
+</html>
