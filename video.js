@@ -437,6 +437,10 @@
   async function exportVideo(rehearsal) {
     if (busy) return;
     if(rehearsal!==true&&rn&&rnVideoScope==='state'){
+      if(!inSecondRoundPollingWindow()){
+        setStatus('A exportação com votos está bloqueada até a publicação e conciliação oficial do TSE, após 17h de 25/10. Para testar o envio, use o MP4 sem votos.',true);
+        return;
+      }
       setStatus('Consultando a apuração estadual do RN no TSE; conferindo votos e registros…',false);
       if(!(await refreshRnState()))return;
     }
