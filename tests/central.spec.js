@@ -740,12 +740,16 @@ test('Motion RN: primeiro vídeo e texto são estaduais; Natal só após escolha
   expect(general.scope).toBe('state');
   expect(general.label).toContain('RIO GRANDE DO NORTE');
   expect(general.label).not.toContain('Natal');
+  await expect(page.locator('#uefyVideoCaption')).toHaveValue(/RIO GRANDE DO NORTE/);
+  await expect(page.locator('#uefyVideoCaption')).not.toHaveValue(/Natal/);
   expect(general.endpoint).toBe('https://resultados.tse.jus.br/oficial/ele2026/6260/dados/rn/rn-c0003-e006260-u.json');
   expect(general.ready).toBeFalsy();
   await page.locator('#uefyVideoScope').selectOption('municipal');
   expect(await page.evaluate(()=>window.__uefyVideo.rehearsalText)).toContain('Natal');
+  await expect(page.locator('#uefyVideoCaption')).toHaveValue(/Natal/);
   await page.locator('#uefyVideoScope').selectOption('state');
   expect(await page.evaluate(()=>window.__uefyVideo.rehearsalText)).not.toContain('Natal');
+  await expect(page.locator('#uefyVideoCaption')).not.toHaveValue(/Natal/);
 });
 
 test('Motion estadual confere RN todo pelo EA20; rejeita usar o resultado municipal como substituto',async({page})=>{
