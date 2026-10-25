@@ -19,7 +19,7 @@ const params=new URLSearchParams(location.search);
 const capture=params.get('capture')==='1';
 let scope=params.get('scope')==='br'?'br':'rn';
 let scene=params.get('scene')==='panorama'?'panorama':'placar';
-let auto=params.get('auto')==='1';
+let auto=params.get('auto')!=='0';
 let busy=false, intervalAuto=null;
 const store={
  rn:{state:'waiting',result:null,registry:null,reason:'Aguardando o horário oficial de divulgação.',checkedAt:null},
