@@ -22,6 +22,7 @@
     (rn?'<div class="uefy-video-scope-row"><label for="uefyVideoScope">Abrangência do vídeo</label><select id="uefyVideoScope"><option value="state">Rio Grande do Norte inteiro (padrão)</option><option value="municipal">Município selecionado</option></select><p id="uefyVideoScopeHelp">A publicação inicial usa a totalização oficial de todo o RN, não apenas Natal.</p></div>':'') +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
+    '<details class="uefy-video-caption" id="uefyVideoCaptionDetails"><summary>Ver legenda exata deste vídeo para o X</summary><textarea id="uefyVideoCaption" rows="6" readonly aria-label="Legenda correspondente ao recorte do vídeo"></textarea></details>' +
     '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo oficial MP4</button><button class="btn uefy-video-rehearsal" id="uefyVideoRehearsal" type="button">Testar publicação sem votos (MP4)</button><button class="btn uefy-video-copy" id="uefyVideoCopy" type="button">Copiar texto da publicação</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button">1/2 · Preparar MP4 para compartilhar</button></div>' +
     '<p class="uefy-video-share-note">Brave: são dois toques separados. Primeiro prepare o MP4; depois toque em Compartilhar para enviar ao X. O vídeo de teste não tem votos. Amanhã o vídeo oficial só usará dados conferidos do TSE. Caso o aplicativo X ignore a legenda, use Copiar texto da publicação.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">Para testar no Brave: toque em “1/2 · Preparar MP4” e, depois, em “2/2 · Compartilhar no X”. O teste não apresenta votos.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
@@ -43,6 +44,7 @@
   var result = studio.querySelector('#uefyVideoResult');
   var player = studio.querySelector('#uefyVideoPlayer');
   var download = studio.querySelector('#uefyVideoDownload');
+  var videoCaption=studio.querySelector('#uefyVideoCaption');
   studio.querySelector('.uefy-video-actions').before(status);
   var previewId = 0, busy = false, lastUrl = null;
   var lastBlob = null, lastRecord = null, lastTweet = '';
@@ -104,6 +106,7 @@
         {name:second.nome,number:String(second.numero),party:second.partido,color:'#d62828',pct:0,votes:0}
       ];
       presidentialBallotError=null;
+      refreshVideoCaption();
       if(!busy && !previewId)draw(1650,safeRecord()||placeholder());
       setStatus('Prévia presidencial conferida com a base de candidaturas do TSE: '+first.nome+' (PL) e '+second.nome+' (PT). Sem votos antes da divulgação oficial.',false);
       return true;
@@ -416,6 +419,7 @@
   function finishVideo(blob,snapshot,tweet) {
     lastUrl=URL.createObjectURL(blob);
     lastBlob=blob;lastRecord=snapshot;lastTweet=tweet;
+    refreshVideoCaption();
     updateShareButton();
     player.src=lastUrl;
     download.href=lastUrl;
@@ -432,6 +436,7 @@
     result.hidden=true;player.removeAttribute('src');player.load();
     download.removeAttribute('href');
     shareBtn.dataset.fallback='';
+    refreshVideoCaption();
     updateShareButton();
   }
   async function exportVideo(rehearsal) {
@@ -579,10 +584,17 @@
         return ellipsis(row.name,17)+': '+pct(row.pct);
       }).join('\n')+'\nFonte: TSE';
   }
+  function refreshVideoCaption(){
+    var snapshot=lastRecord||safeRecord();
+    if(!snapshot && (rn||presidentialBallot))snapshot=rehearsalRecord();
+    videoCaption.value=snapshot?(lastRecord?lastTweet:makeTwitterText(snapshot)):
+      'Aguardando conferência da base oficial de candidaturas do TSE.';
+  }
   async function copyPostText() {
-    var snapshot=lastRecord || safeRecord();
+    var snapshot=lastRecord || safeRecord() ||
+      ((rn||presidentialBallot)?rehearsalRecord():null);
     if(!snapshot) {
-      setStatus('O texto oficial só fica disponível após a apuração e a conferência dos dados do TSE.',true);
+      setStatus('A legenda ficará disponível após conferir a base de candidaturas do TSE.',true);
       return;
     }
     var value=lastRecord?lastTweet:makeTwitterText(snapshot);
@@ -681,6 +693,7 @@
       : 'Vídeo somente do município selecionado no mapa.';
     overlay.hidden=!(!safeRecord());
     draw(1650,safeRecord()||placeholder());setTime(0);
+    refreshVideoCaption();
     setStatus(rnVideoScope==='state'
       ? 'Publicação estadual selecionada: Rio Grande do Norte inteiro.'
       : 'Publicação municipal selecionada: '+(selectedFeature?.properties?.nome||'município atual')+'.',false);
@@ -726,5 +739,6 @@
   overlay.hidden=false;
   draw(1650,safeRecord()||placeholder());setTime(0);
   updateShareButton();
+  refreshVideoCaption();
   if(!rn)loadPresidentialBallot();
 })();
