@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Python
         uses: actions/setup-python@v5
@@ -38,13 +40,30 @@ jobs:
       - name: Sintaxe JavaScript
         run: node --check live-studio.js && node --check video.js && node --check share-mobile.js && node --check election-integrity.js && node --check app-primeiro-turno.js && node --check app.js && node --check rn.js && node --check radar.js && node --check analises.js && node --check entre-turnos.js && node --check mudancas-rn.js
 
+      - name: Identificar atualização exclusivamente de dados
+        id: update_class
+        shell: bash
+        run: |
+          changed="$(git diff --name-only HEAD^ HEAD 2>/dev/null || true)"
+          subject="$(git log -1 --format=%s)"
+          if [[ -n "$changed" ]] && [[ "$subject" == dados:* ]] && ! grep -qvE '^data/(rn-governador-mapa-2t|entre-turnos-2t)\.json$' <<< "$changed"; then
+            echo "data_only=true" >> "$GITHUB_OUTPUT"
+            echo "Snapshot de dados auditado, sem mudanças de código."
+          else
+            echo "data_only=false" >> "$GITHUB_OUTPUT"
+            echo "Mudança de código: teste completo obrigatório."
+          fi
+
       - name: Instalar testes de navegador
+        if: steps.update_class.outputs.data_only != 'true'
         run: npm install
 
       - name: Instalar Chromium
+        if: steps.update_class.outputs.data_only != 'true'
         run: npx playwright install --with-deps chromium
 
       - name: Testar Central, mapas e publicações
+        if: steps.update_class.outputs.data_only != 'true'
         run: npx playwright test
 
       - name: Salvar relatório dos testes

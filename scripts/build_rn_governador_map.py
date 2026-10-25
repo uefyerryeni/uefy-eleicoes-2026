@@ -115,6 +115,14 @@ def write_if_changed(data):
     return True
 
 def write_wait(message):
+    # Conserva o último mapa íntegro quando o TSE falhar momentaneamente.
+    try:
+        old=json.loads(OUT.read_text(encoding='utf-8'))
+        if old.get('status')=='ok' and str(old.get('election_id'))=='6260' and int(old.get('municipalities_read',0))>0:
+            print('Fonte temporariamente indisponível; mantendo último mapa: '+message)
+            return
+    except (OSError, ValueError, TypeError, AttributeError):
+        pass
     write_if_changed({
         'status':'waiting','round':2,'election_id':'6260','generated_at':datetime.now(TZ).isoformat(timespec='seconds'),
         'source_generated_at':None,'municipalities_expected':167,'municipalities_checked':0,'municipalities_read':0,
@@ -200,7 +208,7 @@ def main():
         'publication_ready':complete,'final_result':final_result,
         'outcome':statewide_outcome,
         'errors':errors,'leaders':leaders,'summary':summary,'natal':natal,
-        'message':('Mapa completo e conferido.' if complete else f'Mapa parcial: {read}/{len(mun)} municípios lidos. Publicação bloqueada até completar a base.')
+        'message':('Mapa completo e conferido.' if complete else f'Mapa parcial: {read}/{len(mun)} municípios com liderança; demais aguardam dados do TSE.')
     }
     changed=write_if_changed(data)
     print(data['message'] if changed else 'Snapshot já corresponde aos dados atuais do TSE.')
