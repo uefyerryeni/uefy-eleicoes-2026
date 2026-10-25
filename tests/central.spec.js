@@ -356,8 +356,9 @@ test('vídeo para Twitter existe em ambas as páginas, com prévia sem números 
   await page.locator('#uefyVideoExport').click();
   await expect(page.locator('#uefyVideoResult')).toBeHidden();
 });
-test('vídeo do RN só é liberado após horário oficial e conciliação integral',async({page})=>{
+test('vídeo municipal do RN só é liberado após horário oficial e conciliação integral',async({page})=>{
   await readyRN(page);
+  await page.locator('#uefyVideoScope').selectOption('municipal');
   await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
   const states=await page.evaluate(()=>{
     const city=selectedFeature.properties.nome;
@@ -724,4 +725,95 @@ test('base local de candidaturas coincide com os dois nomes e partidos publicado
     {name:'FLAVIO BOLSONARO',party:'PL',status:'DEFERIDO'},
     {name:'LULA',party:'PT',status:'DEFERIDO'}
   ]);
+});
+
+
+test('Motion RN: primeiro vídeo e texto são estaduais; Natal só após escolha municipal',async({page})=>{
+  await readyRN(page);
+  await expect(page.locator('#uefyVideoScope')).toHaveValue('state');
+  const general=await page.evaluate(()=>({
+    scope:window.__uefyVideo.rnVideoScope,
+    label:window.__uefyVideo.rehearsalText,
+    endpoint:window.__uefyVideo.rnTotalUrl,
+    ready:window.__uefyVideo.officialReady
+  }));
+  expect(general.scope).toBe('state');
+  expect(general.label).toContain('RIO GRANDE DO NORTE');
+  expect(general.label).not.toContain('Natal');
+  expect(general.endpoint).toBe('https://resultados.tse.jus.br/oficial/ele2026/6260/dados/rn/rn-c0003-e006260-u.json');
+  expect(general.ready).toBeFalsy();
+  await page.locator('#uefyVideoScope').selectOption('municipal');
+  expect(await page.evaluate(()=>window.__uefyVideo.rehearsalText)).toContain('Natal');
+  await page.locator('#uefyVideoScope').selectOption('state');
+  expect(await page.evaluate(()=>window.__uefyVideo.rehearsalText)).not.toContain('Natal');
+});
+
+test('Motion estadual confere RN todo pelo EA20; rejeita usar o resultado municipal como substituto',async({page})=>{
+  test.setTimeout(30000);
+  await page.setViewportSize({width:390,height:844});
+  await readyRN(page);
+  await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
+  await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>
+    route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({
+      dg:'25/10/2026',hg:'18:30:00',s:{pst:'52,00'},
+      carg:[{agr:[{par:[
+        {sg:'PT',cand:[{n:'13',nmu:'CADU DE LULA',pvap:'56,00',vap:56000}]},
+        {sg:'UNIÃO',cand:[{n:'44',nmu:'ALLYSON BEZERRA',pvap:'44,00',vap:44000}]}
+      ]}]}]
+    })}));
+  await page.evaluate(()=>{
+    current={
+      municipality:'Natal',progress:96,integrity:{matched:2,total:2,unmatched:0},
+      candidates:[
+        {number:'13',name:'CADU DE LULA',votes:10,pct:1},
+        {number:'44',name:'ALLYSON BEZERRA',votes:990,pct:99}
+      ]};
+  });
+  await page.locator('#uefyVideoExport').click();
+  await page.waitForFunction(()=>window.__uefyVideo.rnStateReady===true,{timeout:12000});
+  const snapshot=await page.evaluate(()=>({
+    scope:window.__uefyVideo.rnVideoScope,
+    label:window.__uefyVideo.officialLabel,
+    rows:window.__uefyVideo.officialRows,
+    ready:window.__uefyVideo.officialReady
+  }));
+  expect(snapshot.scope).toBe('state');
+  expect(snapshot.label).toBe('RIO GRANDE DO NORTE');
+  expect(snapshot.ready).toBeTruthy();
+  expect(snapshot.rows).toEqual([
+    {number:'13',votes:56000,pct:56},
+    {number:'44',votes:44000,pct:44}
+  ]);
+});
+
+test('WebCodecs grava MP4 com taxa de quadros fixa e sem captura em tempo real',async({page})=>{
+  test.setTimeout(45000);
+  await readyRN(page);
+  const supported=await page.evaluate(async()=>{
+    if(typeof VideoEncoder==='undefined'||typeof VideoFrame==='undefined')return false;
+    try{return !!(await VideoEncoder.isConfigSupported({
+      codec:'avc1.42E01E',width:720,height:720,bitrate:2800000,
+      framerate:24,avc:{format:'avc'}
+    })).supported;}catch(e){return false;}
+  });
+  test.skip(!supported,'WebCodecs H264 indisponível neste ambiente');
+  await page.evaluate(()=>{window.MediaRecorder=undefined;});
+  await page.locator('#uefyVideoRehearsal').click();
+  await expect(page.locator('#uefyVideoShare')).toContainText('2/2 · Compartilhar',{timeout:35000});
+  const actual=await page.evaluate(async()=>{
+    const video=document.querySelector('#uefyVideoPlayer');
+    const blob=await fetch(video.src).then(r=>r.blob());
+    const bytes=new Uint8Array(await blob.slice(0,12).arrayBuffer());
+    return {size:blob.size,ftyp:String.fromCharCode(...bytes.slice(4,8)),
+      duration:await new Promise(resolve=>{
+        if(video.readyState>=1)resolve(video.duration);
+        else video.addEventListener('loadedmetadata',()=>resolve(video.duration),{once:true});
+      }),text:window.__uefyVideo.generatedText};
+  });
+  expect(actual.size).toBeGreaterThan(20000);
+  expect(actual.ftyp).toBe('ftyp');
+  expect(actual.duration).toBeGreaterThan(7.9);
+  expect(actual.duration).toBeLessThan(8.2);
+  expect(actual.text).toContain('RIO GRANDE DO NORTE');
+  expect(actual.text).not.toContain('Natal');
 });
