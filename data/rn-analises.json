@@ -1,7 +1,7 @@
 {
   "status": "ok",
-  "generated_at": "2026-10-21T06:51:13-03:00",
-  "source_generated_at": "05/10/2026 · 12:52:21",
+  "generated_at": "2026-10-25T16:48:44-03:00",
+  "source_generated_at": "24/10/2026 · 12:06:44",
   "municipalities_expected": 167,
   "municipalities_read": 167,
   "errors": [],
@@ -285,10 +285,10 @@
             "abstention_pct": 19.63,
             "blank": 253,
             "blank_pct": 3.36,
-            "null": 467,
-            "null_pct": 6.2,
+            "null": 468,
+            "null_pct": 6.22,
             "valid": 6808,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 7529
           }
         }
@@ -342,10 +342,10 @@
             "abstention_pct": 19.76,
             "blank": 238,
             "blank_pct": 2.81,
-            "null": 326,
-            "null_pct": 3.86,
+            "null": 327,
+            "null_pct": 3.87,
             "valid": 7890,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 8455
           }
         }
@@ -367,7 +367,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 3975,
-          "pct": 45.5,
+          "pct": 45.51,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -399,10 +399,10 @@
             "abstention_pct": 19.94,
             "blank": 266,
             "blank_pct": 2.82,
-            "null": 439,
-            "null_pct": 4.65,
+            "null": 441,
+            "null_pct": 4.67,
             "valid": 8735,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 9442
           }
         }
@@ -481,7 +481,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 4150,
-          "pct": 47.37,
+          "pct": 47.38,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -513,10 +513,10 @@
             "abstention_pct": 20.58,
             "blank": 327,
             "blank_pct": 3.41,
-            "null": 489,
-            "null_pct": 5.11,
+            "null": 491,
+            "null_pct": 5.13,
             "valid": 8759,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 9577
           }
         }
@@ -538,7 +538,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 3435,
-          "pct": 44.15,
+          "pct": 44.16,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -570,10 +570,10 @@
             "abstention_pct": 17.84,
             "blank": 236,
             "blank_pct": 2.81,
-            "null": 378,
-            "null_pct": 4.5,
+            "null": 380,
+            "null_pct": 4.53,
             "valid": 7779,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 8395
           }
         }
@@ -595,7 +595,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 2774,
-          "pct": 59.2,
+          "pct": 59.21,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -627,10 +627,10 @@
             "abstention_pct": 14.98,
             "blank": 118,
             "blank_pct": 2.35,
-            "null": 220,
-            "null_pct": 4.38,
+            "null": 221,
+            "null_pct": 4.4,
             "valid": 4685,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 5024
           }
         }
@@ -652,7 +652,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 11799,
-          "pct": 50.59,
+          "pct": 50.6,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -684,10 +684,10 @@
             "abstention_pct": 14.56,
             "blank": 1264,
             "blank_pct": 4.9,
-            "null": 1231,
+            "null": 1232,
             "null_pct": 4.77,
             "valid": 23320,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 25816
           }
         }
@@ -798,10 +798,10 @@
             "abstention_pct": 19.37,
             "blank": 416,
             "blank_pct": 4.48,
-            "null": 559,
-            "null_pct": 6.03,
+            "null": 560,
+            "null_pct": 6.04,
             "valid": 8300,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 9276
           }
         }
@@ -855,10 +855,10 @@
             "abstention_pct": 18.9,
             "blank": 1490,
             "blank_pct": 4.03,
-            "null": 1785,
-            "null_pct": 4.83,
+            "null": 1786,
+            "null_pct": 4.84,
             "valid": 33658,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 36934
           }
         }
@@ -912,10 +912,10 @@
             "abstention_pct": 17.64,
             "blank": 719,
             "blank_pct": 3.96,
-            "null": 749,
+            "null": 750,
             "null_pct": 4.13,
             "valid": 16682,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 18151
           }
         }
@@ -994,7 +994,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 2425,
-          "pct": 45.55,
+          "pct": 45.56,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -1026,10 +1026,10 @@
             "abstention_pct": 20.24,
             "blank": 305,
             "blank_pct": 5.17,
-            "null": 275,
-            "null_pct": 4.66,
+            "null": 276,
+            "null_pct": 4.67,
             "valid": 5323,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 5904
           }
         }
@@ -1311,10 +1311,10 @@
             "abstention_pct": 21.14,
             "blank": 266,
             "blank_pct": 3.34,
-            "null": 529,
-            "null_pct": 6.64,
+            "null": 530,
+            "null_pct": 6.65,
             "valid": 7170,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 7966
           }
         }
@@ -1368,10 +1368,10 @@
             "abstention_pct": 15.78,
             "blank": 1267,
             "blank_pct": 3.34,
-            "null": 1778,
-            "null_pct": 4.69,
+            "null": 1784,
+            "null_pct": 4.7,
             "valid": 34872,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 37923
           }
         }
@@ -1450,7 +1450,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 1806,
-          "pct": 53.72,
+          "pct": 53.73,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -1482,10 +1482,10 @@
             "abstention_pct": 16.26,
             "blank": 39,
             "blank_pct": 1.11,
-            "null": 111,
-            "null_pct": 3.16,
+            "null": 112,
+            "null_pct": 3.19,
             "valid": 3361,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 3512
           }
         }
@@ -1564,7 +1564,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 2351,
-          "pct": 36.94,
+          "pct": 36.95,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -1596,10 +1596,10 @@
             "abstention_pct": 18.64,
             "blank": 251,
             "blank_pct": 3.58,
-            "null": 397,
-            "null_pct": 5.66,
+            "null": 398,
+            "null_pct": 5.68,
             "valid": 6363,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 7012
           }
         }
@@ -1621,7 +1621,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 8709,
-          "pct": 48.77,
+          "pct": 48.78,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -1653,10 +1653,10 @@
             "abstention_pct": 19.13,
             "blank": 1035,
             "blank_pct": 5.18,
-            "null": 1070,
-            "null_pct": 5.36,
+            "null": 1073,
+            "null_pct": 5.38,
             "valid": 17854,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 19962
           }
         }
@@ -1710,10 +1710,10 @@
             "abstention_pct": 16.72,
             "blank": 822,
             "blank_pct": 5.2,
-            "null": 765,
-            "null_pct": 4.84,
+            "null": 767,
+            "null_pct": 4.85,
             "valid": 14213,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 15802
           }
         }
@@ -1735,7 +1735,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 3311,
-          "pct": 50.33,
+          "pct": 50.34,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -1767,10 +1767,10 @@
             "abstention_pct": 18.26,
             "blank": 206,
             "blank_pct": 2.9,
-            "null": 314,
-            "null_pct": 4.42,
+            "null": 315,
+            "null_pct": 4.44,
             "valid": 6577,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 7098
           }
         }
@@ -1881,10 +1881,10 @@
             "abstention_pct": 17.88,
             "blank": 2765,
             "blank_pct": 5.59,
-            "null": 2927,
-            "null_pct": 5.91,
+            "null": 2932,
+            "null_pct": 5.92,
             "valid": 43806,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 49503
           }
         }
@@ -1938,10 +1938,10 @@
             "abstention_pct": 22.55,
             "blank": 165,
             "blank_pct": 2.19,
-            "null": 403,
-            "null_pct": 5.35,
+            "null": 404,
+            "null_pct": 5.37,
             "valid": 6958,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 7527
           }
         }
@@ -2166,10 +2166,10 @@
             "abstention_pct": 19.42,
             "blank": 1306,
             "blank_pct": 4.92,
-            "null": 1805,
-            "null_pct": 6.8,
+            "null": 1806,
+            "null_pct": 6.81,
             "valid": 23416,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 26528
           }
         }
@@ -2248,7 +2248,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 2183,
-          "pct": 56.69,
+          "pct": 56.7,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -2280,10 +2280,10 @@
             "abstention_pct": 18.46,
             "blank": 115,
             "blank_pct": 2.74,
-            "null": 226,
-            "null_pct": 5.39,
+            "null": 227,
+            "null_pct": 5.42,
             "valid": 3850,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 4192
           }
         }
@@ -2305,7 +2305,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 1636,
-          "pct": 47.49,
+          "pct": 47.5,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -2337,10 +2337,10 @@
             "abstention_pct": 16.57,
             "blank": 194,
             "blank_pct": 4.88,
-            "null": 340,
-            "null_pct": 8.54,
+            "null": 341,
+            "null_pct": 8.57,
             "valid": 3444,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 3979
           }
         }
@@ -2362,7 +2362,7 @@
           "name": "ÁLVARO DIAS",
           "party": "PL",
           "votes": 2410,
-          "pct": 41.02,
+          "pct": 41.03,
           "seq": 3,
           "vote_destination": "válido"
         },
@@ -2394,10 +2394,10 @@
             "abstention_pct": 19.86,
             "blank": 209,
             "blank_pct": 3.28,
-            "null": 294,
-            "null_pct": 4.61,
+            "null": 295,
+            "null_pct": 4.63,
             "valid": 5874,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 6378
           }
         }
@@ -2451,10 +2451,10 @@
             "abstention_pct": 17.25,
             "blank": 1285,
             "blank_pct": 3.93,
-            "null": 1518,
-            "null_pct": 4.64,
+            "null": 1522,
+            "null_pct": 4.66,
             "valid": 29880,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 32687
           }
         }
@@ -2508,10 +2508,10 @@
             "abstention_pct": 14.88,
             "blank": 286,
             "blank_pct": 4.75,
-            "null": 224,
-            "null_pct": 3.72,
+            "null": 225,
+            "null_pct": 3.74,
             "valid": 5507,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 6018
           }
         }
@@ -2850,10 +2850,10 @@
             "abstention_pct": 17.59,
             "blank": 832,
             "blank_pct": 4.54,
-            "null": 1010,
+            "null": 1011,
             "null_pct": 5.51,
             "valid": 16500,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 18343
           }
         }
@@ -2875,7 +2875,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 4936,
-          "pct": 54.94,
+          "pct": 54.95,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -2907,10 +2907,10 @@
             "abstention_pct": 17.24,
             "blank": 443,
             "blank_pct": 4.41,
-            "null": 614,
-            "null_pct": 6.11,
+            "null": 616,
+            "null_pct": 6.13,
             "valid": 8982,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 10041
           }
         }
@@ -3021,10 +3021,10 @@
             "abstention_pct": 22.78,
             "blank": 320,
             "blank_pct": 2.65,
-            "null": 482,
+            "null": 483,
             "null_pct": 4.0,
             "valid": 11262,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 12065
           }
         }
@@ -3046,7 +3046,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 3816,
-          "pct": 41.56,
+          "pct": 41.57,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -3078,10 +3078,10 @@
             "abstention_pct": 15.4,
             "blank": 283,
             "blank_pct": 2.9,
-            "null": 290,
-            "null_pct": 2.97,
+            "null": 291,
+            "null_pct": 2.98,
             "valid": 9180,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 9754
           }
         }
@@ -3217,7 +3217,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 2764,
-          "pct": 49.28,
+          "pct": 49.3,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -3249,10 +3249,10 @@
             "abstention_pct": 18.01,
             "blank": 171,
             "blank_pct": 2.86,
-            "null": 194,
-            "null_pct": 3.25,
+            "null": 196,
+            "null_pct": 3.28,
             "valid": 5607,
-            "valid_pct": 99.96,
+            "valid_pct": 100.0,
             "total_votes": 5974
           }
         }
@@ -3616,7 +3616,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 2955,
-          "pct": 39.41,
+          "pct": 39.42,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -3648,10 +3648,10 @@
             "abstention_pct": 15.23,
             "blank": 455,
             "blank_pct": 5.2,
-            "null": 789,
-            "null_pct": 9.03,
+            "null": 790,
+            "null_pct": 9.04,
             "valid": 7497,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 8742
           }
         }
@@ -3705,10 +3705,10 @@
             "abstention_pct": 17.04,
             "blank": 154,
             "blank_pct": 2.94,
-            "null": 300,
-            "null_pct": 5.72,
+            "null": 301,
+            "null_pct": 5.74,
             "valid": 4790,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 5245
           }
         }
@@ -3787,7 +3787,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 10470,
-          "pct": 48.72,
+          "pct": 48.73,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -3819,10 +3819,10 @@
             "abstention_pct": 16.95,
             "blank": 685,
             "blank_pct": 2.98,
-            "null": 826,
-            "null_pct": 3.59,
+            "null": 828,
+            "null_pct": 3.6,
             "valid": 21486,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 22999
           }
         }
@@ -4129,7 +4129,7 @@
           "name": "ÁLVARO DIAS",
           "party": "PL",
           "votes": 1057,
-          "pct": 41.37,
+          "pct": 41.39,
           "seq": 3,
           "vote_destination": "válido"
         },
@@ -4161,10 +4161,10 @@
             "abstention_pct": 16.84,
             "blank": 63,
             "blank_pct": 2.29,
-            "null": 137,
-            "null_pct": 4.97,
+            "null": 138,
+            "null_pct": 5.01,
             "valid": 2554,
-            "valid_pct": 99.96,
+            "valid_pct": 100.0,
             "total_votes": 2755
           }
         }
@@ -4243,7 +4243,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 2916,
-          "pct": 41.9,
+          "pct": 41.92,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -4275,10 +4275,10 @@
             "abstention_pct": 19.63,
             "blank": 297,
             "blank_pct": 3.84,
-            "null": 469,
-            "null_pct": 6.07,
+            "null": 472,
+            "null_pct": 6.11,
             "valid": 6956,
-            "valid_pct": 99.96,
+            "valid_pct": 100.0,
             "total_votes": 7725
           }
         }
@@ -4471,7 +4471,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 2255,
-          "pct": 44.81,
+          "pct": 44.83,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -4503,10 +4503,10 @@
             "abstention_pct": 23.34,
             "blank": 250,
             "blank_pct": 4.43,
-            "null": 357,
-            "null_pct": 6.33,
+            "null": 359,
+            "null_pct": 6.37,
             "valid": 5030,
-            "valid_pct": 99.96,
+            "valid_pct": 100.0,
             "total_votes": 5639
           }
         }
@@ -4585,7 +4585,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 20666,
-          "pct": 50.33,
+          "pct": 50.34,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -4617,10 +4617,10 @@
             "abstention_pct": 17.02,
             "blank": 1724,
             "blank_pct": 3.82,
-            "null": 2307,
-            "null_pct": 5.12,
+            "null": 2311,
+            "null_pct": 5.13,
             "valid": 41055,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 45090
           }
         }
@@ -5130,10 +5130,10 @@
             "abstention_pct": 15.97,
             "blank": 4751,
             "blank_pct": 3.01,
-            "null": 6337,
-            "null_pct": 4.02,
+            "null": 6352,
+            "null_pct": 4.03,
             "valid": 146541,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 157644
           }
         }
@@ -5187,10 +5187,10 @@
             "abstention_pct": 20.56,
             "blank": 15016,
             "blank_pct": 3.31,
-            "null": 22114,
-            "null_pct": 4.88,
+            "null": 22183,
+            "null_pct": 4.89,
             "valid": 416219,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 453418
           }
         }
@@ -5212,7 +5212,7 @@
           "name": "ÁLVARO DIAS",
           "party": "PL",
           "votes": 7505,
-          "pct": 37.56,
+          "pct": 37.57,
           "seq": 3,
           "vote_destination": "válido"
         },
@@ -5244,10 +5244,10 @@
             "abstention_pct": 19.61,
             "blank": 1117,
             "blank_pct": 4.97,
-            "null": 1369,
-            "null_pct": 6.09,
+            "null": 1372,
+            "null_pct": 6.11,
             "valid": 19976,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 22465
           }
         }
@@ -5269,7 +5269,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 10833,
-          "pct": 59.54,
+          "pct": 59.59,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -5301,10 +5301,10 @@
             "abstention_pct": 16.5,
             "blank": 631,
             "blank_pct": 3.23,
-            "null": 714,
-            "null_pct": 3.65,
+            "null": 732,
+            "null_pct": 3.75,
             "valid": 18178,
-            "valid_pct": 99.9,
+            "valid_pct": 100.0,
             "total_votes": 19541
           }
         }
@@ -5611,7 +5611,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 5440,
-          "pct": 43.83,
+          "pct": 43.84,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -5643,10 +5643,10 @@
             "abstention_pct": 15.89,
             "blank": 929,
             "blank_pct": 6.33,
-            "null": 1343,
-            "null_pct": 9.15,
+            "null": 1346,
+            "null_pct": 9.17,
             "valid": 12410,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 14685
           }
         }
@@ -5700,10 +5700,10 @@
             "abstention_pct": 17.6,
             "blank": 4640,
             "blank_pct": 3.83,
-            "null": 5536,
-            "null_pct": 4.57,
+            "null": 5552,
+            "null_pct": 4.58,
             "valid": 110987,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 121179
           }
         }
@@ -5928,10 +5928,10 @@
             "abstention_pct": 16.97,
             "blank": 643,
             "blank_pct": 3.66,
-            "null": 692,
-            "null_pct": 3.94,
+            "null": 693,
+            "null_pct": 3.95,
             "valid": 16220,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 17556
           }
         }
@@ -6352,7 +6352,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 1843,
-          "pct": 46.98,
+          "pct": 47.02,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -6384,10 +6384,10 @@
             "abstention_pct": 18.25,
             "blank": 89,
             "blank_pct": 2.13,
-            "null": 159,
-            "null_pct": 3.81,
+            "null": 162,
+            "null_pct": 3.88,
             "valid": 3920,
-            "valid_pct": 99.92,
+            "valid_pct": 100.0,
             "total_votes": 4171
           }
         }
@@ -6498,10 +6498,10 @@
             "abstention_pct": 17.13,
             "blank": 205,
             "blank_pct": 2.91,
-            "null": 303,
-            "null_pct": 4.3,
+            "null": 304,
+            "null_pct": 4.31,
             "valid": 6537,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 7046
           }
         }
@@ -7011,10 +7011,10 @@
             "abstention_pct": 17.71,
             "blank": 882,
             "blank_pct": 3.88,
-            "null": 1188,
+            "null": 1189,
             "null_pct": 5.22,
             "valid": 20687,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 22758
           }
         }
@@ -7036,7 +7036,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 1781,
-          "pct": 45.57,
+          "pct": 45.58,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -7068,10 +7068,10 @@
             "abstention_pct": 18.28,
             "blank": 106,
             "blank_pct": 2.54,
-            "null": 165,
-            "null_pct": 3.95,
+            "null": 166,
+            "null_pct": 3.97,
             "valid": 3907,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 4179
           }
         }
@@ -7150,7 +7150,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 819,
-          "pct": 41.36,
+          "pct": 41.38,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -7182,10 +7182,10 @@
             "abstention_pct": 14.09,
             "blank": 111,
             "blank_pct": 4.9,
-            "null": 172,
-            "null_pct": 7.6,
+            "null": 173,
+            "null_pct": 7.64,
             "valid": 1979,
-            "valid_pct": 99.95,
+            "valid_pct": 100.0,
             "total_votes": 2263
           }
         }
@@ -7239,10 +7239,10 @@
             "abstention_pct": 19.55,
             "blank": 515,
             "blank_pct": 3.35,
-            "null": 855,
-            "null_pct": 5.56,
+            "null": 856,
+            "null_pct": 5.57,
             "valid": 14003,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 15374
           }
         }
@@ -7549,7 +7549,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 1589,
-          "pct": 34.02,
+          "pct": 34.04,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -7581,10 +7581,10 @@
             "abstention_pct": 17.95,
             "blank": 194,
             "blank_pct": 3.78,
-            "null": 273,
-            "null_pct": 5.31,
+            "null": 276,
+            "null_pct": 5.37,
             "valid": 4668,
-            "valid_pct": 99.94,
+            "valid_pct": 100.0,
             "total_votes": 5138
           }
         }
@@ -8037,10 +8037,10 @@
             "abstention_pct": 16.19,
             "blank": 2345,
             "blank_pct": 3.61,
-            "null": 3111,
-            "null_pct": 4.79,
+            "null": 3118,
+            "null_pct": 4.8,
             "valid": 59498,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 64961
           }
         }
@@ -8094,10 +8094,10 @@
             "abstention_pct": 19.26,
             "blank": 1266,
             "blank_pct": 4.38,
-            "null": 1674,
-            "null_pct": 5.79,
+            "null": 1677,
+            "null_pct": 5.8,
             "valid": 25950,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 28893
           }
         }
@@ -8119,7 +8119,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 3030,
-          "pct": 39.31,
+          "pct": 39.32,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -8151,10 +8151,10 @@
             "abstention_pct": 18.57,
             "blank": 365,
             "blank_pct": 4.25,
-            "null": 509,
-            "null_pct": 5.93,
+            "null": 511,
+            "null_pct": 5.95,
             "valid": 7706,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 8582
           }
         }
@@ -8176,7 +8176,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 1591,
-          "pct": 45.17,
+          "pct": 45.19,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -8208,10 +8208,10 @@
             "abstention_pct": 14.06,
             "blank": 140,
             "blank_pct": 3.61,
-            "null": 218,
-            "null_pct": 5.62,
+            "null": 219,
+            "null_pct": 5.64,
             "valid": 3521,
-            "valid_pct": 99.97,
+            "valid_pct": 100.0,
             "total_votes": 3880
           }
         }
@@ -8290,7 +8290,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 5992,
-          "pct": 46.79,
+          "pct": 46.8,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -8322,10 +8322,10 @@
             "abstention_pct": 21.71,
             "blank": 1111,
             "blank_pct": 7.29,
-            "null": 1320,
-            "null_pct": 8.66,
+            "null": 1321,
+            "null_pct": 8.67,
             "valid": 12804,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 15236
           }
         }
@@ -8404,7 +8404,7 @@
           "name": "ÁLVARO DIAS",
           "party": "PL",
           "votes": 4347,
-          "pct": 39.25,
+          "pct": 39.26,
           "seq": 3,
           "vote_destination": "válido"
         },
@@ -8436,10 +8436,10 @@
             "abstention_pct": 18.47,
             "blank": 376,
             "blank_pct": 3.14,
-            "null": 515,
-            "null_pct": 4.3,
+            "null": 517,
+            "null_pct": 4.32,
             "valid": 11073,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 11966
           }
         }
@@ -8607,10 +8607,10 @@
             "abstention_pct": 22.31,
             "blank": 98,
             "blank_pct": 1.32,
-            "null": 236,
-            "null_pct": 3.17,
+            "null": 237,
+            "null_pct": 3.18,
             "valid": 7112,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 7447
           }
         }
@@ -8835,10 +8835,10 @@
             "abstention_pct": 16.21,
             "blank": 385,
             "blank_pct": 4.36,
-            "null": 452,
-            "null_pct": 5.11,
+            "null": 453,
+            "null_pct": 5.13,
             "valid": 7999,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 8837
           }
         }
@@ -8917,7 +8917,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 2697,
-          "pct": 42.04,
+          "pct": 42.05,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -8949,10 +8949,10 @@
             "abstention_pct": 16.49,
             "blank": 166,
             "blank_pct": 2.42,
-            "null": 266,
-            "null_pct": 3.88,
+            "null": 267,
+            "null_pct": 3.9,
             "valid": 6414,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 6847
           }
         }
@@ -8974,7 +8974,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 1800,
-          "pct": 42.99,
+          "pct": 43.0,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -9006,10 +9006,10 @@
             "abstention_pct": 17.71,
             "blank": 132,
             "blank_pct": 2.87,
-            "null": 273,
-            "null_pct": 5.95,
+            "null": 274,
+            "null_pct": 5.97,
             "valid": 4186,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 4592
           }
         }
@@ -9031,7 +9031,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 3439,
-          "pct": 53.75,
+          "pct": 53.76,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -9063,10 +9063,10 @@
             "abstention_pct": 24.01,
             "blank": 327,
             "blank_pct": 4.66,
-            "null": 294,
-            "null_pct": 4.19,
+            "null": 295,
+            "null_pct": 4.2,
             "valid": 6397,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 7019
           }
         }
@@ -9120,10 +9120,10 @@
             "abstention_pct": 19.01,
             "blank": 484,
             "blank_pct": 4.38,
-            "null": 563,
-            "null_pct": 5.09,
+            "null": 564,
+            "null_pct": 5.1,
             "valid": 10005,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 11053
           }
         }
@@ -9202,7 +9202,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 12256,
-          "pct": 56.77,
+          "pct": 56.78,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -9234,10 +9234,10 @@
             "abstention_pct": 16.89,
             "blank": 702,
             "blank_pct": 3.0,
-            "null": 1097,
-            "null_pct": 4.69,
+            "null": 1099,
+            "null_pct": 4.7,
             "valid": 21586,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 23387
           }
         }
@@ -9316,7 +9316,7 @@
           "name": "CADU DE LULA",
           "party": "PT",
           "votes": 3575,
-          "pct": 53.07,
+          "pct": 53.08,
           "seq": 2,
           "vote_destination": "válido"
         },
@@ -9348,10 +9348,10 @@
             "abstention_pct": 16.82,
             "blank": 221,
             "blank_pct": 3.01,
-            "null": 397,
-            "null_pct": 5.4,
+            "null": 398,
+            "null_pct": 5.41,
             "valid": 6735,
-            "valid_pct": 99.99,
+            "valid_pct": 100.0,
             "total_votes": 7354
           }
         }
@@ -9658,7 +9658,7 @@
           "name": "ALLYSON",
           "party": "UNIÃO",
           "votes": 2052,
-          "pct": 46.33,
+          "pct": 46.34,
           "seq": 1,
           "vote_destination": "válido"
         },
@@ -9690,10 +9690,10 @@
             "abstention_pct": 15.28,
             "blank": 103,
             "blank_pct": 2.18,
-            "null": 197,
-            "null_pct": 4.17,
+            "null": 198,
+            "null_pct": 4.19,
             "valid": 4428,
-            "valid_pct": 99.98,
+            "valid_pct": 100.0,
             "total_votes": 4729
           }
         }
@@ -9782,12 +9782,12 @@
         "abstention_pct": 18.39,
         "total_votes": 2167714,
         "valid": 1986441,
-        "valid_pct": 99.99,
+        "valid_pct": 100.0,
         "blank": 76524,
         "blank_pct": 3.53,
-        "null": 104522,
-        "null_pct": 4.82,
-        "source_generated_at": "04/10/2026 · 23:02:10"
+        "null": 104749,
+        "null_pct": 4.83,
+        "source_generated_at": "24/10/2026 · 12:06:47"
       }
     },
     "state_2022": {
@@ -10040,19 +10040,19 @@
         },
         {
           "name": "PARELHAS",
-          "value": 9.15
+          "value": 9.17
         },
         {
           "name": "JARDIM DO SERIDÓ",
-          "value": 9.03
+          "value": 9.04
         },
         {
           "name": "SÃO MIGUEL",
-          "value": 8.66
+          "value": 8.67
         },
         {
           "name": "EQUADOR",
-          "value": 8.54
+          "value": 8.57
         },
         {
           "name": "CORONEL JOÃO PESSOA",
@@ -10060,7 +10060,7 @@
         },
         {
           "name": "SANTANA DO SERIDÓ",
-          "value": 7.6
+          "value": 7.64
         },
         {
           "name": "SÃO VICENTE",
@@ -10068,11 +10068,11 @@
         },
         {
           "name": "CURRAIS NOVOS",
-          "value": 6.8
+          "value": 6.81
         },
         {
           "name": "BREJINHO",
-          "value": 6.64
+          "value": 6.65
         }
       ]
     }
