@@ -1,37 +1,32 @@
 {
-  "status": "waiting",
+  "status": "ok",
   "round": 2,
   "election_id": "6260",
-  "generated_at": "2026-10-25T17:18:17-03:00",
-  "source_generated_at": "13/10/2026 · 17:49:20",
+  "generated_at": "2026-10-25T19:06:56-03:00",
+  "source_generated_at": "25/10/2026 · 19:05:12",
   "municipalities_expected": 167,
   "municipalities_checked": 167,
-  "municipalities_read": 0,
+  "municipalities_read": 12,
   "publication_ready": false,
   "final_result": false,
   "outcome": {
     "kind": "none",
-    "mathematically_defined": null,
+    "mathematically_defined": "n",
     "final_totalization": false,
-    "tally_phase": "n",
-    "progress": 0.0,
-    "source_generated_at": "13/10/2026 · 17:48:57",
+    "tally_phase": "p",
+    "progress": 0.9,
+    "source_generated_at": "25/10/2026 · 19:05:44",
     "candidates": []
   },
   "errors": [],
   "leaders": {
+    "ALTO DO RODRIGUES": {
+      "code": "16136",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "AFONSO BEZERRA": {
       "code": "16055",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ANTÔNIO MARTINS": {
-      "code": "16179",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ACARI": {
-      "code": "16012",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -40,93 +35,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "AREIA BRANCA": {
-      "code": "16217",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "AREZ": {
-      "code": "16233",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ALTO DO RODRIGUES": {
-      "code": "16136",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ALMINO AFONSO": {
-      "code": "16110",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BARAÚNA": {
-      "code": "30031",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ANGICOS": {
-      "code": "16152",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BARCELONA": {
-      "code": "16292",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BENTO FERNANDES": {
-      "code": "16314",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BREJINHO": {
-      "code": "16357",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BAÍA FORMOSA": {
-      "code": "16276",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BOM JESUS": {
-      "code": "16330",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BODÓ": {
-      "code": "16101",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "ASSÚ": {
       "code": "16039",
       "status": "no_votes",
       "progress": 0.0
     },
-    "CAICÓ": {
-      "code": "16390",
+    "ANTÔNIO MARTINS": {
+      "code": "16179",
       "status": "no_votes",
       "progress": 0.0
     },
-    "CAIÇARA DO NORTE": {
-      "code": "16047",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "BOA SAÚDE": {
-      "code": "17035",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CAMPO GRANDE": {
-      "code": "16250",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CAIÇARA DO RIO DO VENTO": {
-      "code": "16373",
+    "AREIA BRANCA": {
+      "code": "16217",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -135,13 +55,195 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "CAMPO REDONDO": {
-      "code": "16411",
+    "BARAÚNA": {
+      "code": "30031",
       "status": "no_votes",
       "progress": 0.0
     },
-    "CANGUARETAMA": {
-      "code": "16438",
+    "ALMINO AFONSO": {
+      "code": "16110",
+      "status": "ok",
+      "progress": 4.76,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 130,
+      "pct": 71.04,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 130,
+          "pct": 71.04,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 53,
+          "pct": 28.96,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "ACARI": {
+      "code": "16012",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "AREZ": {
+      "code": "16233",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "ANGICOS": {
+      "code": "16152",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BODÓ": {
+      "code": "16101",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BOA SAÚDE": {
+      "code": "17035",
+      "status": "ok",
+      "progress": 24.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 862,
+      "pct": 59.04,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 862,
+          "pct": 59.04,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 598,
+          "pct": 40.96,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "BREJINHO": {
+      "code": "16357",
+      "status": "ok",
+      "progress": 6.67,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 217,
+      "pct": 69.55,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 217,
+          "pct": 69.55,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 95,
+          "pct": 30.45,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "CAICÓ": {
+      "code": "16390",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BENTO FERNANDES": {
+      "code": "16314",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BARCELONA": {
+      "code": "16292",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAIÇARA DO RIO DO VENTO": {
+      "code": "16373",
+      "status": "ok",
+      "progress": 7.69,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 193,
+      "pct": 63.07,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 193,
+          "pct": 63.07,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 113,
+          "pct": 36.93,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "CAMPO GRANDE": {
+      "code": "16250",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BOM JESUS": {
+      "code": "16330",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "BAÍA FORMOSA": {
+      "code": "16276",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAIÇARA DO NORTE": {
+      "code": "16047",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -155,18 +257,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "CERRO CORÁ": {
+      "code": "16535",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CANGUARETAMA": {
+      "code": "16438",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "CARAÚBAS": {
       "code": "16454",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CORONEL JOÃO PESSOA": {
-      "code": "16578",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ENCANTO": {
-      "code": "16659",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -175,18 +277,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "CERRO CORÁ": {
-      "code": "16535",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "DOUTOR SEVERIANO": {
-      "code": "16632",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "CURRAIS NOVOS": {
-      "code": "16616",
+    "CORONEL JOÃO PESSOA": {
+      "code": "16578",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -195,28 +287,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "CURRAIS NOVOS": {
+      "code": "16616",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "DOUTOR SEVERIANO": {
+      "code": "16632",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "EQUADOR": {
       "code": "16675",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ESPÍRITO SANTO": {
-      "code": "16691",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FERNANDO PEDROZA": {
-      "code": "16144",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FELIPE GUERRA": {
-      "code": "16730",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FRANCISCO DANTAS": {
-      "code": "16772",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -225,8 +307,61 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "FELIPE GUERRA": {
+      "code": "16730",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "ENCANTO": {
+      "code": "16659",
+      "status": "ok",
+      "progress": 20.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 605,
+      "pct": 62.89,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 605,
+          "pct": 62.89,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 357,
+          "pct": 37.11,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "FERNANDO PEDROZA": {
+      "code": "16144",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "EXTREMOZ": {
       "code": "16713",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "FRANCISCO DANTAS": {
+      "code": "16772",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "ESPÍRITO SANTO": {
+      "code": "16691",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -235,23 +370,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "FLORÂNIA": {
+      "code": "16756",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "GOVERNADOR DIX-SEPT ROSADO": {
       "code": "16837",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "IPUEIRA": {
-      "code": "16934",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "GROSSOS": {
-      "code": "16853",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ITAÚ": {
-      "code": "16950",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -260,68 +385,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "IPANGUAÇU": {
-      "code": "16918",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "GUAMARÉ": {
       "code": "16870",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FRUTUOSO GOMES": {
-      "code": "17515",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "FLORÂNIA": {
-      "code": "16756",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JANDAÍRA": {
-      "code": "16993",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JANDUÍS": {
-      "code": "17019",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JAPI": {
-      "code": "17051",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JAÇANÃ": {
-      "code": "16977",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JARDIM DE ANGICOS": {
-      "code": "17078",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JARDIM DO SERIDÓ": {
-      "code": "17116",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "ITAJÁ": {
-      "code": "16080",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JOÃO CÂMARA": {
-      "code": "17132",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "JUCURUTU": {
-      "code": "17191",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -330,23 +395,43 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "JOSÉ DA PENHA": {
-      "code": "17175",
+    "IPANGUAÇU": {
+      "code": "16918",
       "status": "no_votes",
       "progress": 0.0
     },
-    "JUNDIÁ": {
-      "code": "16306",
+    "FRUTUOSO GOMES": {
+      "code": "17515",
       "status": "no_votes",
       "progress": 0.0
     },
-    "JOÃO DIAS": {
-      "code": "17159",
+    "GROSSOS": {
+      "code": "16853",
       "status": "no_votes",
       "progress": 0.0
     },
-    "LAGOA DE VELHOS": {
-      "code": "17272",
+    "IPUEIRA": {
+      "code": "16934",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "ITAÚ": {
+      "code": "16950",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JAPI": {
+      "code": "17051",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JANDUÍS": {
+      "code": "17019",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JANDAÍRA": {
+      "code": "16993",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -355,8 +440,66 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "LAGOA SALGADA": {
-      "code": "17310",
+    "JARDIM DO SERIDÓ": {
+      "code": "17116",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JARDIM DE ANGICOS": {
+      "code": "17078",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "ITAJÁ": {
+      "code": "16080",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JAÇANÃ": {
+      "code": "16977",
+      "status": "ok",
+      "progress": 15.0,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 479,
+      "pct": 59.65,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 479,
+          "pct": 59.65,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 324,
+          "pct": 40.35,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "JOÃO CÂMARA": {
+      "code": "17132",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JOÃO DIAS": {
+      "code": "17159",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JOSÉ DA PENHA": {
+      "code": "17175",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -365,8 +508,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "LUÍS GOMES": {
-      "code": "17396",
+    "JUNDIÁ": {
+      "code": "16306",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "JUCURUTU": {
+      "code": "17191",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "CAMPO REDONDO": {
+      "code": "16411",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -375,18 +528,13 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MACAÍBA": {
-      "code": "17418",
+    "LAGOA DE VELHOS": {
+      "code": "17272",
       "status": "no_votes",
       "progress": 0.0
     },
-    "MACAU": {
-      "code": "17434",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "LUCRÉCIA": {
-      "code": "17370",
+    "LAGOA SALGADA": {
+      "code": "17310",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -400,8 +548,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MARCELINO VIEIRA": {
-      "code": "17450",
+    "LUÍS GOMES": {
+      "code": "17396",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -410,18 +558,23 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MONTANHAS": {
-      "code": "17531",
+    "MACAÍBA": {
+      "code": "17418",
       "status": "no_votes",
       "progress": 0.0
     },
-    "MOSSORÓ": {
-      "code": "17590",
+    "MACAU": {
+      "code": "17434",
       "status": "no_votes",
       "progress": 0.0
     },
-    "MAXARANGUAPE": {
-      "code": "17493",
+    "MARCELINO VIEIRA": {
+      "code": "17450",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "LUCRÉCIA": {
+      "code": "17370",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -430,8 +583,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "MONTE ALEGRE": {
-      "code": "17558",
+    "MAXARANGUAPE": {
+      "code": "17493",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -440,53 +593,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "OLHO D'ÁGUA DO BORGES": {
-      "code": "17671",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "NÍSIA FLORESTA": {
-      "code": "17639",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "NATAL": {
-      "code": "17612",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "MONTE DAS GAMELEIRAS": {
-      "code": "17574",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARELHAS": {
-      "code": "17779",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "NOVA CRUZ": {
-      "code": "17655",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARAZINHO": {
-      "code": "17752",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARAÚ": {
-      "code": "17736",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PASSA E FICA": {
-      "code": "17817",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARANÁ": {
-      "code": "17710",
+    "MONTANHAS": {
+      "code": "17531",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -495,8 +603,91 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "OURO BRANCO": {
-      "code": "17698",
+    "MONTE ALEGRE": {
+      "code": "17558",
+      "status": "ok",
+      "progress": 6.9,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 586,
+      "pct": 58.19,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 586,
+          "pct": 58.19,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 421,
+          "pct": 41.81,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "MONTE DAS GAMELEIRAS": {
+      "code": "17574",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "MOSSORÓ": {
+      "code": "17590",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "NOVA CRUZ": {
+      "code": "17655",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "NATAL": {
+      "code": "17612",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PARANÁ": {
+      "code": "17710",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "OLHO D'ÁGUA DO BORGES": {
+      "code": "17671",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PARAZINHO": {
+      "code": "17752",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PARELHAS": {
+      "code": "17779",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "NÍSIA FLORESTA": {
+      "code": "17639",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PARAÚ": {
+      "code": "17736",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PARNAMIRIM": {
+      "code": "17795",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -505,8 +696,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PATU": {
-      "code": "17850",
+    "PEDRA GRANDE": {
+      "code": "17892",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -515,23 +706,23 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "OURO BRANCO": {
+      "code": "17698",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PATU": {
+      "code": "17850",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PASSA E FICA": {
+      "code": "17817",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "PAU DOS FERROS": {
       "code": "17876",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PEDRO VELHO": {
-      "code": "17957",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PILÕES": {
-      "code": "17990",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PENDÊNCIAS": {
-      "code": "17973",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -540,8 +731,43 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "PENDÊNCIAS": {
+      "code": "17973",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "PORTALEGRE": {
       "code": "18031",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PEDRO VELHO": {
+      "code": "17957",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "POÇO BRANCO": {
+      "code": "18015",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PUREZA": {
+      "code": "18074",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "RAFAEL FERNANDES": {
+      "code": "18090",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PILÕES": {
+      "code": "17990",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "PORTO DO MANGUE": {
+      "code": "16284",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -555,36 +781,6 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "PUREZA": {
-      "code": "18074",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PORTO DO MANGUE": {
-      "code": "16284",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RODOLFO FERNANDES": {
-      "code": "18171",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "PARNAMIRIM": {
-      "code": "17795",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "RAFAEL FERNANDES": {
-      "code": "18090",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "POÇO BRANCO": {
-      "code": "18015",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "RIACHO DE SANTANA": {
       "code": "18139",
       "status": "no_votes",
@@ -595,18 +791,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "RIO DO FOGO": {
-      "code": "16268",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTO ANTÔNIO": {
-      "code": "18295",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTANA DO SERIDÓ": {
-      "code": "18252",
+    "RODOLFO FERNANDES": {
+      "code": "18171",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -620,18 +806,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SENADOR GEORGINO AVELINO": {
-      "code": "18619",
+    "SANTANA DO MATOS": {
+      "code": "18279",
       "status": "no_votes",
       "progress": 0.0
     },
-    "PEDRA GRANDE": {
-      "code": "17892",
+    "SANTANA DO SERIDÓ": {
+      "code": "18252",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SANTA MARIA": {
-      "code": "16241",
+    "SANTO ANTÔNIO": {
+      "code": "18295",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -640,43 +826,51 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SERRA CAIADA": {
-      "code": "18058",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SANTANA DO MATOS": {
-      "code": "18279",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SERRINHA DOS PINTOS": {
-      "code": "16209",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SEVERIANO MELO": {
-      "code": "18694",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "SERRA DE SÃO BENTO": {
       "code": "18635",
+      "status": "ok",
+      "progress": 5.56,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 134,
+      "pct": 52.14,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 134,
+          "pct": 52.14,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 123,
+          "pct": 47.86,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "RIO DO FOGO": {
+      "code": "16268",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO BENTO DO TRAIRÍ": {
-      "code": "18333",
+    "SENADOR GEORGINO AVELINO": {
+      "code": "18619",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SERRINHA": {
-      "code": "18678",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO BENTO DO NORTE": {
-      "code": "18317",
+    "SERRA CAIADA": {
+      "code": "18058",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -685,33 +879,56 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO FERNANDO": {
-      "code": "18350",
+    "SÃO BENTO DO NORTE": {
+      "code": "18317",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO GONÇALO DO AMARANTE": {
-      "code": "18376",
+    "SÃO BENTO DO TRAIRÍ": {
+      "code": "18333",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO JOSÉ DO CAMPESTRE": {
-      "code": "18430",
+    "SEVERIANO MELO": {
+      "code": "18694",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO JOSÉ DE MIPIBU": {
-      "code": "18414",
-      "status": "no_votes",
-      "progress": 0.0
+    "SERRINHA DOS PINTOS": {
+      "code": "16209",
+      "status": "ok",
+      "progress": 6.67,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 159,
+      "pct": 59.11,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 159,
+          "pct": 59.11,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 110,
+          "pct": 40.89,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
     },
-    "SÃO MIGUEL DO GOSTOSO": {
-      "code": "16063",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO PAULO DO POTENGI": {
-      "code": "18490",
+    "SANTA MARIA": {
+      "code": "16241",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -720,58 +937,71 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO JOÃO DO SABUGI": {
-      "code": "18392",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO RAFAEL": {
-      "code": "18538",
-      "status": "no_votes",
-      "progress": 0.0
-    },
     "SERRA DO MEL": {
       "code": "16020",
       "status": "no_votes",
       "progress": 0.0
     },
-    "TABOLEIRO GRANDE": {
-      "code": "18732",
+    "SÃO GONÇALO DO AMARANTE": {
+      "code": "18376",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÍTIO NOVO": {
-      "code": "18716",
+    "SÃO JOSÉ DE MIPIBU": {
+      "code": "18414",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO VICENTE": {
-      "code": "18570",
+    "SERRINHA": {
+      "code": "18678",
       "status": "no_votes",
       "progress": 0.0
     },
-    "TIBAU": {
-      "code": "16225",
+    "SÃO FERNANDO": {
+      "code": "18350",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO MIGUEL": {
-      "code": "18473",
+    "SÃO JOSÉ DO SERIDÓ": {
+      "code": "18457",
+      "status": "ok",
+      "progress": 7.69,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 174,
+      "pct": 59.59,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 174,
+          "pct": 59.59,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 118,
+          "pct": 40.41,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO JOSÉ DO CAMPESTRE": {
+      "code": "18430",
       "status": "no_votes",
       "progress": 0.0
     },
-    "TANGARÁ": {
-      "code": "18775",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "SÃO TOMÉ": {
-      "code": "18554",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "TIMBAÚBA DOS BATISTAS": {
-      "code": "18830",
+    "SÃO JOÃO DO SABUGI": {
+      "code": "18392",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -780,18 +1010,61 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "TENENTE LAURENTINO CRUZ": {
-      "code": "16004",
+    "SÃO VICENTE": {
+      "code": "18570",
       "status": "no_votes",
       "progress": 0.0
     },
-    "TIBAU DO SUL": {
-      "code": "18813",
+    "SÃO TOMÉ": {
+      "code": "18554",
       "status": "no_votes",
       "progress": 0.0
     },
-    "SÃO JOSÉ DO SERIDÓ": {
-      "code": "18457",
+    "SÃO RAFAEL": {
+      "code": "18538",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "SÍTIO NOVO": {
+      "code": "18716",
+      "status": "ok",
+      "progress": 25.0,
+      "candidate_number": "44",
+      "candidate": "ALLYSON",
+      "votes": 615,
+      "pct": 58.07,
+      "top3": [
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 615,
+          "pct": 58.07,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 444,
+          "pct": 41.93,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO MIGUEL DO GOSTOSO": {
+      "code": "16063",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TABOLEIRO GRANDE": {
+      "code": "18732",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -800,8 +1073,51 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "TOUROS": {
-      "code": "18856",
+    "SÃO MIGUEL": {
+      "code": "18473",
+      "status": "ok",
+      "progress": 1.56,
+      "candidate_number": "13",
+      "candidate": "CADU DE LULA",
+      "votes": 211,
+      "pct": 67.85,
+      "top3": [
+        {
+          "number": "13",
+          "name": "CADU DE LULA",
+          "party": "PT",
+          "votes": 211,
+          "pct": 67.85,
+          "seq": 1,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        },
+        {
+          "number": "44",
+          "name": "ALLYSON",
+          "party": "UNIÃO",
+          "votes": 100,
+          "pct": 32.15,
+          "seq": 2,
+          "elected": "n",
+          "totalization_status": "",
+          "vote_destination": "Válido"
+        }
+      ]
+    },
+    "SÃO PAULO DO POTENGI": {
+      "code": "18490",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TANGARÁ": {
+      "code": "18775",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TENENTE LAURENTINO CRUZ": {
+      "code": "16004",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -810,8 +1126,18 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "UPANEMA": {
-      "code": "18899",
+    "TIMBAÚBA DOS BATISTAS": {
+      "code": "18830",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TOUROS": {
+      "code": "18856",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TIBAU DO SUL": {
+      "code": "18813",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -820,8 +1146,8 @@
       "status": "no_votes",
       "progress": 0.0
     },
-    "VILA FLOR": {
-      "code": "18996",
+    "VENHA-VER": {
+      "code": "16187",
       "status": "no_votes",
       "progress": 0.0
     },
@@ -835,6 +1161,26 @@
       "status": "no_votes",
       "progress": 0.0
     },
+    "UPANEMA": {
+      "code": "18899",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "VILA FLOR": {
+      "code": "18996",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "VÁRZEA": {
+      "code": "18910",
+      "status": "no_votes",
+      "progress": 0.0
+    },
+    "TIBAU": {
+      "code": "16225",
+      "status": "no_votes",
+      "progress": 0.0
+    },
     "VIÇOSA": {
       "code": "18970",
       "status": "no_votes",
@@ -844,23 +1190,24 @@
       "code": "16071",
       "status": "no_votes",
       "progress": 0.0
-    },
-    "VÁRZEA": {
-      "code": "18910",
-      "status": "no_votes",
-      "progress": 0.0
-    },
-    "VENHA-VER": {
-      "code": "16187",
-      "status": "no_votes",
-      "progress": 0.0
     }
   },
-  "summary": [],
+  "summary": [
+    {
+      "number": "13",
+      "name": "CADU DE LULA",
+      "municipalities": 8
+    },
+    {
+      "number": "44",
+      "name": "ALLYSON",
+      "municipalities": 4
+    }
+  ],
   "natal": {
     "code": "17612",
     "status": "no_votes",
     "progress": 0.0
   },
-  "message": "Mapa parcial: 0/167 municípios lidos. Publicação bloqueada até completar a base."
+  "message": "Mapa parcial: 12/167 municípios lidos. Publicação bloqueada até completar a base."
 }
