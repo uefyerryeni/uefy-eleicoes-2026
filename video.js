@@ -44,6 +44,48 @@
   studio.querySelector('.uefy-video-actions').before(status);
   var previewId = 0, busy = false, lastUrl = null;
   var lastBlob = null, lastRecord = null, lastTweet = '';
+  // Conferência TSE 2º turno presidencial, 05/10 e propostas para 25/10:
+  // https://www.tse.jus.br/eleicoes/eleicoes-2026-content/propostas-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026-segundo-turno/planos-de-governo-dos-candidatos-ao-cargo-de-presidente-da-republica-eleicoes-2026-2-turno
+  // Os nomes vêm da base local do TSE, não são criados pelo Motion.
+  var presidentialBallot = null, presidentialBallotTask = null;
+  var presidentialBallotError = null;
+  function isVerifiedPresident(row,number,party,name){
+    return row && String(row.numero)===number && String(row.partido).toUpperCase()===party &&
+      String(row.situacao).toUpperCase()==='DEFERIDO' &&
+      String(row.nome).normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+        .toUpperCase().trim()===name;
+  }
+  function loadPresidentialBallot(){
+    if(rn) return Promise.resolve(true);
+    if(presidentialBallot) return Promise.resolve(true);
+    if(presidentialBallotTask)return presidentialBallotTask;
+    presidentialBallotTask=(async function(){
+      const base=typeof candidateBase!=='undefined' && Array.isArray(candidateBase?.pres)
+        ? candidateBase : await fetch('data/candidatos-2026.json',{cache:'no-store'})
+          .then(function(res){if(!res.ok)throw new Error('A base oficial TSE não foi carregada ('+res.status+').');return res.json();});
+      if(!base || base.source!=='TSE/AGEL - Candidatos 2026' || !Array.isArray(base.pres))
+        throw new Error('A base de candidaturas presidenciais não contém metadados oficiais válidos.');
+      const first=base.pres.find(function(c){return String(c.numero)==='22';});
+      const second=base.pres.find(function(c){return String(c.numero)==='13';});
+      if(!isVerifiedPresident(first,'22','PL','FLAVIO BOLSONARO')||
+         !isVerifiedPresident(second,'13','PT','LULA'))
+        throw new Error('As candidaturas do segundo turno não coincidem com os registros oficiais do TSE.');
+      presidentialBallot=[
+        {name:first.nome,number:String(first.numero),party:first.partido,color:'#1976d2',pct:0,votes:0},
+        {name:second.nome,number:String(second.numero),party:second.partido,color:'#d62828',pct:0,votes:0}
+      ];
+      presidentialBallotError=null;
+      if(!busy && !previewId)draw(1650,safeRecord()||placeholder());
+      setStatus('Prévia presidencial conferida com a base de candidaturas do TSE: '+first.nome+' (PL) e '+second.nome+' (PT). Sem votos antes da divulgação oficial.',false);
+      return true;
+    })().catch(function(error){
+      presidentialBallotError=String(error&&error.message||error);
+      setStatus('Não foi possível conferir as candidaturas presidenciais: '+presidentialBallotError+' O vídeo de teste não será gerado com nomes genéricos.',true);
+      if(!busy && !previewId)draw(1650,placeholder());
+      return false;
+    }).finally(function(){presidentialBallotTask=null;});
+    return presidentialBallotTask;
+  }
 
   function safeRecord() {
     if (typeof mode === 'undefined' || mode !== 'official') return null;
@@ -97,10 +139,15 @@
     var place=rn
       ? (typeof selectedFeature!=='undefined'&&selectedFeature?.properties?.nome)||'RIO GRANDE DO NORTE'
       : (typeof scopeLabel==='function'?scopeLabel():'BRASIL');
+    var rows=rn?[
+      {name:'ALLYSON BEZERRA',party:'UNIÃO BRASIL',pct:0,votes:0,color:'#1976d2'},
+      {name:'CADU DE LULA',party:'PT',pct:0,votes:0,color:'#d62828'}
+    ]:presidentialBallot || [
+      {name:'CONSULTANDO BASE TSE',party:'',pct:0,votes:0,color:YELLOW},
+      {name:'VALIDANDO SEGUNDO TURNO',party:'',pct:0,votes:0,color:'#e3e6e2'}
+    ];
     return {demo:true,office:rn?'GOVERNO DO RN':'PRESIDÊNCIA',
-      label:String(place),rows:[
-        {name:rn?'ALLYSON BEZERRA':'CANDIDATURA 01',party:rn?'UNIÃO BRASIL':'',pct:0,votes:0,color:rn?'#1976d2':YELLOW},
-        {name:rn?'CADU DE LULA':'CANDIDATURA 02',party:rn?'PT':'',pct:0,votes:0,color:rn?'#d62828':'#e3e6e2'}],
+      label:String(place),rows:rows,
       progress:0,final:false,elected:false,stamp:'',slug:'previa'};
   }
   function rehearsalRecord(){
@@ -235,9 +282,10 @@
     playBtn.disabled=false;
     playBtn.textContent='▶ Ver animação';
   }
-  function preview() {
+  async function preview() {
     if (busy) return;
     stopPreview();
+    if(!rn && !(await loadPresidentialBallot()))return;
     var snapshot=safeRecord()||placeholder();
     overlay.hidden=!snapshot.demo;
     playBtn.disabled=true;
@@ -348,6 +396,12 @@
   }
   async function exportVideo(rehearsal) {
     if (busy) return;
+    // A prévia presidencial somente é exportada depois da base oficial de
+    // candidaturas ser conferida; nenhuma votação é usada nesse ensaio.
+    if(rehearsal===true&&!rn){
+      setStatus('Conferindo as duas candidaturas do segundo turno com os registros do TSE…',false);
+      if(!(await loadPresidentialBallot()))return;
+    }
     // Ensaio é só o formato, sem votos. Resultados oficiais continuam estritamente bloqueados.
     var snapshot=rehearsal===true?rehearsalRecord():safeRecord();
     if (!snapshot) {
@@ -573,8 +627,14 @@
     get preflightAvailable(){return true;},
     get generatedIsRehearsal(){return !!lastRecord?.rehearsal;},
     get generatedText(){return lastTweet;},
-    get rehearsalText(){return makeTwitterText(rehearsalRecord());}};
+    get rehearsalText(){return makeTwitterText(rehearsalRecord());},
+    get previewCandidates(){return (presidentialBallot||placeholder().rows).map(function(c){
+      return {name:c.name,party:c.party,number:c.number||'',pct:c.pct,votes:c.votes};
+    });},
+    get presidentialBallotVerified(){return rn?null:!!presidentialBallot;},
+    get presidentialBallotError(){return presidentialBallotError;}};
   overlay.hidden=false;
   draw(1650,safeRecord()||placeholder());setTime(0);
   updateShareButton();
+  if(!rn)loadPresidentialBallot();
 })();
