@@ -168,3 +168,11 @@ body.dark .share-status.is-warning{background:#49302a;color:#ffe6d8}
  .share-status{font-size:13px;padding:12px}
  .share-manual-link{min-height:52px;display:flex;align-items:center;justify-content:center}
 }
+
+/* Acesso editorial ao Estúdio UEFY Live */
+.studio-quickline{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:20px 0 6px}
+.studio-quickline span{color:var(--text,#202620);font-size:11px;font-weight:900;letter-spacing:.12em}
+.studio-quickline a{background:#1b211c;color:#f4dd19;border:2px solid #f4dd19;padding:12px 18px;font-size:13px;font-weight:900;text-decoration:none;box-shadow:4px 4px 0 #f4dd19}
+.studio-quickline a:hover{background:#f4dd19;color:#131713}
+body.dark .studio-quickline span{color:#ced5ce}
+@media(max-width:560px){.studio-quickline{align-items:flex-start;flex-direction:column}.studio-quickline a{width:100%;text-align:center}}
