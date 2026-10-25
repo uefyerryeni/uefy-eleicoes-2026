@@ -2,6 +2,26 @@
 
 Ferramenta da Uefyerryeni para acompanhar dados eleitorais oficiais e preparar publicações.
 
+
+## UEFY Live — estúdio para OBS (25/10/2026)
+
+O estúdio está em [estudio-live.html](estudio-live.html) e é acessível pelas páginas de Governo do RN e Presidência, inclusive no menu móvel. Produz um **gráfico editorial 16:9 nativo de 1920 × 1080**, independente dos cards, vídeos e mapas da Central.
+
+- **Estúdio de controle:** estudio-live.html. Escolha RN ou Brasil, placar ou panorama, e habilite o giro automático.
+- **Tela pronta para OBS:** estudio-live.html?capture=1&auto=1. Não exibe controles e faz rodízio automático de 18 segundos entre RN/placar, Brasil/placar, RN/panorama e Brasil/panorama.
+- No OBS, crie **Fonte de navegador** e configure **1920 pixels de largura por 1080 de altura**. Use a URL publicada no próprio estúdio. Não é necessária câmera ou microfone para exibir os gráficos.
+- **O site não inicia a live no X.** É necessário obter acesso/chave de transmissão na conta do X e configurar a saída no OBS.
+
+### Integridade da exibição
+
+A cada **60 segundos**, o estúdio consulta os JSON EA20 oficiais do TSE para o governo do RN (eleição 6260, abrangência estadual) e Presidência (eleição 6258, abrangência **Brasil inteiro**). A consulta só é iniciada após **17h de 25/10/2026**, horário de Brasília. O módulo election-integrity.js já utilizado pela Central verifica turno, fonte, cargo, abrangência, progresso, candidaturas e coerência dos votos. O estúdio também confronta os números com a base local de candidaturas proveniente do TSE.
+
+**Não há simulação na transmissão pública.** Antes dos resultados válidos, a tela exibe as candidaturas com traços no lugar de porcentagens. Se houver erro de rede ou divergência na conciliação, os votos e percentuais são ocultados; uma nova tentativa é feita no ciclo seguinte. Boletins parciais e resultado final são identificados separadamente. O horário exibido é o carimbo do TSE, não o horário da captura do OBS.
+
+### Homologação
+
+tests/live-studio.spec.js executa testes de espera antes das 17h, aceite de boletim íntegro, rejeição de percentuais inconsistentes e saída OBS sem controles em Full HD. Dados artificiais existem **somente nas fixtures isoladas dos testes Playwright**, nunca nos arquivos de produção. O workflow pages.yml executa o teste e verifica a sintaxe de live-studio.js antes de publicar o site.
+
 ## Abrangência
 - Presidência: Brasil, cinco regiões e todas as UFs.
 - Governador: todas as UFs.
