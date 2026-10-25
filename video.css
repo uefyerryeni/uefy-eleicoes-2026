@@ -167,3 +167,17 @@ body.dark .uefy-video-status.is-warning{background:#472d2a;color:#ffe3d9}
  .uefy-video-actions .uefy-video-share:not(:disabled){min-height:62px!important;font-size:14px!important}
  .uefy-video-status{font-size:13px;padding:12px}
 }
+
+
+/* Abrangência editorial explícita para evitar confundir estado e município. */
+.uefy-video-scope-row{display:grid;gap:7px;padding:14px 15px;margin:14px 0;
+  background:#fffdf2;border:2px solid #151a18}
+.uefy-video-scope-row label{font-size:13px;font-weight:950;color:#151a18}
+.uefy-video-scope-row select{width:100%;min-height:50px;padding:10px 12px;
+  border:2px solid #151a18;border-radius:0;background:#f4dd19;
+  color:#151a18;font:900 14px 'DM Sans',Arial,sans-serif}
+.uefy-video-scope-row p{font-size:12px;line-height:1.5;
+  color:#28352c;margin:0;font-weight:700}
+body.dark .uefy-video-scope-row{background:#24372c;border-color:#e4e9db}
+body.dark .uefy-video-scope-row label,body.dark .uefy-video-scope-row p{color:#fbf9ec}
+@media(max-width:600px){.uefy-video-scope-row{padding:12px}.uefy-video-scope-row select{font-size:13px;min-height:54px}}
