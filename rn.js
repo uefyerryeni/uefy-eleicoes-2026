@@ -6,6 +6,24 @@ const AUTO_REFRESH_MS=60000;let rnAutoTimer=null,rnLoading=false;
 let leaderMapData={status:'waiting',leaders:{},summary:[],publication_ready:false}, mapPublicationMode=false;
 let leaderFilter='';
 let publicationTextMode='full';
+let rnPublicationScope='state',rnStatePublicationResult=null,rnStatePublicationTask=null;
+function publicationResult(){return rnPublicationScope==='state'?(rnStatePublicationResult||{progress:0,candidates:[],generatedAt:null}):current;}
+function publicationName(){return rnPublicationScope==='state'?'Rio Grande do Norte':(selectedFeature?.properties?.nome||'Município');}
+async function refreshStatePublication(){
+  if(!inSecondRoundPollingWindow()||rnStatePublicationTask)return rnStatePublicationTask;
+  rnStatePublicationTask=(async()=>{
+    try{
+      const r=await fetch('https://resultados.tse.jus.br/oficial/ele2026/6260/dados/rn/rn-c0003-e006260-u.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
+      if(!r.ok)throw Error('EA20 estadual HTTP '+r.status);
+      const body=await r.json();UEFYElection.validate(body,{election:'6260',cargo:3,scope:'rn'});
+      rnStatePublicationResult=await reconcileRnResult(parseEA20(body));
+    }catch(e){
+      if(rnStatePublicationResult)rnStatePublicationResult={...rnStatePublicationResult,stale:true};
+      if(rnPublicationScope==='state')$('#rnStatus').textContent='Consulta estadual indisponível. Publicação bloqueada até nova conferência: '+e.message;
+    }finally{rnStatePublicationTask=null;if(rnPublicationScope==='state')renderCurrent();}
+  })();
+  return rnStatePublicationTask;
+}
 const logo=new Image();logo.crossOrigin='anonymous';logo.src=LOGO_URL;logo.onload=()=>drawCanvas();
 
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'')}
@@ -26,6 +44,7 @@ async function init(){
   await loadLeaderMap();
   selectedFeature=fc.features.find(f=>norm(f.properties?.nome)==='natal')||fc.features[0];
   selectMunicipality(selectedFeature);
+  refreshStatePublication();
 }
 function renderMap(){
   const svg=$('#rnLargeMap'),proj=projector(fc,760,560,12);
@@ -158,7 +177,7 @@ async function loadLeaderMap(){
     renderLeaderMap();return;
   }
   try{
-    const r=await fetch('data/rn-governador-mapa-2t.json?ts='+Date.now(),{cache:'no-store'});
+    const r=await fetch('data/rn-governador-mapa-2t.json?ts='+Date.now(),{cache:'no-store',signal:AbortSignal.timeout(15000)});
     if(!r.ok)throw new Error('Mapa '+r.status);
     leaderMapData=await r.json();
     if(leaderMapData.round!==2||String(leaderMapData.election_id)!=='6260')throw new Error('Snapshot de turno incompatível');
@@ -358,7 +377,7 @@ let rnCandidateBase=null;
 async function loadRnCandidates(){
   try{
     if(!rnCandidateBase){
-      const r=await fetch('data/candidatos-ufs-c.json',{cache:'no-store'});
+      const r=await fetch('data/candidatos-ufs-c.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
       if(!r.ok)throw new Error('Base RN '+r.status);
       const data=await r.json();rnCandidateBase=data.rn;
     }
@@ -397,18 +416,18 @@ function extractMunicipalities(data){
   walk(data,null);return out;
 }
 let municipalityConfigCache={};
-async function municipalityCode(){
+async function municipalityCode(feature=selectedFeature){
   const key=mode==='sim'?'sim':'official';
   if(!municipalityConfigCache[key]){
-    let cfg=await fetch(municipalConfigUrl(),{cache:'no-store'});
+    let cfg=await fetch(municipalConfigUrl(),{cache:'no-store',signal:AbortSignal.timeout(15000)});
     // Apenas os códigos municipais podem recorrer à configuração do primeiro turno.
     // Os votos são sempre exclusivos da eleição 6260.
-    if(!cfg.ok&&mode==='official')cfg=await fetch('https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json',{cache:'no-store'});
+    if(!cfg.ok&&mode==='official')cfg=await fetch('https://resultados.tse.jus.br/oficial/ele2026/6257/config/mun-e006257-cm.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
     if(!cfg.ok)throw new Error('Config '+cfg.status);
     municipalityConfigCache[key]=extractMunicipalities(await cfg.json());
   }
   const all=municipalityConfigCache[key];
-  const target=municipalityKey(selectedFeature.properties.nome);
+  const target=municipalityKey(feature.properties.nome);
   const found=all.find(m=>m.uf==='rn'&&municipalityKey(m.name)===target);
   if(!found)throw new Error('Município não encontrado na configuração do TSE');
   return found.code;
@@ -443,7 +462,7 @@ function parseEA20(data){
 async function reconcileRnResult(result){
   try{
     if(!rnCandidateBase){
-      const r=await fetch('data/candidatos-ufs-c.json',{cache:'no-store'});
+      const r=await fetch('data/candidatos-ufs-c.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
       if(!r.ok)throw new Error('Base RN '+r.status);
       const data=await r.json();rnCandidateBase=data.rn;
     }
@@ -464,13 +483,21 @@ async function reconcileRnResult(result){
 }
 async function loadRemote(){
   if(rnLoading)return;rnLoading=true;
-  const previous=current;
+  const previous=current,feature=selectedFeature,requestMode=mode,requestOffice=office;
+  const isCurrent=()=>selectedFeature===feature&&mode===requestMode&&office===requestOffice;
   $('#rnRefresh').disabled=true;$('#rnRefresh').textContent='Carregando…';$('#rnStatus').textContent='Localizando o município na configuração do TSE…';
   try{
-    const code=await municipalityCode(),r=await fetch(resultUrl(code),{cache:'no-store'});if(!r.ok)throw new Error('Resultado '+r.status);
-    current=parseEA20(await r.json());
-    current.municipality=selectedFeature?.properties?.nome||'';
-    if(mode==='official')current=await reconcileRnResult(current);
+    const code=await municipalityCode(feature);
+    if(!isCurrent())return;
+    const r=await fetch(resultUrl(code),{cache:'no-store',signal:AbortSignal.timeout(15000)});
+    if(!r.ok)throw new Error('Resultado '+r.status);
+    const payload=await r.json();
+    UEFYElection.validate(payload,{election:'6260',cargo:3,scope:code});
+    let result=parseEA20(payload);
+    result.municipality=feature.properties.nome;
+    if(mode==='official')result=await reconcileRnResult(result);
+    if(!isCurrent())return;
+    current=result;
     if(mode==='sim'){
       $('#rnStatus').textContent='Dados do Simulado TSE para este município. Não representam a apuração oficial.';
     }else if(current.integrity?.unmatched){
@@ -480,24 +507,27 @@ async function loadRemote(){
     }
     renderCurrent();
   }catch(e){
+    if(!isCurrent())return;
     const notPublished=mode==='official'&&String(e?.message||e).includes('404');
     const sameMunicipality=norm(previous?.municipality)===norm(selectedFeature?.properties?.nome);
     const canKeepPrevious=sameMunicipality&&previous?.candidates?.length;
-    if(canKeepPrevious)current=previous;
+    if(canKeepPrevious)current={...previous,stale:true};
     else current={progress:0,candidates:[],generatedAt:null,municipality:selectedFeature?.properties?.nome||'',integrity:null};
-    $('#rnStatus').textContent=canKeepPrevious?'Nova consulta indisponível. Mantendo o último resultado válido deste mesmo município ('+(previous.generatedAt||'horário anterior')+').':(notPublished?'O arquivo oficial deste município ainda não foi publicado pelo TSE.':'Não foi possível carregar este município agora: '+e.message);
+    $('#rnStatus').textContent=canKeepPrevious?'Nova consulta indisponível. Mantendo o último resultado válido deste mesmo município ('+(previous.generatedAt||'horário anterior')+'). Publicação bloqueada até nova conferência.':(notPublished?'O arquivo oficial deste município ainda não foi publicado pelo TSE.':'Não foi possível carregar este município agora: '+e.message);
     renderCurrent();
   }
-  finally{rnLoading=false;$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar';$('#publicacao')?.classList.remove('loading-municipality')}
+  finally{rnLoading=false;if(!isCurrent()){loadRemote();return;}$('#rnRefresh').disabled=false;$('#rnRefresh').textContent='Atualizar';$('#publicacao')?.classList.remove('loading-municipality')}
 }
-function rnPublicationIsSafe(){
+function rnPublicationIsSafe(result=publicationResult(),scope=rnPublicationScope){
+  const current=result;
   if(mode!=='official'||!inSecondRoundPollingWindow())return false;
   if(mapPublicationMode)return !!leaderMapData?.publication_ready&&leaderMapData.round===2&&
     String(leaderMapData.election_id)==='6260'&&Number(leaderMapData.municipalities_read)===167&&
     !(leaderMapData.errors||[]).length;
   const selected=selectedFeature?.properties?.nome||'';
-  if(norm(current?.municipality)!==norm(selected)||!(current?.candidates||[]).length||
+  if((scope==='municipal'&&norm(current?.municipality)!==norm(selected))||!(current?.candidates||[]).length||
     !(Number(current?.progress)>0))return false;
+  if(!UEFYElection.publishable(current,['13','44']))return false;
   const integrity=current?.integrity;
   if(!integrity||integrity.error||Number(integrity.unmatched)!==0||
     Number(integrity.total)!==current.candidates.length||
@@ -510,6 +540,7 @@ function updateRnPublicationSafety(){
    if(!safe&&$('#rnXManual'))$('#rnXManual').hidden=true;
 }
 function renderCurrent(){
+  const current=publicationResult();
   const title=$('#rnResultTitle');
   if(mode==='demo'){
     if(title)title.textContent='Candidaturas a Governador do RN';
@@ -520,15 +551,17 @@ function renderCurrent(){
       return '<div class="rn-result-line registry"><span>'+esc(c.name)+(meta?'<small>'+meta+'</small>':'')+'</span>'+status+'</div>';
     }).join('');
   }else{
-    if(title)title.textContent='Resultado do município';
+    if(title)title.textContent=rnPublicationScope==='state'?'Resultado de todo o Rio Grande do Norte':'Resultado do município';
     $('#rnProgress').textContent=(current.candidates||[]).length?fmtPct(current.progress):'—';
     $('#rnResults').innerHTML=(current.candidates||[]).length?(current.candidates||[]).map(c=>'<div class="rn-result-line"><span>'+esc(c.name)+'</span><span class="bar"><i style="width:'+Math.min(100,c.pct)+'%;background:'+candidateColor(c.name,c.number)+'"></i></span><b>'+fmtPct(c.pct)+'</b></div>').join(''):'<div class="turno2-empty">Aguardando os resultados oficiais do segundo turno.</div>';
   }
   const t=makeText();$('#rnPostText').value=t;$('#rnChars').textContent=t.length+' caracteres';drawCanvas();updateRnPublicationSafety();
 }
 function makeText(){
+  const current=publicationResult();
   if(mapPublicationMode)return mapPostText();
-  const name=selectedFeature?.properties?.nome||'Município';
+  const name=publicationName();
+  if(!current.candidates?.length||!inSecondRoundPollingWindow())return 'ELEIÇÕES 2026 | 2º TURNO | GOVERNADOR DO RN\n'+name+'\nSEM APURAÇÃO: aguardando divulgação e conferência oficial do TSE.';
   const source=mode==='demo'?'Base oficial TSE · sem votos':mode==='sim'?'Fonte: Simulado TSE':'Fonte: Tribunal Superior Eleitoral';
   const final=!!current.finalTotalization;
 
@@ -557,7 +590,7 @@ function makeText(){
       const gap=Math.max(0,Number(leader.pct||0)-Number(runner.pct||0));
       lines.push('','Em '+name+', '+publicationCandidate(leader)+' aparece em 1º lugar, com diferença de '+fmtPct(gap)+' para '+publicationCandidate(runner)+'.');
     }
-    if(!final)lines.push('','O resultado municipal ainda é parcial e pode mudar até o encerramento oficial da totalização.');
+    if(!final)lines.push('','O resultado deste recorte ainda é parcial e pode mudar até o encerramento oficial da totalização.');
   }
   if(current.generatedAt)lines.push('','Atualização: '+current.generatedAt);
   lines.push('',source);
@@ -586,11 +619,12 @@ function drawFocusedMunicipality(ctx,feature,x,y,w,h){
   polys.forEach(poly=>{ctx.beginPath();poly.forEach(ring=>ring.forEach((p,i)=>{const[a,b]=proj(p);i?ctx.lineTo(a,b):ctx.moveTo(a,b)}));ctx.closePath();ctx.fill('evenodd');ctx.stroke()});ctx.restore();
 }
 function drawCanvas(){
+  const current=publicationResult();
   if(mapPublicationMode){drawLeaderMapCanvas();return}
   if(!selectedFeature)return;
-  const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=selectedFeature.properties.nome;
+  const c=$('#rnCanvas'),ctx=c.getContext('2d'),name=publicationName();
   const INK='#151a18',CREAM='#f7f6ef',YELLOW='#f4dd19',MUTED='#515b56';
-  const waiting=mode==='demo', simulated=mode==='sim',final=!!current.finalTotalization;
+  const waiting=mode==='demo'||!current.candidates?.length||!inSecondRoundPollingWindow(), simulated=mode==='sim',final=!!current.finalTotalization;
   const pctValue=Math.min(100,Math.max(0,Number(current.progress)||0));
   ctx.textAlign='left';ctx.textBaseline='alphabetic';ctx.globalAlpha=1;
   ctx.clearRect(0,0,1080,1080);ctx.fillStyle=CREAM;ctx.fillRect(0,0,1080,1080);
@@ -606,16 +640,17 @@ function drawCanvas(){
   // Manchete e município, sem competir com os percentuais.
   fitCanvasText(ctx,'GOVERNO DO RN',60,247,710,73,52,'900',INK);
   fitCanvasText(ctx,String(name).toLocaleUpperCase('pt-BR')+'  /  RN',60,309,690,43,28,'800',MUTED);
-  drawFocusedMunicipality(ctx,selectedFeature,770,184,235,150);
+  const feature=rnPublicationScope==='state'?{type:'Feature',geometry:{type:'MultiPolygon',coordinates:fc.features.flatMap(f=>f.geometry.type==='Polygon'?[f.geometry.coordinates]:f.geometry.coordinates)}}:selectedFeature;
+  drawFocusedMunicipality(ctx,feature,770,184,235,150);
   const status=waiting?'CADASTRO / SEM APURAÇÃO':simulated?'SIMULADO / NÃO OFICIAL':final?'RESULTADO FINAL / TSE':'APURAÇÃO PARCIAL / TSE';
   ctx.fillStyle=INK;ctx.fillRect(60,340,960,42);
   fitCanvasText(ctx,status,80,369,910,23,18,'900',YELLOW);
 
   // Faixa de apuração, separada da votação dos candidatos.
   ctx.fillStyle=YELLOW;ctx.fillRect(60,403,960,104);
-  fitCanvasText(ctx,waiting?'CANDIDATURAS REGISTRADAS':'SEÇÕES TOTALIZADAS',83,438,520,25,20,'900',INK);
+  fitCanvasText(ctx,waiting?'SEM APURAÇÃO PUBLICADA':'SEÇÕES TOTALIZADAS',83,438,520,25,20,'900',INK);
   if(waiting){
-    fitCanvasText(ctx,String((current.candidates||[]).length),84,489,400,51,40,'900',INK);
+    fitCanvasText(ctx,'—',84,489,400,51,40,'900',INK);
     fitCanvasText(ctx,'SEM VOTOS',680,473,285,30,24,'900',INK);
   }else{
     fitCanvasText(ctx,fmtPct(pctValue),83,489,400,61,46,'900',INK);
@@ -629,7 +664,7 @@ function drawCanvas(){
     ctx.fillStyle='#fff';ctx.fillRect(60,530,960,365);
     ctx.strokeStyle='#c7ccc4';ctx.lineWidth=2;ctx.strokeRect(60,530,960,365);
     fitCanvasText(ctx,'AGUARDANDO RESULTADOS DO TSE',95,660,885,47,30,'900',INK);
-    fitCanvasText(ctx,'Nenhum voto divulgado para este município.',95,719,870,27,21,'600',MUTED);
+    fitCanvasText(ctx,'Aguardando divulgação oficial para este recorte.',95,719,870,27,21,'600',MUTED);
   }else{
     rows.forEach((cand,i)=>{
       const y=530+i*192,color=candidateColor(cand.name,cand.number),value=Math.max(0,Math.min(100,Number(cand.pct)||0));
@@ -706,7 +741,7 @@ function rnShareStatus(message,bad){
    }
    const text=$('#rnPostText').value;
    const canvas=$('#rnCanvas');
-   const name=selectedFeature?.properties?.nome||'rn';
+   const name=publicationName();
    const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;
    $('#rnXManual').hidden=true;
    // No Brave/Android e no compartilhamento geral a chamada é feita durante
@@ -751,7 +786,7 @@ $('#munSearch').oninput=e=>{renderList(e.target.value);const d=$('.rn-municipali
 $('#rnMode').value=mode;
 updateSourceUI();
 $('#rnMode').onchange=e=>changeSource(e.target.value);
-$('#rnRefresh').onclick=async()=>{updateSourceUI();await loadLeaderMap();await loadRemote()};
+$('#rnRefresh').onclick=async()=>{updateSourceUI();await loadLeaderMap();await loadRemote();await refreshStatePublication()};
 function syncRnTextModeButtons(){
   document.querySelectorAll('.text-mode-switch [data-text-mode]').forEach(b=>b.classList.toggle('active',b.dataset.textMode===publicationTextMode));
 }
@@ -770,7 +805,7 @@ $('#rnCopyText').onclick=async()=>{
    rnShareStatus(ok?'Texto copiado. Cole no editor do X após anexar a imagem.':'O Brave não liberou a cópia automática. O texto foi selecionado; use Copiar no menu do celular.',!ok);
  };
 $('#rnCopyImage').onclick=async()=>{if(!rnPublicationIsSafe())return flashRN($('#rnCopyImage'),'Verificação necessária');try{await copyRnImage();flashRN($('#rnCopyImage'),'Imagem copiada!')}catch{flashRN($('#rnCopyImage'),'Cópia bloqueada')}};
-$('#rnDownload').onclick=()=>{if(!rnPublicationIsSafe())return flashRN($('#rnDownload'),'Verificação necessária');const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(selectedFeature.properties.nome)+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
+$('#rnDownload').onclick=()=>{if(!rnPublicationIsSafe())return flashRN($('#rnDownload'),'Verificação necessária');const a=document.createElement('a');a.download='uefy-eleicoes-rn-'+norm(publicationName())+'.png';a.href=$('#rnCanvas').toDataURL('image/png');a.click()};
 $('#rnOpenX').onclick=()=>{const desktop=window.matchMedia?.('(pointer:fine)').matches&&window.innerWidth>820;const w=desktop?window.open('about:blank','_blank'):null;shareRNImageAndText(true,w)};
 $('#rnShareBundle').onclick=()=>shareRNImageAndText(false);
 const theme=$('#themeToggle');
@@ -784,8 +819,8 @@ function syncTheme(){
 syncTheme();
 theme.onclick=()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');syncTheme()};
 function inSecondRoundPollingWindow(){const p=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date());const get=t=>p.find(x=>x.type===t)?.value||'';const day=get('year')+'-'+get('month')+'-'+get('day'),hour=Number(get('hour'));return day>'2026-10-25'||(day==='2026-10-25'&&hour>=17)}
-rnAutoTimer=setInterval(()=>{if(mode==='official'&&!document.hidden&&!current?.finalTotalization&&inSecondRoundPollingWindow()){loadLeaderMap();loadRemote()}},AUTO_REFRESH_MS);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='official'&&inSecondRoundPollingWindow()){loadLeaderMap();loadRemote()}});
+rnAutoTimer=setInterval(()=>{if(mode==='official'&&!document.hidden&&inSecondRoundPollingWindow()){loadLeaderMap();if(!current?.finalTotalization)loadRemote();if(!rnStatePublicationResult?.finalTotalization)refreshStatePublication()}},AUTO_REFRESH_MS);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&mode==='official'&&inSecondRoundPollingWindow()){loadLeaderMap();loadRemote();refreshStatePublication()}});
 init().catch(e=>{$('#rnStatus').textContent='Erro ao carregar o mapa: '+e.message});
 
 const topBtn=$('#toTop');window.addEventListener('scroll',()=>topBtn?.classList.toggle('show',scrollY>420),{passive:true});if(topBtn)topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
@@ -800,6 +835,8 @@ function favId(f){return [f.type,f.office,f.scope,f.municipality].filter(Boolean
 function syncFavButton(){const b=document.querySelector('#favoriteCurrent');if(!b||!selectedFeature)return;const on=getFavs().some(f=>favId(f)===favId(currentFav()));b.classList.toggle('on',on);b.textContent=on?'★ Favorito':'☆ Favoritar'}
 function renderFavStrip(){const box=document.querySelector('#liveStripItems');if(!box)return;const favs=getFavs();if(!favs.length){box.innerHTML='<span class="strip-empty">Marque municípios para acompanhar aqui.</span>';return}box.innerHTML=favs.map(f=>'<button class="strip-chip"><b>'+f.label+'</b><span>toque para abrir · <em>↻</em></span></button>').join('');box.querySelectorAll('.strip-chip').forEach((b,i)=>b.onclick=()=>{const f=favs[i];if(f.type!=='rn'){location.href='index.html'}else{const ft=fc?.features.find(x=>norm(x.properties.nome)===norm(f.municipality));if(ft){office=f.office;selectMunicipality(ft);scrollTo({top:document.querySelector('.rn-side').offsetTop-115,behavior:'smooth'})}}})}
 document.querySelector('#favoriteCurrent')?.addEventListener('click',()=>{if(!selectedFeature)return;const f=currentFav(),a=getFavs(),id=favId(f),i=a.findIndex(x=>favId(x)===id);if(i>=0)a.splice(i,1);else a.unshift(f);saveFavs(a.slice(0,12))});
-document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{updateSourceUI();await loadLeaderMap();await loadRemote();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
+document.querySelector('#refreshAll')?.addEventListener('click',async e=>{const b=e.currentTarget;b.classList.add('loading');b.disabled=true;try{updateSourceUI();await loadLeaderMap();await loadRemote();await refreshStatePublication();renderFavStrip()}finally{setTimeout(()=>{b.classList.remove('loading');b.disabled=false},450)}});
 renderFavStrip();
 const _uefyInitFav=setInterval(()=>{if(fc&&selectedFeature){clearInterval(_uefyInitFav);const q=new URLSearchParams(location.search),m=q.get('fav');if(m){const ft=fc.features.find(x=>norm(x.properties.nome)===norm(m));if(ft)selectMunicipality(ft)}syncFavButton();renderFavStrip()}},100);
+
+$('#rnPublicationScope').addEventListener('change',e=>{rnPublicationScope=e.target.value==='municipal'?'municipal':'state';mapPublicationMode=false;renderCurrent();if(rnPublicationScope==='state')refreshStatePublication();});

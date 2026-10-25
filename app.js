@@ -100,7 +100,7 @@ function endpointFor(office,uf,env=mode){
 }
 function aggregateResults(parts){
   const byId=new Map();let st=0,ts=0,latest='';
-  parts.forEach(p=>{st+=p.sectionsDone||0;ts+=p.sectionsTotal||0;latest=p.generatedAt||latest;p.candidates.forEach(c=>{const key=c.id||c.name;if(!byId.has(key))byId.set(key,{id:key,number:c.number||key,name:c.name,votes:0,seq:c.seq});const x=byId.get(key);x.votes+=c.votes||0;x.seq=Math.min(x.seq,c.seq)})});
+  parts.forEach(p=>{st+=p.sectionsDone||0;ts+=p.sectionsTotal||0;latest=p.generatedAt||latest;p.candidates.forEach(c=>{const key=c.id||c.name;if(!byId.has(key))byId.set(key,{id:key,number:c.number||key,name:c.name,votes:0,seq:c.seq,voteDestination:c.voteDestination});const x=byId.get(key);if(c.voteDestination&&!/^(válido|valido)$/i.test(c.voteDestination.trim()))x.voteDestination=c.voteDestination;x.votes+=c.votes||0;x.seq=Math.min(x.seq,c.seq)})});
   const arr=[...byId.values()],total=arr.reduce((s,c)=>s+c.votes,0);arr.forEach(c=>c.pct=total?c.votes/total*100:0);arr.sort((a,b)=>b.votes-a.votes||a.seq-b.seq);
   return {progress:ts?st/ts*100:0,candidates:arr,generatedAt:latest||nowStamp(),sectionsDone:st,sectionsTotal:ts,finalTotalization:false,tallyPhase:'',mathematicallyDefined:'',noElectedAssigned:false};
 }
@@ -111,7 +111,7 @@ async function getUfCandidates(uf){
   uf=String(uf||'').toLowerCase();
   if(!UF_SHARD[uf])return null;
   if(ufCandidateCache[uf])return ufCandidateCache[uf];
-  const r=await fetch('data/candidatos-ufs-'+UF_SHARD[uf]+'.json',{cache:'no-store'});
+  const r=await fetch('data/candidatos-ufs-'+UF_SHARD[uf]+'.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
   if(!r.ok)throw new Error('base UF '+r.status);
   const shard=await r.json();
   Object.assign(ufCandidateCache,shard);
@@ -123,7 +123,7 @@ async function loadTestCandidates(){
   }))}};
   try{
     if(!candidateBase){
-      const r=await fetch('data/candidatos-2026.json',{cache:'no-store'});
+      const r=await fetch('data/candidatos-2026.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
       if(!r.ok)throw new Error('base presidencial '+r.status);
       candidateBase=await r.json();
     }
@@ -171,7 +171,7 @@ async function loadTestCandidates(){
 }
 async function ensurePresidentBase(){
   if(candidateBase&&Array.isArray(candidateBase.pres)&&candidateBase.pres.length)return candidateBase;
-  const r=await fetch('data/candidatos-2026.json',{cache:'no-store'});
+  const r=await fetch('data/candidatos-2026.json',{cache:'no-store',signal:AbortSignal.timeout(15000)});
   if(!r.ok)throw new Error('base presidencial '+r.status);
   candidateBase=await r.json();
   return candidateBase;
@@ -235,10 +235,10 @@ async function loadRemote({silent=false}={}){
   try{
     let result;
     if(selectedOffice==='pres' && selectedScope.startsWith('reg_')){
-      const ufs=REGION_STATES[selectedScope],parts=await Promise.all(ufs.map(uf=>fetch(endpointFor('pres',uf),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(parseEA20)));result=aggregateResults(parts);
+      const ufs=REGION_STATES[selectedScope],parts=await Promise.all(ufs.map(uf=>fetch(endpointFor('pres',uf),{cache:'no-store',signal:AbortSignal.timeout(15000)}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(body=>{UEFYElection.validate(body,{election:'6258',cargo:1,scope:uf});return parseEA20(body)})));result=aggregateResults(parts);
     }else{
       const uf=selectedOffice==='pres'?(selectedScope==='br'?'br':scopeCode()):scopeCode();
-      const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store'});if(!r.ok)throw new Error(r.status);result=parseEA20(await r.json());
+      const r=await fetch(endpointFor(selectedOffice,uf),{cache:'no-store',signal:AbortSignal.timeout(15000)});if(!r.ok)throw new Error(r.status);const payload=await r.json();UEFYElection.validate(payload,{election:'6258',cargo:1,scope:uf});result=parseEA20(payload);
     }
     if(mode==='official')result=await reconcileResult(result,selectedOffice);
     if(requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return;
@@ -263,10 +263,10 @@ async function loadRemote({silent=false}={}){
     if(requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return;
     const notPublished=mode==='official'&&String(e?.message||e).includes('404');
     const hasPrevious=previous?.candidates?.length;
-    state[selectedOffice]=hasPrevious?previous:{progress:0,candidates:[],requestKey};
+    state[selectedOffice]=hasPrevious?{...previous,stale:true}:{progress:0,candidates:[],requestKey};
     $('#statusTitle').textContent=notPublished?'Resultado oficial ainda não disponível':'Consulta ao TSE indisponível';
     $('#statusText').textContent=hasPrevious
-      ?'Mantendo o último resultado válido ('+(previous.generatedAt||'horário anterior')+'). A nova consulta falhou; nenhum dado foi zerado ou substituído.'
+      ?'Mantendo o último resultado válido ('+(previous.generatedAt||'horário anterior')+'). A nova consulta falhou; publicação bloqueada até nova conferência.'
       :(notPublished?'O resultado oficial deste recorte ainda não está disponível no TSE. O Simulado TSE continua disponível apenas para conferência técnica.':'Não foi possível carregar este recorte agora. Tente novamente.');
     renderAll();
   }finally{
@@ -280,6 +280,7 @@ function publicationIsSafe(){
   if(mode!=='official'||!inSecondRoundPollingWindow())return false;
   if(d?.requestKey!==selectedOffice+'|'+selectedScope+'|'+mode)return false;
   if(!(d?.candidates||[]).length||!(Number(d.progress)>0))return false;
+  if(!UEFYElection.publishable(d,['13','22']))return false;
   if(!d.integrity||d.integrity.error||Number(d.integrity.unmatched)!==0||
     Number(d.integrity.total)!==d.candidates.length||
     Number(d.integrity.matched)!==d.candidates.length)return false;

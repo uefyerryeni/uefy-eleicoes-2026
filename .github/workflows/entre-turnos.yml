@@ -12,6 +12,7 @@ on:
     - cron: '30 10 27-31 10 *'
 permissions:
   contents: write
+  actions: write
 concurrency:
   group: uefy-entre-turnos
   cancel-in-progress: true
@@ -29,6 +30,8 @@ jobs:
           python3 -m json.tool data/entre-turnos-2t.json > /dev/null
           python3 scripts/qa_static.py
       - name: Salvar apenas quando houver alterações
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- data/entre-turnos-2t.json; then exit 0; fi
           git config user.name "github-actions[bot]"
@@ -37,3 +40,4 @@ jobs:
           git commit -m "dados: indicadores oficiais do segundo turno"
           git pull --rebase origin main
           git push
+          gh workflow run pages.yml --ref main

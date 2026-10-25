@@ -18,13 +18,13 @@
   studio.className = 'uefy-video-studio';
   studio.id = 'uefyVideoStudio';
   studio.setAttribute('aria-labelledby', 'uefyVideoTitle');
-  studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 1080 × 1080 · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
+  studio.innerHTML = '<div class="uefy-video-heading"><div><span class="uefy-video-kicker">UEFY MOTION / TWITTER</span><h3 id="uefyVideoTitle">Resultado em movimento.</h3><p>Vídeo quadrado · 720 ou 1080 px · 8 segundos · sem áudio</p></div><span class="uefy-video-format">MP4 / H.264</span></div>' +
     (rn?'<div class="uefy-video-scope-row"><label for="uefyVideoScope">Abrangência do vídeo</label><select id="uefyVideoScope"><option value="state">Rio Grande do Norte inteiro (padrão)</option><option value="municipal">Município selecionado</option></select><p id="uefyVideoScopeHelp">A publicação inicial usa a totalização oficial de todo o RN, não apenas Natal.</p></div>':'') +
     '<div class="uefy-video-canvas-wrap"><canvas id="uefyVideoCanvas" width="1080" height="1080" aria-label="Prévia animada do vídeo eleitoral"></canvas><span class="uefy-video-overlay" id="uefyVideoOverlay">PRÉVIA VISUAL · SEM DADOS</span></div>' +
     '<div class="uefy-video-timeline"><span id="uefyVideoCounter">00:00 / 00:08</span><div class="uefy-video-track"><i id="uefyVideoProgress"></i></div></div>' +
     '<details class="uefy-video-caption" id="uefyVideoCaptionDetails"><summary>Ver legenda exata deste vídeo para o X</summary><textarea id="uefyVideoCaption" rows="6" readonly aria-label="Legenda correspondente ao recorte do vídeo"></textarea></details>' +
     '<div class="uefy-video-actions"><button class="btn" id="uefyVideoPlay" type="button">▶ Ver animação</button><button class="btn primary" id="uefyVideoExport" type="button">↓ Gerar vídeo oficial MP4</button><button class="btn uefy-video-rehearsal" id="uefyVideoRehearsal" type="button">Testar publicação sem votos (MP4)</button><button class="btn uefy-video-copy" id="uefyVideoCopy" type="button">Copiar texto da publicação</button><button class="btn uefy-video-share" id="uefyVideoShare" type="button">1/2 · Preparar MP4 para compartilhar</button></div>' +
-    '<p class="uefy-video-share-note">Brave: são dois toques separados. Primeiro prepare o MP4; depois toque em Compartilhar para enviar ao X. O vídeo de teste não tem votos. Amanhã o vídeo oficial só usará dados conferidos do TSE. Caso o aplicativo X ignore a legenda, use Copiar texto da publicação.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">Para testar no Brave: toque em “1/2 · Preparar MP4” e, depois, em “2/2 · Compartilhar no X”. O teste não apresenta votos.</p>' +
+    '<p class="uefy-video-share-note">Brave: são dois toques separados. Primeiro prepare o MP4; depois toque em Compartilhar para enviar ao X. O vídeo de teste não tem votos. O vídeo oficial só usará dados conferidos do TSE. Caso o aplicativo X ignore a legenda, use Copiar texto da publicação.</p><p class="uefy-video-status" id="uefyVideoStatus" role="status" aria-live="polite">Para testar no Brave: toque em “1/2 · Preparar MP4” e, depois, em “2/2 · Compartilhar no X”. O teste não apresenta votos.</p>' +
     '<div class="uefy-video-result" id="uefyVideoResult" hidden><video id="uefyVideoPlayer" controls playsinline preload="metadata"></video><a id="uefyVideoDownload" class="uefy-video-download" download="uefy-eleicoes-twitter.mp4">Baixar MP4 para o Twitter ↗</a></div>';
   actions.insertAdjacentElement('afterend', studio);
 
@@ -48,6 +48,7 @@
   studio.querySelector('.uefy-video-actions').before(status);
   var previewId = 0, busy = false, lastUrl = null;
   var lastBlob = null, lastRecord = null, lastTweet = '';
+  var generationRevision=0,activeRevision=0;
   var rnVideoScope='state',rnStateResult=null,rnStateFetching=null,rnStateError='';
   var RN_TOTAL_URL='https://resultados.tse.jus.br/oficial/ele2026/6260/dados/rn/rn-c0003-e006260-u.json';
   async function refreshRnState(){
@@ -55,16 +56,17 @@
     if(rnStateFetching)return rnStateFetching;
     rnStateFetching=(async function(){
       rnStateResult=null;
-      const response=await fetch(RN_TOTAL_URL,{cache:'no-store'});
+      const response=await fetch(RN_TOTAL_URL,{cache:'no-store',signal:AbortSignal.timeout(15000)});
       if(!response.ok)throw new Error('EA20 estadual indisponível (HTTP '+response.status+').');
       const body=await response.json();
       if(!body||!Array.isArray(body.carg))throw new Error('Arquivo EA20 estadual inválido.');
+      UEFYElection.validate(body,{election:'6260',cargo:3,scope:'rn'});
       const d=await reconcileRnResult(parseEA20(body));
       if((d.candidates||[]).length!==2||
          !['13','44'].every(n=>d.candidates.some(c=>String(c.number)===n))||
          !d.integrity||d.integrity.error||d.integrity.unmatched!==0||
          d.integrity.total!==d.candidates.length||d.integrity.matched!==d.candidates.length||
-         !(Number(d.progress)>0)||!d.candidates.every(c=>c.matched&&Number(c.votes)>0))
+         !(Number(d.progress)>0)||!d.candidates.every(c=>c.matched)||!UEFYElection.publishable(d,['13','44']))
         throw new Error('O total estadual ainda não possui dois resultados conciliados com a base do TSE.');
       rnStateResult=d;rnStateError='';
       return true;
@@ -130,15 +132,15 @@
     var valid = rn ? (rnVideoScope==='state'
       ? !!rnStateResult&&rnStateResult===source&&
         ['13','44'].every(n=>source.candidates.some(c=>String(c.number)===n))
-      : (typeof rnPublicationIsSafe === 'function' && rnPublicationIsSafe()))
+      : (typeof rnPublicationIsSafe === 'function' && rnPublicationIsSafe(current,'municipal')))
       : (typeof publicationIsSafe === 'function' && publicationIsSafe());
-    if (!valid || !source.integrity || source.integrity.error ||
+    if (!valid || !UEFYElection.publishable(source,rn?['13','44']:['13','22']) || !source.integrity || source.integrity.error ||
         Number(source.integrity.unmatched) !== 0 ||
         Number(source.integrity.total) !== source.candidates.length ||
         Number(source.integrity.matched) !== source.candidates.length ||
         !(Number(source.progress) > 0)) return null;
     var rows = source.candidates.filter(function (x) {
-      return x && Number(x.votes) > 0 && Number.isFinite(Number(x.pct)) &&
+      return x && Number(x.votes) >= 0 && Number.isFinite(Number(x.pct)) &&
         Number(x.pct) >= 0 && Number(x.pct) <= 100 &&
         (!x.voteDestination || /^(válido|valido)$/i.test(String(x.voteDestination).trim()));
     }).slice().sort(function (a,b) {return Number(b.votes)-Number(a.votes);});
@@ -291,7 +293,7 @@
     if(isDemo){
       text(d.rehearsal?'TESTE DE PUBLICAÇÃO / SEM VOTOS':'SEM APURAÇÃO PUBLICADA',
         60,928,33,YELLOW,900,940);
-      text(d.rehearsal?'Amanhã: dados oficiais do TSE neste mesmo formato.':
+      text(d.rehearsal?'Cobertura: dados oficiais do TSE neste formato.':
         'O resultado será exibido após a divulgação oficial.',
         60,968,23,cream,650,945);
     }else{
@@ -355,7 +357,7 @@
     if(typeof VideoEncoder==='undefined' || typeof VideoFrame==='undefined')
       throw new Error('O navegador não disponibiliza o codificador H.264 via WebCodecs.');
     var fps=24, size=720, totalFrames=Math.round(LENGTH/1000*fps);
-    var config={codec:'avc1.42E01E',width:size,height:size,
+    var config={codec:'avc1.42E01F',width:size,height:size,
       bitrate:2800000,framerate:fps,avc:{format:'avc'}};
     var supported=await VideoEncoder.isConfigSupported(config);
     if(!supported.supported) throw new Error('O aparelho não oferece codificação H.264 neste navegador.');
@@ -374,12 +376,12 @@
     });
     try {
       encoder.configure(config);
-      for(var i=0;i<=totalFrames;i++){
+      for(var i=0;i<totalFrames;i++){
         if(encodeError) throw encodeError;
         var ms=Math.min(LENGTH,i*1000/fps);
         draw(ms,snapshot);
         scaledContext.drawImage(canvas,0,0,size,size);
-        var frame=new VideoFrame(scaled,{timestamp:Math.round(i*1000000/fps)});
+        var frame=new VideoFrame(scaled,{timestamp:Math.round(i*1000000/fps),duration:Math.round(1000000/fps)});
         encoder.encode(frame,{keyFrame:i%48===0});
         frame.close();
         setTime(ms);
@@ -417,6 +419,7 @@
     return blob;
   }
   function finishVideo(blob,snapshot,tweet) {
+    if(activeRevision!==generationRevision)throw new Error('O recorte mudou durante a geração. Gere novamente o vídeo.');
     lastUrl=URL.createObjectURL(blob);
     lastBlob=blob;lastRecord=snapshot;lastTweet=tweet;
     refreshVideoCaption();
@@ -469,14 +472,14 @@
       setStatus('Seu navegador não permite gerar um MP4 H.264 neste aparelho. Abra o link no Chrome ou Samsung Internet atualizado, fora do navegador interno de outro aplicativo.',true);
       return;
     }
-    busy=true;stopPreview();resetOldVideo();
+    busy=true;activeRevision=generationRevision;stopPreview();resetOldVideo();
     var tweet=makeTwitterText(snapshot);
     exportBtn.disabled=true;rehearsalBtn.disabled=true;playBtn.disabled=true;
     updateShareButton();
     (snapshot.rehearsal?rehearsalBtn:exportBtn).textContent='Gravando 0%…';
     overlay.hidden=true;
     if (document.fonts && document.fonts.ready) {
-      try {await document.fonts.ready;} catch (_) {}
+      try {await Promise.race([document.fonts.ready,new Promise(resolve=>setTimeout(resolve,3000))]);} catch (_) {}
     }
     var stream=null,recorder=null,timer=null,raf=null,finished=false;
     try {
@@ -565,18 +568,15 @@
       'SEM RESULTADOS: nenhum voto ou percentual foi divulgado neste vídeo.',
       'A cobertura oficial usará os dados conferidos do TSE.'
     ].join('\n');
-    var input=document.querySelector(rn?'#rnPostText':'#postText');
-    var edited=String(input && input.value || '').trim();
-    // Preserva textos curtos escritos pelo usuário; para textos extensos,
-    // gera uma versão resumida a partir dos MESMOS dados capturados no vídeo.
-    if(edited && edited.length<=275) return edited;
+    // O texto deriva do snapshot: o painel RN pode estar em outro município.
+
     var lines=['ELEIÇÕES 2026 | 2º TURNO | '+snapshot.office,
       snapshot.label.toLocaleUpperCase('pt-BR'),''];
     snapshot.rows.forEach(function (row) {
       lines.push(row.name+' — '+pct(row.pct));
     });
     lines.push('',(snapshot.final?'Resultado final':'Apuração parcial')+
-      ' · '+pct(snapshot.progress)+' das seções','Fonte: TSE');
+      ' · '+pct(snapshot.progress)+' das seções','Fonte: TSE · '+snapshot.stamp);
     var out=lines.join('\n');
     if(out.length<=275)return out;
     return 'ELEIÇÕES 2026 | 2º TURNO\n'+snapshot.office+' · '+
@@ -640,7 +640,7 @@
     if(!lastBlob || !lastRecord || !lastUrl){
       // Sem MP4, o primeiro toque prepara o arquivo. Compartilhar requer novo gesto.
       setStatus('Etapa 1/2: preparando o MP4. Quando concluir, toque novamente para compartilhar no X.',false);
-      exportVideo(!safeRecord());
+      exportVideo(!inSecondRoundPollingWindow());
       return;
     }
     if(rn&&rnVideoScope==='municipal'&&!lastRecord.rehearsal &&
@@ -685,6 +685,7 @@
   }
 
   if(rnScopeSelect)rnScopeSelect.addEventListener('change',function(){
+    generationRevision++;
     rnVideoScope=rnScopeSelect.value==='municipal'?'municipal':'state';
     stopPreview();resetOldVideo();
     const help=studio.querySelector('#uefyVideoScopeHelp');
@@ -699,10 +700,17 @@
       : 'Publicação municipal selecionada: '+(selectedFeature?.properties?.nome||'município atual')+'.',false);
   });
   window.addEventListener('uefy:municipality-changed',function(){
-    if(!rn||rnVideoScope!=='municipal'||busy)return;
+    if(!rn||rnVideoScope!=='municipal')return;
+    generationRevision++;
+    if(busy)return;
     stopPreview();resetOldVideo();
     draw(1650,placeholder());setTime(0);
     setStatus('Município alterado. Para evitar compartilhar um vídeo antigo, gere um novo MP4 com o recorte atual.',false);
+  });
+  if(!rn)document.querySelector('#scopeSelect')?.addEventListener('change',function(){
+    generationRevision++;stopPreview();resetOldVideo();
+    if(!busy){draw(1650,placeholder());setTime(0);}
+    setStatus('Abrangência alterada. Gere um novo vídeo para este recorte.',false);
   });
   playBtn.addEventListener('click',preview);
   shareBtn.addEventListener('click',shareTwitter);

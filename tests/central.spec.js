@@ -3,12 +3,17 @@ const BUILD = require('../version.json').build;
 const route = name => '/' + name + '?v=' + encodeURIComponent(BUILD);
 // Os testes de interface não dependem de serviços externos nem de resultados antecipados.
 test.beforeEach(async ({page}) => {
+  // QA determinístico: a coleta real de amanhã não altera os cenários de espera.
+  await page.clock.setFixedTime(new Date('2026-10-24T21:00:00Z'));
+  await page.route('**/data/rn-governador-mapa-2t.json*',r=>r.fulfill({json:require('./fixtures/rn-governador-mapa-2t.json')}));
+  await page.route('**/data/entre-turnos-2t.json*',r=>r.fulfill({json:require('./fixtures/entre-turnos-2t.json')}));
   await page.route(/^https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|uefyerryeni\.github\.io|resultados(?:-sim)?\.tse\.jus\.br)\//, route=>route.abort());
 });
 
 async function readyRN(page, name='index.html') {
   await page.goto(route(name),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(() => typeof selectedFeature !== 'undefined' && selectedFeature !== null);
+  await page.locator('#rnPublicationScope').selectOption('municipal');
 }
 function rejectLeaks(errors) {
   const fatal = errors.filter(x=>!(/ResizeObserver loop/.test(x)));
@@ -242,7 +247,8 @@ test('titulos editoriais usam familia larga e leitura confortavel',async({page})
 });
 
 test('auditoria móvel: todas as páginas oferecem menu, campos legíveis e largura estável',async({page})=>{
- const files=['index.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
+ test.setTimeout(120000);
+ const files=['rn.html','index.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
  for(const width of [320,360,390,430,600,768,820]){
   await page.setViewportSize({width,height:800});
   for(const path of files){
@@ -596,6 +602,7 @@ test('MP4 de ensaio pode ser enviado pelo Brave com legenda, mantendo vídeo ofi
         this.onstop?.();
       }
     }
+    window.VideoEncoder=undefined;
     window.MediaRecorder=Recorder;
     window.__restoreRecorder=()=>{window.MediaRecorder=RealRecorder;};
     HTMLCanvasElement.prototype.captureStream=function(){return {getTracks:()=>[]};};
@@ -759,8 +766,8 @@ test('Motion estadual confere RN todo pelo EA20; rejeita usar o resultado munici
   await page.clock.setFixedTime(new Date('2026-10-25T21:30:00.000Z'));
   await page.route('**/6260/dados/rn/rn-c0003-e006260-u.json',route=>
     route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({
-      dg:'25/10/2026',hg:'18:30:00',s:{pst:'52,00'},
-      carg:[{agr:[{par:[
+      ele:'6260',t:'2',f:'o',cdabr:'rn',dg:'25/10/2026',hg:'18:30:00',s:{pst:'52,00'},
+      carg:[{cd:'3',agr:[{par:[
         {sg:'PT',cand:[{n:'13',nmu:'CADU DE LULA',pvap:'56,00',vap:56000}]},
         {sg:'UNIÃO',cand:[{n:'44',nmu:'ALLYSON BEZERRA',pvap:'44,00',vap:44000}]}
       ]}]}]
@@ -796,7 +803,7 @@ test('WebCodecs grava MP4 com taxa de quadros fixa e sem captura em tempo real',
   const supported=await page.evaluate(async()=>{
     if(typeof VideoEncoder==='undefined'||typeof VideoFrame==='undefined')return false;
     try{return !!(await VideoEncoder.isConfigSupported({
-      codec:'avc1.42E01E',width:720,height:720,bitrate:2800000,
+      codec:'avc1.42E01F',width:720,height:720,bitrate:2800000,
       framerate:24,avc:{format:'avc'}
     })).supported;}catch(e){return false;}
   });

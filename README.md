@@ -61,3 +61,25 @@ No momento da apuração, o total estadual do RN é obtido no EA20 oficial por:
 A Central só exporta o vídeo estadual após conciliar a apuração estadual com o registro das candidaturas e com progresso maior que zero. Nunca usa o resultado municipal de Natal em seu lugar. Selecionar outro município invalida o arquivo municipal gerado anteriormente.
 
 **Diagnóstico do MP4 no Brave:** o arquivo de teste enviado em 24/10/2026 tinha pausa de 400 ms entre 0,336 s e 0,736 s, em uma gravação MediaRecorder 1080×1080/30 fps. O gerador agora **prefere WebCodecs H.264 com timestamps fixos de 24 fps**, sem depender da frequência de captura da tela. Se WebCodecs não for suportado, a captura nativa permanece como alternativa, com aviso para revisar a fluidez do vídeo. Na alternativa WebCodecs o arquivo é gerado a 720×720 para reduzir o custo de codificação em celulares.
+
+
+## Homologação operacional de 24/10/2026
+
+- Imagem, texto e vídeo do governador começam em **Rio Grande do Norte inteiro**. Os seletores de abrangência são explícitos; selecionar uma cidade no mapa não muda os totais estaduais. O recorte municipal precisa ser escolhido no respectivo seletor.
+- O envelope EA20 é validado por eleição, turno, origem oficial, cargo, abrangência, horário, números e conciliação aritmética dos percentuais. Dados retidos após uma falha de consulta ficam visíveis com aviso e não autorizam uma nova publicação.
+- Consultas de resultados têm prazo máximo de 15 segundos. Uma resposta de um município anterior é descartada após a troca de cidade e a consulta atual é refeita.
+- A legenda do vídeo é gerada do mesmo snapshot dos quadros, incluindo o horário da fonte; não herda a edição do texto de outro município.
+- WebCodecs usa H.264 com nível solicitado 3.1, adequado ao quadro 720×720, e 192 quadros em oito segundos a 24 fps. O nível 3.0 anteriormente solicitado era incompatível com essa resolução e fazia o navegador cair na captura em tempo real. A captura nativa continua como contingência e requer revisão visual.
+- O compartilhamento sem dados oficiais após a abertura da apuração informa bloqueio; o ensaio sem votos continua disponível no botão próprio.
+- Os dois workflows de coleta do segundo turno disparam explicitamente `pages.yml` após um commit com dados novos. A homologação continua obrigatória antes do deploy. O acréscimo de `actions: write` nesses dois workflows foi autorizado pelo responsável em 24/10/2026.
+- A homologação de navegador pode usar um executável local por `UEFY_BROWSER_PATH`; no CI usa o Chromium instalado pelo Playwright. Testes com compartilhamento simulado e largura móvel não comprovam o seletor nativo do Brave em celular físico nem o recebimento pelo aplicativo X.
+
+### Contingência da cobertura
+
+1. Confirme no TSE o turno, o cargo, a abrangência, o horário da fonte e o progresso. Não contorne os bloqueios da Central.
+2. Em falha de rede ou conciliação, suspenda novas peças daquele recorte. A consulta anterior não é uma confirmação atual; tente **Atualizar** e consulte a divulgação oficial diretamente.
+3. No celular, gere o arquivo e depois faça um segundo toque para compartilhar. Se o seletor falhar, baixe o PNG/MP4, copie a legenda e anexe manualmente no X. Confira o rascunho antes de publicar.
+4. Se a coleta concluir e o site continuar antigo, execute manualmente **Deploy UEFY Eleições to GitHub Pages**, aguarde QA e deploy concluírem e confira `version.json` e o horário do snapshot.
+5. Não publique o MP4 com `TESTE` ou `SEM RESULTADOS` como apuração. A conferência final do Brave/Android ou Brave/iOS e do aplicativo X deve ser feita no aparelho real, sem enviar uma postagem de teste sem autorização.
+
+Os cenários automatizados de espera usam relógio fixo e snapshots de teste sem resultados. Isso evita que a homologação falhe apenas porque o dia da eleição chegou ou os snapshots reais foram atualizados; os cenários de liberação avançam explicitamente o relógio e isolam as respostas dentro do navegador de teste.

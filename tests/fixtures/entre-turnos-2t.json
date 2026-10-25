@@ -1,0 +1,17 @@
+{
+  "round": 2,
+  "election_ids": {
+    "gov": "6260",
+    "pres": "6258"
+  },
+  "status": "waiting",
+  "publication_ready": false,
+  "generated_at": "2026-10-17T00:00:00-03:00",
+  "source_generated_at": null,
+  "municipalities_expected": 167,
+  "municipalities_read": 0,
+  "state": {},
+  "municipalities": [],
+  "errors": [],
+  "message": "Aguardando os resultados oficiais completos de 25/10. Comparações indisponíveis."
+}

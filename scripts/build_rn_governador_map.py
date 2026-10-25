@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, sys, urllib.request
+import json, sys, urllib.request, math
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
@@ -121,7 +121,25 @@ def write_wait(message):
         'publication_ready':False,'message':message,'leaders':{},'summary':[]
     })
 
+def validate_ea20(data,scope):
+    cargos=data.get('carg') or []
+    if (str(data.get('ele'))!='6260' or str(data.get('t'))!='2' or data.get('f')!='o'
+        or str(data.get('cdabr'))!=scope or len(cargos)!=1 or str(cargos[0].get('cd'))!='3'):
+        raise ValueError('Identidade EA20 incompatível com o segundo turno do RN.')
+    rows,progress,_=parse(data)
+    if (len(rows)!=2 or {r['number'] for r in rows}!={'13','44'} or not math.isfinite(progress)
+        or not 0<=progress<=100 or any(r['votes']<0 or not math.isfinite(r['pct']) or not 0<=r['pct']<=100 for r in rows)):
+        raise ValueError('Candidaturas ou números do EA20 inválidos.')
+    total=sum(r['votes'] for r in rows)
+    if total and any(abs(r['pct']-100*r['votes']/total)>.02 for r in rows):
+        raise ValueError('Percentuais não conciliam com os votos do EA20.')
+    return data
+
+
 def main():
+    if datetime.now(TZ)<datetime(2026,10,25,17,0,tzinfo=TZ):
+        write_wait('Aguardando a divulgação oficial após 17h de 25/10/2026, horário de Brasília.')
+        return
     try:
         try: cfg=fetch_json(CONFIG_URL)
         except Exception: cfg=fetch_json(CONFIG_FALLBACK)
@@ -129,18 +147,18 @@ def main():
     except Exception:
         write_wait('A configuração oficial do TSE ainda não está disponível.')
         return
-    if not mun:
+    if len(mun)!=167 or len({m['code'] for m in mun})!=167:
         write_wait('A lista de municípios do RN ainda não está disponível no TSE.')
         return
 
     leaders={}; counts={}; latest=''; errors=[]
     try:
-        statewide=fetch_json(state_url())
+        statewide=validate_ea20(fetch_json(state_url()),'rn')
         statewide_outcome=outcome(statewide)
     except Exception:
         statewide_outcome={'kind':'none','mathematically_defined':None,'final_totalization':False,'tally_phase':None,'progress':0,'source_generated_at':None,'candidates':[]}
     def one(m):
-        data=fetch_json(url(m['code']))
+        data=validate_ea20(fetch_json(url(m['code'])),m['code'])
         rows,progress,stamp=parse(data)
         return m,rows,progress,stamp
 

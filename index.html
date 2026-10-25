@@ -21,9 +21,9 @@
   }).catch(()=>{});
 })();
 </script>
-<link rel="stylesheet" href="turno2.css?v=20261024-motion-rn-estado-24fps-v2">
+<link rel="stylesheet" href="turno2.css?v=20261024-homologacao-final">
   <meta name="description" content="Segundo turno 2026: governo do Rio Grande do Norte, mapa dos 167 municípios e publicações com dados oficiais do TSE.">
-<link rel="stylesheet" href="video.css?v=20261024-motion-rn-estado-24fps-v2">
+<link rel="stylesheet" href="video.css?v=20261024-homologacao-final">
 </head>
 <body>
 <header class="topbar">
@@ -158,6 +158,7 @@
       <details class="rn-municipality-list"><summary>Ver lista de municípios</summary><div class="rn-list" id="munList" aria-label="Lista de municípios"></div></details>
 
       <div class="rn-publisher rn-publisher-priority" id="publicacao">
+        <label for="rnPublicationScope">Abrangência da imagem e do texto</label><select id="rnPublicationScope"><option value="state">Rio Grande do Norte inteiro (padrão)</option><option value="municipal">Município selecionado</option></select>
         <div class="block-title"><span id="rnResultTitle">Resultado oficial do município</span><span id="rnProgress">—</span></div>
         <div class="rn-result-lines" id="rnResults"></div>
         <div class="rn-note" id="rnStatus">2º turno · aguardando divulgação oficial do TSE.</div>
@@ -202,8 +203,9 @@
 <nav class="mobile-dock" aria-label="Acesso rápido"><a href="index.html" class="active">RN ao vivo</a><a href="presidencia.html">Presidência</a><a href="entre-turnos.html">Entre Turnos</a><a href="#publicacao">Publicar</a></nav>
 <button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="share-mobile.js?v=20261024-motion-rn-estado-24fps-v2"></script>
- <script src="rn.js?v=20261024-motion-rn-estado-24fps-v2"></script>
-<script src="video.js?v=20261024-motion-rn-estado-24fps-v2"></script>
+<script src="election-integrity.js?v=20261024-homologacao-final"></script>
+<script src="share-mobile.js?v=20261024-homologacao-final"></script>
+ <script src="rn.js?v=20261024-homologacao-final"></script>
+<script src="video.js?v=20261024-homologacao-final"></script>
 </body>
 </html>
