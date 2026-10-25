@@ -1,5 +1,14 @@
 # UEFY Eleições 2026
 
+## Vinheta sonora do UEFY Motion (25/10/2026)
+
+A prévia e a exportação dos vídeos quadrados (Presidência e Governo do RN) podem usar uma vinheta de alerta de aproximadamente **1 segundo**, recortada do arquivo de áudio fornecido para a edição. O som está ativado por padrão e pode ser desligado na opção **Vinheta sonora na abertura**. Sem essa opção, o MP4 permanece sem áudio.
+
+O trecho comprimido está armazenado em `assets/uefy-intro-audio.b64`; o `video.js` decodifica o MP3 localmente e, quando suportado, codifica AAC junto ao vídeo H.264, tanto no caminho WebCodecs quanto na alternativa MediaRecorder. Se a codificação com áudio não estiver disponível no aparelho, é necessário desativar a vinheta para gerar o MP4 sem som. A lógica de integridade e liberação dos resultados oficiais não foi alterada.
+
+**Direitos de uso:** como a origem do arquivo enviado foi identificada apenas pelo nome do arquivo, a autorização para republicação da vinheta em vídeos públicos deve ser confirmada antes de compartilhar no X.
+
+
 Ferramenta da Uefyerryeni para acompanhar dados eleitorais oficiais e preparar publicações.
 
 
