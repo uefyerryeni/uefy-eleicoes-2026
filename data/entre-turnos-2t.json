@@ -6,8 +6,8 @@
   },
   "status": "waiting",
   "publication_ready": false,
-  "generated_at": "2026-10-25T21:23:00-03:00",
-  "source_generated_at": "25/10/2026 · 21:21:47",
+  "generated_at": "2026-10-25T21:53:17-03:00",
+  "source_generated_at": "25/10/2026 · 21:52:27",
   "municipalities_expected": 167,
   "municipalities_read": 0,
   "state": {
@@ -18,12 +18,14 @@
       "abstention": 426776,
       "abstention_pct": 16.07,
       "total_votes": 2229510,
+      "valid": 2113423,
+      "valid_pct": 94.79,
       "blank": 35873,
       "blank_pct": 1.61,
       "null": 80214,
       "null_pct": 3.6,
-      "complete": false,
-      "source_generated_at": "25/10/2026 · 21:20:15"
+      "complete": true,
+      "source_generated_at": "25/10/2026 · 21:24:45"
     },
     "pres": {
       "electorate": 2659867,
@@ -32,12 +34,14 @@
       "abstention": 427044,
       "abstention_pct": 16.06,
       "total_votes": 2232823,
+      "valid": 2151005,
+      "valid_pct": 96.34,
       "blank": 19939,
       "blank_pct": 0.89,
       "null": 61879,
       "null_pct": 2.77,
       "complete": false,
-      "source_generated_at": "25/10/2026 · 21:21:47"
+      "source_generated_at": "25/10/2026 · 21:52:27"
     }
   },
   "municipalities": [],
