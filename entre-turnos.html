@@ -8,7 +8,7 @@
 <title>Entre Turnos | Central das Eleições UEFY</title>
 <link rel="stylesheet" href="style.css?v=20261017" />
 <link rel="stylesheet" href="turno2.css?v=20261017" />
-<link rel="stylesheet" href="entre-turnos.css?v=20261017" />
+<link rel="stylesheet" href="entre-turnos.css?v=20261025-comparativos" />
 <link rel="stylesheet" href="mudancas-rn.css?v=20261017" />
 </head>
 <body class="between-page">
@@ -62,6 +62,7 @@
     <div class="et-source-action"><button id="etRefresh" type="button">Atualizar dados <span aria-hidden="true">↻</span></button></div>
   </section>
 
+  <p id="etUpdateStatus" class="et-method-small" role="status" aria-live="polite">Consultando bases oficiais…</p>
   <section class="mt-module" id="mudancas" aria-labelledby="mtHeading">
     <div class="mt-head">
       <div><span class="et-overline">01 / GOVERNADOR · LEITURA TERRITORIAL</span>
@@ -142,7 +143,7 @@
   <section class="et-intro">
     <div>
       <span class="et-overline">01 / CONTEXTO</span>
-      <h2>O que mudou no comparecimento?</h2>
+      <h2>O que mudou entre os turnos?</h2>
       <p>Escolha um indicador e um município. O primeiro turno já está disponível. O segundo será integrado somente depois da confirmação dos arquivos oficiais completos.</p>
     </div>
     <div class="et-completeness" id="etCompleteness" role="status" aria-live="polite">
@@ -167,6 +168,7 @@
     <label><span>MUNICÍPIO</span>
       <select id="etCity"><option value="">Rio Grande do Norte (total estadual)</option></select>
     </label>
+    <label><span>VISUALIZAR MAPA</span><select id="etView"><option value="first">1º turno</option><option value="second" disabled>2º turno</option><option value="delta" disabled>Variação entre turnos</option></select></label>
     <button type="button" class="et-reset" id="etReset">Limpar filtros</button>
   </section>
 
@@ -197,7 +199,7 @@
     <div class="et-map-grid">
       <div class="et-map-stage">
         <svg id="etMap" viewBox="0 0 760 560" role="img" aria-label="Mapa dos municípios do RN por indicador de participação"></svg>
-        <div class="et-scale"><span>MENOR VALOR</span><div class="et-scale-bar"></div><span>MAIOR VALOR</span></div>
+        <div class="et-scale"><span id="etScaleLow">MENOR VALOR</span><div class="et-scale-bar"></div><span id="etScaleHigh">MAIOR VALOR</span></div>
       </div>
       <div class="et-map-details">
         <span class="et-overline">SELEÇÃO ATUAL</span>
@@ -205,14 +207,16 @@
         <p id="etFocusText">Selecione qualquer município no mapa ou no campo de busca.</p>
         <div class="et-focus-indicator"><span id="etFocusCaption">Comparecimento no 1º turno</span><strong id="etFocusValue">—</strong></div>
         <button id="etCsv" type="button" class="et-download">Exportar dados em CSV <span aria-hidden="true">↗</span></button>
-        <small>O arquivo identifica o turno, a fonte e os valores ainda indisponíveis.</small>
+        <button id="etCsvAll" type="button" class="et-download">Exportar todos os indicadores ↗</button>
+        <small>O arquivo respeita a busca da tabela e identifica o turno, a fonte e os valores ainda indisponíveis.</small>
       </div>
     </div>
   </section>
 
   <section class="et-table-section" aria-labelledby="etTableHeading">
-    <div class="et-section-heading"><div><span class="et-overline">04 / DADOS ABERTOS</span><h2 id="etTableHeading">Consulta município a município.</h2><p>Ordem alfabética, sem classificação por candidaturas.</p></div></div>
+    <div class="et-section-heading"><div><span class="et-overline">04 / DADOS ABERTOS</span><h2 id="etTableHeading">Consulta município a município.</h2><p>Busque municípios e ordene pelos valores de cada turno ou pelas maiores variações. A exportação respeita a busca e a ordenação.</p></div></div>
     <label class="et-table-search"><span>LOCALIZAR CIDADE</span><input type="search" id="etSearch" placeholder="Buscar entre os 167 municípios" /></label>
+    <label class="et-table-search"><span>ORDENAR MUNICÍPIOS</span><select id="etSort"><option value="name">Nome (A–Z)</option><option value="first_desc">Maior valor · 1º turno</option><option value="first_asc">Menor valor · 1º turno</option><option value="second_desc" disabled>Maior valor · 2º turno</option><option value="second_asc" disabled>Menor valor · 2º turno</option><option value="delta_desc" disabled>Maior aumento</option><option value="delta_asc" disabled>Maior redução</option></select></label>
     <p class="et-swipe-hint">Deslize a tabela para os lados para consultar as colunas.</p>
     <div class="et-table-wrap" role="region" aria-label="Tabela de participação nos municípios" tabindex="0">
       <table class="et-table">
@@ -227,14 +231,14 @@
     <span class="et-overline">05 / METODOLOGIA</span>
     <h2>Critério antes da publicação.</h2>
     <p>Para o primeiro turno, utilizamos o conjunto de análises municipais de 04/10/2026 já preservado na Central. O segundo utiliza exclusivamente os arquivos oficiais identificados como 6258 (Presidência) e 6260 (Governador), referentes a 25/10/2026. Não usamos simulados ou pesquisas para preencher resultados.</p>
-    <p>A comparação de taxas é expressa em pontos percentuais (p.p.); a de quantidades, em número de eleitores. Valores indisponíveis não são tratados como zero. A liberação exige a base final oficial dos dois cargos nos 167 municípios, além dos totais estaduais. Dados agregados não permitem inferir o comportamento individual do eleitor.</p>
+    <p>O percentual de votos válidos é calculado sobre o total de votos do cargo em cada turno. A comparação de taxas é expressa em pontos percentuais (p.p.); a de quantidades, em número de eleitores. Valores indisponíveis não são tratados como zero. A liberação exige a base final oficial dos dois cargos nos 167 municípios, além dos totais estaduais. Dados agregados não permitem inferir o comportamento individual do eleitor.</p>
     <div class="et-links"><a href="https://resultados.tse.jus.br/oficial/app/index.html" target="_blank" rel="noopener noreferrer">Resultados oficiais ↗</a><a href="https://www.tse.jus.br/eleicoes/informacoes-tecnicas-sobre-a-divulgacao-de-resultados" target="_blank" rel="noopener noreferrer">Documentação técnica do TSE ↗</a><a href="analises.html">Acervo do primeiro turno ↗</a></div>
   </section>
 </main>
 <footer class="foot et-footer"><div class="wrap footline"><strong>UEFY / ENTRE TURNOS 2026</strong><span>Informação pública, leitura territorial e transparência · <a href="https://ig.me/m/uefyerryeni" target="_blank" rel="noopener noreferrer">Reportar correção</a></span></div></footer>
 <nav class="mobile-dock et-mobile-dock" aria-label="Acesso rápido"><a href="index.html">RN ao vivo</a><a href="presidencia.html">Presidência</a><a href="entre-turnos.html" class="active">Entre Turnos</a><a href="#mapa">Mapa</a></nav>
 <button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
-<script src="entre-turnos.js?v=20261017"></script>
-<script src="mudancas-rn.js?v=20261017"></script>
+<script src="entre-turnos.js?v=20261025-comparativos"></script>
+<script src="mudancas-rn.js?v=20261025-comparativos"></script>
 </body>
 </html>

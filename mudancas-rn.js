@@ -200,6 +200,7 @@ function exportCsv(){
  a.href=url;a.download='uefy-mudancas-municipais-rn-2026.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);
 }
 async function load(){
+ if($('#mtRefresh').disabled)return;
  $('#mtRefresh').disabled=true;$('#mtStatus').textContent='Conferindo os 167 municípios…';
  try{
   const fetchJSON=path=>fetch(path+(path.includes('?')?'&':'?')+'ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('Falha em '+path);return r.json()});
@@ -220,5 +221,7 @@ $('#mtFilter').addEventListener('change',e=>{group=e.target.value;renderView()})
 $('#mtSearch').addEventListener('input',renderTable);
 $('#mtRefresh').addEventListener('click',load);
 $('#mtExport').addEventListener('click',exportCsv);
+setInterval(()=>{if(!document.hidden)load()},60000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
 load();
 })();

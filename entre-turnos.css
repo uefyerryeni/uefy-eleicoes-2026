@@ -113,3 +113,5 @@ body.dark .et-swipe-hint{color:#c5d2c7}
  .et-links a{display:inline-flex;align-items:center;min-height:44px;padding-block:9px}
  .et-aside-foot a{display:inline-flex;align-items:center;min-height:40px}
 }
+
+.et-toolbar{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}.et-table-search select{max-width:100%;min-height:44px;padding:10px;border:1px solid #819385;border-radius:8px;background:var(--card,#fff);color:inherit}body.dark .et-table-search select{background:#1d2b24}

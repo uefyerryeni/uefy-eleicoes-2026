@@ -61,11 +61,24 @@ def metrics(data):
         'abstention':number(e.get('a')),
         'abstention_pct':percent(e.get('pa')),
         'total_votes':number(v.get('tv')),
+        'valid':number(v.get('vv')),
+        'valid_pct':round(100*number(v.get('vv'))/number(v.get('tv')),2) if number(v.get('tv')) else None,
         'blank':number(v.get('vb')),
         'blank_pct':percent(v.get('pvb')),
         'null':number(v.get('tvn')),
         'null_pct':percent(v.get('ptvn'))
     }
+
+def validate_identity(data, office, code=None):
+    election=FED if office=='pres' else EST
+    cargo='1' if office=='pres' else '3'
+    scopes='rn' if code is None else str(code)
+    cargos=data.get('carg') or []
+    if (str(data.get('ele'))!=election or str(data.get('t'))!='2'
+        or data.get('f')!='o' or str(data.get('cdabr'))!=scopes
+        or len(cargos)!=1 or str(cargos[0].get('cd'))!=cargo):
+        raise ValueError('Identidade da fonte incompatível com cargo, turno ou território.')
+    return data
 
 def complete(data, m):
     # Não confundir zero voto / zero seção com dado fechado.
@@ -76,6 +89,7 @@ def complete(data, m):
     if m['electorate']<=0 or m['turnout']<=0 or m['total_votes']<=0: return False
     if m['turnout']>m['electorate']: return False
     if m['blank']+m['null']>m['total_votes']: return False
+    if m['valid']+m['blank']+m['null']!=m['total_votes']: return False
     if abs(m['turnout']+m['abstention']-m['electorate'])>1: return False
     return all(0<=m[k]<=100 for k in ('turnout_pct','abstention_pct','blank_pct','null_pct'))
 
@@ -140,7 +154,7 @@ def main():
     states={}
     for office in ('gov','pres'):
         try:
-            data=fetch(source(office))
+            data=validate_identity(fetch(source(office)),office)
             values=metrics(data)
             states[office]={**values,'complete':complete(data,values),
                             'source_generated_at':' · '.join(x for x in (str(data.get('dg') or ''),str(data.get('hg') or '')) if x)}
@@ -151,7 +165,7 @@ def main():
     def one(city):
         out={'code':city['code'],'name':city['name']}
         for office in ('gov','pres'):
-            data=fetch(source(office,city['code']))
+            data=validate_identity(fetch(source(office,city['code'])),office,city['code'])
             val=metrics(data)
             if not complete(data,val):
                 return None
