@@ -60,7 +60,14 @@ jobs:
 
       - name: Instalar Chromium
         if: steps.update_class.outputs.data_only != 'true'
-        run: npx playwright install --with-deps chromium
+        run: |
+          uefy_browser_path="$(command -v google-chrome || command -v chromium || command -v chromium-browser || true)"
+          if [ -n "$uefy_browser_path" ]; then
+            echo "UEFY_BROWSER_PATH=$uefy_browser_path" >> "$GITHUB_ENV"
+            "$uefy_browser_path" --version
+          else
+            npx playwright install --with-deps chromium
+          fi
 
       - name: Testar Central, mapas e publicações
         if: steps.update_class.outputs.data_only != 'true'

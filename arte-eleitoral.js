@@ -34,7 +34,7 @@ function render(o){
  if(!title&&template==='list'){
   heading=s.group==='same'?'Quem manteve a liderança':s.group==='changed'?'Onde a liderança mudou':brief.title;
  }
- ctx.fillStyle='#f4dd19';ctx.fillRect(M,34,52,52);text('U',M+9,35,{size:44,max:52,role:'brand'});text('UEFY',M+72,40,{size:40,max:300,role:'brand'});
+ ctx.fillStyle='#f4dd19';ctx.fillRect(M,34,52,52);text('U',M+9,35,{size:44,max:52,role:'brand',color:'#102b23'});text('UEFY',M+72,40,{size:40,max:300,role:'brand'});
  text('RN · 2026',W-M-234,40,{size:40,max:234,color:muted,role:'brand'});
  rule(106);
  if(wide&&!title){if(template==='routes')heading='Lideranças: 1º → 2º turno';else if(template==='list')heading=s.group==='same'?'Quem manteve a liderança':s.group==='changed'?'Onde a liderança mudou':s.group==='all'?'Lideranças nos municípios':brief.title;else if(template==='map'||template==='card'){if(s.metric==='leadership'){if(city)heading=city.name;else if(s.group==='all'||s.group==='changed')heading=brief.count+' municípios mudaram';else if(s.group==='same')heading=brief.count+' municípios mantiveram';else heading=brief.title}else heading=m.label+(m.candidate?' · '+P.short[s.candidate]:'')}}
