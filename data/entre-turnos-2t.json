@@ -6,8 +6,8 @@
   },
   "status": "waiting",
   "publication_ready": false,
-  "generated_at": "2026-10-25T21:53:17-03:00",
-  "source_generated_at": "25/10/2026 · 21:52:27",
+  "generated_at": "2026-10-25T22:21:08-03:00",
+  "source_generated_at": "25/10/2026 · 22:20:28",
   "municipalities_expected": 167,
   "municipalities_read": 0,
   "state": {
@@ -41,7 +41,7 @@
       "null": 61879,
       "null_pct": 2.77,
       "complete": false,
-      "source_generated_at": "25/10/2026 · 21:52:27"
+      "source_generated_at": "25/10/2026 · 22:20:28"
     }
   },
   "municipalities": [],
