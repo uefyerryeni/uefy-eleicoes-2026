@@ -18,7 +18,7 @@ for(const [id,office,title] of [['gov','governor','Governador'],['pres','preside
 }
 METRICS.electorate={label:'Eleitorado',unit:'count',path:['electorate'],note:'Eleitorado do recorte estadual para Governador.'};
 for(const [id,m] of Object.entries(METRICS)){if(!$('#etMetric option[value="'+id+'"]')){const o=document.createElement('option');o.value=id;o.textContent=m.label+(m.unit==='pct'?' (%)':'');$('#etMetric').appendChild(o)}}
-let mapView='first',sort='name',loading=false;
+let mapView='first',sort='name',loading=false,feedVerified=false;
 const viewLabel=()=>mapView==='delta'?'VARIAÇÃO · 2º − 1º TURNO':mapView==='second'?'2º TURNO':'1º TURNO';
 let first=null,second=null,geo=null,rows=[],ready=false,metric='turnout_pct',city=new URLSearchParams(location.search).get('municipio')||'',mapPaths=new Map();
 const fmtNumber=n=>Number(n).toLocaleString('pt-BR');
@@ -92,6 +92,7 @@ function renderSelection(){
  $('#etFocusText').textContent=r?'Dados agregados de '+r.name+'. A seleção não indica preferência eleitoral.':'Selecione um dos municípios no mapa, na tabela ou no filtro.';
  mapPaths.forEach((p,n)=>p.classList.toggle('active',n===city));
  $$('#etTableBody tr[data-city]').forEach(tr=>tr.classList.toggle('selected',tr.dataset.city===city));
+ renderFeed();
 }
 function filteredRows(){
  const q=norm($('#etSearch').value),m=METRICS[metric];
@@ -141,10 +142,10 @@ async function load(){
      geo||fetch('assets/maps/rn-municipios.geojson',{cache:'force-cache'}).then(r=>r.json())
    ]);
    if(!Array.isArray(a.cross?.municipalities)||a.cross.municipalities.length!==167||!Array.isArray(g?.features)||g.features.length!==167)throw Error('Base incompleta');
-   first=a;second=b;geo=g;
+   first=a;second=b;geo=g;feedVerified=true;
    render();
    $('#etUpdateStatus').textContent='Última consulta: '+new Date().toLocaleTimeString('pt-BR')+' · base do 2º turno: '+(b.source_generated_at||'aguardando')+'. Releitura automática a cada 60 s.';
- }catch(e){$('#etUpdateStatus').textContent=first?'Falha na atualização. Mantendo a última base carregada; consulte o horário da fonte.':'Não foi possível carregar as bases oficiais. Tente atualizar.';}
+ }catch(e){feedVerified=false;renderFeed();$('#etUpdateStatus').textContent=first?'Falha na atualização. Mantendo a última base carregada; consulte o horário da fonte.':'Não foi possível carregar as bases oficiais. Tente atualizar.';}
  finally{loading=false;$('#etRefresh').disabled=false;$('#etRefresh').innerHTML='Atualizar dados <span aria-hidden="true">↻</span>';}
 }
 function exportCsv(all=false){
@@ -159,6 +160,64 @@ function exportCsv(all=false){
  const blob=new Blob(['\ufeff'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'});
  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='uefy-entre-turnos-rn-'+(all?'todos-indicadores':metric)+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),30000);
 }
+
+function feedMetrics(){return $('#etFeedMode').value==='summary'?['turnout_pct','abstention_pct','gov_blank_pct','gov_null_pct']:[metric];}
+function feedIsSafe(){
+ const r=city?cityByName(city):null;
+ return ready&&feedVerified&&feedMetrics().every(id=>{const m=METRICS[id];return [firstVal(r,m),secondVal(r,m)].every(n=>typeof n==='number'&&Number.isFinite(n)&&n>=0&&(m.unit!=='pct'||n<=100))});
+}
+function feedDelta(n,m){return (n>0?'+':n<0?'−':'')+(m.unit==='pct'?Math.abs(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})+' p.p.':fmtNumber(Math.abs(n)));}
+function feedFilename(){return 'uefy-entre-turnos-'+(city?norm(city):'rio-grande-do-norte')+'-'+($('#etFeedMode').value==='summary'?'resumo':metric)+'.png';}
+function renderFeed(){
+ const canvas=$('#etFeedCanvas');if(!canvas)return;
+ const ctx=canvas.getContext('2d'),safe=feedIsSafe(),r=city?cityByName(city):null,scope=r?.name||'RIO GRANDE DO NORTE',ids=feedMetrics();
+ const text=(value,x,y,width,size,color='#151a18',weight=800)=>{ctx.fillStyle=color;let n=size;do{ctx.font=weight+' '+n+'px "DM Sans", "Segoe UI", Arial';if(ctx.measureText(value).width<=width)break;n--}while(n>12);ctx.fillText(value,x,y)};
+ ctx.clearRect(0,0,1080,1080);ctx.fillStyle='#f7f6ef';ctx.fillRect(0,0,1080,1080);
+ ctx.fillStyle='#151a18';ctx.fillRect(0,0,1080,155);ctx.fillStyle='#f4dd19';ctx.fillRect(0,0,1080,13);
+ text('UEFY',60,112,285,96,'#f4dd19',900);ctx.fillStyle='#f4dd19';ctx.fillRect(358,37,4,91);
+ text('CENTRAL DAS ELEIÇÕES',390,82,620,34,'#f7f6ef',900);text('2026  /  ENTRE TURNOS',390,121,620,27,'#f4dd19',700);
+ text('O QUE MUDOU ENTRE OS TURNOS',60,220,960,43);text(scope,60,276,960,38,'#226652');
+ text(r?'RECORTE MUNICIPAL · RIO GRANDE DO NORTE':'TOTAL ESTADUAL · 167 MUNICÍPIOS',60,313,960,19,'#59626b',700);
+ if(!safe){
+  ctx.fillStyle='#e7e9df';ctx.fillRect(60,370,960,480);
+  text('AGUARDANDO BASE FINAL',90,540,900,51);text('A imagem será liberada após a conferência',90,610,900,30,'#59626b',600);
+  text('dos dados oficiais dos dois turnos.',90,655,900,30,'#59626b',600);
+ }else{
+  if(ids.length===1){
+   const m=METRICS[metric],a=firstVal(r,m),b=secondVal(r,m);
+   text(m.label,60,380,960,40);
+   [[60,'1º TURNO · 04/10',fmt(a,m)],[390,'2º TURNO · 25/10',fmt(b,m)],[720,'VARIAÇÃO',feedDelta(b-a,m)]].forEach(([x,label,value])=>{
+    ctx.fillStyle='#e7ebe0';ctx.fillRect(x,420,300,210);text(label,x+20,465,260,23,'#59626b',700);text(value,x+20,560,260,68,label==='VARIAÇÃO'?'#226652':'#151a18');
+   });
+   text('Variação = segundo turno menos primeiro turno.',60,715,960,27,'#59626b',600);
+   text(m.unit==='pct'?'Diferença em pontos percentuais (p.p.).':'Diferença em quantidade absoluta.',60,760,960,27,'#59626b',600);
+  }else{
+  text('INDICADOR',60,373,370,18,'#59626b',700);text('1º TURNO · 04/10',450,373,200,18,'#59626b',700);text('2º TURNO · 25/10',665,373,200,18,'#59626b',700);text('VARIAÇÃO',885,373,145,18,'#59626b',700);
+  ids.forEach((id,i)=>{const m=METRICS[id],a=firstVal(r,m),b=secondVal(r,m),d=difference(a,b),y=425+i*111;
+   ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(60,y+65);ctx.lineTo(1020,y+65);ctx.stroke();
+   const label=m.label.replace(' para Governador','').replace(' para Presidente','');text(label,60,y+23,370,ids.length===1?30:27);
+   text(fmt(a,m),450,y+23,190,38);text(fmt(b,m),665,y+23,190,38);text(feedDelta(d,m),885,y+23,145,30,'#226652');
+  });
+  }
+  text(ids.length===1?'Indicador: '+METRICS[metric].label:'Participação, brancos e nulos · recorte para Governador',60,925,960,21,'#59626b',600);
+ }
+ ctx.strokeStyle='#d3d9de';ctx.beginPath();ctx.moveTo(60,960);ctx.lineTo(1020,960);ctx.stroke();
+ text('Fonte: Tribunal Superior Eleitoral · variações percentuais em p.p.',60,996,960,21,'#59626b',600);
+ text('2º turno: '+(second?.source_generated_at||'aguardando base final'),60,1035,960,20,'#59626b',600);
+ const caption=safe?['ELEIÇÕES 2026 | ENTRE TURNOS | '+scope,'',...ids.map(id=>{const m=METRICS[id],a=firstVal(r,m),b=secondVal(r,m);return m.label+': '+fmt(a,m)+' no 1º turno → '+fmt(b,m)+' no 2º turno (variação: '+feedDelta(b-a,m)+(m.unit==='count'?' em quantidade':'')+').'}),'','1º turno: 04/10/2026 · 2º turno: 25/10/2026.','Variação = 2º turno menos 1º turno. Percentuais em pontos percentuais (p.p.).',ids.length>1?'Participação, brancos e nulos no recorte para Governador.':'',r?'Recorte municipal: '+scope+'.':'Total estadual do Rio Grande do Norte.','Fonte: Tribunal Superior Eleitoral.','Boletim do 2º turno: '+(second?.source_generated_at||'não informado')].filter(x=>x!==null).join('\n'):'Comparação aguardando a base final oficial dos dois turnos.';
+ $('#etFeedCaption').value=caption;
+ for(const id of ['etFeedDownload','etFeedShare','etFeedCopy'])$('#'+id).disabled=!safe;
+ $('#etFeedStatus').textContent=safe?'Imagem e legenda prontas para '+(r?scope:'todo o Rio Grande do Norte')+'.':!feedVerified&&first?'Nova exportação bloqueada: atualize os dados para conferir a fonte.':'A imagem comparativa será liberada com a base final oficial completa.';
+}
+$('#etFeedMode').addEventListener('change',renderFeed);
+$('#etFeedDownload').addEventListener('click',()=>{if(!feedIsSafe())return;UEFYShare.download($('#etFeedCanvas'),feedFilename())});
+$('#etFeedCopy').addEventListener('click',async()=>{if(!feedIsSafe())return;const ok=await UEFYShare.copyText($('#etFeedCaption').value,$('#etFeedCaption'));$('#etFeedStatus').textContent=ok?'Legenda copiada.':'Selecione a legenda e copie manualmente.'});
+$('#etFeedShare').addEventListener('click',()=>{
+ if(!feedIsSafe())return;
+ const task=UEFYShare.send({canvas:$('#etFeedCanvas'),text:$('#etFeedCaption').value,filename:feedFilename(),title:'UEFY · Entre Turnos'});
+ task.then(out=>{$('#etFeedStatus').textContent=out.status==='shared'?'Imagem entregue ao menu do dispositivo. Confira se a legenda acompanhou o arquivo.':out.status==='cancelled'?'Compartilhamento cancelado.': 'Baixe a imagem e copie a legenda para publicar pelo aplicativo.'});
+});
+
 $('#etMetric').addEventListener('change',e=>{metric=e.target.value;drawMap();renderTable();renderSelection()});
 $('#etCity').addEventListener('change',e=>{city=e.target.value;renderSelection()});
 $('#etSearch').addEventListener('input',renderTable);
@@ -174,7 +233,7 @@ const sync=()=>{const dark=document.body.classList.contains('dark');theme.textCo
 theme.addEventListener('click',()=>{document.body.classList.toggle('dark');localStorage.setItem('uefy-eleicoes-theme',document.body.classList.contains('dark')?'dark':'light');sync()});sync();
 document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',()=>a.closest('details')?.removeAttribute('open')));
 const top=$('#toTop');window.addEventListener('scroll',()=>top.classList.toggle('show',scrollY>360),{passive:true});top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-window.__entreTurnos={get ready(){return ready},get rows(){return rows.length},get second(){return second},get metric(){return metric}};
+window.__entreTurnos={get ready(){return ready},get rows(){return rows.length},get second(){return second},get metric(){return metric},get feedReady(){return feedIsSafe()}};
 setInterval(()=>{if(!document.hidden)load()},60000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)load()});
 load();
