@@ -2,7 +2,7 @@
 (()=>{'use strict';
 const E=window.ElectionStats,P=window.ElectionPublications,$=q=>document.querySelector(q),NS='http://www.w3.org/2000/svg';
 const statusNames={changed:'Mudou',same:'Manteve',tie:'Empate',pending:'Aguardando'},categoryNames={...E.names,tie:'Empate',pending:'Aguardando',same:'Manteve',changed:'Mudou'};
-let model=null,selected='',loading=false,visible=[],paths=new Map(),imageReady=false,cachedShare=null,imageRevision=0,listPage=0,captionDirty=false,sharing=false;
+let model=null,selected='',loading=false,visible=[],paths=new Map(),imageReady=false,cachedShare=null,imageRevision=0,listPage=0,captionDirty=false,sharing=false,captionPart=0,captionParts=[],captionDrafts=new Map();
 const settings=()=>({metric:$('#metric').value,candidate:$('#candidate').value,view:$('#view').value,group:$('#group').value,search:$('#search').value,sort:$('#sort').value});
 const metric=()=>E.metrics[$('#metric').value],unit=()=>$('#view').value==='delta'&&metric().unit==='pct'?'pp':metric().unit;
 const f=(v,u,sign=false)=>E.format(v,u,sign);
@@ -87,7 +87,7 @@ function renderTransitions(){
  for(const route of ['13-13','44-44','13-44','44-13','22-13','22-44']){
   const [a,b]=route.split('-'),count=model.ready?model.rows.filter(r=>r.from===a&&r.to===b).length:null;
   const btn=el('button',undefined,$('#group').value===route?'active':'');btn.type='button';btn.disabled=!model.ready;btn.setAttribute('aria-pressed',String($('#group').value===route));btn.append(el('span',E.names[a]+' → '+E.names[b]),el('strong',count===null?'—':String(count)));
-  btn.addEventListener('click',()=>{$('#group').value=$('#group').value===route?'all':route;render()});panel.append(btn);
+  btn.addEventListener('click',()=>{resetPublicationText();$('#publication').value='analysis';$('#group').value=$('#group').value===route?'all':route;render()});panel.append(btn);
  }
 }
 function render(){
@@ -118,11 +118,19 @@ function updateShareControls(){
 }
 function updateCaption(force=false){
  if(!model)return;
- const pages=artPages();
- if(force||!captionDirty)$('#supportText').value=P.makePost(publicationBrief(),{style:$('#captionStyle').value,page:listPage,pageCount:pages.length,pageRows:pages[listPage]||[],template:$('#template').value});
+ const pages=artPages(),copy=P.editorial(publicationBrief(),{limit:Number($('#exampleCount').value),style:$('#captionStyle').value,page:listPage,pageCount:pages.length,pageRows:pages[listPage]||[],template:$('#template').value});
+ captionParts=copy.posts;captionPart=Math.min(captionPart,captionParts.length-1);
+ if(force)captionDrafts.delete(captionPart);
+ $('#supportText').value=captionDrafts.get(captionPart)??captionParts[captionPart];
+ captionDirty=captionDrafts.has(captionPart);
+ $('#editorialReport').textContent=copy.report;
+ $('#textPagination').hidden=captionParts.length<=1;$('#textSeriesHint').hidden=captionParts.length<=1;
+ $('#textPartLabel').textContent='Texto '+(captionPart+1)+' de '+captionParts.length;
+ $('#previousText').disabled=captionPart===0;$('#nextText').disabled=captionPart>=captionParts.length-1;
  updateShareControls();
 }
-function resetPublicationText(){captionDirty=false;listPage=0;$('#exportStatus').textContent=''}
+function resetCaptionParts(){captionPart=0;captionDrafts.clear();captionDirty=false}
+function resetPublicationText(){resetCaptionParts();listPage=0;$('#exportStatus').textContent=''}
 function choosePublication(){
  const choice=$('#publication').value;resetPublicationText();$('#imageTitle').value='';
  if(choice==='analysis'){render();return}
@@ -215,10 +223,13 @@ $('#template').addEventListener('change',()=>{
  render();
 });
 $('#imageTitle').addEventListener('input',renderImage);
-$('#supportText').addEventListener('input',()=>{captionDirty=true;$('#exportStatus').textContent='';updateShareControls()});
+$('#supportText').addEventListener('input',()=>{captionDirty=true;captionDrafts.set(captionPart,$('#supportText').value);$('#exportStatus').textContent='';updateShareControls()});
 $('#regenerateText').addEventListener('click',()=>{captionDirty=false;$('#exportStatus').textContent='';updateCaption(true)});
-$('#previousPart').addEventListener('click',()=>{if(listPage>0){listPage--;captionDirty=false;renderImage()}});
-$('#nextPart').addEventListener('click',()=>{if(listPage<artPages().length-1){listPage++;captionDirty=false;renderImage()}});
+$('#exampleCount').addEventListener('change',()=>{resetCaptionParts();updateCaption(true)});
+$('#previousText').addEventListener('click',()=>{if(captionPart>0){captionPart--;updateCaption()}});
+$('#nextText').addEventListener('click',()=>{if(captionPart<captionParts.length-1){captionPart++;updateCaption()}});
+$('#previousPart').addEventListener('click',()=>{if(listPage>0){listPage--;resetCaptionParts();renderImage()}});
+$('#nextPart').addEventListener('click',()=>{if(listPage<artPages().length-1){listPage++;resetCaptionParts();renderImage()}});
 $('#download').addEventListener('click',()=>{if(!imageReady||!cachedShare)return;downloadBlob(cachedShare.file,cachedShare.file.name);$('#exportStatus').textContent='PNG preparado para download. Use a legenda acima para publicar no X.'});
 $('#shareX').addEventListener('click',sharePublication);
 $('#openX').addEventListener('click',event=>{if($('#openX').getAttribute('aria-disabled')==='true'){event.preventDefault();return}$('#exportStatus').textContent='O X abrirá com o texto. Anexe o PNG da imagem antes de publicar.'});

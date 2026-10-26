@@ -37,6 +37,6 @@ test('erro posterior mantém última base conferida e filtro vazio bloqueia PNG'
 });
 test('layout móvel mantém largura, campos e exportação acessíveis',async({page})=>{
  await ready(page);for(const width of [320,390,768,1440]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth)).toBeLessThanOrEqual(2)}
- await page.setViewportSize({width:390,height:844});await page.selectOption('#metric','turnout_pct');await page.selectOption('#palette','dark');await page.locator('#estudio').scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'../../../outputs/plataforma-celular.png'),fullPage:true});
- await page.setViewportSize({width:1440,height:1000});await page.goto('/');await expect(page.locator('#changed')).toHaveText('60');await page.screenshot({path:path.resolve(__dirname,'../../../outputs/plataforma-desktop.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.selectOption('#metric','turnout_pct');await page.selectOption('#palette','dark');await page.locator('#estudio').scrollIntoViewIfNeeded();await page.screenshot({path:path.resolve(__dirname,'../../../outputs/plataforma-celular.png')});
+ await page.setViewportSize({width:1440,height:1000});await page.goto('/');await expect(page.locator('#changed')).toHaveText('60');await page.screenshot({path:path.resolve(__dirname,'../../../outputs/plataforma-desktop.png')});
 });

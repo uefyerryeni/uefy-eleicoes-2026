@@ -6,8 +6,8 @@ async function ready(page){await page.goto('/');await expect(page.locator('#shar
 test('pautas prontas produzem legendas distintas e casos vazios publicáveis',async({page})=>{
  const errors=[];page.on('pageerror',e=>errors.push(e.message));await ready(page);
  await page.selectOption('#publication','same');await expect(page.locator('#supportText')).toHaveValue(/107 municípios mantiveram/);await expect(page.locator('#rowCount')).toHaveText('107 de 167 municípios');
- await page.selectOption('#publication','44-13');await expect(page.locator('#supportText')).toHaveValue(/31 municípios, Allyson Bezerra.*Cadu de Lula/);await expect(page.locator('#group')).toHaveValue('44-13');
- await page.selectOption('#publication','from-22');await expect(page.locator('#supportText')).toHaveValue(/29 municípios.*14 tiveram Cadu e 15 Allyson/);
+ await page.selectOption('#publication','44-13');await expect(page.locator('#supportText')).toHaveValue(/31 municípios, de Allyson no 1º para Cadu no 2º/);await expect(page.locator('#group')).toHaveValue('44-13');
+ await page.selectOption('#publication','from-22');await expect(page.locator('#supportText')).toHaveValue(/29 municípios.*14 com Cadu e 15 com Allyson/);
  await page.selectOption('#publication','13-44');await expect(page.locator('#supportText')).toHaveValue(/nenhum município/);await expect(page.locator('#download')).toBeEnabled();await expect(page.locator('#shareX')).toBeEnabled();
  expect(errors).toEqual([]);
 });
@@ -51,4 +51,19 @@ test('panorama das transições gera quadro com totais e texto comparativo',asyn
 test('link direto abre o estúdio após o carregamento das tabelas',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto('/#estudio');await expect(page.locator('#shareX')).toBeEnabled();
  await expect.poll(()=>page.locator('#estudio').evaluate(n=>Math.abs(n.getBoundingClientRect().top))).toBeLessThan(50);
+});
+
+test('resumo cita 5 ou 10 cidades e navega textos sem alterar a imagem ou perder edições',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await ready(page);
+ await page.selectOption('#publication','44-13');await expect(page.locator('#supportText')).toHaveValue(/São José de Mipibu — Allyson → Cadu/);
+ await expect(page.locator('#editorialReport')).toContainText('Guamaré');await expect(page.locator('#editorialReport')).toContainText('eleitores (1º turno)');
+ const image=await page.locator('#preview').evaluate(c=>c.toDataURL());
+ await page.fill('#supportText','Minha legenda editada.');await page.click('#nextText');await expect(page.locator('#supportText')).toHaveValue(/Guamaré/);await expect(page.locator('#characterCount')).not.toHaveClass(/over-limit/);
+ expect(await page.locator('#preview').evaluate(c=>c.toDataURL())).toBe(image);
+ await page.click('#previousText');await expect(page.locator('#supportText')).toHaveValue('Minha legenda editada.');
+ await page.selectOption('#exampleCount','10');await expect(page.locator('#supportText')).toHaveValue(/31 municípios/);await expect(page.locator('#editorialReport')).toContainText('10. ');
+ const names=await page.locator('#editorialReport').textContent();expect(names).toContain('São José de Mipibu');expect(names).toContain('Allyson → Cadu');
+ const parts=[];for(let attempt=0;attempt<10;attempt++){const t=await page.inputValue('#supportText');parts.push(t);expect(t).toContain('Fonte: TSE, 2026.');await expect(page.locator('#shareX')).toBeEnabled();if(await page.locator('#nextText').isDisabled())break;await page.click('#nextText')}
+ await expect(page.locator('#nextText')).toBeDisabled();expect(parts.join('\n')).toMatch(/10\. /);expect(parts.length).toBeGreaterThan(1);
+ await page.selectOption('#publication','from-22');await expect(page.locator('#supportText')).toHaveValue(/Natal — Álvaro → Allyson/);await expect(page.locator('#editorialReport')).toContainText('Caicó — Álvaro → Cadu');
 });
