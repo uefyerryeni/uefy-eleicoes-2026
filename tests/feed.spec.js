@@ -25,3 +25,15 @@ test('feed estadual acompanha cidade e indicador, compartilha arquivo e bloqueia
  await page.selectOption('#etFeedMode','summary');await page.selectOption('#etCity','');await page.setViewportSize({width:1440,height:1000});require('fs').writeFileSync('../feed-resumo-teste.png',Buffer.from((await page.locator('#etFeedCanvas').evaluate(c=>c.toDataURL('image/png'))).split(',')[1],'base64'));
  offline=true;await page.click('#etRefresh');await expect(page.locator('#etFeedDownload')).toBeDisabled();await expect(page.locator('#etFeedStatus')).toContainText('bloqueada');
 });
+test('resumo estadual final de Governador independe da Presidencia e respeita o cargo selecionado',async({page})=>{
+ const data=snapshot();data.publication_ready=false;data.municipalities_read=0;data.municipalities=[];data.state.pres.complete=false;
+ data.state.gov.source_generated_at='BOLETIM FINAL GOVERNADOR';
+ await page.route('**/data/entre-turnos-2t.json*',r=>r.fulfill({json:data}));
+ await page.goto('/entre-turnos.html#publicar');await page.waitForFunction(()=>window.__entreTurnos?.feedReady);
+ expect(await page.evaluate(()=>window.__entreTurnos.ready)).toBe(false);
+ await expect(page.locator('#etFeedDownload')).toBeEnabled();await expect(page.locator('#etFeedCaption')).toHaveValue(/BOLETIM FINAL GOVERNADOR/);
+ await page.selectOption('#etCity','NATAL');await expect(page.locator('#etFeedDownload')).toBeDisabled();
+ await page.click('#etFeedState');await expect(page.locator('#etFeedDownload')).toBeEnabled();
+ await page.selectOption('#etMetric','pres_blank_pct');await page.selectOption('#etFeedMode','indicator');await expect(page.locator('#etFeedDownload')).toBeDisabled();
+ await page.selectOption('#etMetric','gov_blank_pct');await expect(page.locator('#etFeedDownload')).toBeEnabled();
+});
