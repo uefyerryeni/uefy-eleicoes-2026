@@ -115,3 +115,7 @@ Verificação: node --test tests/estatistica-core.test.cjs, python scripts/qa_st
 ### Publicação móvel e pautas editoriais
 
 O estúdio inclui pautas de mudanças, permanências, transições específicas, municípios por liderança de origem e de destino e panorama das seis combinações. Listas municipais são paginadas com imagens e legendas por parte, sem omitir cidades. Legendas editáveis usam o contador oficial twitter-text 3.1.0, distribuído localmente sob Apache-2.0. O compartilhamento prepara um PNG antes do clique e envia arquivo e texto pelo menu nativo; o usuário escolhe o X e confere a legenda. Onde o envio nativo não é suportado, há download do PNG e abertura do compositor do X com o texto. Não há envio automático nem associação OAuth com uma conta do X. Navegação móvel fixa, campos legíveis e cartões municipais melhoram o uso em telas pequenas.
+
+### Legibilidade das artes no X
+
+As imagens usam uma escala de referência de 1200 px, letras de pelo menos 40 px nessa escala e títulos de 66 a 80 px. Listas usam 2, 4 ou 6 cidades por imagem conforme o formato; rankings e quadros também são divididos em partes. Comparações geram uma imagem por turno, na mesma escala de cores. O formato quadrado é o padrão. Os testes de legibilidade verificam os três formatos e registram as artes em largura de celular, além de bloquear textos que invadiriam o rodapé. Os horários completos permanecem no portal; as artes exibem fonte e dias das bases.

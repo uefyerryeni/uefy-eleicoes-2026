@@ -52,15 +52,29 @@ function brief(model,s,options={}){
  }
  return {rows,count,label,title,subhead,body:body+search,compare:compare+search,counts,changed,same,source};
 }
-function makePost(brief,{style='summary',page=0,pageCount=1,pageRows=[]}={}){
+function makePost(brief,{style='summary',page=0,pageCount=1,pageRows=[],template='map'}={}){
  let main=style==='compare'?brief.compare:brief.body;
  const part=pageCount>1?' Lista de municípios: parte '+(page+1)+'/'+pageCount+'.':' Lista de municípios na imagem.';
- if(style==='names')main=brief.body+part;
+ if(style==='names')main=brief.body+part;else if(pageCount>1)main+=' '+(template==='ranking'?'Ranking':template==='compare'?'Comparação':'Quadro')+': parte '+(page+1)+'/'+pageCount+'.';
  let text=main+' '+source;
  if(!analyzeText(text).valid){text=brief.body.replace(/ No recorte da busca .*$/,'')+(style==='names'?part:'')+' '+source}
  return text;
 }
-function pages(rows,size){const count=size==='1600x900'?16:size==='1200x1200'?12:16;return rows.length?Array.from({length:Math.ceil(rows.length/count)},(_,i)=>rows.slice(i*count,(i+1)*count)):[[]]}
-const api={brief,makePost,pages,analyzeText,routes,short};
+function pageCapacity(size,template='list'){
+ const wide=size==='1600x900',square=size==='1200x1200';
+ return template==='routes'?(wide?2:6):template==='ranking'?(wide?2:square?4:5):wide?2:square?4:6;
+}
+function chunks(rows,count){return rows.length?Array.from({length:Math.ceil(rows.length/count)},(_,i)=>rows.slice(i*count,(i+1)*count)):[[]]}
+function pages(rows,size){return chunks(rows,pageCapacity(size))}
+function artPages(rows,{template,size,s}){
+ if(template==='compare')return [rows,rows];
+ if(template==='routes')return chunks(routes,pageCapacity(size,'routes'));
+ if(template==='ranking'){
+  const ranked=rows.filter(r=>Number.isFinite(E.displayed(r,s.metric,s.view,s.candidate))).sort((a,b)=>s.sort==='asc'?E.displayed(a,s.metric,s.view,s.candidate)-E.displayed(b,s.metric,s.view,s.candidate):E.displayed(b,s.metric,s.view,s.candidate)-E.displayed(a,s.metric,s.view,s.candidate)).slice(0,8);
+  return chunks(ranked,pageCapacity(size,'ranking'));
+ }
+ return template==='list'?pages(rows,size):[rows];
+}
+const api={brief,makePost,pages,analyzeText,routes,short,pageCapacity,artPages};
 if(typeof module!=='undefined')module.exports=api;root.ElectionPublications=api;
 })(typeof window!=='undefined'?window:globalThis);

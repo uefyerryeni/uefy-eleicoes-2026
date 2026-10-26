@@ -12,10 +12,10 @@ test('pautas prontas produzem legendas distintas e casos vazios publicáveis',as
  expect(errors).toEqual([]);
 });
 test('listas trocam PNG e legenda por parte, com nomes de todos os municípios',async({page})=>{
- await ready(page);await page.selectOption('#publication','same');await page.selectOption('#size','1200x1200');await page.selectOption('#captionStyle','names');await expect(page.locator('#template')).toHaveValue('list');await expect(page.locator('#partLabel')).toHaveText('Parte 1 de 9');
- await expect(page.locator('#shareX')).toBeEnabled();const first=await page.locator('#preview').evaluate(c=>c.toDataURL());await page.click('#nextPart');await expect(page.locator('#supportText')).toHaveValue(/parte 2\/9/);await expect(page.locator('#partLabel')).toHaveText('Parte 2 de 9');expect(await page.locator('#preview').evaluate(c=>c.toDataURL())).not.toBe(first);
- for(let i=2;i<9;i++)await page.click('#nextPart');await expect(page.locator('#partLabel')).toHaveText('Parte 9 de 9');await expect(page.locator('#nextPart')).toBeDisabled();
- await page.selectOption('#publication','44-13');await page.selectOption('#size','1200x1200');await expect(page.locator('#partLabel')).toHaveText('Parte 1 de 3');await page.locator('#preview').evaluate(c=>c.toDataURL()).then(async url=>fs.writeFile(path.join(out,'exemplo-lista-municipios.png'),Buffer.from(url.split(',')[1],'base64')));
+ await ready(page);await page.selectOption('#publication','same');await page.selectOption('#size','1200x1200');await page.selectOption('#captionStyle','names');await expect(page.locator('#template')).toHaveValue('list');await expect(page.locator('#partLabel')).toHaveText('Parte 1 de 27');
+ await expect(page.locator('#shareX')).toBeEnabled();const first=await page.locator('#preview').evaluate(c=>c.toDataURL());await page.click('#nextPart');await expect(page.locator('#supportText')).toHaveValue(/parte 2\/27/);await expect(page.locator('#partLabel')).toHaveText('Parte 2 de 27');expect(await page.locator('#preview').evaluate(c=>c.toDataURL())).not.toBe(first);
+ for(let i=2;i<27;i++)await page.click('#nextPart');await expect(page.locator('#partLabel')).toHaveText('Parte 27 de 27');await expect(page.locator('#nextPart')).toBeDisabled();
+ await page.selectOption('#publication','44-13');await page.selectOption('#size','1200x1200');await expect(page.locator('#partLabel')).toHaveText('Parte 1 de 8');await page.locator('#preview').evaluate(c=>c.toDataURL()).then(async url=>fs.writeFile(path.join(out,'exemplo-lista-municipios.png'),Buffer.from(url.split(',')[1],'base64')));
 });
 test('compartilhamento móvel envia PNG e texto editado no gesto de clique',async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.addInitScript(()=>{

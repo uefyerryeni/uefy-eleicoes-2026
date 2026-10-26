@@ -24,3 +24,12 @@ test('primeiro turno isolado e candidatura ausente não viram comparação inven
  const m=model();m.ready=false;const b=P.brief(m,{...options('all'),view:'first'});assert.match(b.body,/1º turno/);assert.doesNotMatch(b.body,/60 .*mudaram/);
  const c=P.brief(model(),{...options('all'),metric:'candidate_votes',candidate:'22'});assert.match(c.body,/Sem comparação disponível/);assert.doesNotMatch(c.body,/0 no 2º/);
 });
+
+test('artes dividem listas e rankings sem perder cidades e usam duas partes para os turnos',()=>{
+ const m=model(),s=options('same'),rows=E.filtered(m,s);
+ assert.equal(P.pages(rows,'1200x1200').length,27);assert.equal(P.pageCapacity('1200x1200'),4);
+ assert.equal(P.artPages(rows,{size:'1200x1200',template:'compare',s}).length,2);
+ const ranking=P.artPages(m.rows,{size:'1600x900',template:'ranking',s:{...s,metric:'turnout_pct',sort:'desc'}});
+ assert.equal(ranking.length,4);assert.equal(ranking.flat().length,8);
+ const routeParts=P.artPages(m.rows,{size:'1600x900',template:'routes',s});assert.equal(routeParts.length,3);assert.deepEqual(routeParts.flat(),P.routes);
+});

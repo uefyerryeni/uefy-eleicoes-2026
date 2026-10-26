@@ -106,7 +106,7 @@ function dates(){
 }
 
 function publicationBrief(){return P.brief(model,settings(),{rows:visible,city:$('#imageScope').value==='city'?model.rows.find(r=>r.code===selected):null})}
-function imageFilename(){return 'uefy-rn-'+settings().metric+'-'+settings().group+'-'+settings().view+'-'+$('#template').value+'-'+$('#size').value+($('#template').value==='list'?'-parte-'+(listPage+1):'')+'.png'}
+function imageFilename(){return 'uefy-rn-'+settings().metric+'-'+settings().group+'-'+settings().view+'-'+$('#template').value+'-'+$('#size').value+(artPages().length>1?'-parte-'+(listPage+1):'')+'.png'}
 function updateShareControls(){
  const text=$('#supportText').value,check=P.analyzeText(text),valid=check.valid&&text.trim().length>0;
  $('#characterCount').textContent=check.length+' / 280';$('#characterCount').classList.toggle('over-limit',!valid);
@@ -118,8 +118,8 @@ function updateShareControls(){
 }
 function updateCaption(force=false){
  if(!model)return;
- const pages=P.pages(visible,$('#size').value);
- if(force||!captionDirty)$('#supportText').value=P.makePost(publicationBrief(),{style:$('#captionStyle').value,page:listPage,pageCount:$('#template').value==='list'?pages.length:1,pageRows:pages[listPage]||[]});
+ const pages=artPages();
+ if(force||!captionDirty)$('#supportText').value=P.makePost(publicationBrief(),{style:$('#captionStyle').value,page:listPage,pageCount:pages.length,pageRows:pages[listPage]||[],template:$('#template').value});
  updateShareControls();
 }
 function resetPublicationText(){captionDirty=false;listPage=0;$('#exportStatus').textContent=''}
@@ -157,120 +157,30 @@ function exportCsv(){
  downloadBlob(new Blob(['\uFEFF'+[heads,...lines].map(a=>a.map(safe).join(';')).join('\r\n')],{type:'text/csv;charset=utf-8'}),'uefy-rn-estatisticas.csv');
 }
 function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=el('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000)}
-/* Renderizador de imagens: vetores da malha, sem imagens remotas ou captura de tela. */
+/* Renderização das artes e preparação do PNG para compartilhar. */
+function artPages(){return P.artPages(visible,{template:$('#template').value,size:$('#size').value,s:settings()})}
 function renderImage(){
  const revision=++imageRevision;cachedShare=null;imageReady=false;$('#shareX').disabled=true;$('#download').disabled=true;$('#copyText').disabled=true;if(!model)return;
- const s=settings(),template=$('#template').value,[w,h]=$('#size').value.split('x').map(Number),canvas=$('#preview');canvas.width=w;canvas.height=h;
+ const s=settings(),template=$('#template').value,canvas=$('#preview');
  const scopeLocked=['ranking','compare','list','routes'].includes(template);$('#imageScope').disabled=scopeLocked;if(scopeLocked)$('#imageScope').value='state';
- const ctx=canvas.getContext('2d'),scale=w/1600;ctx.scale(scale,scale);const W=1600,H=h/scale,dark=$('#palette').value==='dark',ink=dark?'#f5f4ec':'#1d2621',muted=dark?'#bbc1b4':'#626c63',paper=dark?'#17241f':'#f8f7ee',line=dark?'#425047':'#d1d7c8';
- const M=64;ctx.fillStyle=paper;ctx.fillRect(0,0,W,H);ctx.fillStyle='#f4dd19';ctx.fillRect(0,0,W,13);
- const text=(t,x,y,size=24,color=ink,weight='400')=>{ctx.fillStyle=color;ctx.font=weight+' '+size+'px Arial';ctx.fillText(String(t),x,y)};
- const wrap=(t,x,y,max,size=26,color=ink,weight='400',limit=Infinity)=>{
-  ctx.font=weight+' '+size+'px Arial';const words=String(t).split(/\s+/),lines=[];let row='';for(const word of words){if(ctx.measureText(row+(row?' ':'')+word).width>max&&row){lines.push(row);row=word}else row+=(row?' ':'')+word}if(row)lines.push(row);
-  lines.slice(0,limit).forEach((line,i)=>text(line,x,y+i*size*1.3,size,color,weight));return Math.min(lines.length,limit)*size*1.3;
- };
- const rule=y=>{ctx.fillStyle=line;ctx.fillRect(M,y,W-M*2,1)};
- text('CENTRAL UEFY / ELEIÇÕES',M,67,21,ink,'700');text('RIO GRANDE DO NORTE · 2026',W-500,67,19,muted,'700');rule(90);
- const brief=publicationBrief();listPage=Math.min(listPage,P.pages(visible,$('#size').value).length-1);
- const title=$('#imageTitle').value.trim()||(s.metric==='leadership'&&s.view==='delta'?brief.title:null)||(template==='compare'?'O RN entre o primeiro e o segundo turno':s.metric==='leadership'&&s.view==='delta'?'Onde o voto mudou de liderança':topic(s));
- let titleSize=58;while(titleSize>34){ctx.font='700 '+titleSize+'px Arial';if(ctx.measureText(title).width<(W-M*2)*1.75)break;titleSize-=2}
- const titleH=wrap(title,M,157,W-M*2,titleSize,ink,'700',2);
- const subtitleY=157+titleH+10,sub=(s.metric==='leadership'&&s.view==='delta'?$('#group').selectedOptions[0].textContent+(s.search?' · busca: '+s.search.slice(0,45):''):topic(s))+' / '+(template==='compare'?'04 e 25 de outubro de 2026':viewName(s));
- wrap(sub,M,subtitleY,W-M*2,23,muted,'400',2);
- const chartTop=subtitleY+66,footerTop=H-180,chartBottom=footerTop-25,chartH=chartBottom-chartTop;
+ const pages=artPages();listPage=Math.min(listPage,pages.length-1);
  const zeroRoute=model.ready&&s.metric==='leadership'&&s.view==='delta'&&s.group!=='all'&&!s.search;
- const allowed=(visible.length>0||zeroRoute)&&!(['list','routes'].includes(template)&&(s.metric!=='leadership'||!model.ready))&&(s.view==='first'||model.ready)&&(template!=='compare'||model.ready)&&!((template==='ranking')&&s.metric==='leadership')&&!(template==='compare'&&metric().candidate&&s.candidate==='22');
- const rowsSet=new Set(visible.map(r=>r.code));
- const drawMap=(x,y,width,height,mapSettings)=>{
-  const factor=Math.min(width/800,height/540),ox=x+(width-800*factor)/2,oy=y+(height-540*factor)/2;
-  ctx.save();ctx.translate(ox,oy);ctx.scale(factor,factor);
-  for(const r of model.rows){ctx.fillStyle=rowsSet.has(r.code)?getColor(r,mapSettings):(dark?'#2b3b31':'#e4e7dd');ctx.strokeStyle=dark?'#17241f':'#f8f7ee';ctx.lineWidth=.9;const p=new Path2D(paths.get(r.code));ctx.fill(p);ctx.stroke(p)}
-  if(selected&&$('#imageScope').value==='city'){const p=new Path2D(paths.get(selected));ctx.strokeStyle=dark?'#fff':'#111';ctx.lineWidth=3;ctx.stroke(p)}
-  ctx.restore();
- };
- const legend=(x,y,items,width)=>{
-  let offset=x,cy=y;for(const [color,label] of items){ctx.font='18px Arial';const tw=ctx.measureText(label).width+45;if(offset+tw>x+width){offset=x;cy+=34}ctx.fillStyle=color;ctx.fillRect(offset,cy-15,17,17);text(label,offset+25,cy,18,muted);offset+=tw}return cy;
- };
- const recorte=$('#group').selectedOptions[0].textContent+(s.search?' · busca: '+s.search:'');
- if(!allowed){wrap(template==='ranking'&&s.metric==='leadership'?'Selecione um indicador numérico para gerar o ranking.':visible.length===0?'Nenhum município neste filtro. Ajuste o recorte para gerar a imagem.':'Comparação indisponível para este recorte. Use o primeiro turno ou aguarde bases completas.',M,chartTop+70,W-M*2,36,ink,'700',5)}
-
- else if(template==='list'){
-  const chunks=P.pages(visible,$('#size').value),pageRows=chunks[listPage]||[];
-  text('LISTA DE MUNICÍPIOS · PARTE '+(listPage+1)+'/'+chunks.length,M,chartTop+6,22,muted,'700');
-  if(!pageRows.length)wrap('Nenhum município corresponde a esta transição.',M,chartTop+100,W-M*2,34,ink,'700',3);
-  const wide=$('#size').value==='1600x900',perCol=wide?8:$('#size').value==='1200x1200'?12:16,columns=wide?2:1;
-  const rowH=Math.min(110,(chartH-45)/perCol),colWidth=(W-M*2-(columns-1)*50)/columns;
-  pageRows.forEach((r,i)=>{
-   const col=Math.floor(i/perCol),row=i%perCol,x=M+col*(colWidth+50),y=chartTop+32+row*rowH;
-   text(String(listPage*perCol*columns+i+1).padStart(2,'0'),x,y+(wide?23:43),wide?17:25,muted);
-   let font=wide?24:56;ctx.font='700 '+font+'px Arial';while(ctx.measureText(r.name).width>colWidth-(wide?55:90)&&font>(wide?17:36)){font--;ctx.font='700 '+font+'px Arial'}
-   text(r.name,x+(wide?42:75),y+(wide?23:43),font,ink,'700');
-   text((P.short[r.from]||'Empate')+' (1º) → '+(P.short[r.to]||'Sem dado')+' (2º)',x+(wide?42:75),y+(wide?44:72),wide?17:26,muted);
-  });
- }else if(template==='routes'){
-  text('CANDIDATO MAIS VOTADO NO 1º TURNO',M,chartTop+5,19,muted,'700');text('NO 2º TURNO',M+650,chartTop+5,19,muted,'700');text('CIDADES',W-M-135,chartTop+5,19,muted,'700');
-  const rowH=Math.min(140,(chartH-40)/6);
-  P.routes.forEach((k,i)=>{
-   const [a,b]=k.split('-'),y=chartTop+30+i*rowH;
-   ctx.fillStyle=i%2?(dark?'#23372d':'#eef0e5'):paper;ctx.fillRect(M,y,W-M*2,rowH-5);
-   ctx.fillStyle=E.colors[a];ctx.fillRect(M+12,y+10,6,rowH-24);
-   text(E.names[a],M+34,y+rowH*.58,26,ink,'700');text('→',M+535,y+rowH*.58,28,muted);
-   text(E.names[b],M+650,y+rowH*.58,26,ink,'700');text(brief.counts[k],W-M-105,y+rowH*.62,34,ink,'700');
-  });
- }
-else if(template==='compare'){
-  const tall=H>1300;
-  const mapAreaH=chartH-(tall?100:65);
-  if(tall){
-   const mh=(mapAreaH-85)/2;text('01 / PRIMEIRO TURNO',M,chartTop,24,ink,'700');drawMap(M,chartTop+15,W-M*2,mh,{...s,view:'first',shared:true});
-   text('02 / SEGUNDO TURNO',M,chartTop+mh+70,24,ink,'700');drawMap(M,chartTop+mh+85,W-M*2,mh,{...s,view:'second',shared:true});
-  }else{
-   const half=(W-M*2-45)/2;text('01 / PRIMEIRO TURNO',M,chartTop,23,ink,'700');text('02 / SEGUNDO TURNO',M+half+45,chartTop,23,ink,'700');
-   drawMap(M,chartTop+15,half,mapAreaH,{...s,view:'first',shared:true});drawMap(M+half+45,chartTop+15,half,mapAreaH,{...s,view:'second',shared:true});
-  }
-  legend(M,chartBottom-20,palette({...s,view:'first',shared:true}),W-M*2);
-  if(s.metric!=='leadership')text('Mesma escala de cores nos dois turnos.',M,chartBottom+10,18,muted);
- }else if(template==='ranking'){
-  const sorted=visible.filter(r=>Number.isFinite(display(r))).sort((a,b)=>s.sort==='asc'?display(a)-display(b):display(b)-display(a)).slice(0,8),max=Math.max(...sorted.map(r=>Math.abs(display(r))),.01);
-  const rowH=Math.min(95,chartH/8),barX=M+420,barW=W-M*2-650;
-  for(const [i,r] of sorted.entries()){const y=chartTop+i*rowH,v=display(r);text(String(i+1).padStart(2,'0'),M,y+28,22,muted);wrap(r.name,M+60,y+28,345,23,ink,'700',2);ctx.fillStyle=dark?'#354237':'#e6eadc';ctx.fillRect(barX,y+7,barW,27);ctx.fillStyle=v<0?'#3b7d9c':'#b26a1c';ctx.fillRect(barX,y+7,barW*Math.abs(v)/max,27);text(f(v,unit(),s.view==='delta'),barX+barW+25,y+29,25,ink,'700')}
- }else if(template==='card'){
-  const r=$('#imageScope').value==='city'?model.rows.find(r=>r.code===selected):null;let big;
-  if(s.metric==='leadership')big=r?(s.view==='first'?categoryNames[r.from]:s.view==='second'?categoryNames[r.to]:statusNames[r.status]):s.view==='delta'?brief.count+' municípios':visible.length+' municípios';
-  else{const a=r?E.value(r,s.metric,1,s.candidate):E.stateValue(model,s.metric,1,s.candidate),b=r?E.value(r,s.metric,2,s.candidate):E.stateValue(model,s.metric,2,s.candidate);big=f(s.view==='first'?a:s.view==='second'?b:a===null||b===null?null:b-a,unit(),s.view==='delta')}
-  const tall=H>1300,bigWidth=tall?W-M*2:650;wrap(r?r.name:'RIO GRANDE DO NORTE',M,chartTop+15,bigWidth,24,muted,'700',2);
-  wrap(big,M,chartTop+135,bigWidth,76,ink,'700',2);
-  const detailY=chartTop+235;
-  wrap(s.metric==='leadership'?(s.view==='delta'?brief.label+' · 1º e 2º turnos.':'Primeira posição municipal · '+viewName(s)):topic(s)+' · '+viewName(s),M,detailY,bigWidth,26,muted,'400',3);
-  if(tall)drawMap(M,detailY+110,W-M*2,chartBottom-detailY-160,s);else drawMap(770,chartTop,760,chartH-50,s);
-  legend(M,chartBottom,palette(s),W-M*2);
-  }else{
-  if(H<1100){
-   drawMap(M,chartTop-35,960,chartH+5,s);
-   const r=$('#imageScope').value==='city'?model.rows.find(r=>r.code===selected):null,x=1080;
-   wrap(r?r.name:'RIO GRANDE DO NORTE',x,chartTop+25,440,22,muted,'700',2);
-   let big,note;
-   if(s.metric==='leadership'){big=r?(s.view==='delta'?statusNames[r.status]:categoryNames[s.view==='first'?r.from:r.to]):s.view==='delta'?brief.count:visible.length;note=r?'Primeira posição neste município':s.view==='delta'?brief.label:'municípios neste recorte'}
-   else{const a=r?E.value(r,s.metric,1,s.candidate):E.stateValue(model,s.metric,1,s.candidate),b=r?E.value(r,s.metric,2,s.candidate):E.stateValue(model,s.metric,2,s.candidate);big=f(s.view==='first'?a:s.view==='second'?b:a===null||b===null?null:b-a,unit(),s.view==='delta');note=topic(s)}
-   let bigSize=64;ctx.font='700 '+bigSize+'px Arial';while(ctx.measureText(String(big)).width>440&&bigSize>40){bigSize-=2;ctx.font='700 '+bigSize+'px Arial'}wrap(big,x,chartTop+130,440,bigSize,ink,'700',2);wrap(note,x,chartTop+210,430,24,muted,'400',3);
-  }else drawMap(M,chartTop-10,W-M*2,chartH-50,s);
-  legend(M,chartBottom-10,palette(s),W-M*2);
- }
- rule(footerTop);text('FONTE: TSE · '+visible.length+'/167 MUNICÍPIOS NO RECORTE · MALHA: IBGE',M,footerTop+35,18,muted,'700');
- const dateText=dates()+' | Indicadores 1º: '+(model.analysis.source_generated_at||'')+' / 2º: '+(model.ready?model.participation.source_generated_at:'indisponível');
- wrap(dateText,M,footerTop+67,W-M*2,17,muted,'400',2);
- wrap('Recorte: '+recorte+'. '+(s.metric==='leadership'?'Mudança de liderança não demonstra transferência individual de votos.':metric().note||'Taxas calculadas sobre o eleitorado ou total de votos do cargo; diferenças de taxas em pontos percentuais.'),M,footerTop+118,W-M*2,18,muted,'400',2);
- $('#dimensions').textContent=w+' × '+h+' · PNG';$('#studioContext').textContent=topic(s)+' · '+viewName(s)+' · '+visible.length+' municípios. '+(template==='ranking'?'Ranking usa o indicador, recorte temporal e ordenação selecionados.':'A imagem acompanha os filtros da análise.');
-
- const pages=P.pages(visible,$('#size').value),isList=template==='list';$('#listPagination').hidden=!isList||pages.length===1;$('#listNotice').hidden=!isList;
+ let allowed=(visible.length>0||zeroRoute)&&!(['list','routes'].includes(template)&&(s.metric!=='leadership'||!model.ready))&&(s.view==='first'||model.ready)&&(template!=='compare'||model.ready)&&!((template==='ranking')&&s.metric==='leadership')&&!(template==='compare'&&metric().candidate&&s.candidate==='22');
+ const city=$('#imageScope').value==='city'?model.rows.find(r=>r.code===selected):null;
+ const report=window.ElectionArt.render({canvas,model,s,rows:visible,paths,brief:publicationBrief(),template,size:$('#size').value,page:listPage,city,title:$('#imageTitle').value.trim(),palette:$('#palette').value,colors:getColor});
+ if(report.valid&&$('#exportStatus').textContent.startsWith('Encurte'))$('#exportStatus').textContent='';
+ if(!report.valid){allowed=false;$('#exportStatus').textContent='Encurte o título ou escolha o formato quadrado para manter a leitura da arte.'}
+ const [w,h]=$('#size').value.split('x');$('#dimensions').textContent=w+' × '+h+' · PNG';
+ $('#studioContext').textContent=topic(s)+' · '+viewName(s)+' · '+visible.length+' municípios. Letras maiores para o feed do X.';
+ $('#listPagination').hidden=pages.length===1;$('#listNotice').hidden=pages.length===1;
+ $('#listNotice').textContent='Cada parte tem sua própria imagem e legenda. O conteúdo foi dividido para manter os nomes e números legíveis.';
  $('#partLabel').textContent='Parte '+(listPage+1)+' de '+pages.length;$('#previousPart').disabled=listPage===0;$('#nextPart').disabled=listPage>=pages.length-1;
- imageReady=allowed;$('#download').disabled=true;updateCaption();
- if(allowed)canvas.toBlob(blob=>{
+ imageReady=allowed;updateCaption();
+ if(allowed)requestAnimationFrame(()=>{if(revision!==imageRevision)return;canvas.toBlob(blob=>{
   if(revision!==imageRevision||!imageReady)return;
   if(!blob){$('#exportStatus').textContent='Não foi possível preparar o PNG. Altere o formato e tente novamente.';return}
   cachedShare={revision,file:new File([blob],imageFilename(),{type:'image/png'})};updateShareControls();
- },'image/png');
-
+ },'image/png')});
 }
 async function load(){
  if(loading)return;loading=true;$('#refresh').disabled=true;$('#dataStatus').textContent='Conferindo as bases e os 167 municípios…';
@@ -298,7 +208,7 @@ $('#publication').addEventListener('change',choosePublication);
 $('#captionStyle').addEventListener('change',()=>{
  resetPublicationText();if($('#captionStyle').value==='names'){$('#template').value='list';$('#metric').value='leadership';$('#view').value='delta';$('#imageScope').value='state';render()}else{if($('#template').value==='list')$('#template').value='map';renderImage()}
 });
-$('#size').addEventListener('change',()=>{if($('#template').value==='list')resetPublicationText();renderImage()});$('#imageScope').addEventListener('change',()=>{resetPublicationText();renderImage()});$('#palette').addEventListener('change',renderImage);
+$('#size').addEventListener('change',()=>{if(artPages().length>1||['list','ranking','routes','compare'].includes($('#template').value))resetPublicationText();renderImage()});$('#imageScope').addEventListener('change',()=>{resetPublicationText();renderImage()});$('#palette').addEventListener('change',renderImage);
 $('#template').addEventListener('change',()=>{
  resetPublicationText();if(['list','routes'].includes($('#template').value)){$('#metric').value='leadership';$('#view').value='delta'}
  if($('#template').value==='list')$('#captionStyle').value='names';else if($('#captionStyle').value==='names')$('#captionStyle').value='summary';
@@ -308,12 +218,12 @@ $('#imageTitle').addEventListener('input',renderImage);
 $('#supportText').addEventListener('input',()=>{captionDirty=true;$('#exportStatus').textContent='';updateShareControls()});
 $('#regenerateText').addEventListener('click',()=>{captionDirty=false;$('#exportStatus').textContent='';updateCaption(true)});
 $('#previousPart').addEventListener('click',()=>{if(listPage>0){listPage--;captionDirty=false;renderImage()}});
-$('#nextPart').addEventListener('click',()=>{if(listPage<P.pages(visible,$('#size').value).length-1){listPage++;captionDirty=false;renderImage()}});
+$('#nextPart').addEventListener('click',()=>{if(listPage<artPages().length-1){listPage++;captionDirty=false;renderImage()}});
 $('#download').addEventListener('click',()=>{if(!imageReady||!cachedShare)return;downloadBlob(cachedShare.file,cachedShare.file.name);$('#exportStatus').textContent='PNG preparado para download. Use a legenda acima para publicar no X.'});
 $('#shareX').addEventListener('click',sharePublication);
 $('#openX').addEventListener('click',event=>{if($('#openX').getAttribute('aria-disabled')==='true'){event.preventDefault();return}$('#exportStatus').textContent='O X abrirá com o texto. Anexe o PNG da imagem antes de publicar.'});
 $('#copyText').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('#supportText').value);$('#exportStatus').textContent='Texto para o X copiado.'}catch(e){$('#supportText').focus();$('#supportText').select();$('#exportStatus').textContent='Texto selecionado. Use Copiar no menu do celular.'}});
 if(matchMedia('(max-width:760px)').matches){$('#imageSettings').open=false;$('#size').value='1200x1200'}
-window.__stats={get model(){return model},get visible(){return visible},get imageReady(){return imageReady},get shareReady(){return !!cachedShare},get listPage(){return listPage},renderImage};
+window.__stats={get model(){return model},get visible(){return visible},get imageReady(){return imageReady},get shareReady(){return !!cachedShare},get listPage(){return listPage},get artAudit(){return JSON.parse($('#preview').dataset.artAudit||'{}')},renderImage};
 load();
 })();
