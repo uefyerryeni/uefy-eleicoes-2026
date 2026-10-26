@@ -10,7 +10,7 @@ test.beforeEach(async ({page}) => {
   await page.route(/^https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|uefyerryeni\.github\.io|resultados(?:-sim)?\.tse\.jus\.br)\//, route=>route.abort());
 });
 
-async function readyRN(page, name='index.html') {
+async function readyRN(page, name='apuracao.html') {
   await page.goto(route(name),{waitUntil:'domcontentloaded'});
   await page.waitForFunction(() => typeof selectedFeature !== 'undefined' && selectedFeature !== null);
   await page.locator('#rnPublicationScope').selectOption('municipal');
@@ -248,7 +248,7 @@ test('titulos editoriais usam familia larga e leitura confortavel',async({page})
 
 test('auditoria móvel: todas as páginas oferecem menu, campos legíveis e largura estável',async({page})=>{
  test.setTimeout(120000);
- const files=['rn.html','index.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
+ const files=['rn.html','apuracao.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
  for(const width of [320,360,390,430,600,768,820]){
   await page.setViewportSize({width,height:800});
   for(const path of files){
@@ -292,7 +292,7 @@ test('tabelas do Entre Turnos deslizam sem criar rolagem horizontal geral',async
 
 test('navegação no modo escuro mantém largura e interações em celular',async({page})=>{
  await page.setViewportSize({width:360,height:780});
- for(const path of ['index.html','entre-turnos.html']){
+ for(const path of ['apuracao.html','entre-turnos.html']){
   await page.goto(route(path),{waitUntil:'domcontentloaded'});
   const t=page.locator('#themeToggle');
   const before=await page.evaluate(()=>document.body.classList.contains('dark'));
@@ -315,7 +315,7 @@ test('atalhos editoriais e marca possuem área de toque adequada',async({page})=
 for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
   test('sem rolagem horizontal em '+viewport.width+'px', async ({page}) => {
     await page.setViewportSize(viewport);
-    for (const pathname of ['index.html','presidencia.html','analises.html','radar.html','primeiro-turno.html','entre-turnos.html']) {
+    for (const pathname of ['apuracao.html','presidencia.html','analises.html','radar.html','primeiro-turno.html','entre-turnos.html']) {
       await page.goto(route(pathname),{waitUntil:'domcontentloaded'});
       await page.waitForLoadState('domcontentloaded');
       const x=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,viewport:document.documentElement.clientWidth}));

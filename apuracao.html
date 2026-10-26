@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#f4dd19">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Segundo turno no RN | Central das Eleições UEFY</title>
+  <link rel="stylesheet" href="style.css?v=20261004-candidate-filter">
+  <script>
+(function(){
+  fetch('version.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(x=>{
+    if(!x||!x.build)return;
+    const u=new URL(location.href);
+    if(u.searchParams.get('v')!==x.build){
+      u.searchParams.set('v',x.build);
+      location.replace(u.pathname+u.search+u.hash);
+    }
+  }).catch(()=>{});
+})();
+</script>
+<link rel="stylesheet" href="turno2.css?v=20261025-live-studio">
+  <meta name="description" content="Segundo turno 2026: governo do Rio Grande do Norte, mapa dos 167 municípios e publicações com dados oficiais do TSE.">
+<link rel="stylesheet" href="video.css?v=20261025-sem-vinheta-estavel">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <img class="brandmark" src="https://uefyerryeni.github.io/uefyerryeni-logo.png" alt="Marca Uefyerryeni">
+      <div class="brandtext"><strong>Central das Eleições UEFY</strong><span>Rio Grande do Norte</span></div>
+    </div>
+    <nav class="nav" aria-label="Navegação principal">
+      <a class="active" href="index.html">RN ao vivo</a>
+      <a  href="presidencia.html">Presidência</a>
+      <a href="entre-turnos.html">Entre Turnos</a>
+      <a href="analises.html">Acervo do 1º turno</a>
+      <a href="#publicacao">Publicar</a>
+      <a href="estudio-live.html">UEFY Live</a>
+      <a class="mobile-rn-link" href="presidencia.html">Presidência</a>
+      <details class="mobile-menu"><summary aria-label="Abrir menu">Menu</summary>
+        <div class="mobile-menu-panel">
+          <a href="index.html">RN ao vivo</a><a href="presidencia.html">Presidência</a>
+          <a href="entre-turnos.html">Entre Turnos</a>
+          <a href="analises.html">Acervo do 1º turno</a><a href="primeiro-turno.html">Arquivo completo</a>
+          <a href="#publicacao">Publicar</a>
+          <a href="estudio-live.html">UEFY Live · Estúdio OBS</a>
+        </div>
+      </details>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar tema">◐</button>
+      <span class="live"><i></i><span id="liveLabel">TSE oficial</span></span>
+    </nav>
+  </div>
+</header>
+<main class="wrap rn-shell">
+  <section class="rn-hero turno2-hero" aria-labelledby="homeTitle">
+    <div class="turno2-hero-copy">
+      <span class="turno2-kicker"><span class="pulse-dot"></span> Central das Eleições UEFY <b> / 25.10.2026</b></span>
+      <span class="turno2-eyebrow">ELEIÇÕES 2026 <span>·</span> SEGUNDO TURNO</span>
+      <h1 id="homeTitle">O RN<br><em>decide.</em></h1>
+      <p>Governador do Rio Grande do Norte. Acompanhe a totalização oficial e explore o voto nos 167 municípios, com dados do TSE.</p>
+      <div class="turno2-hero-links"><a class="turno2-hero-link primary" href="#mapa-totalizacao">Explorar mapa <span>↗</span></a><a class="turno2-hero-link" href="#publicacao">Gerar publicação <span>↗</span></a><a class="turno2-hero-link" href="estudio-live.html">Estúdio UEFY Live <span>↗</span></a></div>
+    </div>
+    <aside class="turno2-duel" aria-label="Candidaturas ao segundo turno do governo do RN">
+      <div class="turno2-duel-label"><span>DISPUTA ESTADUAL</span><strong>02 CANDIDATURAS</strong></div>
+      <div class="turno2-duel-candidate allyson"><span class="candidate-number">44</span><span class="candidate-meta"><b>ALLYSON BEZERRA</b><small>União Brasil</small></span><span class="candidate-swatch"></span></div>
+      <div class="turno2-duel-separator">SEGUNDO TURNO</div>
+      <div class="turno2-duel-candidate cadu"><span class="candidate-number">13</span><span class="candidate-meta"><b>CADU DE LULA</b><small>PT</small></span><span class="candidate-swatch"></span></div>
+      <p>Resultados somente após a abertura oficial da divulgação pelo TSE. Sem estimativas nem simulações.</p>
+    </aside>
+  </section>
+
+  <a href="entre-turnos.html" class="turnos-spotlight" aria-label="Abrir atlas Entre Turnos">
+    <span class="turnos-spotlight-tag">NOVO · ATLAS RN</span>
+    <span><strong>ENTRE TURNOS</strong><small>Comparecimento, abstenção, brancos e nulos · 167 municípios · primeiro e segundo turno</small></span>
+    <span class="turnos-spotlight-arrow" aria-hidden="true">↗</span>
+  </a>
+  <section class="card rn-source-control" aria-label="Fonte de dados da página do RN">
+    <div class="rn-source-copy">
+      <span>Fonte verificada do segundo turno</span>
+      <strong id="rnSourceTitle">Oficial TSE</strong>
+      <small id="rnSourceHelp">Resultados oficiais do segundo turno · eleição 6260.</small>
+    </div>
+    <label class="rn-source-select">
+      <span>Ambiente</span>
+      <select id="rnMode">
+        <option value="official">Oficial TSE</option>
+        
+        
+      </select>
+    </label>
+    <button class="btn primary rn-source-refresh" id="rnRefresh" type="button">Atualizar tudo</button>
+  </section>
+
+  <section class="card rn-total-map-section" id="mapa-totalizacao">
+    <div class="rn-total-map-head">
+      <div>
+        <div class="rn-map-titleline"><span class="rn-badge">2º turno · RN</span><span class="rn-source-chip" id="rnSourceBadge">OFICIAL TSE</span></div>
+        <h2>O voto no território.</h2>
+        <p>A cor indica a candidatura com mais votos válidos em cada município, conforme o último dado oficial disponível. Municípios sem votos publicados permanecem neutros.</p>
+      </div>
+      <div class="rn-map-audit" id="rnMapAudit">
+        <span>Municípios lidos</span>
+        <strong id="rnMapRead">0/167</strong>
+        <small id="rnMapBase">Aguardando TSE</small>
+      </div>
+    </div>
+    <div class="rn-map-filter" aria-label="Filtro de candidatura no mapa">
+      <label class="turno2-search-label"><span>Encontrar município</span><input class="rn-search" id="munSearch" type="search" placeholder="Digite o nome da cidade" aria-label="Buscar município"></label>
+      <label for="rnLeaderFilter">
+        <span>Mostrar no mapa</span>
+        <select id="rnLeaderFilter">
+          <option value="">Todos os candidatos</option>
+        </select>
+      </label>
+      <div class="rn-map-filter-status" id="rnLeaderFilterStatus">Exibindo todos os municípios com liderança registrada.</div>
+    </div>
+    <div class="rn-total-map-grid">
+      <div class="rn-total-map-card">
+        <svg id="rnLeaderMap" class="rn-leader-map" viewBox="0 0 760 560" aria-label="Mapa de liderança por município para governador"></svg>
+        <div class="rn-map-legend" id="rnLeaderLegend"></div>
+      </div>
+      <aside class="rn-total-map-side">
+        <div class="rn-map-summary">
+          <span class="map-source">Governador</span>
+          <h3>Municípios liderados</h3>
+          <div id="rnElectionOutcome" class="rn-election-outcome" hidden></div>
+          <div id="rnLeaderSummary" class="rn-leader-summary"></div>
+        </div>
+        <div class="rn-natal-highlight" id="rnNatalHighlight">
+          <small>Natal</small>
+          <strong>Aguardando apuração oficial</strong>
+          <span>O destaque da capital aparecerá quando houver votos.</span>
+        </div>
+        <div class="rn-map-publish">
+          <button class="btn primary" id="rnMapPublish" type="button" disabled>Gerar publicação do mapa</button>
+          <small id="rnMapPublishNote">Mapas parciais poderão ser publicados com cobertura, horário e dados oficiais conferidos.</small>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="rn-layout">
+    <svg id="rnLargeMap" viewBox="0 0 760 560" aria-hidden="true" style="display:none"></svg>
+    <aside class="card rn-side">
+      <div class="rn-selected"><div class="selected-line"><div><small>EXPLORAR MUNICÍPIO · 2º TURNO</small><strong id="selectedMun">Natal</strong></div></div>
+        <div class="mun-focus-wrap">
+          <span class="mun-focus-label">Recorte do município</span>
+          <svg id="munFocusMap" class="mun-focus-map" viewBox="0 0 320 220" aria-label="Município selecionado ampliado"></svg>
+        </div>
+        <a class="rn-compare-link" id="rnCompareCity" href="entre-turnos.html?municipio=Natal#mudancas">Consultar este município entre turnos <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="rn-toolbar rn-toolbar-simple">
+        <div class="rn-fixed-office" aria-label="Cargo consultado"><strong>Governador do Rio Grande do Norte</strong><span>Dados oficiais por município · <b id="rnMunicipalSource">Oficial TSE</b></span></div>
+      </div>
+
+      <details class="rn-municipality-list"><summary>Ver lista de municípios</summary><div class="rn-list" id="munList" aria-label="Lista de municípios"></div></details>
+
+      <div class="rn-publisher rn-publisher-priority" id="publicacao">
+        <label for="rnPublicationScope">Abrangência da imagem e do texto</label><select id="rnPublicationScope"><option value="state">Rio Grande do Norte inteiro (padrão)</option><option value="municipal">Município selecionado</option></select>
+        <div class="block-title"><span id="rnResultTitle">Resultado oficial do município</span><span id="rnProgress">—</span></div>
+        <div class="rn-result-lines" id="rnResults"></div>
+        <div class="rn-note" id="rnStatus">2º turno · aguardando divulgação oficial do TSE.</div>
+
+        <div class="block-title text-title"><span>Prévia da imagem</span><span>1080 × 1080</span></div>
+        <div class="canvas-box"><canvas id="rnCanvas" width="1080" height="1080"></canvas></div>
+        <div class="block-title text-title"><span>Texto</span><span id="rnChars">0 caracteres</span></div>
+        <div class="text-mode-switch" role="group" aria-label="Tamanho do texto">
+          <button type="button" class="active" data-text-mode="full">Completo</button>
+          <button type="button" data-text-mode="compact">Enxuto</button>
+        </div>
+        <textarea id="rnPostText"></textarea>
+        <p class="share-note">O texto acima corresponde ao <b>município selecionado</b>. Para divulgar o <b>resultado de todo o Rio Grande do Norte em vídeo</b>, use o estúdio logo abaixo, com recorte estadual selecionado por padrão.</p>
+        <div class="rn-actions">
+          <button class="btn" id="rnCopyText">Copiar texto</button>
+          <button class="btn" id="rnCopyImage">Copiar imagem</button>
+          <button class="btn primary" id="rnOpenX">Publicar no X</button>
+          <button class="btn" id="rnDownload">Baixar imagem</button>
+          <button class="btn primary full" id="rnShareBundle">Compartilhar imagem + texto</button>
+        </div>
+          <p class="share-status" id="rnShareStatus" role="status" aria-live="polite">No Brave: use “Compartilhar imagem + texto” para abrir o menu de aplicativos. Confira imagem e legenda antes de publicar.</p>
+          <a id="rnXManual" class="share-manual-link" href="https://x.com/compose/post" target="_blank" rel="noopener noreferrer" hidden>Abrir o X com o texto (anexar imagem manualmente)</a>
+          <p class="share-note">No <b>Brave do celular</b>, “Compartilhar imagem + texto” abre o menu de aplicativos, quando permitido. O X pode receber apenas a imagem; confira a legenda antes de postar. Se falhar, use “Copiar texto”, “Baixar imagem” e o link de abrir o X. No computador, “Publicar no X” abre o compositor com o texto; anexe ou cole a imagem.</p>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<section class="wrap contact-panel" id="contato" aria-labelledby="contactTitle">
+  <div class="contact-copy">
+    <span class="contact-kicker">Correções e ajustes</span>
+    <h2 id="contactTitle">Encontrou algo que precisa ser revisto?</h2>
+    <p>Envie uma mensagem para a UEFY com o município, cargo ou dado que merece conferência. Isso ajuda a manter a Central mais confiável.</p>
+  </div>
+  <div class="contact-actions" aria-label="Canais de contato">
+    <a class="contact-btn primary" href="https://ig.me/m/uefyerryeni" target="_blank" rel="noopener noreferrer" data-contact="instagram">Falar no Instagram</a>
+    <a class="contact-btn" href="https://x.com/Uefyerryeni" target="_blank" rel="noopener noreferrer" data-contact="x">Falar no X</a>
+  </div>
+</section>
+
+<footer class="foot rn-foot"><div class="wrap footline"><strong>Central das Eleições UEFY · Rio Grande do Norte</strong><span>Segundo turno em 25 de outubro · fonte: Tribunal Superior Eleitoral · <a href="primeiro-turno.html">Arquivo do 1º turno</a> · <a href="radar.html">Legislativo 2026</a></span></div></footer>
+<nav class="mobile-dock" aria-label="Acesso rápido"><a href="index.html" class="active">RN ao vivo</a><a href="presidencia.html">Presidência</a><a href="estudio-live.html">UEFY Live</a><a href="#publicacao">Publicar</a></nav>
+<button class="float-refresh" id="refreshAll" type="button" aria-label="Atualizar todos os dados" title="Atualizar todos os dados">↻<span>Atualizar</span></button>
+<button class="to-top" id="toTop" type="button" aria-label="Voltar ao topo">↑</button>
+<script src="election-integrity.js?v=20261024-homologacao-final-v2"></script>
+<script src="share-mobile.js?v=20261024-homologacao-final-v2"></script>
+ <script src="rn.js?v=20261025-mapa-parcial"></script>
+<script src="video.js?v=20261025-sem-vinheta-estavel"></script>
+</body>
+</html>

@@ -102,3 +102,12 @@ A Central só exporta o vídeo estadual após conciliar a apuração estadual co
 Os cenários automatizados de espera usam relógio fixo e snapshots de teste sem resultados. Isso evita que a homologação falhe apenas porque o dia da eleição chegou ou os snapshots reais foram atualizados; os cenários de liberação avançam explicitamente o relógio e isolam as respostas dentro do navegador de teste.
 
 A animação oficial revela desde o primeiro quadro somente os percentuais exatos do snapshot TSE. Não há contagem numérica de zero até o resultado, para impedir que valores intermediários sejam confundidos com apurações oficiais.
+
+
+## Plataforma de estatísticas e imagens (26/10/2026)
+
+A página inicial reúne 23 indicadores, filtros por candidatura e município, transições de liderança para Governador, mapas por turno e variação, ranking, CSV e estúdio PNG local para o X. Modelos: mapa, dois mapas com escala comum, ranking de oito municípios e destaque estatístico; formatos 1600×900, 1200×1200 e 1080×1350, com título editável e temas claro/escuro. A página inicial não carrega módulos de vídeo. A apuração anterior permanece em apuracao.html.
+
+O motor estatistica-core.js cruza códigos TSE únicos; a geometria utiliza nomes normalizados com aliases documentados no código. Comparações só são liberadas quando os 167 registros de ambos os turnos passam pela validação. Falhas de atualização mantêm a última base conferida. Taxas estaduais usam denominadores estaduais, sem média simples municipal; ausência de candidatura no segundo turno é nula, nunca zero. Mudança de liderança não demonstra transferência individual de votos. Fontes e datas acompanham as imagens. Nenhum conteúdo é publicado automaticamente no X.
+
+Verificação: node --test tests/estatistica-core.test.cjs, python scripts/qa_static.py e npx playwright test. Os testes de apuração histórica apontam para apuracao.html. Os testes da plataforma verificam os bytes PNG e o evento de download sem depender do gerenciador de arquivos do navegador.

@@ -7,7 +7,7 @@ const BUILD=require('../version.json').build;
 test('auditoria de largura, navegação e controles em telas móveis',async({page})=>{
  test.setTimeout(140000);
  await page.route(/^https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|uefyerryeni\.github\.io|resultados(?:-sim)?\.tse\.jus\.br)\//,r=>r.abort());
- const paths=['index.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
+ const paths=['apuracao.html','presidencia.html','entre-turnos.html','analises.html','radar.html','primeiro-turno.html'];
  const widths=[320,360,390,430,600,768,820];
  const report=[];
  for(const width of widths){

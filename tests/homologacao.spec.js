@@ -4,7 +4,7 @@ const ea20=(scope,values=[60,40])=>({ele:'6260',t:'2',f:'o',cdabr:scope,dg:'25/1
 test.beforeEach(async({page})=>{
  await page.clock.setFixedTime(new Date('2026-10-24T21:00:00Z'));
  await page.route(/^https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com|uefyerryeni\.github\.io|resultados\.tse\.jus\.br)\//,r=>r.abort());
- await page.goto('/index.html');
+ await page.goto('/apuracao.html');
  await page.waitForFunction(()=>typeof selectedFeature!=='undefined'&&selectedFeature);
 });
 test('EA20 rejeita eleição, turno, cargo, abrangência e números inválidos',async({page})=>{
