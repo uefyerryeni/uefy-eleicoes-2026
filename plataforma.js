@@ -278,12 +278,13 @@ async function load(){
  try{
   const [first,analysis,geo,second,part]=await Promise.all([json('data/rn-governador-mapa.json'),json('data/rn-analises.json'),json('assets/maps/rn-municipios.geojson'),json('data/rn-governador-mapa-2t.json').catch(()=>({})),json('data/entre-turnos-2t.json').catch(()=>({}))]);
   const next=E.build(first,second,analysis,part,geo);if(model?.ready&&!next.ready)throw Error('Atualização do segundo turno ainda não conciliada');
-  model=next;preparePaths();
+  const initialLoad=!model;model=next;preparePaths();
   const wanted=new URLSearchParams(location.search).get('municipio');if(wanted&&!selected)selected=model.rows.find(r=>E.key(r.name)===E.key(wanted))?.code||'';
   $('#compared').textContent=model.ready?'167':'—';$('#changed').textContent=model.ready?model.rows.filter(r=>r.status==='changed').length:'—';$('#same').textContent=model.ready?model.rows.filter(r=>r.status==='same').length:'—';
   const t1=E.stateValue(model,'turnout_pct',1),t2=E.stateValue(model,'turnout_pct',2);$('#turnout').textContent=f(t2,'pct');$('#turnoutDelta').textContent=t2===null?'segundo turno indisponível':f(t2-t1,'pp',true)+' em relação ao 1º turno';
   $('#dataStatus').textContent=model.ready?'Bases TSE conferidas · 167/167 municípios · dois turnos completos':'1º turno disponível · '+model.secondError;
   $('#sourceDates').textContent=dates();render();
+  if(initialLoad&&location.hash)requestAnimationFrame(()=>document.getElementById(location.hash.slice(1))?.scrollIntoView({behavior:'instant'}));
  }catch(e){$('#dataStatus').textContent=model?'Falha na atualização. Mantendo a última base conferida.':'Dados indisponíveis: '+e.message;if(!model){$('#download').disabled=true;$('#csv').disabled=true;$('#copyText').disabled=true}}
  finally{loading=false;$('#refresh').disabled=false}
 }

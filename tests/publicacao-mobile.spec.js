@@ -47,3 +47,8 @@ test('panorama das transições gera quadro com totais e texto comparativo',asyn
  await ready(page);await page.selectOption('#publication','overview');await expect(page.locator('#template')).toHaveValue('routes');await expect(page.locator('#supportText')).toHaveValue(/31 foram de Allyson para Cadu/);await expect(page.locator('#shareX')).toBeEnabled();
  await page.locator('#preview').evaluate(c=>c.toDataURL()).then(async url=>fs.writeFile(path.join(out,'exemplo-trocas-candidatos.png'),Buffer.from(url.split(',')[1],'base64')));
 });
+
+test('link direto abre o estúdio após o carregamento das tabelas',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('/#estudio');await expect(page.locator('#shareX')).toBeEnabled();
+ await expect.poll(()=>page.locator('#estudio').evaluate(n=>Math.abs(n.getBoundingClientRect().top))).toBeLessThan(50);
+});
