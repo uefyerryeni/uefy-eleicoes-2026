@@ -1,4 +1,5 @@
 const {test,expect}=require('@playwright/test'),path=require('node:path');
+test.beforeAll(async()=>{await require('node:fs/promises').mkdir(path.resolve(__dirname,'../../../outputs'),{recursive:true})});
 test.beforeEach(async({page})=>{await page.route(/^https:\/\//,r=>r.abort())});
 async function ready(page){await page.goto('/');await expect(page.locator('#dataStatus')).toContainText('167/167');await expect(page.locator('#download')).toBeEnabled()}
 test('plataforma combina filtros, seleção municipal, candidatos e retorno ao RN',async({page})=>{
