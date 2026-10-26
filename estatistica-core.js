@@ -87,7 +87,7 @@ function stateValue(model,id,round,n='13'){
 const format=(n,unit='count',sign=false)=>n===null||n===undefined?'—':(sign&&n>0?'+':'')+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:unit==='count'?0:2,maximumFractionDigits:unit==='count'?0:2})+(unit==='pct'?'%':unit==='pp'?' p.p.':'');
 function displayed(r,id,view,n){if(id==='leadership')return view==='delta'?r.status:view==='first'?r.from:r.to;const a=value(r,id,1,n),b=value(r,id,2,n);return view==='first'?a:view==='second'?b:a===null||b===null?null:b-a}
 function filtered(model,{search='',group='all',metric='leadership',view='delta',candidate='13',sort='name'}={}){
- const rows=model.rows.filter(r=>key(r.name).includes(key(search))&&(group==='all'||r.status===group||r.from+'-'+r.to===group));
+ const rows=model.rows.filter(r=>key(r.name).includes(key(search))&&(group==='all'||r.status===group||r.from+'-'+r.to===group||group.startsWith('from-')&&r.from===group.slice(5)||group.startsWith('to-')&&r.to===group.slice(3)));
  return rows.sort((a,b)=>{const x=displayed(a,metric,view,candidate),y=displayed(b,metric,view,candidate);return sort==='name'||metrics[metric].unit==='category'?a.name.localeCompare(b.name,'pt-BR'):x===null?y===null?0:1:y===null?-1:(sort==='asc'?x-y:y-x)||a.name.localeCompare(b.name,'pt-BR')});
 }
 const api={names,colors,key,metrics,build,value,stateValue,format,displayed,filtered};
